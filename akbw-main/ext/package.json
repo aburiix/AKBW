@@ -1,0 +1,40 @@
+{
+  "name": "akbw-import-extension",
+  "version": "0.1.0",
+  "description": "Chrome extension (MV3) to visually import products from any e-commerce website into the AKBW backend.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n content,background,popup -c blue,magenta,green \"vite build --config vite.config.content.ts --watch\" \"vite build --config vite.config.background.ts --watch\" \"vite build --config vite.config.popup.ts --watch\"",
+    "dev:popup": "vite --config vite.config.popup.ts",
+    "build:content": "vite build --config vite.config.content.ts",
+    "build:background": "vite build --config vite.config.background.ts",
+    "build:popup": "vite build --config vite.config.popup.ts",
+    "build": "npm run clean && npm run build:content && npm run build:background && npm run build:popup",
+    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/chrome": "^0.0.320",
+    "@types/node": "^24.10.9",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.7.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.5.0",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.0",
+    "vite": "^7.1.0"
+  }
+}

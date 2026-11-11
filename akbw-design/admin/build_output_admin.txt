@@ -1,0 +1,23 @@
+
+> next-ts@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.4
+   - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 8.5s
+   Linting and checking validity of types ...
+Failed to compile.
+
+./src/features/categories/ui/index.tsx:27:27
+Type error: Cannot find module '@/shared/config/api/product/product.modal' or its corresponding type declarations.
+
+[0m [90m 25 |[39m [36mimport[39m [33mAddCategoryModal[39m [36mfrom[39m [32m'./add-category-modal'[39m[33m;[39m
+ [90m 26 |[39m [36mimport[39m { useCategories[33m,[39m useDeleteCategory } [36mfrom[39m [32m'../lib/hooks'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 27 |[39m [36mimport[39m { [33mICategory[39m } [36mfrom[39m [32m'@/shared/config/api/product/product.modal'[39m[33m;[39m
+ [90m    |[39m                           [31m[1m^[22m[39m
+ [90m 28 |[39m
+ [90m 29 |[39m
+ [90m 30 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mCategories[39m() {[0m
+Next.js build worker exited with code: 1 and signal: null

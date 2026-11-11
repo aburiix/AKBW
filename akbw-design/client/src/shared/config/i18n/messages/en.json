@@ -1,0 +1,662 @@
+{
+  "Navbar": {
+    "category": "Category",
+    "categories": "Categories",
+    "see_all": "See All",
+    "back": "Back",
+    "category_by_category": "All by Category",
+    "about": "About Us",
+    "contact": "Contact",
+    "search": "Search products"
+  },
+  "HomePage": {
+    "hero_title": "Our Brand — Style and Confidence",
+    "hero_subtitle": "We change the way you relate to clothing. Quality fashion on your side.",
+    "explore_product": "EXPLORE PRODUCT",
+    "akbw-title": "AKBW NEXT GENERATION ONLINE CLOTHING PLATFORM",
+    "akbw-subtitle-1": "Our goal is to become a reliable brand not only in Uzbekistan but also in the international market",
+    "akbw-subtitle-2": "We change the attitude towards clothing. Because clothes are not just a daily tool, they are your appearance and your self-confidence.",
+    "watch_products_btn": "View Products",
+    "customers": "Customers",
+    "products": "Products",
+    "favorite_customers": "Grateful Customers",
+    "styles": "Assortments",
+    "newest": "New Arrivals",
+    "most-sold": "Best Sellers",
+    "login_register_btn": "Login or Register",
+    "show_more": "Show More",
+    "show_less": "Show Less",
+    "seasons": "Seasons",
+    "no_seasons": "No seasons available yet",
+    "happy_customers_title": "Our Grateful Customers",
+    "not_enough_reviews": "Not enough reviews yet",
+    "anonymous_user": "Anonymous"
+  },
+  "Footer": {
+    "new_arrivals": "New Arrivals",
+    "best_sellers": "Best Sellers",
+    "all_products": "All Products",
+    "contact_us": "Contact Us",
+    "chat": "Chat",
+    "about_akbw": "About AKBW",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_use": "Terms of Use",
+    "shop": "Shop",
+    "support": "Support",
+    "company": "Company",
+    "copyright": "© 2026 YATT | STIR 51102076950099. All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "footer-desc": "We change the way people relate to clothing. Because clothing is not just an everyday necessity — it is your appearance and your confidence in yourself"
+  },
+  "Login": {
+    "phone_label": "Phone Number",
+    "verify": "Verifying...",
+    "sending": "Sending",
+    "phone_placeholder": "+998 90 123 45 67",
+    "phone_invalid": "Invalid phone number",
+    "not_registered_text": "If you are not registered",
+    "register_link": "Register here",
+    "send_code_btn": "Send Code",
+    "otp_placeholder": "00000",
+    "otp_invalid": "Code must consist of 5 digits",
+    "otp_sent_text": "Enter the 5-digit code sent to {phone}",
+    "resend_code_btn": "Resend Code",
+    "verify_btn": "Verify",
+    "change_phone_btn": "Change Number",
+    "login_title": "Login",
+    "verify_title": "Verification Code",
+    "continue_terms_text": "By continuing, I",
+    "terms_link_text": "agree to the AKBW data processing policy!"
+  },
+  "Register": {
+    "name_invalid": "Name must be at least 2 letters long",
+    "sending": "Sending",
+    "verifying": "Verifying",
+    "lastname_invalid": "Lastname must be at least 2 letters long",
+    "gender_invalid": "Gender must be at least 2 letters long",
+    "phone_invalid": "Invalid phone number",
+    "register_success": "Registration successful",
+    "otp_invalid": "Code must consist of 5 digits",
+    "register_btn": "Register",
+    "register_title": "Registration",
+    "verify_title": "Verification Code",
+    "continue_terms_text": "By continuing, I",
+    "terms_link_text": "agree to the AKBW data processing policy!",
+    "name_label": "Name",
+    "name_placeholder": "Abdulloh",
+    "lastname_label": "Lastname",
+    "lastname_placeholder": "Akbarov",
+    "gender_label": "Gender",
+    "gender_male": "Male",
+    "gender_female": "Female",
+    "phone_label": "Phone Number",
+    "phone_placeholder": "+998 90 123 45 67",
+    "send_code_btn": "Send Code",
+    "otp_placeholder": "00000",
+    "otp_sent_text": "Enter the 5-digit code sent to {phone}",
+    "resend_code_btn": "Resend Code",
+    "verify_btn": "Verify",
+    "edit_info_btn": "Edit Information",
+    "referral_bonus_applied": "Referral bonus applied",
+    "welcome_bonus_applied": "Welcome bonus applied"
+  },
+  "AboutPage": {
+    "hero_subtitle": "Simple, High-Quality, Endless Design",
+    "intro_title": "A modern platform founded in Uzbekistan",
+    "akbw_full_name": "AKBW (ABURIIX KRAFT BRAND WEAR)",
+    "intro_description_1": "— is a modern clothing platform founded in Uzbekistan, based on the ideas of simplicity, quality, and minimal design.",
+    "intro_description_2": "The main goal of the platform is to shape a unique style by offering comfortable, modern, and aesthetically clean clothes for daily life.",
+    "vision_label": "Vision",
+    "vision_title": "Choosing a style that stands the test of time",
+    "vision_description": "The platform's idea relies on long-term value design, calm colors, and quality materials rather than noisy trends and fast-changing fashion.",
+    "founder_name": "Akbarov Abdulloh",
+    "founder_role": "AKBW Founder",
+    "features": {
+      "minimalism_title": "Minimalism",
+      "minimalism_description": "Expression of character through clear shapes and calm colors without excess decoration.",
+      "quality_title": "Quality",
+      "quality_description": "Strict control of every product from selection to delivery to the customer.",
+      "future_title": "Future",
+      "future_description": "Sustainable development starting in Uzbekistan and striving for an international scale."
+    },
+    "growth_title": "Development and Goals",
+    "growth_description_1": "The platform was founded in Tashkent and operates within ABURIIX GROUP. The AKBW team pays special attention to design, quality control, and online sales processes.",
+    "growth_description_2": "AKBW initially aims to strengthen its position in the market by cooperating with quality manufacturers. In the future, the platform plans to create products with its own design, fully reflecting the AKBW philosophy.",
+    "values": {
+      "honesty_title": "Honesty",
+      "honesty_description": "Transparency and trust are our top priorities in all our processes.",
+      "online_exp_title": "Online Experience",
+      "online_exp_description": "An open, clear, and convenient shopping experience in the digital environment."
+    },
+    "bottom_quote": "AKBW is not just design, it's a way of thinking.",
+    "bottom_description": "Express yourself through clear shapes and calm colors without excess decoration.",
+    "home_link": "Home Page",
+    "contact_link": "Contact"
+  },
+  "ContactPage": {
+    "title": "Contact",
+    "subtitle": "Do you have questions or want to cooperate? Get in touch with us.",
+    "contact_methods": {
+      "phone_title": "Phone",
+      "phone_value": "+998 90 566 11 07",
+      "phone_description": "Every day from 09:00 to 18:00",
+      "email_title": "Email",
+      "email_value": "akbw.uz@gmail.com",
+      "email_description": "Write to us anytime",
+      "address_title": "Address",
+      "address_value": "Tashkent city, Shaykhantakhur district",
+      "address_description": "Main office location"
+    },
+    "socials_title": "Social Networks",
+    "socials_description": "Follow us to stay informed about news, promotions, and new collections.",
+    "working_hours_title": "Working Hours",
+    "working_days": "Monday - Saturday",
+    "working_time": "09:00 - 18:00",
+    "weekend": "Sunday - Day off",
+    "faq_title": "Frequently Asked Questions",
+    "faq": {
+      "delivery_question": "How long does delivery take?",
+      "delivery_answer": "International delivery (Stage 1) and domestic delivery (Stage 2) together can take an average of 5-15 days.",
+      "payment_question": "What are the payment methods?",
+      "payment_answer": "We accept payments through Click, Payme, Uzum, and Paynet.",
+      "partnership_question": "Who should I contact for partnership?",
+      "partnership_answer": "For commercial offers, you can write to the email address {email}.",
+      "why_first_pay": "Why is money taken in advance?",
+      "why_first_pay_answer": "This is necessary to start the process of preparing and delivering the product specifically for you. Also, this allows us to confirm your order and provide faster service."
+    },
+    "terms_link": "Read the terms and conditions of use"
+  },
+  "Cart": {
+    "breadcrumb_home": "Home",
+    "quantity": "quantity",
+    "order_items": "Order Items",
+    "breadcrumb_cart": "Cart",
+    "title": "Your cart",
+    "loading": "Loading...",
+    "empty_cart_text": "Your cart is empty.",
+    "view_products_btn": "View Products",
+    "size": "Size",
+    "color": "Color",
+    "order_summary": "Order Summary",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "delivery_fee": "Delivery",
+    "total": "Total",
+    "promo_placeholder": "Enter promo code",
+    "apply_btn": "Apply",
+    "checkout_btn": "Proceed to Checkout",
+    "active_orders": "Active Orders",
+    "order_id": "Order ID",
+    "status_review": "Reviewing...",
+    "status_paid": "Paid",
+    "status_approved": "Approved",
+    "status_delivering": "Delivering",
+    "status_cancelled": "Cancelled",
+    "order_now_btn": "Order Now",
+    "track_order_btn": "Track Order",
+    "watch_progress_btn": "Watch Progress",
+    "shipments_progress_title": "Shipments Progress",
+    "shipments_progress_desc": "Track the status of your shipments",
+    "modal_finalize_title": "Finalize Order",
+    "modal_finalize_desc": "Enter the delivery address and select a payment method",
+    "delivery_address": "Delivery Address",
+    "region": "Region",
+    "district": "District",
+    "select_region": "Select Region",
+    "select_district": "Select District",
+    "detailed_address_label": "Full Address (Street, House, Apartment)",
+    "detailed_address_placeholder": "Example: Amir Temur street, 108",
+    "payment_method": "Payment Method",
+    "total_to_pay": "Total to pay",
+    "pay_now_btn": "Pay Now",
+    "order_received_title": "Order Received!",
+    "order_received_desc": "Payment successful. Your order is on its way.",
+    "close_btn": "Close",
+    "china": "China (Warehouse)",
+    "uzbekistan": "Uzbekistan (Customs)",
+    "delivering": "Delivering (BTS)",
+    "delivered": "Delivered",
+    "trackingActive": "Tracking Active",
+    "onTheWay": "On the way",
+    "arrived": "Arrived",
+    "available_bonus": "Available Bonus",
+    "bonus_placeholder": "Bonus amount",
+    "apply_bonus": "Apply bonus",
+    "applying": "Applying",
+    "bonus_note": "Maximum 50% bonus can be applied",
+    "bonus_available": "You have bonus amount",
+    "bonus_suggestion": "Use your bonus to save money on your next order",
+    "invalid_bonus_amount": "Wrong bonus amount",
+    "insufficient_bonus": "There is no enough bonus amount",
+    "bonus_will_be_applied": "{amount} sum bonus can be applied in your orders",
+    "bonus_apply_error": "Error while applying bonus",
+    "promo_code_removed": "Promo-code removed",
+    "remove_promo_btn": "Cancel",
+    "promo_code_required": "Please enter a promo code first",
+    "promo_code_already_applied": "Please remove the applied promo code first",
+    "promo_code_success": "Promo code applied successfully",
+    "promo_code_discount_desc": "You have been granted a {discount}% discount.",
+    "promo_code_invalid": "Invalid promo code",
+    "promo_code_not_found_or_expired": "Coupon not found or expired.",
+    "item_removed_success": "{name} removed from cart",
+    "item_removed_desc": "Your cart has been updated.",
+    "order_submitted": "Your order has been submitted for review!",
+    "order_submitted_desc": "Our operators will contact you shortly.",
+    "order_submit_error": "An error occurred while placing the order",
+    "address_required": "Please fill in all address fields",
+    "payment_link_error": "Error getting payment link",
+    "payment_error": "An error occurred during payment",
+    "payment_loading": "Payment in progress...",
+    "payment_success": "Payment completed successfully! Thank you.",
+    "bts_getting_error": "Error getting BTS data",
+    "bts_cities_getting_error": "Error getting BTS cities",
+    "bts_try_again_error": "Error getting BTS data, please try again later!",
+    "choose_delivery_branch": "Choose delivery branch",
+    "delivery_branch": "Delivery branch",
+    "select_branch": "Select branch",
+    "bts_branches_getting_error": "Error getting BTS branches, please try again later!",
+    "branch_selection_required": "Delivery branch selection is required",
+    "rest_will_be_paid_at_delivery": "The delivery price will be paid upon delivery",
+    "login_required": "Please login first",
+    "open_in_map": "Open in map"
+  },
+  "FavoritesPage": {
+    "title": "Favorites",
+    "description": "List of products you liked. We saved them for you to buy later.",
+    "emptyTitle": "Favorites list is empty",
+    "emptyDescription": "You haven't added any products to your favorites list yet.",
+    "productCount": "{count} products",
+    "viewProducts": "View Products"
+  },
+  "FilterPage": {
+    "breadcrumbs": "Home / Filters",
+    "filters": "Filters",
+    "price": "Price",
+    "min": "Min",
+    "max": "Max",
+    "colors": "Colors",
+    "sizes": "Sizes",
+    "applyFilters": "Apply Filters",
+    "sort": "Sort",
+    "sortNewest": "Newest",
+    "sortCheapest": "Cheapest",
+    "sortMostExpensive": "Most Expensive",
+    "allProducts": "All Products",
+    "searchResult": "Search results for \"{query}\"",
+    "loadingProducts": "Loading products...",
+    "noProducts": "No products found for the selected filters.",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "PrivacyPage": {
+    "hero": {
+      "title": "Privacy Policy",
+      "description": "Explains how the AKBW platform collects, stores, and uses users' personal data"
+    },
+    "intro": "By using the platform, you agree to the terms of this policy.",
+    "sections": [
+      {
+        "title": "1. What information we collect",
+        "content": "We may collect the following information:",
+        "list": [
+          "First and last name",
+          "Phone number",
+          "Email address",
+          "Delivery address",
+          "Order history",
+          "Technical payment information (card details are not stored)"
+        ]
+      },
+      {
+        "title": "2. How we use information",
+        "content": "The collected information is used for the following purposes:",
+        "list": [
+          "Receiving and delivering orders",
+          "Contacting the user",
+          "Processing payments",
+          "Improving service quality",
+          "Complying with legal requirements"
+        ]
+      },
+      {
+        "title": "3. Payment Information",
+        "content": "Payments are made through third-party payment systems (Click, Payme, Uzcard, Humo, etc.).",
+        "note": "The platform does not store or see bank card details."
+      },
+      {
+        "title": "4. Disclosure of Information to Third Parties",
+        "content": "We will not:",
+        "list": [
+          "sell",
+          "rent",
+          "distribute without permission"
+        ],
+        "note": "user data. It may only be provided in the following cases:",
+        "subList": [
+          "by law requirement (court or state authorities)",
+          "delivery service (only for address and contact)"
+        ]
+      },
+      {
+        "title": "5. Data Security",
+        "content": "To protect user data, the platform uses:",
+        "list": [
+          "modern technical tools",
+          "secure servers",
+          "password encryption (hash)"
+        ],
+        "note": "methods."
+      },
+      {
+        "title": "6. Cookies",
+        "content": "The platform may use cookies to improve user experience.",
+        "note": "Users can disable cookies in their browser settings if they wish."
+      },
+      {
+        "title": "7. User Rights",
+        "content": "You have the right to:",
+        "list": [
+          "view your data",
+          "edit it",
+          "request deletion"
+        ],
+        "note": "."
+      },
+      {
+        "title": "8. Policy Changes",
+        "content": "The platform may update this Privacy Policy from time to time.",
+        "note": "The updated version becomes effective from the moment it is posted on the site."
+      }
+    ],
+    "contact": {
+      "title": "9. Contact",
+      "description": "If you have questions, please contact us:",
+      "email": "akbw.uz@gmail.com",
+      "emailLabel": "Email",
+      "phoneLabel": "Phone Number",
+      "phone": "+998 90 566 11 07",
+      "addressLabel": "Address",
+      "address": "Tashkent city, Shaykhontokhur district"
+    },
+    "footerNote": "Last update: February 1, 2026"
+  },
+  "ProductPage": {
+    "breadcrumbs": [
+      "Home",
+      "Products"
+    ],
+    "rating": {
+      "notRated": "Not rated yet",
+      "reviews": "Reviews",
+      "leaveReview": "Leave a review",
+      "giveRating": "Rate this product",
+      "submit": "Submit",
+      "reviewPlaceholder": "Write your thoughts about this product...",
+      "reviewChars": "{count}/500",
+      "deleteConfirmTitle": "Delete Review",
+      "deleteConfirmDesc": "Are you sure you want to delete this review?",
+      "noReviews": {
+        "title": "No reviews yet",
+        "desc": "Be the first to share your thoughts!"
+      },
+      "loadMore": "Load More",
+      "loadingReviews": "Loading reviews..."
+    },
+    "price": "{price} UZS",
+    "selectColor": "Select Color",
+    "selectSize": "Select Size",
+    "quantity": {
+      "decrease": "Decrease",
+      "increase": "Increase"
+    },
+    "addToCart": "Add to Cart",
+    "tabs": {
+      "reviews": "Rating & Reviews",
+      "faqs": "FAQs"
+    },
+    "faqs": [
+      {
+        "q": "How long does delivery take?",
+        "a": "Standard delivery in Uzbekistan takes 3-5 business days, international delivery takes 7-14 days."
+      },
+      {
+        "q": "What is the return policy?",
+        "a": "We offer a 30-day money-back guarantee for all unused and unwashed items."
+      },
+      {
+        "q": "How to choose the correct size?",
+        "a": "Please refer to the size guide located below the size selection."
+      }
+    ],
+    "relatedProductsTitle": "You May Also Like!",
+    "error_getting_reviews": "Failed to load reviews",
+    "error_submitting_review": "Failed to submit review. Please try again.",
+    "error_deleting_review": "Failed to delete review",
+    "review_fields_required": "Please fill in all fields and select a rating",
+    "review_success": "Review submitted successfully!",
+    "review_deleted_success": "Review deleted successfully!",
+    "add_to_cart_success": "{name} added to cart"
+  },
+  "SearchPage": {
+    "placeholder": "Search...",
+    "recentOrHint": "Type to see search results...",
+    "backButtonAria": "Back",
+    "searchButtonAria": "Search"
+  },
+  "TermsAndConditions": {
+    "hero": {
+      "title": "Terms and Conditions",
+      "subtitle": "Rules and conditions for using the AKBW platform"
+    },
+    "introduction": "By using the platform, you agree to these terms and are obligated to follow them.",
+    "sections": [
+      {
+        "title": "1. General Provisions",
+        "list": [
+          "The platform provides online ordering and delivery services for clothing products.",
+          "The platform operates in accordance with the legislation of the Republic of Uzbekistan.",
+          "Ordering through the platform is only permitted for persons over 18 years of age."
+        ]
+      },
+      {
+        "title": "2. Ordering Procedure",
+        "list": [
+          "The user selects a product and places an order.",
+          "Information entered during ordering (name, phone, address) must be correct and accurate.",
+          "The platform is not responsible for orders not delivered due to incorrectly entered information."
+        ]
+      },
+      {
+        "title": "3. Payment Terms",
+        "content": "Payments are made through the following methods:",
+        "list": [
+          "Click",
+          "Payme",
+          "Uzcard",
+          "Humo"
+        ],
+        "notes": [
+          "Payments are processed through secure third-party payment systems.",
+          "The platform does not store or process bank card details."
+        ]
+      },
+      {
+        "title": "4. Delivery Terms",
+        "isImportant": true,
+        "content": "Products are delivered through the BTS postal service, and delivery consists of two stages:",
+        "stages": [
+          {
+            "title": "Stage 1:",
+            "items": [
+              "The product is delivered from abroad to Uzbekistan (Tashkent city).",
+              "This stage may take more time.",
+              "This time depends on customs, logistics, and external factors."
+            ]
+          },
+          {
+            "title": "Stage 2:",
+            "items": [
+              "The product is sent from Tashkent to the address specified by the user via BTS."
+            ]
+          }
+        ],
+        "warning": "The user understands and agrees that the delivery time mainly depends on Stage 1."
+      },
+      {
+        "title": "5. Delivery Time",
+        "list": [
+          "Delivery time is estimated."
+        ],
+        "content": "Delays may occur due to:",
+        "subList": [
+          "customs inspections",
+          "weather",
+          "transportation issues"
+        ],
+        "note": ".",
+        "warning": "The platform is not responsible for these cases."
+      },
+      {
+        "title": "6. Returns and Refunds",
+        "content": "If the product:",
+        "list": [
+          "was sent incorrectly",
+          "arrived with a serious defect"
+        ],
+        "note": "the user must apply within 3 days of receiving the product.",
+        "additionalNotes": [
+          "Return issues due to size or personal taste are considered individually.",
+          "Delivered and used products are not returnable."
+        ]
+      },
+      {
+        "title": "7. Limitation of Liability",
+        "list": [
+          "The platform is not fully responsible for the activities of third-party services (BTS, payment systems).",
+          "The platform is not responsible for damages caused by incorrect actions of the user."
+        ]
+      },
+      {
+        "title": "8. Intellectual Property",
+        "list": [
+          "All texts, images, and design elements on the site belong to the Platform.",
+          "Unauthorized copying or use of them is prohibited."
+        ]
+      },
+      {
+        "title": "9. Changes",
+        "content": "The platform has the right to change these Terms of Use at any time.",
+        "note": "Updated terms become effective from the day they are posted on the site."
+      }
+    ],
+    "contact": {
+      "title": "10. Contact",
+      "description": "For any questions, you can contact us:",
+      "phoneLabel": "Phone",
+      "emailLabel": "Email",
+      "phone": "+998 90 566 11 07",
+      "email": "akbw.uz@gmail.com"
+    },
+    "footerNote": "Last update: February 1, 2026"
+  },
+  "Profile": {
+    "guest_mode": "Guest Mode",
+    "guest_description": "Please log in to use all features",
+    "login": "Login",
+    "register": "Register",
+    "useful_links": "Useful Links",
+    "about_us": "About Us",
+    "contact": "Contact",
+    "security_note": "Your data is kept secure and will not be shared with third parties",
+    "logout": "Log Out",
+    "user_profile_aria": "User Profile",
+    "tabs": {
+      "menu": "Menu",
+      "favorites": "Favorites",
+      "notifications": "Notifications",
+      "reviews": "Reviews"
+    },
+    "back_to_menu": "Back to Menu",
+    "save_btn": "Save",
+    "phone_readonly_note": "Phone number cannot be changed",
+    "chat_placeholder": "Write a message...",
+    "inquiry_empty_title": "Ask a question about a product",
+    "inquiry_empty_desc": "Upload a photo and write a message",
+    "inquiry_placeholder": "Do you have this product?",
+    "favorites_empty": "No favorite products",
+    "added_to_cart": "{name} added to cart",
+    "to_cart": "To Cart",
+    "notifications_empty_title": "No notifications found",
+    "notifications_empty_desc": "You don't have any new notifications at the moment.",
+    "notification_label": "Notification",
+    "close": "Close",
+    "reviews_empty": "No reviews",
+    "order_label": "Order",
+    "menu_items": {
+      "edit_profile": {
+        "title": "Edit Profile",
+        "desc": "Change personal information"
+      },
+      "support": {
+        "title": "Support",
+        "desc": "Contact administrator"
+      },
+      "inquiry": {
+        "title": "Product Inquiry",
+        "desc": "Send a request about a product"
+      },
+      "about": {
+        "title": "About Us",
+        "desc": "Company information"
+      },
+      "contact_item": {
+        "title": "Contact",
+        "desc": "Contact details"
+      }
+    },
+    "messages": {
+      "save_success": "Profile saved successfully",
+      "save_error": "Error saving profile",
+      "send_error": "Error sending message",
+      "image_upload_success": "Image uploaded successfully",
+      "image_upload_error": "Error uploading image"
+    },
+    "validation": {
+      "name_min": "Name must be at least 2 characters long",
+      "lastname_min": "Last name must be at least 2 characters long",
+      "gender_min": "Gender must be at least 2 characters long"
+    }
+  },
+  "NewArrivalsPage": {
+    "title": "New Arrivals",
+    "description": "Our newest products added in the last 30 days",
+    "view_all_products": "View all products",
+    "view_best_sellers": "View best sellers",
+    "latest_arrivals": "Latest arrivals",
+    "updated_daily": "Updated daily",
+    "no_new_arrivals": "No new products yet",
+    "check_back_soon": "New products will be added soon",
+    "browse_all_products": "Browse all products"
+  },
+  "BestSellersPage": {
+    "title": "Best Sellers",
+    "description": "Our most popular and best-selling products",
+    "view_all_products": "View all products",
+    "view_new_arrivals": "View new arrivals",
+    "most_popular": "Most popular products",
+    "based_on_sales": "Based on sales",
+    "no_best_sellers": "No best-selling products yet",
+    "check_back_soon": "New products will be added soon",
+    "browse_all_products": "Browse all products"
+  },
+  "Common": {
+    "error": "Error getting data!"
+  },
+  "Bonus": {
+    "title": "My Bonuses",
+    "welcome_bonus": "Welcome bonus",
+    "referral_bonus": "Referral bonus",
+    "referrer_bonus": "Referrer bonus"
+  }
+}

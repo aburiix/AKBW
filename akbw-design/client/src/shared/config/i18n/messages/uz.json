@@ -1,0 +1,700 @@
+{
+  "Navbar": {
+    "category": "Kategoriya",
+    "categories": "Kategoriyalar",
+    "see_all": "Barchasini ko'rish",
+    "back": "Ortga",
+    "category_by_category": "Kategoriya bo'yicha barchasi",
+    "about": "Biz haqimizda",
+    "contact": "Bog'lanish",
+    "search": "Maxsulotlarni qidiring",
+    "category_error": "Kategoriyalarni yuklab olishda xatolik"
+  },
+  "HomePage": {
+    "hero_title": "Bizning Brendimiz — Uslub va Ishonch",
+    "hero_subtitle": "Kiyimga bo'lgan munosabatni o'zgartiramiz. Sifatli kiyim sizning tarafingizdir.",
+    "explore_product": "MAXSULOTLARNI KO'RING",    "akbw-title": "AKBW YANGI AVLOD ONLINE KIYIM PLATFORMASI",
+    "akbw-subtitle-1": "Maqsadimiz nafaqat O‘zbekistonda, balki xalqaro bozorda ham ishonchli brendga aylanish",
+    "akbw-subtitle-2": "Biz kiyimga bo‘lgan munosabatni o‘zgartiramiz. Chunki kiyim — shunchaki kundalik vosita emas, u sizning tashqi ko‘rinishingiz va o‘zingizga bo‘lgan ishonchingizdir.",
+    "watch_products_btn": "Maxsulotlarni ko'rish",
+    "customers": "Mijozlar",
+    "products": "Maxsulotlar",
+    "favorite_customers": "Minnatdor Mijozlar",
+    "styles": "Asartimentlar",
+    "newest": "Yangi Qo'shilganlar",
+    "most-sold": "Eng ko'p sotilayotganlar",
+    "login_register_btn": "Kirish yoki Ro'yhatdan o'tish",
+    "show_more": "Ko'proq ko'rish",
+    "show_less": "Kamroq ko'rish",
+    "seasons": "Fasllar",
+    "no_seasons": "Hozircha fasllar mavjud emas",
+    "happy_customers_title": "Bizning minnatdor mijozlarimiz",
+    "not_enough_reviews": "Hozircha sharhlar yetarli emas",
+    "anonymous_user": "Anonim"
+  },
+  "Footer": {
+    "new_arrivals": "Yangi Qo'shilganlar",
+    "best_sellers": "Eng ko'p sotilayotganlar",
+    "all_products": "Barcha maxsulotlar",
+    "contact_us": "Biz bilan bog'lanish",
+    "chat": "Chat",
+    "about_akbw": "AKBW haqida",
+    "privacy_policy": "Shaxsiy ma'lumotlarni himoya qilish",
+    "terms_of_use": "Foydalanish shartlari",
+    "shop": "Do'kon",
+    "support": "Qo'llab-quvvatlash",
+    "company": "Kompaniya",
+    "copyright": "© 2026 YATT | STIR 51102076950099. Barcha huquqlar himoyalangan.",
+    "privacy": "Shaxsiy",
+    "terms": "Shartlar",
+    "footer-desc": "Biz kiyimga bo‘lgan munosabatni o‘zgartiramiz. Chunki kiyim — shunchaki kundalik vosita emas, u sizning tashqi ko‘rinishingiz va o‘zingizga bo‘lgan ishonchingizdir."
+  },
+  "Login": {
+    "phone_label": "Telefon raqami",
+    "verify": "Tasdiqlanmoqda",
+    "sending": "Jo'natilmoqda",
+    "verifying": "Tasdiqlanmoqda",
+    "phone_placeholder": "+998 90 123 45 67",
+    "phone_invalid": "Telefon raqami noto'g'ri",
+    "not_registered_text": "Agar ro'yhatdan o'tmagan bo'lsangiz",
+    "register_link": "Ro'yhatdan o'ting",
+    "send_code_btn": "Kod yuborish",
+    "otp_placeholder": "00000",
+    "otp_invalid": "Kod 5 ta raqamdan iborat bo'lishi kerak",
+    "otp_sent_text": "{phone} raqamiga yuborilgan 5 xonali kodni kiriting",
+    "resend_code_btn": "Qayta kod yuborish",
+    "verify_btn": "Tasdiqlash",
+    "change_phone_btn": "Raqamni o'zgartirish",
+    "login_title": "Kirish",
+    "verify_title": "Tasdiqlash kodi",
+    "continue_terms_text": "Davom etgan holda men",
+    "terms_link_text": "AKBW ma'lumotlarni qayta ishlash siyosatiga rozilik bildiraman!",
+    "user_not_found": "Foydalanuvchi topilmadi",
+    "please_register": "Iltimos, avval ro'yhatdan o'ting",
+    "login_error": "Kirishda xatolik yuz berdi",
+    "not_registered_error": "Siz ro'yhatdan o'tmagansiz iltimos birinchi bo'lib ro'yhatdan o'ting",
+    "otp_length_error": "Kod 5 ta raqamdan iborat bo'lishi kerak"
+  },
+  "Register": {
+    "name_invalid": "Ism kamida 2 ta harfdan iborat bo'lishi kerak",
+    "sending": "Jo'natilmoqda",
+    "verifying":"Tasdiqlanmoqda",
+    "lastname_invalid": "Familiya kamida 2 ta harfdan iborat bo'lishi kerak",
+    "gender_invalid": "Jins kamida 2 ta harfdan iborat bo'lishi kerak",
+    "phone_invalid": "Telefon raqami noto'g'ri",
+    "register_success": "Ro'yhatdan o'tish muvaffaqiyatli bajarildi",
+    "otp_invalid": "Kod 5 ta raqamdan iborat bo'lishi kerak",
+    "register_btn": "Ro'yhatdan o'tish",
+    "register_title": "Ro'yhatdan o'tish",
+    "verify_title": "Tasdiqlash kodi",
+    "continue_terms_text": "Davom etgan holda men",
+    "terms_link_text": "AKBW ma'lumotlarni qayta ishlash siyosatiga rozilik bildiraman!",
+    "name_label": "Ism",
+    "name_placeholder": "Abdullox",
+    "lastname_label": "Familiya",
+    "lastname_placeholder": "Akbarov",
+    "gender_label": "Jins",
+    "gender_male": "Erkak",
+    "gender_female": "Ayol",
+    "phone_label": "Telefon raqami",
+    "phone_placeholder": "+998 90 123 45 67",
+    "send_code_btn": "Kod yuborish",
+    "otp_placeholder": "00000",
+    "otp_sent_text": "{phone} raqamiga yuborilgan 5 xonali kodni kiriting",
+    "resend_code_btn": "Qayta kod yuborish",
+    "verify_btn": "Tasdiqlash",
+    "edit_info_btn": "Ma'lumotlarni tahrirlash",
+    "referral_bonus_applied": "Referral bonus qo'shildi",
+    "welcome_bonus_applied": "Welcome bonus qo'shildi",
+    "error": "Ro'yhatdan o'tishda xatolik yuz berdi"
+  },
+  "AboutPage": {
+    "hero_subtitle": "Oddiy, Sifatli Cheksiz Dizayn",
+    "intro_title": "O'zbekistonda tashkil topgan zamonaviy platforma",
+    "akbw_full_name": "AKBW (ABURIIX KRAFT BRAND WEAR)",
+    "intro_description_1": "— O‘zbekistonda tashkil topgan zamonaviy kiyim platformasi bo‘lib, soddalik, sifat va minimal dizayn g‘oyalariga asoslangan.",
+    "intro_description_2": "Platformaning asosiy maqsadi kundalik hayot uchun qulay, zamonaviy va estetik jihatdan toza kiyimlarni taklif qilish orqali o‘ziga xos uslubni shakllantirishdir.",
+    "vision_label": "Vizyon",
+    "vision_title": "Vaqt sinovidan o'tadigan uslubni tanlash",
+    "vision_description": "Platforma g‘oyasi shovqinli trendlar va tez o‘zgaruvchan modadan ko‘ra, uzoq muddatli qiymatga ega bo‘lgan dizayn, sokin ranglar va sifatli materiallarga tayanadi.",
+    "founder_name": "Akbarov Abdulloh",
+    "founder_role": "AKBW Asoschisi",
+    "features": {
+      "minimalism_title": "Minimalizm",
+      "minimalism_description": "Ortiqcha bezaklarsiz, tushunarli shakllar va sokin ranglar orqali xarakter ifodasi.",
+      "quality_title": "Sifat",
+      "quality_description": "Har bir mahsulot tanlashdan tortib mijozga yetib borguncha qat'iy nazorat.",
+      "future_title": "Kelajak",
+      "future_description": "O'zbekistonda boshlanib, xalqaro miqyosga intilayotgan barqaror rivojlanish."
+    },
+    "growth_title": "Rivojlanish va Maqsadlar",
+    "growth_description_1": "Platforma Toshkent shahrida tashkil topgan bo‘lib, faoliyati ABURIIX GROUP tarkibida olib boriladi. AKBW jamoasi dizayn, sifat nazorati va onlayn savdo jarayonlariga alohida e’tibor qaratadi.",
+    "growth_description_2": "AKBW dastlab sifatli ishlab chiqaruvchilar bilan hamkorlik qilish orqali bozorda o‘z o‘rnini mustahkamlashni maqsad qilgan. Kelajakda esa platforma o‘z dizayniga ega bo‘lgan, AKBW falsafasini to‘liq aks ettiruvchi mahsulotlarni yaratishni rejalashtiradi.",
+    "values": {
+      "honesty_title": "Halollik",
+      "honesty_description": "Bizning barcha jarayonlarimizda shaffoflik va ishonch birinchi o'rinda.",
+      "online_exp_title": "Onlayn Tajriba",
+      "online_exp_description": "Raqamli muhitda ochiq, tushunarli va qulay xarid tajribasi."
+    },
+    "bottom_quote": "AKBW — bu faqat dizayn emas, balki fikrlash uslubidir.",
+    "bottom_description": "Ortiqcha bezaklarsiz, tushunarli shakllar va sokin ranglar orqali o'zingizni namoyon qiling.",
+    "home_link": "Bosh sahifa",
+    "contact_link": "Bog'lanish"
+  },
+  "ContactPage": {
+    "title": "Bog'lanish",
+    "subtitle": "Savollaringiz bormi yoki hamkorlik qilmoqchimisiz? Biz bilan aloqaga chiqing.",
+    "contact_methods": {
+      "phone_title": "Telefon",
+      "phone_value": "+998 90 566 11 07",
+      "phone_description": "Har kuni 09:00 dan 18:00 gacha",
+      "email_title": "Email",
+      "email_value": "akbw.uz@gmail.com",
+      "email_description": "Bizga istalgan vaqtda yozing",
+      "address_title": "Manzil",
+      "address_value": "Toshkent sh., Shayxontoxur tumani",
+      "address_description": "Bosh ofis joylashuvi"
+    },
+    "socials_title": "Ijtimoiy tarmoqlar",
+    "socials_description": "Yangiliklar, aksiyalar va yangi to'plamlardan xabardor bo'lish uchun bizni kuzatib boring.",
+    "working_hours_title": "Ish vaqti",
+    "working_days": "Dushanba - Shanba",
+    "working_time": "09:00 - 18:00",
+    "weekend": "Yakshanba - Dam olish kuni",
+    "faq_title": "Ko'p beriladigan savollar",
+    "faq": {
+      "delivery_question": "Yetkazib berish qancha vaqt oladi?",
+      "delivery_answer": "Xalqaro yetkazib berish (1-bosqich) va ichki yetkazib berish (2-bosqich) birgalikda o'rtacha 5-15 kun davom etishi mumkin.",
+      "payment_question": "To'lov turlari qanday?",
+      "payment_answer": "Biz Click, Payme, Uzum va Paynet orqali to'lovlarni qabul qilamiz.",
+      "partnership_question": "Hamkorlik bo'yicha kimga murojaat qilish kerak?",
+      "partnership_answer": "Tijoriy takliflar uchun {email} elektron pochta manziliga yozishingiz mumkin.",
+      "why_first_pay": "Nega oldindan pul olinadi",
+      "why_first_pay_answer": "Bu mahsulotni siz uchun maxsus tayyorlash va yetkazib berish jarayonlarini boshlash uchun zarurdir. Shuningdek, bu bizga sizning buyurtmangizni tasdiqlash va tezroq xizmat ko'rsatish imkonini beradi."
+    },
+    "terms_link": "Foydalanish shartlari va qoidalari bilan tanishib chiqing"
+  },
+  "Cart": {
+    "breadcrumb_home": "Bosh sahifa",
+    "quantity": "soni",
+    "order_items": "Buyurtma mahsulotlari",
+    "breadcrumb_cart": "Savat",
+    "title": "Sizning savatingiz",
+    "loading": "Yuklanmoqda...",
+    "empty_cart_text": "Sizning savatingiz bo'sh.",
+    "view_products_btn": "Mahsulotlarni ko'rish",
+    "size": "O'lcham",
+    "color": "Rag",
+    "order_summary": "Buyurtma xulosasi",
+    "subtotal": "Jami",
+    "discount": "Chegirma",
+    "delivery_fee": "Yetkazib berish",
+    "total": "Umumiy",
+    "promo_placeholder": "Promo kod kiriting",
+    "apply_btn": "Qo'llash",
+    "checkout_btn": "Tekshiruvga yuborish",
+    "active_orders": "Faol buyurtmalar",
+    "order_id": "Buyurtma ID",
+    "status_review": "Tekshirilmoqda...",
+    "status_paid": "To'langan",
+    "status_approved": "Tasdiqlangan",
+    "status_delivering": "Yetkazilmoqda",
+    "status_cancelled": "Bekor qilingan",
+    "order_now_btn": "Buyurtma qilish",
+    "track_order_btn": "Buyurtmani kuzatish",
+    "watch_progress_btn": "Jarayonni kuzatish",
+    "shipments_progress_title": "Yuklar Jarayoni",
+    "shipments_progress_desc": "Yuklaringiz holatini kuzating",
+    "modal_finalize_title": "Buyurtmani yakunlash",
+    "modal_finalize_desc": "Yetkazib berish manzilini kiriting va to'lov usulini tanlang",
+    "delivery_address": "Yetkazib berish manzili",
+    "region": "Viloyat",
+    "district": "Tuman",
+    "select_region": "Viloyatni tanlang",
+    "select_district": "Tumanni tanlang",
+    "detailed_address_label": "To'liq manzil (Ko'cha, Uy, Kvartira)",
+    "detailed_address_placeholder": "Masalan: Amir Temur ko'chasi, 108",
+    "payment_method": "To'lov usuli",
+    "total_to_pay": "To'lanadigan summa",
+    "pay_now_btn": "Hozir to'lash",
+    "order_received_title": "Buyurtma qabul qilindi!",
+    "order_received_desc": "To'lov muvaffaqiyatli amalga oshirildi. Buyurtmangiz yo'lga chiqdi.",
+    "close_btn": "Yopish",
+    "china": "Xitoy (Ombor)",
+    "uzbekistan": "O'zbekiston (Bojxona)",
+    "delivering": "Yetkazilmoqda (BTS)",
+    "delivered": "Yetkazildi",
+    "trackingActive": "Tracking Active",
+    "onTheWay": "Yo‘lda",
+    "arrived": "Yetib keldi",
+    "available_bonus": "Mavjud Bonus",
+    "bonus_placeholder": "Bonus miqdori",
+    "apply_bonus": "Bonusni Qo'llash",
+    "applying": "Qo'llanmoqda...",
+    "bonus_note": "Maksimum 50% gacha bonus qo'llash mumkin",
+    "bonus_available": "Sizda bonus mablag'i mavjud!",
+    "bonus_suggestion": "Xaridingizda bonuslaringizdan foydalaning",
+    "invalid_bonus_amount": "Noto'g'ri bonus miqdori",
+    "insufficient_bonus": "Yetarli bonus mablag'i yo'q",
+    "bonus_will_be_applied": "{amount} so'm bonus xaridingizda qo'llaniladi",
+    "bonus_apply_error": "Bonusni qo'llashda xatolik",
+    "promo_code_removed": "Promo-kod olib tashlandi",
+    "remove_promo_btn": "Bekor qilish",
+    "promo_code_required": "Iltimos, avval promo-kodni kiriting",
+    "promo_code_already_applied": "Iltimos, avval qo'llanilgan promo-kodni olib tashlang",
+    "promo_code_success": "Promo-kod muvaffaqiyatli qo'llanildi",
+    "promo_code_discount_desc": "Sizga {discount}% chegirma berildi.",
+    "promo_code_invalid": "Noto'g'ri promo-kod",
+    "promo_code_not_found_or_expired": "Kupon topilmadi yoki muddati tugagan.",
+    "item_removed_success": "{name} savatdan olib tashlandi",
+    "item_removed_desc": "Sizning savatingiz yangilandi.",
+    "order_submitted": "Buyurtmangiz yaratildi yuborildi!",
+    "order_submitted_desc": "Tez orada operatorlarimiz siz bilan bog'lanishadi.",
+    "order_submit_error": "Buyurtma berishda xatolik yuz berdi",
+    "address_required": "Iltimos, barcha manzil maydonlarini to'ldiring",
+    "payment_link_error": "To'lov havolasini olishda xatolik yuz berdi",
+    "payment_error": "To'lovda xatolik yuz berdi",
+    "payment_loading": "To'lov amalga oshirilmoqda...",
+    "payment_success": "To'lov muvaffaqiyatli yakunlandi! Rahmat.",
+    "bts_getting_error": "BTS ma'lumotlarini olishda xatolik yuz berdi",
+    "bts_cities_getting_error": "BTS shaharlarini olishda xatolik yuz berdi",
+    "bts_try_again_error": "Btsdan malumotlarni olishda xatolik yuzaga keldi iltimos keyinroq urunib ko'ring!",
+    "choose_delivery_branch": "Yetkazib berish filialini tanlang",
+    "delivery_branch": "Yetkazib berish filiali",
+    "select_branch": "Filialni tanlang",
+    "bts_branches_getting_error": "BTS filiallarini olishda xatolik yuz berdi, iltimos keyinroq urunib ko'ring!",
+    "branch_selection_required": "Yetkazib berish filialini tanlash majburiydir",
+    "rest_will_be_paid_at_delivery": "Yetkazib berish uchun summa bts orqali maxsulot yetkazib berilgandan keyin to'lanadi",
+    "login_required": "Iltimos, avval tizimga kiring",
+    "open_in_map": "Xaritada ochish"
+  },
+  "FavoritesPage": {
+    "title": "Sevimlilar",
+    "description": "Siz yoqtirgan mahsulotlar ro'yxati. Ularni keyinroq sotib olish uchun saqlab qo'ydik.",
+    "emptyTitle": "Sevimlilar ro'yxati bo'sh",
+    "emptyDescription": "Siz hali hech qanday mahsulotni sevimlilar ro'yxatiga qo'shmagansiz.",
+    "productCount": "{count} ta mahsulot",
+    "viewProducts": "Mahsulotlarni ko'rish"
+  },
+  "FilterPage": {
+    "breadcrumbs": "Bosh sahifa / Filtrlar",
+    "filters": "Filtrlar",
+    "price": "Narx",
+    "min": "Min",
+    "max": "Max",
+    "colors": "Ranglar",
+    "sizes": "O'lchamlar",
+    "applyFilters": "Filterlarni qo'llash",
+    "sort": "Saralash",
+    "sortNewest": "Eng yangi",
+    "sortCheapest": "Eng arzon",
+    "sortMostExpensive": "Eng qimmat",
+    "allProducts": "Barcha mahsulotlar",
+    "searchResult": "\"{query}\" bo'yicha qidiruv",
+    "loadingProducts": "Mahsulotlar yuklanmoqda...",
+    "noProducts": "Tanlangan filtrlarga mos mahsulot topilmadi.",
+    "previous": "Oldingi",
+    "next": "Keyingi",
+    "categories_error": "Kategoriyalarni yuklashda muammo yuzaga keldi, Iltimos keyinroq urunib ko'ring!"
+  },
+  "PrivacyPage": {
+    "hero": {
+      "title": "Maxfiylik Siyosati",
+      "description": "AKBW platformasi foydalanuvchilarining shaxsiy ma'lumotlarini qanday yig'ish, saqlash va ishlatishni tushuntiradi"
+    },
+    "intro": "Platformadan foydalanish orqali siz ushbu siyosat shartlariga rozilik bildirasiz.",
+    "sections": [
+      {
+        "title": "1. Qaysi ma'lumotlarni yig'amiz",
+        "content": "Biz quyidagi ma'lumotlarni yig'ishimiz mumkin:",
+        "list": [
+          "Ism va familiya",
+          "Telefon raqami",
+          "Elektron pochta (email)",
+          "Yetkazib berish manzili",
+          "Buyurtmalar tarixi",
+          "To'lovga oid texnik ma'lumotlar (karta raqami saqlanmaydi)"
+        ]
+      },
+      {
+        "title": "2. Ma'lumotlardan qanday foydalanamiz",
+        "content": "Yig'ilgan ma'lumotlar quyidagi maqsadlarda ishlatiladi:",
+        "list": [
+          "Buyurtmalarni qabul qilish va yetkazib berish",
+          "Foydalanuvchi bilan bog'lanish",
+          "To'lovlarni amalga oshirish",
+          "Xizmat sifatini yaxshilash",
+          "Qonunchilik talablarini bajarish"
+        ]
+      },
+      {
+        "title": "3. To'lov ma'lumotlari",
+        "content": "To'lovlar uchinchi tomon to'lov tizimlari (Click, Payme, Uzcard, Humo va boshqalar) orqali amalga oshiriladi.",
+        "note": "Platforma bank karta ma'lumotlarini saqlamaydi va ko'rmaydi."
+      },
+      {
+        "title": "4. Ma'lumotlarni uchinchi shaxslarga berish",
+        "content": "Biz foydalanuvchi ma'lumotlarini:",
+        "list": [
+          "sotmaymiz",
+          "ijaraga bermaymiz",
+          "ruxsatsiz tarqatmaymiz"
+        ],
+        "note": "Faqat quyidagi hollarda berilishi mumkin:",
+        "subList": [
+          "qonun talabi bilan (sud yoki davlat organlari)",
+          "yetkazib berish xizmati (faqat manzil va aloqa uchun)"
+        ]
+      },
+      {
+        "title": "5. Ma'lumotlar xavfsizligi",
+        "content": "Platforma foydalanuvchi ma'lumotlarini himoyalash uchun:",
+        "list": [
+          "zamonaviy texnik vositalar",
+          "xavfsiz serverlar",
+          "parollarni shifrlash (hash)"
+        ],
+        "note": "usullaridan foydalanadi."
+      },
+      {
+        "title": "6. Cookies (fayllar)",
+        "content": "Platforma foydalanuvchi tajribasini yaxshilash uchun cookies dan foydalanishi mumkin.",
+        "note": "Foydalanuvchi xohlasa brauzer sozlamalaridan cookies'ni o'chirishi mumkin."
+      },
+      {
+        "title": "7. Foydalanuvchi huquqlari",
+        "content": "Siz:",
+        "list": [
+          "o'z ma'lumotlaringizni ko'rish",
+          "tahrirlash",
+          "o'chirishni so'rash"
+        ],
+        "note": "huquqiga egasiz."
+      },
+      {
+        "title": "8. Siyosatga o'zgartirishlar",
+        "content": "Platforma ushbu Maxfiylik siyosatini vaqti-vaqti bilan yangilashi mumkin.",
+        "note": "Yangilangan versiya saytga joylashtirilgan paytdan boshlab kuchga kiradi."
+      }
+    ],
+    "contact": {
+      "title": "9. Aloqa",
+      "description": "Agar savollaringiz bo'lsa, biz bilan bog'laning:",
+      "email": "akbw.uz@gmail.com",
+      "emailLabel": "Pochta",
+      "phoneLabel": "Telefon raqami",
+      "phone": "+998 90 566 11 07",
+      "addressLabel": "Manzil",
+      "address": "Toshkent shahar, Shayxontoxur tumani"
+    },
+    "footerNote": "Oxirgi yangilanish: 2026 yil 1-fevral"
+  },
+  "ProductPage": {
+    "breadcrumbs": [
+      "Bosh sahifa",
+      "Maxsulotlar"
+    ],
+    "rating": {
+      "notRated": "Hali reyting berilmagan",
+      "reviews": "Izohlar",
+      "leaveReview": "Izoh qoldirish",
+      "giveRating": "Bu mahsulotga baho bering",
+      "submit": "Joylash",
+      "reviewPlaceholder": "Bu mahsulot haqida fikringizni yozing...",
+      "reviewChars": "{count}/500",
+      "deleteConfirmTitle": "Izohni o'chirish",
+      "deleteConfirmDesc": "Izohni o'chirishga ishonchingiz komilmi?",
+      "noReviews": {
+        "title": "Hali izohlar yo'q",
+        "desc": "Birinchi bo'lib o'z fikringizni bildiring!"
+      },
+      "loadMore": "Ko'proq yuklash",
+      "loadingReviews": "Izohlar yuklanmoqda..."
+    },
+    "price": "{price} so'm",
+    "selectColor": "Rangni tanlang",
+    "selectSize": "O'lchamni tanlang",
+    "quantity": {
+      "decrease": "Kamaytirish",
+      "increase": "Ko'paytirish"
+    },
+    "addToCart": "Savatga qo'shish",
+    "tabs": {
+      "reviews": "Baho & Izohlar",
+      "faqs": "Savollar"
+    },
+    "faqs": [
+      {
+        "q": "Yetkazib berish qancha vaqt oladi?",
+        "a": "O'zbekistonda standart yetkazib berish 3-5 ish kuni, xalqaro yetkazib berish 7-14 kun davom etadi."
+      },
+      {
+        "q": "Qaytarish siyosati qanday?",
+        "a": "Biz barcha ishlatilmagan va yuvilmagan buyumlar uchun 30 kunlik pulni qaytarish kafolati taqdim etamiz."
+      },
+      {
+        "q": "Qanday qilib to'g'ri o'lchamni tanlash mumkin?",
+        "a": "Iltimos, o'lcham tanlovlari ostidagi o'lcham qo'llanmasiga murojaat qiling."
+      }
+    ],
+    "relatedProductsTitle": "Sizga yoqishi mumkin!",
+    "error_getting_reviews": "Izohlarni yuklashda muammoga duch kelindi",
+    "error_submitting_review": "Izohni yuborishda muammo yuzaga keldi",
+    "error_deleting_review": "Izohni o'chirishda xatolik yuz berdi",
+    "review_fields_required": "Iltimos, barcha maydonlarni to'ldiring va baho bering",
+    "review_success": "Izoh muvaffaqiyatli joylandi!",
+    "review_deleted_success": "Izoh muvaffaqiyatli o'chirildi!",
+    "add_to_cart_success": "{name} savatga qo'shildi"
+  },
+  "SearchPage": {
+    "placeholder": "Qidirish...",
+    "recentOrHint": "Qidiruv natijalarini ko'rish uchun yozing...",
+    "backButtonAria": "Orqaga",
+    "searchButtonAria": "Qidirish"
+  },
+  "TermsAndConditions": {
+    "hero": {
+      "title": "Foydalanish Shartlari",
+      "subtitle": "AKBW platformasidan foydalanish qoidalari va shartlari"
+    },
+    "introduction": "Platformadan foydalanish orqali siz ushbu shartlarga rozilik bildirasiz va ularni bajarishga majbursiz.",
+    "sections": [
+      {
+        "title": "1. Umumiy qoidalar",
+        "list": [
+          "Platforma kiyim-kechak mahsulotlarini onlayn buyurtma qilish va yetkazib berish xizmatini ko'rsatadi.",
+          "Platforma O'zbekiston Respublikasi qonunchiligiga muvofiq faoliyat yuritadi.",
+          "Platforma orqali buyurtma berish faqat 18 yoshdan katta shaxslar uchun ruxsat etiladi."
+        ]
+      },
+      {
+        "title": "2. Buyurtma berish tartibi",
+        "list": [
+          "Foydalanuvchi mahsulotni tanlab, buyurtma beradi.",
+          "Buyurtma berishda kiritilgan ma'lumotlar (ism, telefon, manzil) to'g'ri va aniq bo'lishi shart.",
+          "Noto'g'ri kiritilgan ma'lumotlar sababli yetkazib berilmagan buyurtma uchun Platforma javobgar emas."
+        ]
+      },
+      {
+        "title": "3. To'lov shartlari",
+        "content": "To'lovlar quyidagi usullar orqali amalga oshiriladi:",
+        "list": [
+          "Click",
+          "Payme",
+          "Uzcard",
+          "Humo"
+        ],
+        "notes": [
+          "To'lovlar xavfsiz uchinchi tomon to'lov tizimlari orqali amalga oshiriladi.",
+          "Platforma bank karta ma'lumotlarini saqlamaydi va qayta ishlamaydi."
+        ]
+      },
+      {
+        "title": "4. Yetkazib berish shartlari",
+        "isImportant": true,
+        "content": "Mahsulotlar BTS pochta xizmati orqali yetkazib beriladi va yetkazib berish ikki bosqichdan iborat:",
+        "stages": [
+          {
+            "title": "1-bosqich:",
+            "items": [
+              "Mahsulot chet eldan O'zbekistonga (Toshkent shahriga) yetkaziladi.",
+              "Ushbu bosqichga ko'proq vaqt ketishi mumkin.",
+              "Bu vaqt bojxona, logistika va tashqi omillarga bog'liq."
+            ]
+          },
+          {
+            "title": "2-bosqich:",
+            "items": [
+              "Mahsulot Toshkent shahridan foydalanuvchi ko'rsatgan manzilga BTS orqali yuboriladi."
+            ]
+          }
+        ],
+        "warning": "Foydalanuvchi yetkazib berish muddati asosan 1-bosqichga bog'liqligini tushunib, bunga rozilik bildiradi."
+      },
+      {
+        "title": "5. Yetkazib berish muddati",
+        "list": [
+          "Yetkazib berish muddati taxminiy hisoblanadi."
+        ],
+        "content": "Kechikishlar:",
+        "subList": [
+          "bojxona tekshiruvlari",
+          "ob-havo",
+          "transport muammolari"
+        ],
+        "note": "sababli yuzaga kelishi mumkin.",
+        "warning": "Platforma ushbu holatlar uchun javobgar emas."
+      },
+      {
+        "title": "6. Qaytarish va refund",
+        "content": "Agar mahsulot:",
+        "list": [
+          "noto'g'ri yuborilgan bo'lsa",
+          "jiddiy nuqson bilan yetib kelsa"
+        ],
+        "note": "foydalanuvchi mahsulotni qabul qilgan kundan boshlab 3 kun ichida murojaat qilishi kerak.",
+        "additionalNotes": [
+          "O'lcham yoki did sababli qaytarish masalalari individual tartibda ko'rib chiqiladi.",
+          "Yetkazib berilgan va ishlatilgan mahsulotlar qaytarilmaydi."
+        ]
+      },
+      {
+        "title": "7. Javobgarlikni cheklash",
+        "list": [
+          "Platforma uchinchi tomon xizmatlari (BTS, to'lov tizimlari) faoliyati uchun to'liq javobgar emas.",
+          "Platforma foydalanuvchining noto'g'ri harakatlari sababli yuzaga kelgan zararlar uchun javobgar emas."
+        ]
+      },
+      {
+        "title": "8. Intellektual mulk",
+        "list": [
+          "Saytdagi barcha matnlar, rasmlar va dizayn elementlari Platformaga tegishli.",
+          "Ularni ruxsatsiz ko'chirish yoki ishlatish taqiqlanadi."
+        ]
+      },
+      {
+        "title": "9. O'zgartirishlar",
+        "content": "Platforma ushbu Foydalanish shartlarini istalgan vaqtda o'zgartirish huquqiga ega.",
+        "note": "Yangilangan shartlar saytga joylangan kundan boshlab kuchga kiradi."
+      }
+    ],
+    "contact": {
+      "title": "10. Aloqa",
+      "description": "Savollar bo'yicha biz bilan bog'lanishingiz mumkin:",
+      "phoneLabel": "Telefon",
+      "emailLabel": "Elektron pochta",
+      "phone": "+998 90 566 11 07",
+      "email": "akbw.uz@gmail.com"
+    },
+    "footerNote": "Oxirgi yangilanish: 2026 yil 1-fevral"
+  },
+  "Profile": {
+    "guest_mode": "Mehmon rejimi",
+    "guest_description": "To'liq imkoniyatlardan foydalanish uchun tizimga kiring",
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "useful_links": "Foydali havolalar",
+    "about_us": "Biz haqimizda",
+    "contact": "Bog'lanish",
+    "security_note": "Ma'lumotlaringiz xavfsiz saqlanadi va uchinchi shaxslarga berilmaydi",
+    "logout": "Chiqish",
+    "user_profile_aria": "Foydalanuvchi profili",
+    "tabs": {
+      "menu": "Menyu",
+      "favorites": "Sevimlilar",
+      "notifications": "Bildirishnomalar",
+      "reviews": "Sharhlar"
+    },
+    "back_to_menu": "Menyuga qaytish",
+    "save_btn": "Saqlash",
+    "phone_readonly_note": "Telefon raqamini o'zgartirib bo'lmaydi",
+    "chat_placeholder": "Xabar yozing...",
+    "inquiry_empty_title": "Mahsulot haqida savol bering",
+    "inquiry_empty_desc": "Rasm yuklang va xabar yozing",
+    "inquiry_placeholder": "Sizda bunday mahsulot bormi?",
+    "favorites_empty": "Sevimli mahsulotlar yo'q",
+    "added_to_cart": "{name} savatga qo'shildi",
+    "to_cart": "Savatga",
+    "notifications_empty_title": "Bildirishnomalar topilmadi",
+    "notifications_empty_desc": "Hozircha sizda hech qanday yangi bildirishnomalar mavjud emas.",
+    "notification_label": "Bildirishnoma",
+    "close": "Yopish",
+    "reviews_empty": "Sharhlar yo'q",
+    "order_label": "Buyurtma",
+    "menu_items": {
+      "edit_profile": {
+        "title": "Profilni tahrirlash",
+        "desc": "Shaxsiy ma'lumotlarni o'zgartirish"
+      },
+      "support": {
+        "title": "Yordam",
+        "desc": "Admin bilan bog'lanish"
+      },
+      "inquiry": {
+        "title": "Mahsulot so'rash",
+        "desc": "Mahsulot haqida so'rov yuborish"
+      },
+      "about": {
+        "title": "Biz haqimizda",
+        "desc": "Kompaniya haqida ma'lumot"
+      },
+      "contact_item": {
+        "title": "Bog'lanish",
+        "desc": "Aloqa ma'lumotlari"
+      }
+    },
+    "messages": {
+      "save_success": "Profil muvaffaqiyatli saqlandi",
+      "save_error": "Profilni saqlashda xatolik yuz berdi",
+      "send_error": "Xabar yuborishda xatolik yuz berdi",
+      "image_upload_success": "Rasm yuklandi",
+      "image_upload_error": "Rasm yuklashda xatolik yuz berdi"
+    },
+    "validation": {
+      "name_min": "Ism kamida 2 ta harfdan iborat bo'lishi kerak",
+      "lastname_min": "Familiya kamida 2 ta harfdan iborat bo'lishi kerak",
+      "gender_min": "Jins kamida 2 ta harfdan iborat bo'lishi kerak"
+    }
+  },
+  "NewArrivalsPage": {
+    "title": "Yangi Qo'shilganlar",
+    "description": "So'nggi 30 kun ichida qo'shilgan yangi mahsulotlarimiz",
+    "view_all_products": "Barcha mahsulotlar",
+    "view_best_sellers": "Eng ko'p sotilayotganlar",
+    "latest_arrivals": "So'nggi yangiliklar",
+    "updated_daily": "Kunlik yangilanadi",
+    "no_new_arrivals": "Hali yangi mahsulotlar yo'q",
+    "check_back_soon": "Tez orada yangi mahsulotlar qo'shiladi",
+    "browse_all_products": "Barcha mahsulotlarni ko'rish"
+  },
+  "BestSellersPage": {
+    "title": "Eng ko'p sotilayotganlar",
+    "description": "Eng mashhur va ko'p sotilayotgan mahsulotlarimiz",
+    "view_all_products": "Barcha mahsulotlar",
+    "view_new_arrivals": "Yangi mahsulotlar",
+    "most_popular": "Eng mashhur mahsulotlar",
+    "based_on_sales": "Sotuvlar asosida",
+    "no_best_sellers": "Hali eng ko'p sotilayotgan mahsulotlar yo'q",
+    "check_back_soon": "Tez orada yangi mahsulotlar qo'shiladi",
+    "browse_all_products": "Barcha mahsulotlarni ko'rish"
+  },
+  "Bonus": {
+    "title": "Mening Bonuslarim",
+    "description": "Bonuslaringizni boshqaring va taklif dasturi",
+    "available_bonus": "Mavjud Bonus",
+    "available_bonus_desc": "Xaridlar uchun ishlatish mumkin",
+    "total_earned": "Jami topilgan",
+    "referral_program": "Taklif Dasturi",
+    "referral_program_desc": "Do'stlaringizni taklif qiling va bonuslar oling",
+    "total_referrals": "Jami Takliflar",
+    "active_referrals": "Faol Takliflar",
+    "share_referral_link": "Taklif Havolasini Ulashish",
+    "your_referral_link": "Sizning Taklif Havolangiz",
+    "referral_link_desc": "Bu havolani do'stlaringiz bilan ulashing",
+    "copy": "Nusxalash",
+    "share": "Ulashish",
+    "pending_bonuses": "Kutilayotgan Bonuslar",
+    "pending_bonuses_desc": "Birinchi xaridingizda qo'llaniladigan bonuslar",
+    "pending_bonuses_note": "Bu bonuslar birinchi xaridingizda foiz chegirma sifatida avtomatik ravishda qo'llaniladi.",
+    "bonus_history": "Bonuslar Tarixi",
+    "bonus_history_desc": "Sizning bonus operatsiyalaringiz tarixi",
+    "no_history": "Hali bonuslar tarixi yo'q",
+    "how_it_works": "Bu Qanday Ishlaydi",
+    "welcome_bonus": "Xush Kelibsiz Bonusi",
+    "welcome_bonus_desc": "Barcha yangi foydalanuvchilar birinchi xaridlarida 5% bonus olishadi",
+    "referral_bonus": "Taklif Bonusi",
+    "referral_bonus_desc": "Sizning havolangiz orqali ro'yxatdan o'tgan do'stlaringiz 10% bonus olishadi",
+    "referrer_bonus": "Taklif Qiluvchi Bonusi",
+    "referrer_bonus_desc": "Do'stingiz birinchi xarid qilganda siz 5% bonus olasiz",
+    "link_copied": "Taklif havolasi nusxalandi!",
+    "share_title": "AKBW ga mening taklif havolam orqali qo'shiling!",
+    "share_text": "AKBW ga mening taklif havolam orqali qo'shilsangiz, birinchi xaridingizda 10% bonus olasiz!",
+    "hide_history": "Tarixni Yashirish",
+    "show_history": "Tarixni Ko'rsatish",
+    "created_on": "Yaratilgan sana",
+    "loading": "Yuklanmoqda..."
+  },
+  "Common": {
+    "error": "Malumotlarni olishda xatolik yuz berdi!"
+  }
+}

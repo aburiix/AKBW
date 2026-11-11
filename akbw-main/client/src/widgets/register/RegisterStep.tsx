@@ -1,0 +1,130 @@
+import { cn } from '@/shared/lib/utils';
+import { Button } from '@/shared/ui/button';
+import { Input } from '@/shared/ui/input';
+import { ChevronDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import React from 'react';
+
+interface Props {
+  name: string;
+  lastName: string;
+  gender: string;
+  phone: string;
+  errors: Record<string, string>;
+  handleRegister: () => void;
+  handlePhoneChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setName: (name: string) => void;
+  setLastName: (lastName: string) => void;
+  setGender: (gender: string) => void;
+  isLoading: boolean;
+}
+
+export default function RegisterStep({
+  name,
+  lastName,
+  gender,
+  phone,
+  errors,
+  handleRegister,
+  handlePhoneChange,
+  setName,
+  setLastName,
+  setGender,
+  isLoading,
+}: Props) {
+  const t = useTranslations('Register');
+  return (
+    <>
+      <div className={cn('flex', 'flex-col', 'gap-1', 'mt-3')}>
+        <label className={cn('text-sm', 'font-medium')}>
+          {t('name_label')}
+        </label>
+        <Input
+          placeholder={t('name_placeholder')}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className={errors.name ? 'border-red-500' : 'placeholder:opacity-50'}
+        />
+        {errors.name && (
+          <p className={cn('text-xs', 'text-red-500')}>{errors.name}</p>
+        )}
+      </div>
+
+      <div className={cn('flex', 'flex-col', 'gap-1', 'mt-3')}>
+        <label className={cn('text-sm', 'font-medium')}>
+          {t('lastname_label')}
+        </label>
+        <Input
+          placeholder={t('lastname_placeholder')}
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          className={
+            errors.lastName ? 'border-red-500' : 'placeholder:opacity-50'
+          }
+        />
+        {errors.lastName && (
+          <p className={cn('text-xs', 'text-red-500')}>{errors.lastName}</p>
+        )}
+      </div>
+
+      <div className={cn('flex', 'flex-col', 'gap-1', 'mt-3')}>
+        <label className={cn('text-sm', 'font-medium')}>
+          {t('gender_label')}
+        </label>
+        <div className="relative">
+          <select
+            name="gender"
+            id="gender"
+            className={cn(
+              'flex h-10 w-full rounded-md px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 appearance-none pr-8 bg-white shadow-lg border-none outline-none',
+              errors.gender ? 'border-1 border-red-500' : '',
+            )}
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          >
+            <option value="male">{t('gender_male')}</option>
+            <option value="female">{t('gender_female')}</option>
+          </select>
+          <ChevronDown
+            className={cn(
+              'absolute',
+              'right-3',
+              'top-1/2',
+              '-translate-y-1/2',
+              'h-4',
+              'w-4',
+              'text-gray-500',
+              'pointer-events-none',
+            )}
+          />
+        </div>
+        {errors.gender && (
+          <p className={cn('text-xs', 'text-red-500')}>{errors.gender}</p>
+        )}
+      </div>
+
+      <div className={cn('flex', 'flex-col', 'gap-1', 'mt-3')}>
+        <label className={cn('text-sm', 'font-medium')}>
+          {t('phone_label')}
+        </label>
+        <Input
+          placeholder={t('phone_placeholder')}
+          value={phone}
+          onChange={handlePhoneChange}
+          className={errors.phone ? 'border-red-500' : 'placeholder:opacity-50'}
+        />
+        {errors.phone && (
+          <p className={cn('text-xs', 'text-red-500')}>{errors.phone}</p>
+        )}
+      </div>
+
+      <Button
+        onClick={handleRegister}
+        className={cn('mt-5', 'w-full')}
+        disabled={isLoading}
+      >
+        {isLoading ? t('sending') : t('send_code_btn')}
+      </Button>
+    </>
+  );
+}

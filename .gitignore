@@ -1,0 +1,27 @@
+# --- Bog'liqliklar va build ---
+node_modules/
+.next/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# --- Maxfiy sozlamalar: barcha .env fayllari (namunalardan tashqari) ---
+.env*
+!.env.example
+*.pem
+*.key
+
+# --- Serverga yuklangan foydalanuvchi fayllari ---
+**/server/uploads/*
+!**/server/uploads/.gitkeep
+
+# --- Tizim / muharrir ---
+.DS_Store
+.vscode/
+.idea/
+*.log
+*.tmp
+*.bak
+*.swp
+.husky/

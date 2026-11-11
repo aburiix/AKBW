@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AKBW — yangi dizayn maketi</title>
+<link rel="stylesheet" href="maket.css">
+</head>
+<body class="home">
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M19 12H5m5-5-5 5 5 5"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5"/><rect x="13.5" y="4" width="6.5" height="6.5"/><rect x="4" y="13.5" width="6.5" height="6.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5"/></symbol>
+</svg>
+
+<div class="announce"><div class="track" id="ann"></div></div>
+
+<header class="header">
+  <div class="wrap">
+    <nav class="nav">
+      <a href="#">Katalog</a><a href="#">Yangi</a><a href="#">Eng ko'p sotilgan</a><a href="#">Fasllar</a>
+    </nav>
+    <button class="burger" aria-label="Menyu"><svg class="icon"><use href="#i-menu"/></svg></button>
+    <a class="logo" href="#">AKBW</a>
+    <div class="tools">
+      <span class="lang">UZ</span>
+      <svg class="icon"><use href="#i-search"/></svg>
+      <svg class="icon hide-m"><use href="#i-heart"/></svg>
+      <svg class="icon hide-m"><use href="#i-user"/></svg>
+      <span class="cart-count"><svg class="icon"><use href="#i-bag"/></svg><b>2</b></span>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="grid">
+    <div class="hero-text">
+      <span class="eyebrow">Kuz — Qish 2026 kolleksiyasi</span>
+      <h1 class="h-display">Uslub<br>va <em>ishonch</em></h1>
+      <p>Kiyimga bo'lgan munosabatni o'zgartiramiz. Tabiiy mato, erkin bichim va har kuni kiyish uchun sifat.</p>
+      <div class="hero-cta">
+        <a class="btn btn-ink" href="#">Kolleksiyani ko'rish <svg class="icon" style="width:18px"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-line" href="#">Yangi qo'shilganlar</a>
+      </div>
+      <div class="hero-stats">
+        <div><b>4</b><span>to'lov tizimi</span></div>
+        <div><b>BTS</b><span>butun O'zbekiston bo'ylab</span></div>
+        <div><b>3 til</b><span>o'zbek · rus · ingliz</span></div>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="../akbw-design/client/public/assets/welcome-right.png" alt="">
+      <div class="hero-meta">Aburiix · Kraft · Brand · Wear</div>
+      <div class="hero-tag"><i class="dot"></i><span>Oversize xudi to'plami<br><b style="font-family:var(--sans);letter-spacing:0">329 000 so'm</b></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Kategoriyalar</div><h2 class="h-section">Nimani qidiryapsiz?</h2></div>
+      <a class="link-u" href="#">Barchasi</a>
+    </div>
+    <div class="cats" id="cats"></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Yangi qo'shilganlar</div><h2 class="h-section">Hozirgina keldi</h2></div>
+      <a class="link-u" href="#">Barchasini ko'rish</a>
+    </div>
+    <div class="chips"><span class="chip on">Barchasi</span><span class="chip">Futbolkalar</span><span class="chip">Xudi</span><span class="chip">Shimlar</span><span class="chip">Kurtkalar</span><span class="chip">Poyabzal</span></div>
+    <div class="grid-p" id="newest"></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="editorial">
+      <a class="ed-big" href="#">
+        <img src="../akbw-design/client/public/assets/oldmoney.jpg" alt="">
+        <div class="txt">
+          <span class="eyebrow">Fasl uslubi</span>
+          <h3>Old money.<br>Sokin hashamat</h3>
+          <span class="btn btn-line">Uslubni ko'rish</span>
+        </div>
+      </a>
+      <div class="ed-side">
+        <a class="ed-tile" href="#"><img src="../akbw-design/client/public/assets/sport-style.jpg" alt=""><span>Sport uslub</span></a>
+        <a class="ed-tile" href="#"><img src="../akbw-design/client/public/assets/minimalistik.jpg" alt=""><span>Minimalizm</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Eng ko'p sotilganlar</div><h2 class="h-section">Xaridorlar tanlovi</h2></div>
+      <div class="rail-nav"><button aria-label="Oldingi"><svg class="icon" style="width:18px"><use href="#i-left"/></svg></button><button aria-label="Keyingi"><svg class="icon" style="width:18px"><use href="#i-arrow"/></svg></button></div>
+    </div>
+    <div class="rail" id="best"></div>
+  </div>
+</section>
+
+<section class="manifest">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">AKBW haqida</div>
+      <q>Biz kiyimni shunchaki sotmaymiz. Har bir buyum — o'zingizni ishonchli his qilishingiz uchun.</q>
+      <div class="sig">Aburiix Kraft</div>
+      <div style="margin-top:36px"><a class="btn btn-line" style="border-color:var(--bg);color:var(--bg)" href="#">Brend tarixi</a></div>
+    </div>
+    <div class="img"><img src="../akbw-design/client/public/assets/welcome.jpg" alt=""></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Sharhlar</div><h2 class="h-section">Xaridorlar nima deydi</h2></div>
+      <a class="link-u" href="#">Barcha sharhlar</a>
+    </div>
+    <div class="reviews" id="reviews"></div>
+  </div>
+</section>
+
+<div class="wrap" style="padding-bottom:clamp(64px,9vw,128px)">
+  <div class="perks">
+    <div class="perk"><b>Tez yetkazish</b><span>BTS orqali butun O'zbekiston bo'ylab</span></div>
+    <div class="perk"><b>Qulay to'lov</b><span>Onlayn yoki kartadan</span><div class="pay"><i>Payme</i><i>Click</i><i>Uzum</i><i>Paynet</i></div></div>
+    <div class="perk"><b>Bonus tizimi</b><span>Do'stingizni taklif qiling va bonus oling</span></div>
+    <div class="perk"><b>Yordam</b><span>Savollaringizga chatda javob beramiz</span></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="top">
+      <div class="news"><h4>Yangiliklar</h4><p>Yangi kolleksiya va chegirmalardan birinchi bo'lib xabardor bo'ling</p>
+        <form onsubmit="return false"><input placeholder="Telefon raqamingiz"><button><svg class="icon"><use href="#i-arrow"/></svg></button></form></div>
+      <div><h4>Do'kon</h4><ul><li><a href="#">Yangi qo'shilganlar</a></li><li><a href="#">Eng ko'p sotilganlar</a></li><li><a href="#">Barcha mahsulotlar</a></li><li><a href="#">Fasllar</a></li></ul></div>
+      <div><h4>Yordam</h4><ul><li><a href="#">Biz bilan bog'lanish</a></li><li><a href="#">Chat</a></li><li><a href="#">Yetkazib berish</a></li></ul></div>
+      <div><h4>Kompaniya</h4><ul><li><a href="#">AKBW haqida</a></li><li><a href="#">Maxfiylik siyosati</a></li><li><a href="#">Foydalanish shartlari</a></li></ul></div>
+    </div>
+  </div>
+  <div class="wordmark">AKBW</div>
+  <div class="wrap">
+    <div class="bottom"><span>© 2026 AKBW · Aburiix Kraft Brand Wear</span>
+      <div class="social"><a href="#">IG</a><a href="#">TG</a><a href="#">YT</a></div></div>
+  </div>
+</footer>
+
+<nav class="tabbar">
+  <a class="on" href="#"><svg class="icon"><use href="#i-home"/></svg>Asosiy</a>
+  <a href="#"><svg class="icon"><use href="#i-grid"/></svg>Katalog</a>
+  <a href="#"><svg class="icon"><use href="#i-search"/></svg>Qidiruv</a>
+  <a href="#"><svg class="icon"><use href="#i-heart"/></svg>Saralangan</a>
+  <a href="#"><svg class="icon"><use href="#i-user"/></svg>Profil</a>
+</nav>
+
+<script>
+const A = "../akbw-design/client/public/assets/";
+const img = ["oversize.jpg","oldmoney.jpg","sport-style.jpg","minimalistik.jpg","giamour.webp","welcome.jpg","akbw-about.jpg","herobg.jpg"];
+const sw = ["#0d0d0c","#f1eee8","#cbbfa8","#8d8a83","#6b6e5f"];
+const P = [
+  ["Oversize futbolka","Futbolkalar",189000,0,4.8,"new"],["Klassik polo","Futbolkalar",249000,15,4.5],
+  ["Sport xudi","Xudi",329000,0,4.9],["Minimal svitshot","Xudi",279000,10,4.2],
+  ["Kashemir sviter","Triko",459000,0,5.0,"new"],["Keng shim","Shimlar",299000,0,4.6],
+  ["Jogger shim","Shimlar",259000,20,4.4],["Bomber kurtka","Kurtkalar",549000,0,4.7]];
+const fmt = n => n.toLocaleString("ru-RU").replace(/,/g," ") + " so'm";
+const card = (p,i) => {
+  const [n,c,pr,d,r,tag] = p, old = d ? Math.round(pr/(1-d/100)/1000)*1000 : 0;
+  return `<a class="card" href="product.html"><div class="media">
+    ${d ? `<span class="badge">−${d}%</span>` : tag ? `<span class="badge new">Yangi</span>` : ""}
+    <button class="fav" aria-label="Saralash"><svg class="icon"><use href="#i-heart"/></svg></button>
+    <img src="${A+img[i%8]}" alt=""><img src="${A+img[(i+3)%8]}" alt="">
+    <div class="quick"><button>S</button><button>M</button><button>L</button><button>XL</button></div></div>
+    <div class="info"><span class="cat-n">${c}</span><span class="name">${n}</span>
+    <span class="price ${d?"sale":""}">${d?`<s>${fmt(old)}</s>`:""}<ins>${fmt(pr)}</ins></span>
+    <span class="swatches">${sw.slice(i%2,(i%2)+3).map(s=>`<i class="sw" style="background:${s}"></i>`).join("")}</span>
+    <span class="rating"><i>★</i>${r.toFixed(1)}</span></div></a>`;
+};
+newest.innerHTML = P.map(card).join("");
+best.innerHTML = [...P.slice(4),...P.slice(0,4)].map((p,i)=>card(p,i+4)).join("");
+cats.innerHTML = [["Futbolkalar","oversize.jpg"],["Xudi va svitshot","sport-style.jpg"],["Shimlar","minimalistik.jpg"],["Kurtkalar","oldmoney.jpg"],["Aksessuarlar","giamour.webp"]]
+  .map(([n,f])=>`<a class="cat" href="#"><img src="${A+f}" alt=""><span>${n}<svg class="icon" style="width:18px"><use href="#i-arrow"/></svg></span></a>`).join("");
+reviews.innerHTML = [["Sifati juda zo'r, o'lchami aniq to'g'ri keldi. Mato yumshoq.","Aziz","A"],["Yetkazib berish tez bo'ldi, rangi rasmdagidek chiroyli.","Dilnoza","D"],["Narxiga nisbatan juda yaxshi kiyim, yana buyurtma beraman.","Jasur","J"]]
+  .map(([t,n,a])=>`<div class="review"><div class="stars">★★★★★</div><p>“${t}”</p><div class="who"><span class="av">${a}</span>${n} · Tasdiqlangan xarid</div></div>`).join("");
+const msg = ["Yangi kolleksiya: Kuz — Qish 2026","Payme · Click · Uzum · Paynet orqali to'lov","Butun O'zbekiston bo'ylab yetkazib berish","Do'stingizni taklif qiling — bonus oling"];
+ann.innerHTML = [...msg,...msg].map(m=>`<span>${m}</span><span>✦</span>`).join("");
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Production
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.PRODUCTION_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_ROOT_LOGIN }}
+          port: 22
+          script: |
+            cd .. 
+            cd opt/akbw
+            
+            # Pull from github
+            git pull https://the-ict:${{secrets.GH_TOKEN}}@github.com/the-ict/akbw.git main
+
+            # Turn off docker containers
+            docker compose down 
+
+            # Deploy new version
+            docker compose up -d --build
+
+            # Remove unused applications
+            docker image prune -f 
+            
+            # Health check
+            sleep 10
+            docker compose ps

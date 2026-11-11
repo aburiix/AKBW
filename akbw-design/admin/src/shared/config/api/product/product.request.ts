@@ -1,0 +1,100 @@
+import httpClient from '../httpClient';
+import {
+  ENDP_PRODUCT_CATEGORIES_CREATE,
+  ENDP_PRODUCT_CREATE,
+  ENDP_PRODUCT,
+  ENDP_PRODUCT_SIZES,
+  ENDP_PRODUCT_COLORS,
+  ENDP_UPLOAD,
+} from '../URLs';
+
+import {
+  ICreateCategory,
+  ICreateProduct,
+  IUpdateProduct,
+  ICategory,
+  IProductListResponse,
+  IProductFilters,
+} from './product.model';
+
+export const createProductRequest = async (product: ICreateProduct) => {
+  return (await httpClient.post(ENDP_PRODUCT_CREATE, product)).data;
+};
+
+export const getProductsRequest = async (
+  params: IProductFilters,
+): Promise<IProductListResponse> => {
+  return (await httpClient.get(ENDP_PRODUCT, { params })).data;
+};
+
+export const deleteProductRequest = async (id: number) => {
+  return await httpClient.delete(`${ENDP_PRODUCT}/${id}`);
+};
+
+export const updateProductRequest = async (product: IUpdateProduct) => {
+  const { id, ...data } = product;
+  return (await httpClient.put(`${ENDP_PRODUCT_CREATE}/${id}`, data)).data;
+};
+
+export const createCategoriesRequest = async (category: ICreateCategory) => {
+  return await httpClient.post(ENDP_PRODUCT_CATEGORIES_CREATE, category);
+};
+
+export const updateCategoriesRequest = async (
+  category: Partial<ICreateCategory> & { id: number },
+) => {
+  const { id, ...data } = category;
+  return await httpClient.put(`${ENDP_PRODUCT_CATEGORIES_CREATE}/${id}`, data);
+};
+
+export const getCategoriesRequest = async (
+  q?: string,
+): Promise<ICategory[]> => {
+  return (
+    await httpClient.get(ENDP_PRODUCT_CATEGORIES_CREATE, { params: { q } })
+  ).data;
+};
+
+export const getCategoryByIdRequest = async (id: number): Promise<any> => {
+  return (await httpClient.get(`${ENDP_PRODUCT_CATEGORIES_CREATE}/${id}`)).data;
+};
+
+export const deleteCategoriesRequest = async (id: number) => {
+  return await httpClient.delete(`${ENDP_PRODUCT_CATEGORIES_CREATE}/${id}`);
+};
+
+export const getSizesRequest = async (): Promise<any[]> => {
+  return (await httpClient.get(ENDP_PRODUCT_SIZES)).data;
+};
+
+export const createSizeRequest = async (data: any) => {
+  return (await httpClient.post(ENDP_PRODUCT_SIZES, data)).data;
+};
+
+export const getColorsRequest = async (): Promise<any[]> => {
+  return (await httpClient.get(ENDP_PRODUCT_COLORS)).data;
+};
+
+export const createColorRequest = async (data: any) => {
+  return (await httpClient.post(ENDP_PRODUCT_COLORS, data)).data;
+};
+
+export const uploadImageRequest = async (file: File) => {
+  const formData = new FormData();
+  formData.append('image', file);
+  return (
+    await httpClient.post(ENDP_UPLOAD, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+  ).data;
+};
+
+export const deleteSizeRequest = async (id: number) => {
+  return (await httpClient.delete(`${ENDP_PRODUCT_SIZES}/${id}`)).data;
+};
+
+export const deleteColorRequest = async (id: number) => {
+  return (await httpClient.delete(`${ENDP_PRODUCT_COLORS}/${id}`)).data;
+};

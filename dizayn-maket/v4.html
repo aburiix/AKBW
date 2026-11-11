@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c0b0a">
+<title>AKBW — v4 (ilova uslubi)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: "Kenao"; src: url("../akbw-design/client/public/fonts/Kenao.otf"); font-display: swap; }
+@font-face { font-family: "Didot"; src: url("../akbw-design/client/public/fonts/DidotBold.otf"); font-display: swap; }
+@font-face { font-family: "Futura"; src: url("../akbw-design/client/public/fonts/futuralight.ttf"); font-display: swap; }
+:root {
+  --bg: #0c0b0a; --surface: rgba(24, 22, 20, .62); --surface-2: rgba(255, 255, 255, .06);
+  --line: rgba(246, 240, 230, .1); --line-2: rgba(246, 240, 230, .2);
+  --text: #f6f0e6; --mute: rgba(246, 240, 230, .58); --mute-2: rgba(246, 240, 230, .38);
+  --ivory: #efe8db; --ink: #13110f;
+  --sand: #a6a195; --olive: #6b6e5f; --taupe: #8a847a;
+  --sale: #e0896f; --ok: #a9c49a;
+  --a1: #4c5640; --a2: #2a2f22;   /* fon rangi (JS almashtiradi) */
+  --r: 22px;
+  --serif: "Didot", Georgia, serif; --label: "Futura", "Inter", sans-serif; --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif; --logo: "Kenao", serif;
+  --pad: 18px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--text); font: 400 15px/1.45 var(--sans); -webkit-font-smoothing: antialiased; overflow: hidden; overscroll-behavior: none; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+svg.i { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.4; fill: none; flex: none; }
+.lbl { font: 400 11px/1.2 var(--label); letter-spacing: .22em; text-transform: uppercase; }
+.serif { font-family: var(--serif); font-weight: 400; letter-spacing: -.01em; }
+
+/* Fon: tab rangi + donadorlik */
+.ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(120% 70% at 50% -10%, var(--a1), transparent 70%), radial-gradient(90% 60% at 100% 110%, var(--a2), transparent 70%), var(--bg); transition: background .1s; }
+.grain { position: fixed; inset: -50%; z-index: 1; pointer-events: none; opacity: .09; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1.2s steps(6) infinite; }
+@keyframes grain { 0%,100% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); } 40% { transform: translate(2%,-3%); } 60% { transform: translate(-2%,-1%); } 80% { transform: translate(3%,3%); } }
+
+.glass { background: linear-gradient(140deg, rgba(255,255,255,.12), rgba(255,255,255,.03)); backdrop-filter: blur(26px) saturate(150%); -webkit-backdrop-filter: blur(26px) saturate(150%); border: 1px solid var(--line-2); box-shadow: inset 0 1px 0 rgba(255,255,255,.14); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+
+/* ---------- App qobig'i ---------- */
+.app { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; max-width: 1240px; margin: 0 auto; }
+.top { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; padding: calc(10px + env(safe-area-inset-top)) var(--pad) 6px; }
+.av { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--ivory); color: var(--ink); font: 400 15px/1 var(--logo); }
+.top .title { text-align: center; }
+.top .title .lbl { color: var(--mute); }
+.top .title .logo { display: block; font: 400 22px/1 var(--logo); letter-spacing: .05em; margin-bottom: 4px; }
+.bell { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; position: relative; justify-self: end; }
+.bell::after { content: ""; position: absolute; top: 9px; right: 10px; width: 7px; height: 7px; border-radius: 50%; background: var(--sale); box-shadow: 0 0 0 2px var(--bg); }
+.tabs { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); margin: 4px var(--pad) 0; border-bottom: 1px solid var(--line); }
+.tabs button { height: 48px; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--mute-2); transition: color .3s; }
+.tabs button.on { color: var(--text); }
+.tabs button span { display: none; }
+.tabs .ind { position: absolute; bottom: -1px; left: 0; width: 33.333%; height: 1px; background: var(--text); transition: transform .08s linear; }
+
+.pager { flex: 1; display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.pager::-webkit-scrollbar { display: none; }
+.page { flex: 0 0 100%; overflow-y: auto; scroll-snap-align: start; scroll-snap-stop: always; padding: 18px var(--pad) 130px; scrollbar-width: none; }
+.page::-webkit-scrollbar { display: none; }
+.sec-t { display: flex; justify-content: space-between; align-items: baseline; margin: 30px 0 14px; }
+.sec-t h3 { font: 400 26px/1 var(--serif); }
+.sec-t a { color: var(--mute); }
+
+/* ---------- Bosh sahifa ---------- */
+.hero3d { position: relative; height: 330px; border-radius: 30px; overflow: hidden; border: 1px solid var(--line); }
+.hero3d canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero3d .fallback { position: absolute; inset: 0; background: radial-gradient(70% 60% at 50% 30%, #8a5c36, #2a1c12 70%); }
+.hero3d .cap { position: absolute; left: 18px; right: 18px; bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
+.hero3d .cap h2 { font: 400 30px/1 var(--serif); }
+.hero3d .cap .lbl { color: var(--mute); display: block; margin-bottom: 8px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; font: 400 11px/1 var(--label); letter-spacing: .18em; text-transform: uppercase; white-space: nowrap; }
+.pill.iv { background: var(--ivory); color: var(--ink); }
+.widgets { display: grid; grid-auto-flow: column; grid-auto-columns: 46%; gap: 8px; margin: 10px calc(var(--pad) * -1) 0; padding: 0 var(--pad); overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory; }
+.widgets::-webkit-scrollbar { display: none; }
+.widgets > * { scroll-snap-align: start; }
+.wd b { margin-top: 6px; display: block; }
+.wd { padding: 14px; min-height: 120px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 20px; cursor: pointer; }
+.wd .lbl { color: var(--mute); font-size: 9.5px; letter-spacing: .18em; }
+.wd b { font: 400 19px/1.1 var(--serif); }
+.wd .ruler { height: 18px; background: repeating-linear-gradient(90deg, var(--mute-2) 0 1px, transparent 1px 7px); mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); position: relative; }
+.wd .ruler::after { content: ""; position: absolute; left: 50%; top: -4px; width: 2px; height: 26px; background: var(--ivory); border-radius: 2px; }
+.wd .route { display: flex; align-items: center; gap: 6px; }
+.wd .route i { width: 6px; height: 6px; border-radius: 50%; background: var(--ivory); }
+.wd .route em { flex: 1; height: 1px; background: repeating-linear-gradient(90deg, var(--mute) 0 4px, transparent 4px 8px); }
+.wd .swatch { display: flex; } .wd .swatch i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #1a1816; margin-right: -5px; }
+.rail { display: grid; grid-auto-flow: column; grid-auto-columns: 62%; gap: 10px; overflow-x: auto; scrollbar-width: none; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); scroll-snap-type: x mandatory; }
+.rail::-webkit-scrollbar { display: none; }
+.rail > * { scroll-snap-align: start; }
+.look { position: relative; border-radius: 26px; overflow: hidden; aspect-ratio: 4/5; }
+.look::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(10,9,8,.75)); }
+.look .t { position: absolute; z-index: 1; left: 16px; right: 16px; bottom: 16px; }
+.look .t .lbl { color: var(--mute); } .look .t b { display: block; font: 400 24px/1.05 var(--serif); margin-top: 6px; }
+.note { display: flex; gap: 14px; padding: 16px; border-radius: 20px; margin-top: 10px; align-items: flex-start; }
+.note .ic { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--surface-2); flex: none; }
+.note b { display: block; font-weight: 500; margin-bottom: 2px; }
+.note span { color: var(--mute); font-size: 13px; }
+
+/* ---------- Katalog ---------- */
+.search { display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 18px; border-radius: 999px; color: var(--mute); }
+.chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 14px calc(var(--pad) * -1) 16px; padding: 0 var(--pad); }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex: none; height: 36px; padding: 0 15px; border-radius: 999px; border: 1px solid var(--line-2); font: 400 10.5px/34px var(--label); letter-spacing: .18em; text-transform: uppercase; color: var(--mute); }
+.chip.on { background: var(--ivory); color: var(--ink); border-color: var(--ivory); }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 8px; }
+.pc { cursor: pointer; }
+.pc .ph { position: relative; aspect-ratio: 3/4; border-radius: 20px; overflow: hidden; background: #1c1a17; }
+.pc .ph img { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.pc:hover .ph img { transform: scale(1.05); }
+.pc .tag { position: absolute; left: 8px; top: 8px; height: 24px; padding: 0 9px; border-radius: 999px; font: 500 11px/24px var(--sans); background: var(--sale); color: var(--ink); }
+.pc .fav { position: absolute; right: 8px; top: 8px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; }
+.pc .fav.on svg { fill: var(--ivory); }
+.pc .sw { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 4px; }
+.pc .sw i { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); }
+.pc .m { padding: 10px 4px 0; }
+.pc .m .lbl { color: var(--mute-2); font-size: 9.5px; }
+.pc .m .n { font-size: 14px; margin: 4px 0 2px; }
+.pc .m .p { font-weight: 500; font-size: 14px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.pc .m .p s { color: var(--mute-2); font-weight: 400; font-size: 12px; }
+
+/* ---------- Profil ---------- */
+.prof { text-align: left; padding-top: 18px; }
+.prof .big-av { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: var(--ivory); color: var(--ink); font: 400 30px/1 var(--logo); }
+.prof h2 { font: 400 46px/.95 var(--serif); margin: 18px 0 12px; }
+.badge { display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px; border-radius: 999px; font: 400 10.5px/1 var(--label); letter-spacing: .18em; text-transform: uppercase; }
+.balance { margin-top: 26px; padding: 22px; border-radius: 26px; }
+.balance .row { display: flex; justify-content: space-between; align-items: center; }
+.balance .lbl { color: var(--mute); }
+.balance .num { font: 400 48px/1 var(--serif); margin: 14px 0 14px; display: flex; align-items: center; gap: 12px; }
+.balance .num button { color: var(--mute); }
+.balance .num.hide span { filter: blur(10px); }
+.balance .sub { display: inline-flex; gap: 8px; align-items: center; height: 32px; padding: 0 12px; border-radius: 999px; font: 400 10.5px/1 var(--label); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.balance .sub i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
+.list { margin-top: 12px; border-radius: 22px; overflow: hidden; }
+.list a { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.list a:last-child { border-bottom: 0; }
+.list a .lbl { flex: 1; color: var(--text); font-size: 11.5px; }
+.list a em { font: normal 400 11px var(--label); letter-spacing: .14em; color: var(--mute); text-transform: uppercase; }
+.list a.out .lbl, .list a.out { color: var(--sale); }
+.ver { text-align: center; color: var(--mute-2); margin-top: 18px; }
+
+/* ---------- Pastki panel: bitta shisha bar, ichida o'zgaruvchan tugma ---------- */
+.dock { position: fixed; z-index: 40; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom)); transform: translateX(-50%); width: min(460px, calc(100% - 24px));
+  height: 66px; border-radius: 999px; display: grid; grid-template-columns: 52px 1fr 52px; align-items: center; gap: 6px; padding: 0 7px; }
+.dock .rb { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; color: var(--mute); }
+.dock .rb:hover { color: var(--text); }
+.cta { height: 52px; border-radius: 999px; background: var(--ivory); color: var(--ink); display: flex; align-items: center; justify-content: center; gap: 10px; overflow: hidden; position: relative; }
+.cta .t { font: 400 11.5px/1 var(--label); letter-spacing: .22em; text-transform: uppercase; transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .25s; }
+.cta .t.out { transform: translateY(-120%); opacity: 0; }
+.cta .t.in { transform: translateY(120%); opacity: 0; }
+.cta b { min-width: 20px; height: 20px; border-radius: 999px; background: var(--ink); color: var(--ivory); font: 600 10px/20px var(--sans); text-align: center; padding: 0 5px; }
+
+/* ---------- Pastdan chiqadigan oynalar ---------- */
+.scrim { position: fixed; inset: 0; z-index: 60; background: rgba(5,5,4,.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; pointer-events: none; transition: opacity .35s; }
+.scrim.on { opacity: 1; pointer-events: auto; }
+.sheet { position: fixed; z-index: 70; left: 50%; bottom: 0; width: min(560px, 100%); max-height: 92%; overflow-y: auto; transform: translate(-50%, 105%);
+  background: rgba(22,20,18,.92); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid var(--line-2); border-bottom: 0;
+  border-radius: 30px 30px 0 0; padding: 10px 20px calc(24px + env(safe-area-inset-bottom)); transition: transform .5s cubic-bezier(.2,.8,.2,1); scrollbar-width: none; }
+.sheet.on { transform: translate(-50%, 0); }
+.sheet .grab { width: 40px; height: 4px; border-radius: 4px; background: var(--line-2); margin: 0 auto 12px; }
+.sh-h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.sh-h .lbl { color: var(--mute); }
+.x { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); }
+.sheet h2 { font: 400 34px/1.02 var(--serif); margin-bottom: 8px; }
+.sheet p.d { color: var(--mute); font-size: 14px; }
+.phone { display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--line-2); padding: 26px 0 12px; font: 400 34px/1 var(--serif); }
+.phone input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--text); font: inherit; }
+.phone input::placeholder { color: var(--mute-2); }
+.code { display: flex; gap: 10px; margin: 28px 0 10px; }
+.code input { width: 58px; height: 68px; border-radius: 18px; text-align: center; font: 400 28px var(--serif); color: var(--text); background: var(--surface-2); border: 1px solid var(--line-2); outline: 0; }
+.code input:focus { border-color: var(--ivory); }
+.btn { width: 100%; height: 54px; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 10px; font: 400 11.5px/1 var(--label); letter-spacing: .22em; text-transform: uppercase; }
+.btn.iv { background: var(--ivory); color: var(--ink); }
+.btn.gh { border: 1px solid var(--line-2); }
+.fine { color: var(--mute-2); font-size: 12px; text-align: center; margin-top: 14px; }
+.pdp-img { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: 24px; aspect-ratio: 4/4.4; }
+.pdp-img::-webkit-scrollbar { display: none; }
+.pdp-img img { scroll-snap-align: start; }
+.pdp-h { display: flex; justify-content: space-between; align-items: flex-end; margin: 18px 0 6px; gap: 10px; }
+.pdp-h .pr { font: 400 22px var(--serif); text-align: right; white-space: nowrap; }
+.pdp-h .pr s { display: block; font-size: 14px; color: var(--mute-2); }
+.opt { margin: 20px 0 10px; }
+.opt .lbl { color: var(--mute); margin-bottom: 10px; display: flex; justify-content: space-between; }
+.sizes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.sizes button { height: 46px; border-radius: 14px; border: 1px solid var(--line-2); font: 400 13px var(--sans); }
+.sizes button.on { background: var(--ivory); color: var(--ink); border-color: var(--ivory); }
+.sizes button.off { color: var(--mute-2); text-decoration: line-through; }
+.cols { display: flex; gap: 10px; }
+.cols button { width: 38px; height: 38px; border-radius: 50%; padding: 3px; border: 1px solid transparent; }
+.cols button.on { border-color: var(--ivory); }
+.cols button i { display: block; width: 100%; height: 100%; border-radius: 50%; }
+.ci { display: grid; grid-template-columns: 64px 1fr auto; gap: 14px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.ci .th { width: 64px; height: 80px; border-radius: 14px; overflow: hidden; }
+.ci small { display: block; color: var(--mute); font: 400 10px/1.4 var(--label); letter-spacing: .16em; text-transform: uppercase; margin-top: 4px; }
+.ci .q { display: flex; gap: 12px; align-items: center; height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line-2); }
+.tot { display: flex; justify-content: space-between; align-items: baseline; margin: 18px 0; }
+.tot b { font: 400 30px var(--serif); }
+.nt { padding: 16px; border-radius: 20px; margin-bottom: 8px; }
+.nt .h { display: flex; justify-content: space-between; color: var(--mute); margin-bottom: 8px; }
+.nt b { font-weight: 500; display: block; margin-bottom: 4px; }
+.nt span { color: var(--mute); font-size: 13px; }
+.nt a { display: inline-block; margin-top: 10px; color: var(--ivory); }
+.menu-l a { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--line); font: 400 28px/1.1 var(--serif); }
+.menu-l a .lbl { color: var(--mute); }
+
+/* Yo'l-yo'riq (coach mark) */
+.coach { position: fixed; z-index: 80; left: 50%; transform: translateX(-50%); width: min(340px, calc(100% - 32px)); padding: 16px; border-radius: 22px; display: none; }
+.coach.on { display: block; animation: pop .4s cubic-bezier(.2,.8,.2,1); }
+@keyframes pop { from { opacity: 0; transform: translate(-50%, 10px) scale(.96); } }
+.coach .h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.coach .step { color: var(--mute); }
+.coach b { display: block; font: 400 22px/1.1 var(--serif); margin-bottom: 6px; }
+.coach span { color: var(--mute); font-size: 13px; }
+.coach .nx { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; }
+.coach .nx .pill { height: 36px; }
+.coach::before { content: ""; position: absolute; left: var(--ax, 50%); top: -7px; width: 14px; height: 14px; transform: rotate(45deg); background: inherit; border-left: 1px solid var(--line-2); border-top: 1px solid var(--line-2); backdrop-filter: blur(26px); }
+.coach.down::before { top: auto; bottom: -7px; border: 0; border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+.hl { position: relative; z-index: 79; }
+
+.toast { position: fixed; z-index: 90; left: 50%; top: calc(14px + env(safe-area-inset-top)); transform: translate(-50%, -140%); padding: 12px 18px; border-radius: 999px; font-size: 14px; display: flex; gap: 10px; align-items: center; transition: transform .45s cubic-bezier(.2,.8,.2,1); white-space: nowrap; }
+.toast.on { transform: translate(-50%, 0); }
+.toast i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+
+/* ---------- Splash va onboarding ---------- */
+.splash { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: radial-gradient(80% 60% at 50% 40%, #c69a6c, #7a5233 55%, #2a1c12); transition: opacity .6s, visibility .6s; }
+.splash .lg { font: 400 64px/1 var(--logo); letter-spacing: .06em; color: var(--ivory); animation: breathe 1.6s ease-in-out infinite; }
+.splash .lbl { position: absolute; bottom: calc(40px + env(safe-area-inset-bottom)); color: rgba(246,240,230,.7); }
+@keyframes breathe { 50% { opacity: .55; letter-spacing: .1em; } }
+.splash.off { opacity: 0; visibility: hidden; }
+.onb { position: fixed; inset: 0; z-index: 95; background: var(--bg); display: flex; flex-direction: column; transition: opacity .5s, visibility .5s; }
+.onb.off { opacity: 0; visibility: hidden; }
+.onb .slides { flex: 1; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.onb .slides::-webkit-scrollbar { display: none; }
+.onb .sl { flex: 0 0 100%; scroll-snap-align: start; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 22px 30px; }
+.onb .sl img { position: absolute; inset: 0; filter: blur(2px) saturate(.9); transform: scale(1.06); }
+.onb .sl::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(12,11,10,.45), rgba(12,11,10,.05) 25%, rgba(12,11,10,.7) 48%, rgba(12,11,10,.95) 68%, var(--bg)); }
+.onb .sl > * { position: relative; z-index: 2; }
+.onb .sl .lbl { color: var(--mute); }
+.onb .sl h2 { font: 400 46px/.98 var(--serif); margin: 12px 0 12px; }
+.onb .sl p { color: var(--mute); max-width: 420px; }
+.onb .sl .meta { display: flex; align-items: center; gap: 8px; margin-top: 18px; color: var(--mute); font-size: 13px; }
+.onb .bar { padding: 0 22px calc(22px + env(safe-area-inset-bottom)); display: grid; gap: 10px; }
+.onb .dots { display: flex; gap: 6px; justify-content: center; margin-bottom: 8px; }
+.onb .dots i { height: 3px; width: 18px; border-radius: 3px; background: var(--line-2); transition: .3s; }
+.onb .dots i.on { width: 36px; background: var(--ivory); }
+.onb .lang { position: absolute; z-index: 3; top: calc(14px + env(safe-area-inset-top)); right: 18px; }
+.onb .brand { position: absolute; z-index: 3; top: calc(18px + env(safe-area-inset-top)); left: 22px; font: 400 24px/1 var(--logo); letter-spacing: .05em; }
+
+/* ---------- Kompyuter ---------- */
+@media (min-width: 900px) {
+  :root { --pad: 32px; }
+  .top { grid-template-columns: 200px 1fr 200px; padding-top: 20px; }
+  .top .title { order: -1; text-align: left; grid-column: 1; }
+  .top .title .lbl { display: none; }
+  .top .title .logo { font-size: 28px; margin: 0; }
+  .av { grid-column: 3; justify-self: end; order: 2; }
+  .bell { grid-column: 2; justify-self: end; margin-right: 10px; order: 1; }
+  .tabs { width: 520px; margin: 4px auto 0; border: 1px solid var(--line); border-radius: 999px; padding: 4px; grid-template-columns: repeat(3, 1fr); }
+  .tabs button { height: 42px; border-radius: 999px; position: relative; z-index: 1; }
+  .tabs button span { display: inline; font: 400 11px/1 var(--label); letter-spacing: .2em; text-transform: uppercase; }
+  .tabs .ind { top: 4px; bottom: 4px; height: auto; left: 4px; width: calc((100% - 8px) / 3); border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid var(--line-2); }
+  .page { padding-top: 26px; }
+  .home-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 14px; align-items: start; }
+  .hero3d { height: 470px; }
+  .hero3d .cap h2 { font-size: 46px; }
+  .widgets { grid-auto-flow: row; grid-template-columns: 1fr; grid-auto-columns: auto; margin: 0; padding: 0; overflow: visible; }
+  .wd { min-height: 0; flex-direction: row; align-items: center; gap: 14px; padding: 18px; }
+  .wd > div:first-child { flex: 1; }
+  .wd .ruler, .wd .route, .wd .swatch { width: 120px; }
+  .rail { grid-auto-columns: calc((100% - 30px) / 4); margin: 0; padding: 0; }
+  .grid { grid-template-columns: repeat(4, 1fr); gap: 26px 14px; }
+  .search { max-width: 520px; }
+  .prof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+  .prof h2 { font-size: 64px; }
+  .sheet { bottom: 50%; border-radius: 30px; border-bottom: 1px solid var(--line-2); transform: translate(-50%, 60%) scale(.96); opacity: 0; pointer-events: none; transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .3s; max-height: 86%; }
+  .sheet.on { transform: translate(-50%, 50%); opacity: 1; pointer-events: auto; }
+  .sheet.wide { width: min(900px, 94%); }
+  .sheet.wide .pdp { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .onb .sl { padding: 0 8vw 60px; }
+  .onb .sl h2 { font-size: 84px; max-width: 900px; }
+  .onb .bar { grid-template-columns: 1fr 260px 260px; align-items: center; padding: 0 8vw 40px; }
+  .onb .dots { justify-content: flex-start; margin: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .grain { animation: none; } }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15L6 16Z"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-hanger" viewBox="0 0 24 24"><path d="M12 7a2 2 0 1 1 2-2c0 1.2-2 1.6-2 3v1"/><path d="M12 9 3 16.5c-.6.5-.3 1.5.5 1.5h17c.8 0 1.1-1 .5-1.5L12 9Z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7L12 3Z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/><path d="M4 4v4h4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M5 8h14M5 12h14M5 16h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5v-9Z"/><path d="m3 7.5 9 4.5 9-4.5M12 12v9"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5Z"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M14 4h5v16h-5M10 8l-4 4 4 4M6 12h10"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+</svg>
+
+<div class="ambient" id="ambient"></div>
+<div class="grain"></div>
+
+<!-- Splash -->
+<div class="splash" id="splash"><div class="lg">AKBW</div><span class="lbl">Aburiix · Kraft · Brand · Wear</span></div>
+
+<!-- Onboarding -->
+<div class="onb" id="onb">
+  <span class="brand">AKBW</span>
+  <button class="pill glass lang">UZ ⌄</button>
+  <div class="slides" id="slides">
+    <section class="sl"><img src="../akbw-design/client/public/assets/oldmoney.jpg" alt=""><span class="lbl">Kuz — Qish 2026</span><h2>Sokin hashamat har kuni</h2><p>Tabiiy mato, erkin bichim va zamonaviy siluet — yangi kolleksiya allaqachon do'konda.</p><div class="meta"><svg class="i" style="width:16px"><use href="#i-hanger"/></svg>Yangi modellar har oy</div></section>
+    <section class="sl"><img src="../akbw-design/client/public/assets/sport-style.jpg" alt=""><span class="lbl">To'lov va yetkazish</span><h2>Bir bosishda buyurtma</h2><p>Payme, Click, Uzum yoki Paynet orqali to'lang — BTS butun O'zbekiston bo'ylab yetkazadi.</p><div class="meta"><svg class="i" style="width:16px"><use href="#i-truck"/></svg>Narx manzilga qarab hisoblanadi</div></section>
+    <section class="sl"><img src="../akbw-design/client/public/assets/minimalistik.jpg" alt=""><span class="lbl">AKBW Club</span><h2>Do'stni taklif qiling — bonus oling</h2><p>Har bir taklif qilgan do'stingiz xarididan bonus to'planadi va keyingi xaridda ishlatiladi.</p><div class="meta"><svg class="i" style="width:16px"><use href="#i-star"/></svg>Bonus profil sahifasida</div></section>
+  </div>
+  <div class="bar">
+    <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+    <button class="btn iv" id="onbNext">Davom etish</button>
+    <button class="btn gh" id="onbSkip">Hozir emas</button>
+  </div>
+</div>
+
+<!-- Asosiy ilova -->
+<div class="app">
+  <header class="top">
+    <button class="av" data-sheet="login" aria-label="Profil">A</button>
+    <div class="title"><span class="logo">AKBW</span><span class="lbl" id="ttl">Bosh sahifa</span></div>
+    <button class="bell" data-sheet="notif" aria-label="Bildirishnomalar"><svg class="i"><use href="#i-bell"/></svg></button>
+  </header>
+  <nav class="tabs" id="tabs">
+    <button data-go="0" aria-label="Katalog"><svg class="i"><use href="#i-hanger"/></svg><span>Katalog</span></button>
+    <button data-go="1" aria-label="Bosh sahifa" class="on"><svg class="i"><use href="#i-home"/></svg><span>Bosh sahifa</span></button>
+    <button data-go="2" aria-label="Profil"><svg class="i"><use href="#i-star"/></svg><span>Club</span></button>
+    <i class="ind" id="ind"></i>
+  </nav>
+
+  <main class="pager" id="pager">
+    <!-- 0: Katalog -->
+    <section class="page" id="pg0">
+      <button class="search glass" data-sheet="search" style="width:100%"><svg class="i"><use href="#i-search"/></svg>Kiyim, rang yoki uslub…</button>
+      <div class="chips" id="chips"></div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <!-- 1: Bosh sahifa -->
+    <section class="page" id="pg1">
+      <div class="home-grid">
+        <div class="hero3d" id="hero"><div class="fallback"></div><canvas id="gl"></canvas>
+          <div class="cap"><div><span class="lbl">Yangi kolleksiya</span><h2>Kuz — Qish 2026</h2></div><button class="pill iv" data-go="0">Ko'rish</button></div></div>
+        <div class="widgets">
+          <div class="wd card" data-sheet="size"><div><span class="lbl">O'lcham yordamchisi</span><b>M yoki L?</b></div><div class="ruler"></div></div>
+          <div class="wd card" data-sheet="notif"><div><span class="lbl">Yetkazish · BTS</span><b>Kuzatish</b></div><div class="route"><i></i><em></em><i style="background:var(--ok)"></i></div></div>
+          <div class="wd card" data-go="0"><div><span class="lbl">Fasl ranglari</span><b>Qum · Zaytun</b></div><div class="swatch"><i style="background:#a6a195"></i><i style="background:#6b6e5f"></i><i style="background:#8a847a"></i><i style="background:#efe8db"></i></div></div>
+        </div>
+      </div>
+      <div class="sec-t"><h3>Siz uchun</h3><a class="lbl" href="#" data-go="0">Barchasi</a></div>
+      <div class="rail" id="forYou"></div>
+      <div class="sec-t"><h3>Lookbook</h3></div>
+      <div class="rail" id="looks"></div>
+      <div class="note card"><div class="ic"><svg class="i"><use href="#i-star"/></svg></div><div><b>AKBW Club'ga qo'shiling</b><span>Kirish bilan bonus, buyurtmalar tarixi va saralanganlar ochiladi.</span></div></div>
+    </section>
+
+    <!-- 2: Club / Profil -->
+    <section class="page" id="pg2">
+      <div class="prof-grid">
+        <div class="prof">
+          <div class="big-av">A</div>
+          <h2>Mehmon<br>foydalanuvchi</h2>
+          <span class="badge glass"><svg class="i" style="width:13px"><use href="#i-star"/></svg>Club · Standard</span>
+          <div class="balance card">
+            <div class="row"><span class="lbl">Bonus hisobi</span><span class="lbl" style="color:var(--mute-2)">AKBW Club</span></div>
+            <div class="num" id="bal"><span>0 so'm</span><button aria-label="Yashirish" id="eye"><svg class="i"><use href="#i-eye"/></svg></button></div>
+            <span class="sub glass"><i></i>Bonus har xariddan to'planadi</span>
+          </div>
+        </div>
+        <div>
+          <div class="list card">
+            <a href="#" data-sheet="cart"><svg class="i"><use href="#i-box"/></svg><span class="lbl">Buyurtmalar</span><svg class="i" style="width:16px"><use href="#i-chev"/></svg></a>
+            <a href="#" data-sheet="fav"><svg class="i"><use href="#i-heart"/></svg><span class="lbl">Saralanganlar</span><em id="favN">0</em></a>
+            <a href="#"><svg class="i"><use href="#i-pin"/></svg><span class="lbl">Manzillar</span><svg class="i" style="width:16px"><use href="#i-chev"/></svg></a>
+            <a href="#"><svg class="i"><use href="#i-globe"/></svg><span class="lbl">Til</span><em>O'zbekcha</em></a>
+            <a href="#" data-sheet="notif"><svg class="i"><use href="#i-chat"/></svg><span class="lbl">Yordam va chat</span><svg class="i" style="width:16px"><use href="#i-chev"/></svg></a>
+            <a href="#" class="out" data-sheet="login"><svg class="i"><use href="#i-out"/></svg><span class="lbl">Kirish / Ro'yxatdan o'tish</span></a>
+          </div>
+          <div class="ver lbl">AKBW · versiya 2.0 · maket</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Pastki panel -->
+<nav class="dock glass">
+  <button class="rb" data-sheet="cart" aria-label="Buyurtmalar"><svg class="i"><use href="#i-clock"/></svg></button>
+  <button class="cta" id="cta"><span class="t" id="ctaT">Katalog</span></button>
+  <button class="rb" data-sheet="menu" aria-label="Menyu"><svg class="i"><use href="#i-menu"/></svg></button>
+</nav>
+
+<!-- Oynalar -->
+<div class="scrim" id="scrim"></div>
+
+<div class="sheet" id="sh-login"><div class="grab"></div>
+  <div class="sh-h"><span class="lbl">Kirish</span><button class="x" data-close><svg class="i" style="width:16px"><use href="#i-x"/></svg></button></div>
+  <div id="lgStep1"><h2>Telefon raqamingizni kiriting</h2><p class="d">Kirish yoki ro'yxatdan o'tish uchun. Bir martalik kodni SMS orqali yuboramiz.</p>
+    <label class="phone"><span style="color:var(--mute)">+998</span><input id="ph" inputmode="tel" placeholder="90 000 00 00" maxlength="12"></label>
+    <div style="height:26px"></div><button class="btn iv" id="sendCode">Kod yuborish</button>
+    <p class="fine">Tugmani bosib, foydalanish shartlariga rozilik bildirasiz</p></div>
+  <div id="lgStep2" hidden><h2>SMS dagi kodni kiriting</h2><p class="d" id="sentTo">Kod yuborildi</p>
+    <div class="code" id="code"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"></div>
+    <p class="fine" style="text-align:left">Maket: istalgan 5 ta raqam — haqiqiy SMS yuborilmaydi</p></div>
+</div>
+
+<div class="sheet wide" id="sh-pdp"><div class="grab"></div><div id="pdpBody"></div></div>
+
+<div class="sheet" id="sh-cart"><div class="grab"></div>
+  <div class="sh-h"><span class="lbl">Savat</span><button class="x" data-close><svg class="i" style="width:16px"><use href="#i-x"/></svg></button></div>
+  <div id="cartList"></div>
+  <div class="tot"><span class="lbl" style="color:var(--mute)">Jami</span><b id="cartSum">0 so'm</b></div>
+  <button class="btn iv">Rasmiylashtirish <svg class="i" style="width:16px"><use href="#i-arrow"/></svg></button>
+</div>
+
+<div class="sheet" id="sh-fav"><div class="grab"></div>
+  <div class="sh-h"><span class="lbl">Saralanganlar</span><button class="x" data-close><svg class="i" style="width:16px"><use href="#i-x"/></svg></button></div>
+  <div id="favList"></div>
+</div>
+
+<div class="sheet" id="sh-notif"><div class="grab"></div>
+  <div class="sh-h"><span class="lbl">Bildirishnomalar</span><button class="x" data-close><svg class="i" style="width:16px"><use href="#i-x"/></svg></button></div>
+  <div class="chips" style="margin-top:0"><span class="chip on">Barchasi</span><span class="chip">Buyurtmalar</span><span class="chip">Aksiyalar</span></div>
+  <div class="nt card"><div class="h lbl"><span>Yangi kolleksiya</span><span>Bugun</span></div><b>Kuz — Qish 2026 do'konda</b><span>Yangi xudi, palto va triko modellari katalogda.</span><a class="lbl" href="#" data-go="0" data-close>Batafsil →</a></div>
+  <div class="nt card"><div class="h lbl"><span>Yetkazish</span><span>Kecha</span></div><b>Buyurtmalarni kuzatish</b><span>Kirgandan so'ng BTS orqali yuborilgan buyurtma holati shu yerda ko'rinadi.</span></div>
+  <div class="nt card"><div class="h lbl"><span>AKBW Club</span><span>06.11</span></div><b>Bonus tizimi ishga tushdi</b><span>Do'stingizni taklif qiling — uning xarididan bonus oling.</span></div>
+</div>
+
+<div class="sheet" id="sh-menu"><div class="grab"></div>
+  <div class="sh-h"><span class="lbl">Menyu</span><button class="x" data-close><svg class="i" style="width:16px"><use href="#i-x"/></svg></button></div>
+  <nav class="menu-l">
+    <a href="#" data-go="1" data-close>Bosh sahifa <span class="lbl">01</span></a>
+    <a href="#" data-go="0" data-close>Katalog <span class="lbl">02</span></a>
+    <a href="#" data-go="2" data-close>AKBW Club <span class="lbl">03</span></a>
+    <a href="#" data-sheet="search">Qidiruv <span class="lbl">04</span></a>
+  </nav>
+  <div class="chips" style="margin-top:18px"><span class="chip on">O'zbek</span><span class="chip">Русский</span><span class="chip">English</span></div>
+</div>
+
+<div class="sheet" id="sh-search"><div class="grab"></div>
+  <div class="sh-h"><span class="lbl">Qidiruv</span><button class="x" data-close><svg class="i" style="width:16px"><use href="#i-x"/></svg></button></div>
+  <label class="search glass"><svg class="i"><use href="#i-search"/></svg><input id="sIn" placeholder="Xudi, shim, polo…" style="flex:1;background:none;border:0;outline:0;color:var(--text);font:inherit"></label>
+  <div class="chips" id="sTags"></div>
+  <div class="grid" id="sRes"></div>
+</div>
+
+<div class="sheet" id="sh-size"><div class="grab"></div>
+  <div class="sh-h"><span class="lbl">O'lcham yordamchisi</span><button class="x" data-close><svg class="i" style="width:16px"><use href="#i-x"/></svg></button></div>
+  <h2>Bo'yingiz va vazningiz</h2><p class="d">Ikkita raqam — va mos o'lchamni taklif qilamiz.</p>
+  <div class="opt"><div class="lbl"><span>Bo'y</span><span id="hV">175 sm</span></div><input type="range" min="150" max="200" value="175" id="hR" style="width:100%;accent-color:#efe8db"></div>
+  <div class="opt"><div class="lbl"><span>Vazn</span><span id="wV">70 kg</span></div><input type="range" min="40" max="120" value="70" id="wR" style="width:100%;accent-color:#efe8db"></div>
+  <div class="balance card" style="margin-top:14px;text-align:center"><span class="lbl">Sizga mos</span><div class="num" style="justify-content:center"><span id="szOut">M</span></div><span class="lbl" style="color:var(--mute-2)">Oversize bichim uchun bir o'lcham kichikroq oling</span></div>
+</div>
+
+<div class="coach glass" id="coach"><div class="h"><span class="lbl step" id="cStep">3 dan 1</span><button class="x" id="cX" style="width:30px;height:30px"><svg class="i" style="width:14px"><use href="#i-x"/></svg></button></div>
+  <b id="cT"></b><span id="cD"></span><div class="nx"><span></span><button class="pill iv" id="cN">Keyingi</button></div></div>
+
+<div class="toast glass" id="toast"><i></i><span id="toastT"></span></div>
+
+<script>
+/* ---------- Ma'lumot ---------- */
+const A = "../akbw-design/client/public/assets/";
+const fmt = n => n.toLocaleString("ru-RU").replace(/\s|,/g, " ") + " so'm";
+const P = [["Oversize futbolka","Futbolka",189000,0,"oversize.jpg"],["Klassik polo","Polo",249000,15,"oldmoney.jpg"],["Sport xudi","Xudi",329000,0,"sport-style.jpg"],["Minimal svitshot","Svitshot",279000,10,"minimalistik.jpg"],
+  ["Kashemir sviter","Triko",459000,0,"welcome.jpg"],["Keng shim","Shim",299000,0,"giamour.webp"],["Jogger shim","Shim",259000,20,"akbw-about.jpg"],["Bomber kurtka","Kurtka",549000,0,"herobg.jpg"]];
+const SW = ["#0d0d0c", "#efe8db", "#a6a195", "#6b6e5f"];
+const $ = s => document.querySelector(s);
+const cart = [{ i: 1, s: "M", q: 1 }, { i: 2, s: "L", q: 1 }];
+const favs = new Set();
+const oldP = (p, d) => Math.round(p / (1 - d / 100) / 1000) * 1000;
+
+/* ---------- Mahsulotlar ---------- */
+const pc = ([n, c, p, d, f], i) => `<article class="pc" data-pdp="${i}"><div class="ph"><img src="${A + f}" alt="" loading="lazy">
+  ${d ? `<span class="tag">−${d}%</span>` : ""}<button class="fav glass ${favs.has(i) ? "on" : ""}" data-fav="${i}" aria-label="Saralash"><svg class="i" style="width:16px"><use href="#i-heart"/></svg></button>
+  <div class="sw">${SW.slice(i % 2, i % 2 + 3).map(s => `<i style="background:${s}"></i>`).join("")}</div></div>
+  <div class="m"><span class="lbl">${c}</span><div class="n">${n}</div><div class="p">${fmt(p)}${d ? `<s>${fmt(oldP(p, d))}</s>` : ""}</div></div></article>`;
+const cats = ["Hammasi", ...new Set(P.map(p => p[1]))];
+chips.innerHTML = cats.map((c, k) => `<button class="chip ${k ? "" : "on"}" data-cat="${c}">${c}</button>`).join("");
+function renderGrid(cat = "Hammasi") { grid.innerHTML = P.map((p, i) => [p, i]).filter(([p]) => cat === "Hammasi" || p[1] === cat).map(([p, i]) => pc(p, i)).join(""); }
+renderGrid();
+chips.addEventListener("click", e => { const b = e.target.closest("[data-cat]"); if (!b) return; chips.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === b)); renderGrid(b.dataset.cat); });
+forYou.innerHTML = [4, 1, 7, 2, 5].map(i => pc(P[i], i)).join("");
+looks.innerHTML = [["Old money", "oldmoney.jpg"], ["Sport", "sport-style.jpg"], ["Minimalizm", "minimalistik.jpg"], ["Glamour", "giamour.webp"], ["Oversize", "oversize.jpg"]]
+  .map(([n, f]) => `<a class="look" href="#" data-go="0"><img src="${A + f}" alt=""><div class="t"><span class="lbl">Lookbook</span><b>${n}</b></div></a>`).join("");
+
+/* ---------- Tablar: surish + fon rangi ---------- */
+const AMB = [["#4c5640", "#2a2f22"], ["#7a4e2c", "#3a2414"], ["#7a3b2e", "#3a1c16"]];  // zaytun, bronza, terrakota
+const TITLES = ["Katalog", "Bosh sahifa", "AKBW Club"], CTAS = ["Savat", "Katalog", "Kirish"];
+const hex = h => [1, 3, 5].map(k => parseInt(h.slice(k, k + 2), 16));
+const mix = (a, b, t) => "rgb(" + hex(a).map((v, k) => Math.round(v + (hex(b)[k] - v) * t)).join(",") + ")";
+let cur = -1;
+function onPager() {
+  const x = pager.scrollLeft / pager.clientWidth, k = Math.min(Math.floor(x), 1), t = x - k;
+  ambient.style.setProperty("--a1", mix(AMB[k][0], AMB[k + 1][0], t)); ambient.style.setProperty("--a2", mix(AMB[k][1], AMB[k + 1][1], t));
+  ind.style.transform = `translateX(${x * 100}%)`;
+  const idx = Math.round(x); if (idx !== cur) setTab(idx);
+}
+function setTab(idx) {
+  cur = idx; ttl.textContent = TITLES[idx];
+  tabs.querySelectorAll("button").forEach((b, k) => b.classList.toggle("on", k === idx));
+  setCta(CTAS[idx]);
+}
+function setCta(txt) {
+  const t = $("#ctaT"); if (t.dataset.v === txt) return; t.dataset.v = txt;
+  t.classList.add("out");
+  setTimeout(() => { t.innerHTML = txt === "Savat" ? `Savat <b>${cart.reduce((s, c) => s + c.q, 0)}</b>` : txt; t.classList.remove("out"); t.classList.add("in"); requestAnimationFrame(() => requestAnimationFrame(() => t.classList.remove("in"))); }, 180);
+}
+const go = i => pager.scrollTo({ left: i * pager.clientWidth, behavior: "smooth" });
+pager.addEventListener("scroll", onPager, { passive: true });
+addEventListener("resize", () => { pager.scrollLeft = cur * pager.clientWidth; });
+pager.scrollLeft = pager.clientWidth; onPager();
+cta.addEventListener("click", () => { const v = $("#ctaT").dataset.v; if (v === "Savat") openSheet("cart"); else if (v === "Katalog") go(0); else openSheet("login"); });
+
+/* ---------- Oynalar ---------- */
+let open = null;
+function openSheet(id) {
+  if (open) $("#sh-" + open).classList.remove("on");
+  if (id === "cart") renderCart(); if (id === "fav") renderFav(); if (id === "search") renderSearch("");
+  $("#sh-" + id).classList.add("on"); scrim.classList.add("on"); open = id;
+}
+function closeSheet() { if (!open) return; $("#sh-" + open).classList.remove("on"); scrim.classList.remove("on"); open = null; }
+scrim.addEventListener("click", closeSheet);
+addEventListener("keydown", e => e.key === "Escape" && closeSheet());
+document.addEventListener("click", e => {
+  const f = e.target.closest("[data-fav]");
+  if (f) { e.stopPropagation(); e.preventDefault(); const i = +f.dataset.fav; favs.has(i) ? favs.delete(i) : favs.add(i);
+    document.querySelectorAll(`[data-fav="${i}"]`).forEach(x => x.classList.toggle("on", favs.has(i))); favN.textContent = favs.size; toast(favs.has(i) ? "Saralanganlarga qo'shildi" : "Saralanganlardan olindi"); if (open === "fav") renderFav(); return; }
+  const add = e.target.closest("[data-add]");
+  if (add) { e.preventDefault(); const sz = document.querySelector("#pdpSizes .on"); const i = +add.dataset.add, s = sz ? sz.textContent : "M"; const ex = cart.find(c => c.i === i && c.s === s); ex ? ex.q++ : cart.push({ i, s, q: 1 });
+    closeSheet(); toast(`${P[i][0]} savatga qo'shildi`); const v = $("#ctaT").dataset.v; $("#ctaT").dataset.v = ""; setCta(v === "Savat" ? "Savat" : "Savat"); return; }
+  const p = e.target.closest("[data-pdp]"); if (p) { e.preventDefault(); pdp(+p.dataset.pdp); return; }
+  const s = e.target.closest("[data-sheet]"); if (s) { e.preventDefault(); openSheet(s.dataset.sheet); return; }
+  const g = e.target.closest("[data-go]"); if (g) { e.preventDefault(); if (g.hasAttribute("data-close")) closeSheet(); go(+g.dataset.go); }
+  const c = e.target.closest("[data-close]"); if (c) { e.preventDefault(); closeSheet(); }
+});
+/* Mahsulot oynasi */
+function pdp(i) {
+  const [n, c, p, d, f] = P[i], imgs = [f, P[(i + 3) % 8][4], P[(i + 5) % 8][4]];
+  pdpBody.innerHTML = `<div class="sh-h"><span class="lbl">${c} · AKBW</span><button class="x" data-close><svg class="i" style="width:16px"><use href="#i-x"/></svg></button></div>
+  <div class="pdp"><div class="pdp-img">${imgs.map(x => `<img src="${A + x}" alt="">`).join("")}</div><div>
+    <div class="pdp-h"><h2>${n}</h2><div class="pr">${fmt(p)}${d ? `<s>${fmt(oldP(p, d))}</s>` : ""}</div></div>
+    <p class="d">Yumshoq paxta, erkin bichim. Har kuni kiyish uchun qulay va sifatli kiyim.</p>
+    <div class="opt"><div class="lbl"><span>Rang</span></div><div class="cols">${SW.map((s, k) => `<button class="${k ? "" : "on"}"><i style="background:${s}"></i></button>`).join("")}</div></div>
+    <div class="opt"><div class="lbl"><span>O'lcham</span><a href="#" data-sheet="size" style="color:var(--ivory)">Qaysi biri mos?</a></div>
+      <div class="sizes" id="pdpSizes">${["XS", "S", "M", "L", "XL"].map(s => `<button class="${s === "M" ? "on" : s === "XS" ? "off" : ""}">${s}</button>`).join("")}</div></div>
+    <div style="display:grid;grid-template-columns:54px 1fr;gap:8px;margin-top:18px"><button class="btn gh fav ${favs.has(i) ? "on" : ""}" data-fav="${i}" style="padding:0"><svg class="i"><use href="#i-heart"/></svg></button><button class="btn iv" data-add="${i}">Savatga qo'shish</button></div>
+  </div></div>`;
+  pdpBody.querySelector("#pdpSizes").addEventListener("click", e => { const b = e.target.closest("button:not(.off)"); if (!b) return; b.parentNode.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); });
+  pdpBody.querySelector(".cols").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; b.parentNode.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); });
+  openSheet("pdp");
+}
+/* Savat */
+function renderCart() {
+  cartList.innerHTML = cart.length ? cart.map((c, k) => { const [n, , p, , f] = P[c.i]; return `<div class="ci"><div class="th"><img src="${A + f}" alt=""></div><div>${n}<small>O'lcham ${c.s} · ${fmt(p)}</small></div>
+    <div class="q"><button data-q="${k}" data-d="-1">−</button>${c.q}<button data-q="${k}" data-d="1">+</button></div></div>`; }).join("") : `<p class="d" style="padding:30px 0;text-align:center">Savat bo'sh</p>`;
+  cartSum.textContent = fmt(cart.reduce((s, c) => s + P[c.i][2] * c.q, 0));
+}
+cartList.addEventListener("click", e => { const b = e.target.closest("[data-q]"); if (!b) return; const c = cart[b.dataset.q]; c.q += +b.dataset.d; if (c.q < 1) cart.splice(b.dataset.q, 1); renderCart(); $("#ctaT").dataset.v = ""; setCta(CTAS[cur]); });
+function renderFav() { favList.innerHTML = favs.size ? `<div class="grid">${[...favs].map(i => pc(P[i], i)).join("")}</div>` : `<p class="d" style="padding:30px 0;text-align:center">Kartochkadagi ♡ ni bosing — mahsulot shu yerda saqlanadi</p>`; }
+/* Qidiruv */
+sTags.innerHTML = ["Xudi", "Shim", "Polo", "Kurtka", "Chegirma"].map(t => `<button class="chip" data-tag="${t}">${t}</button>`).join("");
+sTags.addEventListener("click", e => { const b = e.target.closest("[data-tag]"); if (b) { sIn.value = b.dataset.tag; renderSearch(b.dataset.tag); } });
+sIn.addEventListener("input", () => renderSearch(sIn.value));
+function renderSearch(q) { q = q.trim().toLowerCase(); const l = P.map((p, i) => [p, i]).filter(([p]) => !q || (q === "chegirma" ? p[3] : (p[0] + " " + p[1]).toLowerCase().includes(q)));
+  sRes.innerHTML = l.length ? l.map(([p, i]) => pc(p, i)).join("") : `<p class="d" style="grid-column:1/-1;padding:20px 0">"${q}" topilmadi</p>`; }
+/* Kirish */
+sendCode.addEventListener("click", () => { lgStep1.hidden = true; lgStep2.hidden = false; sentTo.textContent = `Bir martalik kod +998 ${ph.value || "…"} raqamiga yuborildi`; code.querySelector("input").focus(); });
+code.addEventListener("input", e => { const ins = [...code.querySelectorAll("input")], k = ins.indexOf(e.target); if (e.target.value && k < 4) ins[k + 1].focus();
+  if (ins.every(x => x.value)) { closeSheet(); toast("Xush kelibsiz!"); setTimeout(() => { lgStep1.hidden = false; lgStep2.hidden = true; ins.forEach(x => x.value = ""); }, 600); } });
+/* O'lcham yordamchisi */
+function size() { const h = +hR.value, w = +wR.value; hV.textContent = h + " sm"; wV.textContent = w + " kg"; const bmi = w / ((h / 100) ** 2); const s = h < 165 ? (bmi < 23 ? "S" : "M") : h < 180 ? (bmi < 22 ? "M" : bmi < 27 ? "L" : "XL") : (bmi < 23 ? "L" : "XL"); szOut.textContent = s; }
+hR.oninput = wR.oninput = size; size();
+/* Bonus yashirish */
+eye.addEventListener("click", () => bal.classList.toggle("hide"));
+/* Toast */
+function toast(t) { toastT.textContent = t; const el = $("#toast"); el.classList.add("on"); clearTimeout(el._h); el._h = setTimeout(() => el.classList.remove("on"), 1900); }
+
+/* ---------- Splash → onboarding → yo'l-yo'riq ---------- */
+const seen = (() => { try { return localStorage.getItem("akbw_onb") === "1"; } catch { return false; } })();
+setTimeout(() => splash.classList.add("off"), 1400);
+if (seen || new URLSearchParams(location.search).has("skip")) onb.classList.add("off");
+slides.addEventListener("scroll", () => { const k = Math.round(slides.scrollLeft / slides.clientWidth); dots.querySelectorAll("i").forEach((d, j) => d.classList.toggle("on", j === k)); onbNext.textContent = k === 2 ? "Boshlash" : "Davom etish"; }, { passive: true });
+onbNext.addEventListener("click", () => { const k = Math.round(slides.scrollLeft / slides.clientWidth); if (k < 2) slides.scrollTo({ left: (k + 1) * slides.clientWidth, behavior: "smooth" }); else finishOnb(); });
+onbSkip.addEventListener("click", finishOnb);
+function finishOnb() { onb.classList.add("off"); try { localStorage.setItem("akbw_onb", "1"); } catch {} setTimeout(coachStart, 700); }
+const STEPS = [[".tabs", "Uchta bo'lim", "Katalog, Bosh sahifa va Club — surib yoki bosib o'ting. Har birining o'z rangi bor."],
+  [".cta", "Aqlli tugma", "Bo'limga qarab o'zgaradi: katalogda savat, bosh sahifada katalog, Club'da kirish."],
+  [".widgets", "O'lcham yordamchisi", "Bo'y va vazningizni kiriting — mos o'lchamni taklif qilamiz."]];
+let cs = 0;
+function coachStart() { cs = 0; coachShow(); }
+function coachShow() {
+  const [sel, t, d] = STEPS[cs], el = document.querySelector(sel), r = el.getBoundingClientRect(), c = $("#coach");
+  cStep.textContent = `3 dan ${cs + 1}`; cT.textContent = t; cD.textContent = d; cN.textContent = cs === 2 ? "Tushunarli" : "Keyingi";
+  c.classList.add("on"); const below = r.top < innerHeight / 2; c.classList.toggle("down", !below);
+  c.style.top = below ? (r.bottom + 14) + "px" : "auto"; c.style.bottom = below ? "auto" : (innerHeight - r.top + 14) + "px";
+  const cr = c.getBoundingClientRect(); c.style.setProperty("--ax", Math.max(20, Math.min(cr.width - 30, r.left + r.width / 2 - cr.left - 7)) + "px");
+}
+cN.addEventListener("click", () => { if (++cs > 2) return $("#coach").classList.remove("on"); coachShow(); });
+cX.addEventListener("click", () => $("#coach").classList.remove("on"));
+</script>
+
+<script type="module">
+/* ---------- 3D shisha AKBW (bosh sahifa kartasida) ---------- */
+import * as THREE from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import opentype from "https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/+esm";
+const hero = document.getElementById("hero"), canvas = document.getElementById("gl");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.outputColorSpace = THREE.SRGBColorSpace;
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.02).texture;
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 200);
+function tex() {
+  const c = document.createElement("canvas"); c.width = 1600; c.height = 1000; const g = c.getContext("2d");
+  const b = g.createLinearGradient(0, 0, 0, 1000); b.addColorStop(0, "#3a2717"); b.addColorStop(1, "#120d09"); g.fillStyle = b; g.fillRect(0, 0, 1600, 1000);
+  const blob = (x, y, r, col) => { const rg = g.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, col); rg.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = rg; g.fillRect(0, 0, 1600, 1000); };
+  blob(800, 260, 700, "rgba(214,160,108,.8)"); blob(800, 200, 300, "rgba(255,230,196,.5)"); blob(1500, 900, 600, "rgba(10,8,6,.8)");
+  g.filter = "blur(22px)"; [[480, .2], [660, .12], [1000, .16], [1180, .1]].forEach(([x, a]) => { g.fillStyle = `rgba(255,240,220,${a})`; g.fillRect(x, 80, 40, 640); }); g.filter = "none";
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+const bg = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: tex(), toneMapped: false })); bg.position.z = -8; scene.add(bg);
+const key = new THREE.DirectionalLight("#fff3e2", 3.5); key.position.set(4, 6, 8); scene.add(key);
+const glass = new THREE.MeshPhysicalMaterial({ color: "#fff", roughness: 0.02, transmission: 1, thickness: 1.3, ior: 1.55, dispersion: 5, clearcoat: 1, envMapIntensity: 2.6, attenuationColor: new THREE.Color("#f3dcb5"), attenuationDistance: 3 });
+const font = opentype.parse(await fetch("../akbw-design/client/public/fonts/Kenao.otf").then(r => r.arrayBuffer()));
+const sp = new THREE.ShapePath();
+for (const c of font.getPath("AKBW", 0, 0, 4).commands) {
+  if (c.type === "M") sp.moveTo(c.x, -c.y); else if (c.type === "L") sp.lineTo(c.x, -c.y);
+  else if (c.type === "Q") sp.quadraticCurveTo(c.x1, -c.y1, c.x, -c.y); else if (c.type === "C") sp.bezierCurveTo(c.x1, -c.y1, c.x2, -c.y2, c.x, -c.y);
+}
+let big = null, ar = 0; for (const s of sp.subPaths) { const pts = s.getPoints(), a = Math.abs(THREE.ShapeUtils.area(pts)); if (a > ar) { ar = a; big = pts; } }
+const geo = new THREE.ExtrudeGeometry(sp.toShapes(big ? !THREE.ShapeUtils.isClockWise(big) : true), { depth: 0.5, bevelEnabled: true, bevelThickness: 0.08, bevelSize: 0.04, bevelSegments: 10, curveSegments: 32 });
+geo.center(); geo.computeBoundingBox(); const W = geo.boundingBox.max.x - geo.boundingBox.min.x;
+const logo = new THREE.Mesh(geo, glass); scene.add(logo);
+const orb = new THREE.Mesh(new THREE.TorusGeometry(0.45, 0.15, 48, 120), glass); scene.add(orb);
+function resize() {
+  const w = hero.clientWidth, h = hero.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h;
+  const tanH = Math.tan(THREE.MathUtils.degToRad(15)); camera.position.z = Math.max(12, W / (0.72 * 2 * tanH * camera.aspect)); camera.updateProjectionMatrix();
+  const d = camera.position.z + 8, bh = 2 * tanH * d * 1.1; bg.scale.set(Math.max(bh * camera.aspect, bh * 1.6), Math.max(bh, bh * camera.aspect / 1.6), 1);
+  const vh = 2 * tanH * camera.position.z; logo.position.y = vh * 0.12; orb.position.set(W * 0.42, vh * 0.32, -1.5);
+}
+new ResizeObserver(resize).observe(hero); resize();
+hero.querySelector(".fallback").style.display = "none";
+const tgt = { x: 0, y: 0 }, cu = { x: 0, y: 0 };
+addEventListener("pointermove", e => { tgt.x = (e.clientX / innerWidth - .5) * 2; tgt.y = (e.clientY / innerHeight - .5) * 2; });
+addEventListener("deviceorientation", e => { if (e.gamma != null) { tgt.x = Math.max(-1, Math.min(1, e.gamma / 30)); tgt.y = Math.max(-1, Math.min(1, (e.beta - 45) / 30)); } });
+let vis = true; new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(hero);
+const clk = new THREE.Clock();
+renderer.setAnimationLoop(() => { if (!vis) return; const t = clk.getElapsedTime(); cu.x += (tgt.x - cu.x) * .04; cu.y += (tgt.y - cu.y) * .04;
+  logo.rotation.y = -.2 + cu.x * .3 + Math.sin(t * .35) * .16; logo.rotation.x = .1 + cu.y * .14 + Math.sin(t * .5) * .04; logo.position.x = 0;
+  orb.rotation.x = t * .3; orb.rotation.y = t * .4; orb.position.y += (Math.sin(t * .7) * .004);
+  renderer.render(scene, camera); });
+</script>
+</body>
+</html>

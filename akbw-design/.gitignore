@@ -1,0 +1,28 @@
+node_modules
+dist
+.DS_Store
+.env
+.vscode
+.idea
+npm-debug.log
+yarn-error.log
+coverage
+*.log
+*.tmp
+*.bak
+*.swp
+.next
+.husky
+# --- Maxfiy sozlamalar: barcha .env fayllari (namuna fayllardan tashqari) ---
+.env*
+!.env.example
+*.pem
+*.key
+
+# --- Serverga yuklangan foydalanuvchi fayllari (rasm va h.k.) ---
+server/uploads/*
+!server/uploads/.gitkeep
+
+# --- Build va kesh ---
+*.tsbuildinfo
+next-env.d.ts

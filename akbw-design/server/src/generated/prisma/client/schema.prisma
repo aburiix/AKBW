@@ -1,0 +1,449 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                 String               @id @default(uuid())
+  phone              String               @unique
+  refreshToken       String?              @unique
+  name               String
+  lastName           String
+  gender             String
+  helpChatMessages   HelpChatMessages[]
+  askForChatMessages AskForChatMessages[]
+  reviews            Reviews[]
+  profile_picture    String               @default("")
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  orders             Orders[]
+  helpChats          HelpChat[]
+  askForChats        AskForChat[]
+  transactions       Transactions[]
+  referralCode       String               @unique @default(uuid())
+  referredBy         String? // ID of user who referred this user
+  referrer           User?                @relation("UserReferrals", fields: [referredBy], references: [id])
+  referrals          User[]               @relation("UserReferrals")
+  availableBonus     Int                  @default(0) // Bonus amount available to use (in so'm)
+  totalEarnedBonus   Int                  @default(0) // Total bonus earned (in so'm)
+  totalUsedBonus     Int                  @default(0) // Total bonus used (in so'm)
+  adresses           Adresses[]
+}
+
+model Verify {
+  id        Int      @id @default(autoincrement())
+  code      String
+  phone     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Admins {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  lastName           String
+  phone              String               @unique
+  password           String
+  role               String?
+  refreshToken       String?              @unique
+  access             Access[]
+  helpChatMessages   HelpChatMessages[]
+  askForChatMessages AskForChatMessages[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+}
+
+model Access {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  admins    Admins[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Products {
+  id                  Int                   @id @default(autoincrement())
+  price               Int
+  product_images      String[]
+  categories          Categories[]
+  sizes               Sizes[]
+  colors              Colors[]
+  translations        ProductTranslations[]
+  type                FulfillmentType
+  actual_product_link String
+  factory_id          Int?
+  weight              Float
+  volume_x            Float
+  volume_y            Float
+  volume_z            Float
+  factory             Factories?            @relation(fields: [factory_id], references: [id])
+  discount            Int                   @default(0)
+  reviews             Reviews[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @default(now()) @updatedAt
+  orderItems          OrderItem[]
+
+  @@index([factory_id])
+}
+
+model ProductTranslations {
+  id          Int      @id @default(autoincrement())
+  name        String
+  lang        String
+  description String
+  productId   Int
+  product     Products @relation(fields: [productId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([productId])
+}
+
+model Categories {
+  id           Int                    @id @default(autoincrement())
+  products     Products[]
+  translations CategoryTranslations[]
+  styles       Styles[]
+  parentId     Int?
+  parent       Categories?            @relation("SubCategories", fields: [parentId], references: [id])
+  children     Categories[]           @relation("SubCategories")
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+}
+
+model Styles {
+  id         Int        @id @default(autoincrement())
+  image      String
+  categoryId Int
+  category   Categories @relation(fields: [categoryId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model CategoryTranslations {
+  id         Int        @id @default(autoincrement())
+  name       String
+  lang       String
+  categoryId Int
+  category   Categories @relation(fields: [categoryId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@index([categoryId])
+}
+
+model Sizes {
+  id           Int                @id @default(autoincrement())
+  products     Products[]
+  translations SizeTranslations[]
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @default(now()) @updatedAt
+  orderItems   OrderItem[]
+}
+
+model SizeTranslations {
+  id        Int      @id @default(autoincrement())
+  name      String
+  lang      String
+  sizeId    Int
+  size      Sizes    @relation(fields: [sizeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Colors {
+  id           Int                 @id @default(autoincrement())
+  products     Products[]
+  translations ColorTranslations[]
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @default(now()) @updatedAt
+  orderItems   OrderItem[]
+}
+
+model ColorTranslations {
+  id        Int      @id @default(autoincrement())
+  name      String
+  lang      String
+  colorId   Int
+  color     Colors   @relation(fields: [colorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Reviews {
+  id         Int      @id @default(autoincrement())
+  rating     Int
+  comment    String
+  user_id    String
+  user       User     @relation(fields: [user_id], references: [id])
+  product_id Int
+  product    Products @relation(fields: [product_id], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Coupons {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  discount  Int
+  expiry    DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  orders    Orders[]
+}
+
+enum BonusType {
+  WELCOME
+  REFERRAL_BONUS
+  REFERRER_BONUS
+  PURCHASE
+}
+
+model Orders {
+  id           Int           @id @default(autoincrement())
+  user_id      String
+  user         User          @relation(fields: [user_id], references: [id])
+  orderItems   OrderItem[]
+  state        OrderState    @default(PENDING)
+  total_price  Int
+  coupon_id    Int?
+  coupon       Coupons?      @relation(fields: [coupon_id], references: [id])
+  addressId    Int
+  address      Adresses      @relation("OrderAddress", fields: [addressId], references: [id])
+  transactions Transactions?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  shipments    Shipment[]
+}
+
+model OrderItem {
+  id                  Int            @id @default(autoincrement())
+  orderId             Int
+  order               Orders         @relation(fields: [orderId], references: [id])
+  productId           Int
+  product             Products       @relation(fields: [productId], references: [id])
+  quantity            Int            @default(1)
+  colorId             Int?
+  color               Colors?        @relation(fields: [colorId], references: [id])
+  sizeId              Int?
+  size                Sizes?         @relation(fields: [sizeId], references: [id])
+  price               Int
+  actual_product_link String         @default("")
+  state               OrderItemState @default(PENDING)
+  shipmentId          Int?
+  shipment            Shipment?      @relation(fields: [shipmentId], references: [id])
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @default(now()) @updatedAt
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Notifications {
+  id        Int      @id @default(autoincrement())
+  title     String
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model HelpChat {
+  id        Int                @id @default(autoincrement())
+  members   String[]
+  user_id   String
+  user      User               @relation(fields: [user_id], references: [id])
+  messages  HelpChatMessages[]
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+}
+
+model HelpChatMessages {
+  id        Int      @id @default(autoincrement())
+  chat_id   Int
+  chat      HelpChat @relation(fields: [chat_id], references: [id])
+  sender_id String?
+  sender    User?    @relation(fields: [sender_id], references: [id])
+  admin_id  Int?
+  admin     Admins?  @relation(fields: [admin_id], references: [id])
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([chat_id])
+}
+
+model AskForChat {
+  id        Int                  @id @default(autoincrement())
+  members   String[]
+  messages  AskForChatMessages[]
+  user_id   String
+  user      User                 @relation(fields: [user_id], references: [id])
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+}
+
+model AskForChatMessages {
+  id        Int        @id @default(autoincrement())
+  chat_id   Int
+  chat      AskForChat @relation(fields: [chat_id], references: [id])
+  sender_id String?
+  sender    User?      @relation(fields: [sender_id], references: [id])
+  admin_id  Int?
+  admin     Admins?    @relation(fields: [admin_id], references: [id])
+  message   String
+  photo     String?    @default("")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([chat_id])
+}
+
+model Transactions {
+  id                  Int      @id @default(autoincrement())
+  payment_provider_id String   @unique
+  order_id            Int?     @unique
+  user_id             String
+  user                User     @relation(fields: [user_id], references: [id])
+  order               Orders?  @relation(fields: [order_id], references: [id])
+  create_time         DateTime @default(now())
+  perform_time        BigInt   @default(0)
+  cancel_time         BigInt   @default(0)
+  transaction         String
+  state               String   @default("1")
+  reason              String   @default("")
+  amount              Int
+  provider            String
+  prapere_id          BigInt?
+
+  @@index([order_id])
+  @@index([user_id])
+}
+
+model Factories {
+  id              Int                     @id @default(autoincrement())
+  name            String
+  products        Products[]
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @default(now())
+  payment_type    PaymentDateForFactories @default(MONTH)
+  phone           String
+  address         String
+  workers         Workers[]
+  bts_region_code String
+  bts_city_code   String
+  bts_branch_code String
+  login           String                  @unique
+  password        String
+  bank_name       String?
+  bank_account    String?
+  bank_mfo        String?
+  bank_inn        String?
+  shipments       Shipment[]
+}
+
+model Workers {
+  id         Int       @id @default(autoincrement())
+  factory    Factories @relation(fields: [factory_id], references: [id])
+  factory_id Int
+  name       String
+  phone      String
+  role       String    @default("")
+  tg_id      String    @unique
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now()) @updatedAt
+}
+
+model Adresses {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [user_id], references: [id])
+  user_id     String
+  address     String
+  city_code   String
+  branch_code String
+  orders      Orders[] @relation("OrderAddress")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SenderConfig {
+  id          Int      @id @default(autoincrement())
+  name        String
+  phone       String
+  address     String
+  region_code String
+  city_code   String
+  branch_code String
+  lat_long    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Shipment {
+  id                   Int             @id @default(autoincrement())
+  orderId              Int
+  order                Orders          @relation(fields: [orderId], references: [id])
+  type                 FulfillmentType
+  factoryId            Int?
+  factory              Factories?      @relation(fields: [factoryId], references: [id])
+  sender_city_code     String
+  sender_region_code   String
+  sender_branch_code   String
+  receiver_city_code   String
+  receiver_branch_code String
+  receiver_region_code String
+  receiver_address     String
+  tracking_number      String?
+  state                ShipmentState   @default(PENDING)
+  orderItems           OrderItem[]
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @default(now()) @updatedAt
+}
+
+enum PaymentDateForFactories {
+  MONTH
+  THREEMONTH
+  SIXMONTH
+  YEAR
+}
+
+enum FulfillmentType {
+  SELF
+  FACTORY
+}
+
+enum TransactionState {
+  PENDING
+  PAID
+  CANCELLED
+  PENDING_CANCELLED
+  PAID_CANCELLED
+}
+
+enum OrderItemState {
+  REVIEW
+  PENDING
+  SENT
+}
+
+enum OrderState {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+enum ShipmentState {
+  PENDING
+  ORDERED_FROM_SUPPLIER
+  SUPPLIER_CONFIRMED
+  IN_TRANSIT
+  ARRIVED_UZBEKISTAN
+  IN_CUSTOMS
+  READY_FOR_BTS
+  SENT
+  DELIVERED
+  CANCELLED
+}
