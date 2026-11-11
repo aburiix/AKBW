@@ -23,6 +23,7 @@ import {
   LogOut,
   Info,
   Phone,
+  ChevronDown,
 } from 'lucide-react';
 import React from 'react';
 import * as z from 'zod';
@@ -41,6 +42,7 @@ import { useSupportChat, useProductInquiry } from './lib/hooks';
 import { toast } from '@/shared/ui/toast';
 import { uploadRequest } from '@/shared/config/api/upload/upload.request';
 import Login from '../login';
+import { AuthHeader } from '@/shared/ui/auth';
 import Register from '../register';
 import { useRouter, usePathname, Link } from '@/shared/config/i18n/navigation';
 import { useTranslations, useLocale } from 'next-intl';
@@ -254,7 +256,11 @@ function Profile({ children }: ProfileProps) {
         label: t('tabs.notifications'),
         icon: Bell,
       },
-      { id: 'reviews' as TabType, label: t('tabs.reviews'), icon: MessageSquare },
+      {
+        id: 'reviews' as TabType,
+        label: t('tabs.reviews'),
+        icon: MessageSquare,
+      },
     ],
     [t],
   );
@@ -402,125 +408,69 @@ function Profile({ children }: ProfileProps) {
         <ModalTrigger asChild>
           {children || <User size={24} className="cursor-pointer" />}
         </ModalTrigger>
-        <ModalContent
-          className={cn(
-            'max-w-[95%]',
-            'md:max-w-xl',
-            'overflow-hidden',
-            'flex',
-            'flex-col',
-            'bg-[#D6D3CC]',
-            'rounded-2xl',
-            'p-6',
-            'max-md:p-2',
-            'max-md:w-[90vw]]',
-          )}
-        >
-          <ModalTitle className={cn('text-xl', 'font-bold', 'mb-4')}>
-            {t('guest_mode')}
-          </ModalTitle>
-          <ModalClose className={cn('absolute', 'right-4', 'top-4', 'z-10')}>
-            <X className={cn('h-5', 'w-5')} />
+        <ModalContent className="max-w-[440px] flex flex-col">
+          <ModalClose>
+            <X />
           </ModalClose>
+          <ModalTitle className="sr-only">{t('guest_mode')}</ModalTitle>
 
-          <div className={cn('flex', 'flex-col', 'gap-4')}>
-            <div
-              className={cn(
-                'bg-[#D6D3CC]/40',
-                'p-4',
-                'rounded-xl',
-                'text-center',
-              )}
-            >
-              <p className={cn('text-gray-600', 'mb-4', 'text-sm')}>
-                {t('guest_description')}
-              </p>
-              <div className={cn('flex', 'flex-col', 'gap-3')}>
-                <Login
-                  trigger={<Button className="w-full">{t('login')}</Button>}
-                />
-                <Register
-                  trigger={
-                    <Button
-                      variant="outline"
-                      className={cn('w-full', 'bg-[#fff]/50', 'text-black')}
-                    >
-                      {t('register')}
-                    </Button>
-                  }
-                />
-              </div>
-            </div>
+          <AuthHeader
+            title={t('guest_mode')}
+            subtitle={t('guest_description')}
+          />
 
-            <div className={cn('border-t', 'border-gray-100', 'pt-4')}>
-              <h3 className={cn('font-semibold', 'mb-3')}>
-                {t('useful_links')}
-              </h3>
-              <div className={cn('flex', 'flex-col', 'gap-2')}>
+          <div className="mt-7 flex flex-col gap-3">
+            <Login trigger={<Button className="w-full">{t('login')}</Button>} />
+            <Register
+              trigger={
+                <Button variant="outline" className="w-full">
+                  {t('register')}
+                </Button>
+              }
+            />
+          </div>
+
+          <div className="mt-7 pt-6 border-t border-line">
+            <h3 className="lbl text-ivory/45 mb-3">{t('useful_links')}</h3>
+            <div className="flex flex-col gap-1">
+              {[
+                {
+                  href: '/about',
+                  icon: <Info size={17} />,
+                  label: t('about_us'),
+                },
+                {
+                  href: '/contact',
+                  icon: <Phone size={17} />,
+                  label: t('contact'),
+                },
+              ].map((l) => (
                 <Link
-                  href="/about"
+                  key={l.href}
+                  href={l.href}
                   onClick={() => onOpenChange(false)}
-                  className={cn(
-                    'flex',
-                    'items-center',
-                    'gap-3',
-                    'p-3',
-                    'hover:bg-gray-50',
-                    'rounded-lg',
-                    'transition-colors',
-                  )}
+                  className="flex items-center gap-3 h-12 px-2 rounded-2xl text-ivory/80 hover:text-ivory hover:bg-ivory/[0.05] transition-colors"
                 >
-                  <div
-                    className={cn(
-                      'bg-blue-100',
-                      'text-blue-600',
-                      'p-2',
-                      'rounded-lg',
-                    )}
-                  >
-                    <Info size={18} />
-                  </div>
-                  <span className="font-medium">{t('about_us')}</span>
+                  <span className="grid place-items-center size-9 rounded-xl border border-line-2 text-ivory/70">
+                    {l.icon}
+                  </span>
+                  <span className="text-[14px]">{l.label}</span>
                 </Link>
-                <Link
-                  href="/contact"
-                  onClick={() => onOpenChange(false)}
-                  className={cn(
-                    'flex',
-                    'items-center',
-                    'gap-3',
-                    'p-3',
-                    'hover:bg-gray-50',
-                    'rounded-lg',
-                    'transition-colors',
-                  )}
-                >
-                  <div
-                    className={cn(
-                      'bg-green-100',
-                      'text-green-600',
-                      'p-2',
-                      'rounded-lg',
-                    )}
-                  >
-                    <Phone size={18} />
-                  </div>
-                  <span className="font-medium">{t('contact')}</span>
-                </Link>
+              ))}
+              <div className="relative mt-2">
                 <select
                   value={locale}
-                  className={cn(
-                    'bg-transparent',
-                    'text-sm',
-                    'outline-none',
-                    'cursor-pointer',
-                  )}
+                  className="w-full h-12 appearance-none rounded-2xl border border-line-2 bg-ivory/[0.04] px-4 text-[14px] text-ivory outline-none cursor-pointer"
                   onChange={handleChangeLanguage}
                 >
                   <option value="uz">O&apos;zbek 🇺🇿</option>
                   <option value="ru">Русский 🇷🇺</option>
                   <option value="en">English 🇺🇸</option>
                 </select>
+                <ChevronDown
+                  size={16}
+                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ivory/50"
+                />
               </div>
             </div>
           </div>
@@ -534,21 +484,10 @@ function Profile({ children }: ProfileProps) {
       <ModalTrigger asChild>
         {children || <User size={24} className="cursor-pointer" />}
       </ModalTrigger>
-      <ModalContent
-        className={cn(
-          'max-w-[95%]',
-          'md:max-w-xl',
-          'max-h-[90vh]',
-          'overflow-hidden',
-          'flex',
-          'flex-col',
-          'bg-white',
-          'rounded-2xl',
-        )}
-      >
+      <ModalContent className="max-w-[560px] max-h-[calc(100dvh-24px)] overflow-hidden flex flex-col p-5 md:p-7">
         <ModalTitle className="sr-only">{t('user_profile_aria')}</ModalTitle>
-        <ModalClose className={cn('absolute', 'right-4', 'top-4', 'z-10')}>
-          <X className={cn('h-5', 'w-5')} />
+        <ModalClose>
+          <X />
         </ModalClose>
 
         {((activeTab === 'menu' &&
@@ -559,52 +498,27 @@ function Profile({ children }: ProfileProps) {
           renderProfileHeader()}
 
         {!(activeTab === 'menu' && activeSubSection) && (
-          <div className={cn('px-4', 'mt-2')}>
-            <div
-              className={cn(
-                'flex',
-                'items-center',
-                'justify-between',
-                'gap-2',
-                'overflow-x-auto',
-                'no-scrollbar',
-                'border',
-                'border-gray-200',
-                'p-1.5',
-                'rounded-xl',
-                'bg-gray-50/50',
-              )}
-            >
+          <div className="mt-3">
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar p-1 rounded-full border border-line-2 bg-ivory/[0.03]">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 return (
                   <button
+                    type="button"
                     key={tab.id}
                     onClick={() => {
                       setProfileTab(tab.id);
                       setProfileSubSection(null);
                     }}
                     className={cn(
-                      'flex items-center justify-center py-2 px-3 gap-2 cursor-pointer rounded-lg text-sm font-semibold transition-all whitespace-nowrap',
+                      'flex-1 flex items-center justify-center h-10 px-3.5 gap-2 cursor-pointer rounded-full transition-all whitespace-nowrap',
                       activeTab === tab.id
-                        ? 'bg-black text-white shadow-md'
-                        : 'bg-white text-gray-700',
+                        ? 'bg-ivory text-night'
+                        : 'text-ivory/55 hover:text-ivory',
                     )}
                   >
-                    <div
-                      className={cn(
-                        'flex',
-                        'items-center',
-                        'gap-2',
-                        'md:flex-col',
-                        'md:gap-1',
-                      )}
-                    >
-                      <Icon size={16} className="shrink-0" />
-                      <span className={cn('text-[12px]', 'md:text-sm')}>
-                        {tab.label}
-                      </span>
-                    </div>
+                    <Icon size={15} className="shrink-0" />
+                    <span className="lbl !tracking-[0.12em]">{tab.label}</span>
                   </button>
                 );
               })}
@@ -614,8 +528,8 @@ function Profile({ children }: ProfileProps) {
 
         <div
           className={cn(
-            'flex-1 overflow-y-auto px-4',
-            activeTab === 'menu' && activeSubSection ? 'mt-4' : 'mt-2',
+            'flex-1 overflow-y-auto no-scrollbar -mx-1 px-1',
+            activeTab === 'menu' && activeSubSection ? 'mt-2' : 'mt-4',
           )}
         >
           {renderTabContent()}
@@ -625,20 +539,7 @@ function Profile({ children }: ProfileProps) {
               <select
                 value={locale}
                 onChange={handleChangeLanguage}
-                className={cn(
-                  'md:hidden',
-                  'w-full',
-                  'mt-4',
-                  'bg-gray-50',
-                  'border',
-                  'border-gray-200',
-                  'rounded-xl',
-                  'px-4',
-                  'py-3',
-                  'text-sm',
-                  'outline-none',
-                  'cursor-pointer',
-                )}
+                className="md:hidden w-full mt-4 h-12 appearance-none rounded-2xl border border-line-2 bg-ivory/[0.04] px-4 text-[14px] text-ivory outline-none cursor-pointer"
               >
                 <option value="uz">O&apos;zbek 🇺🇿</option>
                 <option value="ru">Русский 🇷🇺</option>
@@ -646,20 +547,10 @@ function Profile({ children }: ProfileProps) {
               </select>
               <Button
                 onClick={handleLogOut}
-                className={cn(
-                  'w-full',
-                  'mt-4',
-                  'h-11',
-                  'bg-red-500',
-                  'hover:bg-red-600',
-                  'text-white',
-                  'font-semibold',
-                  'shadow-md',
-                  'hover:shadow-lg',
-                  'transition-all',
-                )}
+                variant="outline"
+                className="w-full mt-4 !border-sale/40 !text-sale hover:!bg-sale/10"
               >
-                <LogOut size={18} className="mr-2" />
+                <LogOut size={16} />
                 {t('logout')}
               </Button>
             </>
@@ -667,16 +558,7 @@ function Profile({ children }: ProfileProps) {
         </div>
 
         {!(activeTab === 'menu' && activeSubSection) && (
-          <ModalDescription
-            className={cn(
-              'text-gray-400',
-              'mt-5',
-              'mb-2',
-              'text-[10px]',
-              'text-center',
-              'leading-tight',
-            )}
-          >
+          <ModalDescription className="mt-5 text-[10.5px] text-center leading-relaxed text-ivory/35">
             {t('security_note')}
           </ModalDescription>
         )}

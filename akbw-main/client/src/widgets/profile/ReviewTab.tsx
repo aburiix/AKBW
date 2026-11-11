@@ -22,7 +22,7 @@ export default function ReviewTab({ reviews }: Props) {
         reviews.map((review) => (
           <div
             key={review.id}
-            className="p-4 bg-white rounded-lg shadow-sm border border-gray-100"
+            className="p-4 bg-surface rounded-2xl border border-line"
           >
             <div className="flex items-start justify-between gap-2 mb-2">
               <h4 className="font-medium text-sm">

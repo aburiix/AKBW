@@ -1,11 +1,10 @@
 'use client';
 
+import { colorToCss } from '@/shared/lib/colorToCss';
 import { useProduct, useProducts } from '@/features/products/lib/hooks';
 import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { useCartStore } from '@/shared/store/cart.store';
-import { Star, Minus, Plus, Check } from 'lucide-react';
-import { monsterrat } from '@/shared/fonts';
-import { Button } from '@/shared/ui/button';
+import { Star, Minus, Plus, Check, ShoppingBag } from 'lucide-react';
 import ProductCard from '@/widgets/product';
 import { cn } from '@/shared/lib/utils';
 import { toast } from '@/shared/ui/toast';
@@ -53,30 +52,17 @@ export default function Product({ id }: ProductProps) {
 
   if (isLoading) {
     return (
-      <div
-        className={cn(
-          'min-h-screen',
-          'bg-white',
-          'flex',
-          'items-center',
-          'justify-center',
-        )}
-      >
-        <div className="text-center">
-          <div
-            className={cn(
-              'w-16',
-              'h-16',
-              'border-4',
-              'border-black',
-              'border-t-transparent',
-              'rounded-full',
-              'animate-spin',
-              'mx-auto',
-              'mb-4',
-            )}
-          />
-          <p className="text-gray-500">Mahsulot yuklanmoqda...</p>
+      <div className="wrap pt-6 md:pt-10 pb-16 animate-pulse">
+        <div className="h-3 w-48 rounded bg-ivory/[0.06] mb-8" />
+        <div className="grid lg:grid-cols-[1.15fr_1fr] gap-8 xl:gap-14">
+          <div className="aspect-[4/5] rounded-[28px] bg-ivory/[0.05]" />
+          <div className="space-y-4 pt-4">
+            <div className="h-3 w-24 rounded bg-ivory/[0.06]" />
+            <div className="h-12 w-3/4 rounded-xl bg-ivory/[0.07]" />
+            <div className="h-8 w-40 rounded-xl bg-ivory/[0.06]" />
+            <div className="h-24 w-full rounded-2xl bg-ivory/[0.04]" />
+            <div className="h-14 w-full rounded-full bg-ivory/[0.06]" />
+          </div>
         </div>
       </div>
     );
@@ -84,20 +70,11 @@ export default function Product({ id }: ProductProps) {
 
   if (error || !product) {
     return (
-      <div
-        className={cn(
-          'min-h-screen',
-          'bg-white',
-          'flex',
-          'items-center',
-          'justify-center',
-        )}
-      >
-        <div className="text-center">
-          <h2 className={cn('text-2xl', 'font-bold', 'mb-2')}>
-            Maxsulot topilmadi!
-          </h2>
-          <p className="text-gray-500">Siz qidirayotgan maxsulot topilmadi.</p>
+      <div className="wrap min-h-[70vh] grid place-items-center text-center">
+        <div className="flex flex-col items-center gap-3">
+          <span className="font-display text-[44px] text-ivory/15">AKBW</span>
+          <h2 className="serif text-[32px] text-ivory">Maxsulot topilmadi!</h2>
+          <p className="text-ivory/50">Siz qidirayotgan maxsulot topilmadi.</p>
         </div>
       </div>
     );
@@ -116,362 +93,306 @@ export default function Product({ id }: ProductProps) {
     });
   };
 
-  return (
-    <div className={cn('min-h-screen', 'bg-white')}>
-      <div className={cn('container', 'py-4', 'px-4', 'md:px-6')}>
-        <div
-          className={cn('flex', 'gap-2', 'text-sm', 'text-gray-500', 'mb-10')}
-        >
-          <span>{t('breadcrumbs.0')}</span>
-          <span>/</span>
-          <span>{t('breadcrumbs.1')}</span>
-          <span>/</span>
-          <span className={cn('text-black', 'font-medium')}>
-            {product.name}
-          </span>
-        </div>
+  const colorName = product.colors?.find((c) => c.id === selectedColor)?.name;
+  const sizeName = product.sizes?.find((s) => s.id === selectedSize)?.name;
+  const oldPrice =
+    product.discount > 0
+      ? Math.round(product.price * (1 + product.discount / 100))
+      : null;
+  const categoryName = product.categories?.[0]?.name;
 
-        <div
-          className={cn(
-            'grid',
-            'grid-cols-1',
-            'lg:grid-cols-2',
-            'gap-8',
-            'xl:gap-16',
-            'items-start',
-            'mb-0',
-          )}
-        >
-          <div
-            className={cn('flex', 'flex-col-reverse', 'md:flex-row', 'gap-5')}
-          >
-            <div
-              className={cn(
-                'flex',
-                'md:flex-col',
-                'gap-5',
-                'overflow-x-auto',
-                'md:overflow-y-auto',
-                'no-scrollbar',
-                'md:w-24',
-              )}
-            >
-              {productImages.map((img, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => setActiveImage(idx)}
-                  className={cn(
-                    'relative shrink-0 w-16 h-16',
-                    activeImage === idx
-                      ? 'border-black shadow-lg scale-95'
-                      : 'border-transparent bg-gray-100 opacity-70 hover:opacity-100',
-                  )}
-                >
-                  <Image
-                    src={img}
-                    alt={`thumbnail-${idx}`}
-                    fill
-                    className="object-cover rounded-lg cursor-pointer"
-                    sizes="64px"
-                  />
-                </div>
-              ))}
-            </div>
-            <div className={cn('relative', 'w-full', 'overflow-hidden')}>
+  return (
+    <div className="min-h-screen">
+      <div className="wrap pt-5 md:pt-8 pb-28 md:pb-10">
+        {/* Yo'l */}
+        <nav className="flex items-center gap-2 lbl text-ivory/40 mb-6 md:mb-8 overflow-hidden">
+          <span className="shrink-0">{t('breadcrumbs.0')}</span>
+          <span className="shrink-0">/</span>
+          <span className="shrink-0">{t('breadcrumbs.1')}</span>
+          <span className="shrink-0">/</span>
+          <span className="text-ivory/75 truncate">{product.name}</span>
+        </nav>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-6 md:gap-10 xl:gap-16 items-start">
+          {/* Galereya */}
+          <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-4 lg:sticky lg:top-28">
+            {productImages.length > 1 && (
+              <div className="flex md:flex-col gap-2.5 overflow-x-auto md:overflow-y-auto no-scrollbar md:w-[84px] md:max-h-[640px] shrink-0">
+                {productImages.map((img, idx) => (
+                  <button
+                    type="button"
+                    key={idx}
+                    onClick={() => setActiveImage(idx)}
+                    className={cn(
+                      'relative shrink-0 w-[68px] md:w-full aspect-[3/4] rounded-2xl overflow-hidden border transition-all cursor-pointer',
+                      activeImage === idx
+                        ? 'border-ivory'
+                        : 'border-line opacity-55 hover:opacity-100',
+                    )}
+                  >
+                    <Image
+                      src={img}
+                      alt={`thumbnail-${idx}`}
+                      fill
+                      className="object-cover"
+                      sizes="84px"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+            <div className="relative flex-1 aspect-[4/5] rounded-[28px] overflow-hidden border border-line bg-surface-2">
               <Image
+                key={activeImage}
                 src={productImages[activeImage]}
-                alt="product-main"
-                width={800}
-                height={1000}
-                className={cn(
-                  'object-cover',
-                  'transition-transform',
-                  'duration-700',
-                  'w-full',
-                  'h-auto',
-                  'rounded-2xl',
-                )}
+                alt={product.name}
+                fill
+                sizes="(max-width: 1024px) 100vw, 55vw"
+                className="object-cover animate-in fade-in duration-500"
                 priority
               />
+              {product.discount > 0 && (
+                <span className="absolute top-4 left-4 rounded-full bg-sale text-night px-3 py-1.5 lbl !tracking-[0.12em]">
+                  −{product.discount}%
+                </span>
+              )}
+              {productImages.length > 1 && (
+                <span className="absolute bottom-4 right-4 glass !bg-night/40 rounded-full px-3 py-1.5 lbl text-ivory tabular-nums">
+                  {activeImage + 1} / {productImages.length}
+                </span>
+              )}
             </div>
           </div>
 
-          <div className={cn('flex', 'flex-col')}>
-            <h1
-              className={cn(
-                'text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5.5xl font-black uppercase mb-4 leading-tight',
-                monsterrat.className,
-              )}
-            >
+          {/* Ma'lumot */}
+          <div className="flex flex-col">
+            {categoryName && (
+              <span className="lbl text-ivory/45 mb-3">{categoryName}</span>
+            )}
+            <h1 className="serif text-[34px] sm:text-[44px] xl:text-[54px] leading-[1.02] text-ivory">
               {product.name}
             </h1>
 
-            <div className={cn('flex', 'items-center', 'gap-2 sm:gap-3', 'mb-4 sm:mb-6')}>
-              <div className={cn('flex', 'gap-1')}>
-                {product.rating == null ? (
-                  <Star size={18} className="text-gray-400" />
-                ) : (
-                  Array.from({ length: product.rating }).map((_, idx) => (
-                    <Star
-                      key={idx}
-                      size={18}
-                      className="text-yellow-400"
-                      fill="currentColor"
-                    />
-                  ))
-                )}
+            <div className="flex items-center gap-3 mt-4">
+              <div className="flex gap-0.5">
+                {Array.from({ length: 5 }).map((_, idx) => (
+                  <Star
+                    key={idx}
+                    size={15}
+                    className={
+                      product.rating != null && idx < product.rating
+                        ? 'text-star'
+                        : 'text-ivory/20'
+                    }
+                    fill="currentColor"
+                  />
+                ))}
               </div>
-              <span className={cn('text-sm', 'font-medium')}>
-                {product.rating === null ? (
-                  <p>{t('rating.notRated')}</p>
-                ) : (
-                  <>
-                    {product.rating} /{' '}
-                    <span className={cn('text-gray-400', 'font-normal')}>
-                      5
-                    </span>
-                  </>
-                )}
+              <span className="text-[13px] text-ivory/55">
+                {product.rating == null
+                  ? t('rating.notRated')
+                  : `${product.rating} / 5`}
               </span>
             </div>
 
-            <div className={cn('flex', 'items-center', 'gap-3 sm:gap-4', 'mb-6 sm:mb-8')}>
-              <span className={cn('text-2xl sm:text-3xl', 'font-bold')}>
+            <div className="flex items-baseline gap-3 mt-6">
+              <span
+                className={cn(
+                  'text-[28px] sm:text-[32px] tabular-nums',
+                  oldPrice ? 'text-sale' : 'text-ivory',
+                )}
+              >
                 {product.price.toLocaleString()} so&apos;m
               </span>
-            </div>
-
-            <p
-              className={cn(
-                'text-gray-500',
-                'leading-relaxed',
-                'mb-8 sm:mb-10',
-                'text-sm sm:text-base md:text-lg',
-                'max-w-xl',
+              {oldPrice && (
+                <span className="text-ivory/35 line-through tabular-nums">
+                  {oldPrice.toLocaleString()}
+                </span>
               )}
-            >
-              {product.description}
-            </p>
-
-            <hr className={cn('border-gray-100', 'mb-8')} />
-
-            <div className="mb-8">
-              <h3
-                className={cn(
-                  'text-gray-500',
-                  'font-medium',
-                  'mb-4',
-                  'uppercase',
-                  'tracking-widest',
-                  'text-xs',
-                )}
-              >
-                {t('selectColor')}
-              </h3>
-              <div className={cn('flex', 'gap-4')}>
-                {product.colors?.map((color) => (
-                  <button
-                    key={color.id}
-                    onClick={() => setSelectedColor(color.id)}
-                    style={{ backgroundColor: color.name }}
-                    className={cn(
-                      'w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 shadow-sm border-2 cursor-pointer',
-                      selectedColor === color.id
-                        ? 'border-black ring-4 ring-black/5'
-                        : 'border-transparent',
-                    )}
-                  >
-                    {selectedColor === color.id && (
-                      <Check size={18} className="text-white" />
-                    )}
-                  </button>
-                ))}
-              </div>
             </div>
 
-            <hr className={cn('border-gray-100', 'mb-8')} />
+            {product.description && (
+              <p className="mt-5 text-ivory/60 leading-relaxed text-[15px] max-w-xl">
+                {product.description}
+              </p>
+            )}
 
-            <div className="mb-10">
-              <h3
-                className={cn(
-                  'text-gray-500',
-                  'font-medium',
-                  'mb-4',
-                  'uppercase',
-                  'tracking-widest',
-                  'text-xs',
-                )}
-              >
-                {t('selectSize')}
-              </h3>
-              <div className={cn('flex', 'flex-wrap', 'gap-3')}>
-                {product.sizes?.map((size) => (
+            <div className="mt-8 rounded-[26px] border border-line bg-surface p-5 md:p-6 flex flex-col gap-7">
+              {product.colors?.length > 0 && (
+                <div>
+                  <div className="flex items-center justify-between mb-3.5">
+                    <h3 className="lbl text-ivory/45">{t('selectColor')}</h3>
+                    <span className="text-[13px] text-ivory/75">
+                      {colorName}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2.5">
+                    {product.colors.map((color) => (
+                      <button
+                        type="button"
+                        key={color.id}
+                        title={color.name}
+                        aria-label={color.name}
+                        onClick={() => setSelectedColor(color.id)}
+                        className={cn(
+                          'size-11 rounded-full grid place-items-center transition-all cursor-pointer ring-offset-[3px] ring-offset-surface',
+                          selectedColor === color.id
+                            ? 'ring-2 ring-ivory'
+                            : 'hover:ring-1 hover:ring-ivory/40',
+                        )}
+                      >
+                        <span
+                          style={{ backgroundColor: colorToCss(color.name) }}
+                          className="size-9 rounded-full border border-line-2 grid place-items-center"
+                        >
+                          {selectedColor === color.id && (
+                            <Check
+                              size={15}
+                              className="text-ivory mix-blend-difference"
+                            />
+                          )}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {product.sizes?.length > 0 && (
+                <div>
+                  <div className="flex items-center justify-between mb-3.5">
+                    <h3 className="lbl text-ivory/45">{t('selectSize')}</h3>
+                    <span className="text-[13px] text-ivory/75">
+                      {sizeName}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                    {product.sizes.map((size) => (
+                      <button
+                        type="button"
+                        key={size.id}
+                        onClick={() => setSelectedSize(size.id)}
+                        className={cn(
+                          'h-12 rounded-xl border text-[14px] transition-all cursor-pointer',
+                          selectedSize === size.id
+                            ? 'bg-ivory text-night border-ivory'
+                            : 'border-line-2 text-ivory/70 hover:border-ivory/50 hover:text-ivory',
+                        )}
+                      >
+                        {size.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex gap-3">
+                <div className="flex items-center justify-between h-[52px] w-[132px] shrink-0 rounded-full border border-line-2 px-2">
                   <button
-                    key={size.id}
-                    onClick={() => setSelectedSize(size.id)}
-                    className={cn(
-                      'px-7 py-3 rounded-full text-sm font-semibold transition-all border cursor-pointer',
-                      selectedSize === size.id
-                        ? 'bg-black text-white border-black shadow-xl scale-105'
-                        : 'bg-gray-100 border-transparent text-gray-500 hover:border-black/20 hover:text-black',
-                    )}
+                    type="button"
+                    aria-label={t('quantity.decrease')}
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    className="grid place-items-center size-9 rounded-full text-ivory/60 hover:text-ivory hover:bg-ivory/[0.06] cursor-pointer"
                   >
-                    {size.name}
+                    <Minus size={16} />
                   </button>
-                ))}
-              </div>
-            </div>
-
-            <hr className={cn('border-gray-100', 'mb-10')} />
-
-            <div className={cn('flex', 'flex-col', 'sm:flex-row', 'gap-5')}>
-              <div
-                className={cn(
-                  'flex',
-                  'items-center',
-                  'justify-between',
-                  'bg-gray-100',
-                  'rounded-full',
-                  'px-6',
-                  'py-4',
-                  'w-full',
-                  'sm:w-44',
-                )}
-              >
+                  <span className="text-[16px] text-ivory tabular-nums">
+                    {quantity}
+                  </span>
+                  <button
+                    type="button"
+                    aria-label={t('quantity.increase')}
+                    onClick={() => setQuantity((q) => q + 1)}
+                    className="grid place-items-center size-9 rounded-full text-ivory/60 hover:text-ivory hover:bg-ivory/[0.06] cursor-pointer"
+                  >
+                    <Plus size={16} />
+                  </button>
+                </div>
                 <button
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className={cn(
-                    'hover:text-black',
-                    'transition-colors',
-                    'opacity-60',
-                    'hover:opacity-100',
-                    'cursor-pointer',
-                  )}
+                  type="button"
+                  onClick={handleAddToCart}
+                  className="pill pill-ivory flex-1 !h-[52px] cursor-pointer active:scale-[0.98]"
                 >
-                  <Minus size={22} />
-                </button>
-                <span className={cn('font-bold', 'text-lg')}>{quantity}</span>
-                <button
-                  onClick={() => setQuantity((q) => q + 1)}
-                  className={cn(
-                    'hover:text-black',
-                    'transition-colors',
-                    'opacity-60',
-                    'hover:opacity-100',
-                    'cursor-pointer',
-                  )}
-                >
-                  <Plus size={22} />
+                  <ShoppingBag size={16} />
+                  {t('addToCart')}
                 </button>
               </div>
-              <Button
-                onClick={handleAddToCart}
-                className={cn(
-                  'flex-1',
-                  'rounded-full',
-                  'cursor-pointer',
-                  'h-full',
-                  'py-8',
-                  'font-black',
-                  'text-lg',
-                  'bg-black',
-                  'hover:bg-black/90',
-                  'shadow-2xl',
-                  'hover:shadow-black/20',
-                  'transition-all',
-                  'uppercase',
-                  'tracking-widest',
-                )}
-              >
-                {t('addToCart')}
-              </Button>
             </div>
           </div>
         </div>
 
-        <div className={cn('border-b', 'border-gray-100', 'mt-10')}>
-          <div
-            className={cn(
-              'flex',
-              'justify-between',
-              'md:justify-around',
-              'overflow-x-auto',
-              'no-scrollbar',
-            )}
-          >
+        {/* Izohlar / savollar */}
+        <div className="mt-16 md:mt-24">
+          <div className="inline-flex p-1 rounded-full border border-line-2 bg-ivory/[0.03]">
             {[
               { name: t('tabs.reviews'), id: 'reviews' },
               { name: t('tabs.faqs'), id: 'faqs' },
             ].map((tab) => (
               <button
+                type="button"
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  'pb-4 sm:pb-6 px-6 sm:px-10 text-sm sm:text-base md:text-lg font-medium transition-all relative shrink-0 cursor-pointer',
+                  'h-10 px-5 md:px-7 rounded-full lbl !tracking-[0.14em] transition-all cursor-pointer',
                   activeTab === tab.id
-                    ? 'text-black'
-                    : 'text-gray-400 hover:text-gray-600',
+                    ? 'bg-ivory text-night'
+                    : 'text-ivory/55 hover:text-ivory',
                 )}
               >
                 {tab.name}
-                {activeTab === tab.id && (
-                  <div
-                    className={cn(
-                      'absolute',
-                      'bottom-0',
-                      'left-0',
-                      'w-full',
-                      'h-0.5',
-                      'bg-black',
-                      'transition-all',
-                    )}
-                  />
-                )}
               </button>
             ))}
           </div>
         </div>
 
-        <div className="mb-20">
-          <Suspense fallback={<div>Loading...</div>}>
+        <div className="mt-8 mb-16">
+          <Suspense fallback={<div className="text-ivory/40">…</div>}>
             <ReviewView activeTab={activeTab} productId={id} />
           </Suspense>
 
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div className="text-ivory/40">…</div>}>
             <Faq activeTab={activeTab} />
           </Suspense>
         </div>
 
-        <div
-          className={cn(
-            'mt-32',
-            'border-t',
-            'border-gray-100',
-            'pt-32',
-            'pb-20',
-          )}
-        >
-          <h2
-            className={cn(
-              'text-4xl font-bold text-center uppercase my-10 max-sm:text-[20px]',
-              monsterrat.className,
-            )}
-          >
-            {t('relatedProductsTitle')}
-          </h2>
-          <div
-            className={cn(
-              'grid',
-              'grid-cols-1',
-              'sm:grid-cols-2',
-              'lg:grid-cols-4',
-              'gap-8',
-            )}
-          >
-            {relatedProducts?.data?.map((relatedProduct) => (
-              <ProductCard key={relatedProduct.id} product={relatedProduct} />
-            ))}
+        {/* O'xshash mahsulotlar */}
+        {relatedProducts?.data?.length ? (
+          <section className="mt-10 pt-12 md:pt-16 border-t border-line">
+            <div className="flex items-end justify-between mb-6 md:mb-8">
+              <h2 className="serif text-[30px] md:text-[44px] leading-none text-ivory">
+                {t('relatedProductsTitle')}
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2.5 gap-y-6 md:gap-x-3.5 md:gap-y-7">
+              {relatedProducts.data.map((relatedProduct) => (
+                <ProductCard key={relatedProduct.id} product={relatedProduct} />
+              ))}
+            </div>
+          </section>
+        ) : null}
+      </div>
+
+      {/* Telefonda pastda doim ko'rinadigan "savatga" paneli */}
+      <div className="md:hidden fixed left-0 right-0 bottom-[calc(72px+env(safe-area-inset-bottom))] z-30 px-3 pb-2">
+        <div className="glass !bg-surface-2/95 rounded-full flex items-center gap-3 pl-5 pr-1.5 py-1.5 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.8)]">
+          <div className="flex flex-col min-w-0">
+            <span className="text-[15px] text-ivory tabular-nums leading-tight">
+              {product.price.toLocaleString()} so&apos;m
+            </span>
+            <span className="text-[11px] text-ivory/45 truncate">
+              {[sizeName, colorName, `${quantity} dona`]
+                .filter(Boolean)
+                .join(' · ')}
+            </span>
           </div>
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            className="pill pill-ivory pill-sm ml-auto !h-11 cursor-pointer active:scale-[0.98]"
+          >
+            <ShoppingBag size={15} />
+            {t('addToCart')}
+          </button>
         </div>
       </div>
     </div>

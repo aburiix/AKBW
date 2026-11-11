@@ -103,7 +103,7 @@ function ModalOverlay({
     <DialogPrimitive.Overlay
       data-slot="modal-overlay"
       className={cn(
-        'fixed inset-0 z-50 bg-black/20 backdrop-blur-[5px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+        'fixed inset-0 z-[70] bg-night/60 backdrop-blur-[6px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         className,
       )}
       {...props}
@@ -122,7 +122,7 @@ function ModalContent({
       <DialogPrimitive.Content
         data-slot="modal-content"
         className={cn(
-          'fixed left-[50%] top-[50%] z-50 grid bg-[#D6D3CC] w-full max-w-lg translate-x-[-50%] translate-y-[-50%] text-black p-10 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=bottom]:slide-in-from-top-[48%] data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg',
+          'fixed left-[50%] top-[50%] z-[70] grid bg-[var(--color-akbw-filter-bg)] w-[calc(100%-24px)] max-w-lg max-h-[calc(100dvh-24px)] overflow-y-auto translate-x-[-50%] translate-y-[-50%] text-black p-7 md:p-10 shadow-2xl shadow-night/40 rounded-[26px] border border-line-2 duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=bottom]:slide-in-from-top-[48%] data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-top-[48%]',
           className,
         )}
         {...props}
@@ -156,7 +156,7 @@ function ModalDescription({
   return (
     <DialogPrimitive.Description
       data-slot="modal-description"
-      className={cn('text-sm text-muted-foreground', className)}
+      className={cn('text-sm text-ivory/50', className)}
       {...props}
     />
   );
@@ -169,7 +169,10 @@ function ModalClose({
     <DialogPrimitive.Close
       data-slot="modal-close"
       {...props}
-      className={cn('cursor-pointer absolute top-5 right-5', props.className)}
+      className={cn(
+        'cursor-pointer absolute top-4 right-4 z-10 grid place-items-center size-10 rounded-full border border-line text-ivory/70 hover:text-ivory hover:bg-ivory/[0.06] transition-colors [&_svg]:size-[18px]',
+        props.className,
+      )}
     />
   );
 }

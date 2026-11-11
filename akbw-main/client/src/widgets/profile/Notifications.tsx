@@ -17,7 +17,7 @@ export default function Notifications() {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="h-24 w-full bg-gray-100 animate-pulse rounded-2xl"
+            className="h-24 w-full bg-ivory/[0.06] animate-pulse rounded-2xl"
           />
         ))}
       </div>
@@ -28,7 +28,7 @@ export default function Notifications() {
     <div className="space-y-4 pb-4">
       {notifications?.data?.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-          <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 transition-transform hover:scale-110 duration-300">
+          <div className="w-20 h-20 bg-ivory/[0.04] rounded-full flex items-center justify-center mb-4 transition-transform hover:scale-110 duration-300">
             <Bell size={32} className="text-gray-300" />
           </div>
           <h3 className="text-lg font-bold text-gray-900 mb-1">
@@ -50,14 +50,14 @@ export default function Notifications() {
             >
               <div className="flex gap-4 cursor-pointer">
                 <div className="shrink-0 mt-1">
-                  <div className="w-10 h-10 rounded-2xl bg-gray-50 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors duration-300">
+                  <div className="w-10 h-10 rounded-2xl bg-ivory/[0.04] flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors duration-300">
                     <Info size={18} />
                   </div>
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 mb-1">
-                    <h4 className="font-black text-sm uppercase tracking-tight truncate group-hover:text-black transition-colors">
+                    <h4 className="text-[14px] text-ivory truncate group-hover:text-black transition-colors">
                       {notification.title}
                     </h4>
                     <div className="flex items-center gap-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest whitespace-nowrap">
@@ -73,7 +73,7 @@ export default function Notifications() {
                     {notification.message}
                   </p>
 
-                  <div className="mt-3 flex items-center gap-2 pt-3 border-t border-gray-50">
+                  <div className="mt-3 flex items-center gap-2 pt-3 border-t border-line">
                     <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-gray-300">
                       <Calendar size={10} />
                       {new Date(notification.createdAt).toLocaleDateString()}
@@ -97,22 +97,22 @@ export default function Notifications() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedNotification(null)}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[9999] h-full"
+              className="fixed inset-0 bg-night/60 backdrop-blur-sm z-[9999] h-full"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-32px)] max-w-lg bg-white rounded-[40px] shadow-2xl z-[10000] overflow-hidden"
+              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-32px)] max-w-lg bg-surface-2 border border-line-2 rounded-[28px] shadow-2xl z-[10000] overflow-hidden"
             >
               <div className="p-8">
                 <div className="flex justify-between items-start mb-6">
-                  <div className="p-4 bg-gray-50 rounded-3xl">
+                  <div className="p-4 bg-ivory/[0.04] rounded-3xl">
                     <Bell size={24} className="text-black" />
                   </div>
                   <button
                     onClick={() => setSelectedNotification(null)}
-                    className="p-2 hover:bg-gray-100 rounded-2xl transition-colors cursor-pointer"
+                    className="p-2 hover:bg-ivory/[0.06] rounded-2xl transition-colors cursor-pointer"
                   >
                     <X size={20} />
                   </button>
@@ -135,12 +135,12 @@ export default function Notifications() {
                         })}
                       </span>
                     </div>
-                    <h2 className="text-2xl font-black uppercase tracking-tight leading-tight">
+                    <h2 className="serif text-[28px] text-ivory leading-tight">
                       {selectedNotification.title}
                     </h2>
                   </div>
 
-                  <div className="p-6 bg-gray-50 rounded-[32px]">
+                  <div className="p-6 bg-ivory/[0.04] rounded-[32px]">
                     <p className="text-sm text-gray-600 leading-relaxed font-medium">
                       {selectedNotification.message}
                     </p>

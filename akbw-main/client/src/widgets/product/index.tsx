@@ -15,6 +15,9 @@ interface ProductProps {
   product?: IProduct;
 }
 
+const SIZES = '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw';
+
+/** Mahsulot kartasi — v5 dizayn. Sevimlilar/login mantiqi o'zgarmagan. */
 export default React.memo(function Product({ product }: ProductProps) {
   const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
   const isInWishlist = useWishlistStore((s) => s.isInWishlist);
@@ -26,9 +29,14 @@ export default React.memo(function Product({ product }: ProductProps) {
   }
 
   const firstImage = product.product_images?.[0] || '/assets/product.png';
+  const secondImage = product.product_images?.[1];
   const isFavorite = isInWishlist(product.id);
+  // Eski narx hisobi avvalgi kod bilan bir xil qoldirildi
+  const oldPrice =
+    product.discount > 0 ? product.price * (1 + product.discount / 100) : 0;
 
   const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     if (!token) {
       openModal();
@@ -45,77 +53,79 @@ export default React.memo(function Product({ product }: ProductProps) {
   return (
     <Link
       href={`/product/${product.id}`}
-      className="cursor-pointer flex flex-col gap-3 group relative"
+      className="group relative flex flex-col gap-2.5 cursor-pointer"
     >
-      <div className="relative w-full aspect-[3/4] rounded-[28px] overflow-hidden bg-[#D6D3CC]/30 border border-black/10 shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-black/10 group-hover:-translate-y-2">
+      <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden bg-surface-2">
         <Image
           src={firstImage}
           alt={product.name || 'product image'}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-500"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          sizes={SIZES}
         />
+        {secondImage && (
+          <Image
+            src={secondImage}
+            alt=""
+            fill
+            className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            sizes={SIZES}
+          />
+        )}
+
+        {product.discount > 0 && (
+          <span className="absolute z-10 left-2.5 top-2.5 h-6 px-2.5 rounded-full bg-sale text-night text-[11px] font-semibold leading-6">
+            −{product.discount}%
+          </span>
+        )}
 
         <button
           onClick={handleToggleWishlist}
+          aria-label="Sevimlilar"
           className={cn(
-            'absolute top-4 cursor-pointer right-4 p-2.5 rounded-full backdrop-blur-md transition-all duration-300 z-10 shadow-sm',
+            'absolute z-10 top-2 right-2 size-9 rounded-full grid place-items-center backdrop-blur-md transition-colors duration-300',
             isFavorite
-              ? 'bg-red-50 text-red-500 scale-110'
-              : 'bg-white/80 text-gray-400 hover:text-red-500 hover:scale-110',
+              ? 'bg-night/60 text-sale'
+              : 'bg-night/45 text-ivory hover:text-sale',
           )}
         >
-          <Heart size={20} fill={isFavorite ? 'currentColor' : 'none'} />
+          <Heart
+            size={17}
+            strokeWidth={1.6}
+            fill={isFavorite ? 'currentColor' : 'none'}
+          />
         </button>
       </div>
 
-      <div className="px-1">
-        <h1 className="text-lg font-semibold line-clamp-1 group-hover:text-black transition-colors">
-          {product.name}
-        </h1>
-
-        <div className="flex items-center gap-2 mt-1">
-          <div className="flex items-center">
-            {[1, 2, 3, 4, 5].map((_, index) => (
-              <Star
-                key={index}
-                className={cn(
-                  'text-sm transition-colors',
-                  index < (product.rating || 0)
-                    ? 'text-yellow-400 fill-yellow-400'
-                    : 'text-yellow-300',
-                )}
-                size={14}
-              />
-            ))}
-          </div>
-          {product.rating > 0 ? (
-            <p className="text-sm text-gray-400">({product.rating}/5)</p>
-          ) : (
-            <p className="text-[10px] uppercase tracking-wider font-bold text-gray-300">
-              Baholanmagan
-            </p>
-          )}
-        </div>
-
-        <div className="flex items-center justify-between mt-2">
-          <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold">
-              {product.price.toLocaleString()} so&apos;m
-            </span>
-            {product.discount > 0 && (
-              <span className="text-sm text-gray-400 line-through">
-                {(
-                  product.price *
-                  (1 + product.discount / 100)
-                ).toLocaleString()}{' '}
-                so&apos;m
-              </span>
+      <div className="flex flex-col gap-1 px-0.5">
+        {product.categories?.[0]?.name && (
+          <span className="lbl !text-[9.5px] text-ivory/40">
+            {product.categories[0].name}
+          </span>
+        )}
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-1 md:gap-3">
+          <h3 className="text-sm text-ivory line-clamp-1">{product.name}</h3>
+          <div
+            className={cn(
+              'text-[15px] font-semibold whitespace-nowrap md:text-right',
+              product.discount > 0 && 'text-sale',
+            )}
+          >
+            {product.price.toLocaleString()} so&apos;m
+            {oldPrice > 0 && (
+              <s className="block text-xs font-normal text-ivory/40">
+                {oldPrice.toLocaleString()} so&apos;m
+              </s>
             )}
           </div>
-          {product.discount > 0 && (
-            <span className="bg-red-50 text-red-500 px-2.5 py-1 rounded-lg text-xs font-black">
-              -{product.discount}%
+        </div>
+        <div className="flex items-center gap-1.5 text-xs text-ivory/60">
+          <Star size={13} className="text-star fill-star" />
+          {product.rating > 0 ? (
+            <span>{Number(product.rating).toFixed(1)}</span>
+          ) : (
+            <span className="lbl !text-[9.5px] text-ivory/40">
+              Baholanmagan
             </span>
           )}
         </div>

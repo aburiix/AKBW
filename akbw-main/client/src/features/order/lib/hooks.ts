@@ -4,6 +4,7 @@ import { ICreateOrderRequest } from '@/shared/config/api/order/order.model';
 import { useTranslations } from 'next-intl';
 import { toast } from '@/shared/ui/toast';
 import { onError } from '@/shared/config/api/isAxiosError';
+import { openExternal } from '@/shared/lib/telegram';
 
 export const useOrders = () => {
   return useQuery({
@@ -34,7 +35,7 @@ export const usePaymeLink = () => {
     onError: (err) => onError(err, t('order_submit_error')),
     onSuccess: (data) => {
       if (data.link) {
-        window.location.replace(data.link);
+        openExternal(data.link);
       }
     },
   });

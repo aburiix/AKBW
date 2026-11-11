@@ -36,25 +36,10 @@ function OrderCard({
   return (
     <div
       key={order.id}
-      className={cn(
-        'border',
-        'border-white/20',
-        'rounded-4xl',
-        'p-8',
-        'bg-white/60',
-        'backdrop-blur-md',
-        'shadow-xl',
-        'shadow-black/5',
-        'overflow-hidden',
-        'relative',
-        'group',
-        'hover:bg-white/80',
-        'transition-all',
-        'duration-500',
-      )}
+      className="relative overflow-hidden rounded-[26px] border border-line bg-surface p-5 md:p-7 transition-colors hover:border-line-2"
     >
       {order.status === 'review' && (
-        <div className={cn('absolute', 'inset-0', 'bg-white/40', 'z-10')} />
+        <div className="absolute inset-0 bg-night/30 z-10" />
       )}
       <div
         className={cn(
@@ -70,17 +55,17 @@ function OrderCard({
         )}
       >
         <div className={cn('flex', 'gap-4', 'items-center')}>
-          <div className="ml-4">
-            <p className={cn('text-sm', 'text-gray-400', 'font-medium')}>
+          <div>
+            <p className="lbl text-ivory/45">
               {t('order_id')}:{' '}
-              <span className="text-black">
+              <span className="text-ivory">
                 #{order.id.toString().slice(-6)}
               </span>
             </p>
-            <p className={cn('font-bold', 'text-lg')}>
+            <p className="serif text-[28px] leading-none text-ivory tabular-nums mt-2">
               {order.total_price.toLocaleString()} so&apos;m
             </p>
-            <p className={cn('text-xs', 'text-gray-400')}>
+            <p className="text-[12px] text-ivory/40 mt-1.5">
               {new Date(order.createdAt).toLocaleDateString()}
             </p>
           </div>
@@ -100,29 +85,19 @@ function OrderCard({
           {/* Status Badge */}
           <div
             className={cn(
-              'px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 max-md:w-full',
+              'h-10 px-4 rounded-full border lbl !tracking-[0.14em] flex items-center gap-2 max-md:w-full',
               order.status === 'review'
-                ? 'bg-gray-200 text-gray-500'
+                ? 'border-line-2 text-ivory/55'
                 : order.status === 'delivering'
-                  ? 'bg-blue-100 text-blue-600'
-                  : order.status === 'approved'
-                    ? 'bg-green-100 text-green-600'
-                    : 'bg-green-100 text-green-600',
-              order.status === 'paid' ? 'bg-green-100 text-green-600' : '',
-              order.status === 'cancelled' ? 'bg-red-100 text-red-600' : '',
+                  ? 'border-star/40 bg-star/10 text-star'
+                  : order.status === 'cancelled'
+                    ? 'border-sale/40 bg-sale/10 text-sale'
+                    : 'border-ok/40 bg-ok/10 text-ok',
             )}
           >
             {order.status === 'review' && (
               <>
-                <div
-                  className={cn(
-                    'w-2',
-                    'h-2',
-                    'rounded-full',
-                    'bg-gray-400',
-                    'animate-pulse',
-                  )}
-                />
+                <div className="w-2 h-2 rounded-full bg-ivory/50 animate-pulse" />
                 {t('status_review')}
               </>
             )}
@@ -161,22 +136,8 @@ function OrderCard({
                   setModalMode('shipments');
                   setIsCheckoutOpen(true);
                 }}
-                className={cn(
-                  'rounded-full',
-                  'px-8',
-                  'py-5',
-                  'font-bold',
-                  'uppercase',
-                  'text-xs',
-                  'bg-white',
-                  'text-black',
-                  'border-2',
-                  'border-black',
-                  'hover:bg-gray-50',
-                  'transition-all',
-                  'cursor-pointer',
-                  'max-md:w-full',
-                )}
+                variant="outline"
+                className="max-md:w-full"
               >
                 {t('watch_progress_btn')}
               </Button>
@@ -185,20 +146,7 @@ function OrderCard({
           {order.status === 'approved' && (
             <Button
               onClick={() => handleOrderNow(order)}
-              className={cn(
-                'rounded-full',
-                'px-10',
-                'py-6',
-                'font-black',
-                'uppercase',
-                'text-sm',
-                'bg-black',
-                'hover:bg-black/90',
-                'shadow-xl',
-                'transition-all',
-                'cursor-pointer',
-                'max-md:w-full',
-              )}
+              className="max-md:w-full !h-12 px-8"
             >
               {t('order_now_btn')}
             </Button>
@@ -211,22 +159,8 @@ function OrderCard({
                 setModalMode('tracking');
                 setIsCheckoutOpen(true);
               }}
-              className={cn(
-                'rounded-full',
-                'px-10',
-                'py-6',
-                'font-bold',
-                'uppercase',
-                'text-sm',
-                'bg-white',
-                'text-black',
-                'border-2',
-                'border-black',
-                'hover:bg-gray-50',
-                'transition-all',
-                'cursor-pointer',
-                'max-md:w-full',
-              )}
+              variant="outline"
+              className="max-md:w-full"
             >
               {t('track_order_btn')}
             </Button>
@@ -235,20 +169,10 @@ function OrderCard({
       </div>
 
       {/* Order Items Section */}
-      <div className={cn('mt-6', 'border-t', 'border-white/20', 'pt-6')}>
+      <div className="mt-6 border-t border-line pt-5">
         <button
           onClick={() => setShowItems(!showItems)}
-          className={cn(
-            'flex',
-            'items-center',
-            'gap-2',
-            'text-sm',
-            'font-bold',
-            'text-gray-600',
-            'hover:text-black',
-            'transition-colors',
-            'cursor-pointer',
-          )}
+          className="flex items-center gap-2 lbl text-ivory/55 hover:text-ivory transition-colors cursor-pointer"
         >
           {showItems ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           {t('order_items')} ({order.orderItems?.length || 0})
@@ -259,27 +183,9 @@ function OrderCard({
             {order.orderItems.map((item, idx) => (
               <div
                 key={idx}
-                className={cn(
-                  'flex',
-                  'items-center',
-                  'gap-4',
-                  'p-3',
-                  'bg-white/40',
-                  'rounded-2xl',
-                  'border',
-                  'border-white/20',
-                )}
+                className="flex items-center gap-4 p-3 rounded-2xl border border-line bg-ivory/[0.03]"
               >
-                <div
-                  className={cn(
-                    'w-16',
-                    'h-16',
-                    'rounded-xl',
-                    'overflow-hidden',
-                    'bg-gray-100',
-                    'shrink-0',
-                  )}
-                >
+                <div className="w-14 h-[72px] rounded-xl overflow-hidden bg-surface-2 shrink-0">
                   <Image
                     src={item.product?.product_images?.[0] || ProductImage.src}
                     alt={item.product?.translations?.[0]?.name || 'product'}
@@ -289,27 +195,11 @@ function OrderCard({
                   />
                 </div>
                 <div className={cn('flex-1', 'min-w-0')}>
-                  <p
-                    className={cn(
-                      'font-semibold',
-                      'text-sm',
-                      'text-black',
-                      'truncate',
-                    )}
-                  >
+                  <p className="text-[14px] text-ivory truncate">
                     {item.product?.translations?.[0]?.name ||
                       `Product ${item.productId}`}
                   </p>
-                  <div
-                    className={cn(
-                      'flex',
-                      'items-center',
-                      'gap-3',
-                      'mt-1',
-                      'text-xs',
-                      'text-gray-500',
-                    )}
-                  >
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-[12px] text-ivory/45">
                     {item.size && (
                       <span>
                         {t('size')}:{' '}
@@ -328,10 +218,10 @@ function OrderCard({
                   </div>
                 </div>
                 <div className={cn('text-right', 'shrink-0')}>
-                  <p className={cn('font-bold', 'text-sm', 'text-black')}>
+                  <p className="text-[14px] text-ivory tabular-nums">
                     {(item.price * item.quantity).toLocaleString()} so&apos;m
                   </p>
-                  <p className={cn('text-xs', 'text-gray-400')}>
+                  <p className="text-[12px] text-ivory/40 mt-1.5">
                     {item.price.toLocaleString()} so&apos;m × {item.quantity}
                   </p>
                 </div>

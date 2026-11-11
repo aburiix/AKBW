@@ -273,6 +273,7 @@
     "viewProducts": "Посмотреть товары"
   },
   "FilterPage": {
+    "products_error": "Ошибка при загрузке товаров",
     "breadcrumbs": "Главная / Фильтры",
     "filters": "Фильтры",
     "price": "Цена",

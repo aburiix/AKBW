@@ -9,6 +9,14 @@ import {
   ModalTrigger,
 } from '@/shared/ui/modal';
 import { cn } from '@/shared/lib/utils';
+import {
+  AuthHeader,
+  AuthTerms,
+  Field,
+  OtpInput,
+  ResendRow,
+  fieldError,
+} from '@/shared/ui/auth';
 import { sendSms, verifySms } from '@/shared/config/api/sms/sms.request';
 import { login } from '@/shared/config/api/auth/auth.request';
 import { useUserStore } from '@/shared/store/user.store';
@@ -159,123 +167,90 @@ function Login({ trigger, className }: LoginProps) {
     switch (steps) {
       case 'register':
         return (
-          <>
-            <div className={cn('flex', 'flex-col', 'gap-1', 'mt-3')}>
-              <label className={cn('text-sm', 'font-medium')}>
-                {t('phone_label')}
-              </label>
-              {errors.isRegistered && (
-                <p className={cn('text-xs', 'text-red-500')}>
-                  {errors.isRegistered}
-                </p>
-              )}
+          <form
+            className="mt-7 flex flex-col gap-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleRegister();
+            }}
+          >
+            <Field label={t('phone_label')} error={errors.phone}>
               <Input
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
                 placeholder={t('phone_placeholder')}
                 value={phone}
                 onChange={handlePhoneChange}
-                className={
-                  errors.phone ? 'border-red-500' : 'placeholder:opacity-50'
-                }
-              />
-              {errors.phone && (
-                <p className={cn('text-xs', 'text-red-500')}>{errors.phone}</p>
-              )}
-
-              <p
                 className={cn(
-                  'text-gray-500',
-                  'mt-3',
-                  'text-[11px]',
-                  'flex',
-                  'items-center',
-                  'gap-3',
+                  'h-14 text-[17px] tracking-[0.04em]',
+                  fieldError(errors.phone),
                 )}
-              >
-                {t('not_registered_text')}{' '}
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    openModal('register-modal');
-                  }}
-                  className={cn('text-gray-600', 'underline', 'font-bold')}
-                >
-                  {t('register_link')}
-                </button>
-              </p>
-            </div>
+              />
+            </Field>
+            {errors.isRegistered && (
+              <div className="rounded-2xl border border-sale/30 bg-sale/10 px-4 py-3 text-[12.5px] leading-relaxed text-sale">
+                {errors.isRegistered}
+              </div>
+            )}
 
             <Button
-              onClick={handleRegister}
-              className={cn('mt-5', 'w-full')}
+              type="submit"
+              className="mt-2 w-full"
               disabled={sendSmsMutation.isPending}
             >
               {sendSmsMutation.isPending ? t('sending') : t('send_code_btn')}
             </Button>
-          </>
+
+            <div className="flex items-center gap-3 my-1" aria-hidden>
+              <span className="h-px flex-1 bg-line" />
+              <span className="lbl text-ivory/30">AKBW</span>
+              <span className="h-px flex-1 bg-line" />
+            </div>
+
+            <p className="text-center text-[13px] text-ivory/55">
+              {t('not_registered_text')}{' '}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  openModal('register-modal');
+                }}
+                className="text-ivory underline underline-offset-4 decoration-ivory/40 hover:decoration-ivory cursor-pointer"
+              >
+                {t('register_link')}
+              </button>
+            </p>
+          </form>
         );
 
       case 'verify':
         return (
-          <>
-            <div className={cn('flex', 'flex-col', 'gap-1', 'mt-5')}>
-              <Input
-                placeholder={t('otp_placeholder')}
-                value={otp}
-                onChange={handleOtpChange}
-                className={cn(
-                  'text-center tracking-[1em] font-bold text-xl h-12',
-                  errors.otp
-                    ? 'border-red-500'
-                    : 'placeholder:opacity-30 placeholder:tracking-normal',
-                )}
-                maxLength={5}
-              />
-              <div
-                className={cn(
-                  'flex',
-                  'justify-between',
-                  'items-center',
-                  'mt-2',
-                )}
-              >
-                <p className={cn('text-xs', 'text-gray-500')}>
-                  {t('otp_sent_text', { phone: phone })}
-                </p>
-                {timeLeft > 0 ? (
-                  <p className={cn('text-xs', 'font-medium', 'text-black')}>
-                    00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
-                  </p>
-                ) : (
-                  <button
-                    onClick={handleResendCode}
-                    disabled={
-                      verifySmsMutation.isPending || loginMutation.isPending
-                    }
-                    className={cn(
-                      'text-xs',
-                      'font-bold',
-                      'text-black',
-                      'underline',
-                      'hover:opacity-70',
-                      'transition-opacity',
-                      (verifySmsMutation.isPending ||
-                        loginMutation.isPending) &&
-                        'opacity-50 cursor-not-allowed',
-                    )}
-                  >
-                    {t('resend_code_btn')}
-                  </button>
-                )}
-              </div>
-              {errors.otp && (
-                <p className={cn('text-xs', 'text-red-500')}>{errors.otp}</p>
-              )}
-            </div>
+          <form
+            className="mt-7 flex flex-col gap-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleVerify();
+            }}
+          >
+            <OtpInput
+              value={otp}
+              onChange={handleOtpChange}
+              error={!!errors.otp}
+            />
+            {errors.otp && (
+              <p className="text-xs text-sale text-center">{errors.otp}</p>
+            )}
+            <ResendRow
+              timeLeft={timeLeft}
+              onResend={handleResendCode}
+              disabled={verifySmsMutation.isPending || loginMutation.isPending}
+              label={t('resend_code_btn')}
+            />
 
             <Button
-              onClick={handleVerify}
-              className={cn('mt-8', 'w-full')}
+              type="submit"
+              className="mt-2 w-full"
               disabled={verifySmsMutation.isPending || loginMutation.isPending}
             >
               {verifySmsMutation.isPending || loginMutation.isPending
@@ -284,27 +259,17 @@ function Login({ trigger, className }: LoginProps) {
             </Button>
 
             <Button
+              type="button"
+              variant="outline"
               onClick={() => {
                 setSteps('register');
                 setTimeLeft(60);
               }}
-              className={cn(
-                'bg-white/50',
-                'mt-3',
-                'text-black',
-                'btn-register-padding',
-                'hover:bg-white/80',
-                'border',
-                'border-black/20',
-                'shadow-xl',
-                'text-sm',
-                'font-bold',
-                'w-full',
-              )}
+              className="w-full"
             >
               {t('change_phone_btn')}
             </Button>
-          </>
+          </form>
         );
     }
   };
@@ -314,46 +279,36 @@ function Login({ trigger, className }: LoginProps) {
       <ModalTrigger asChild>
         {trigger || <Button>{t('login_title')}</Button>}
       </ModalTrigger>
-      <ModalContent className={className}>
+      <ModalContent className={cn('max-w-[440px]', className)}>
         <ModalClose>
           <X />
         </ModalClose>
 
-        <h1
-          className={cn(
-            'font-display',
-            'text-2xl',
-            'md:text-3xl',
-            'font-bold',
-            'w-full',
-            'text-center',
-          )}
-        >
-          AKBW
-        </h1>
-        <ModalTitle className="text-center">
+        <ModalTitle className="sr-only">
           {steps === 'register' ? t('login_title') : t('verify_title')}
         </ModalTitle>
+        <AuthHeader
+          step={steps === 'register' ? 1 : 2}
+          title={steps === 'register' ? t('login_title') : t('verify_title')}
+          subtitle={
+            steps === 'verify' ? (
+              t('otp_sent_text', { phone })
+            ) : (
+              <span className="lbl !tracking-[0.24em] text-ivory/40">
+                AKBW Club
+              </span>
+            )
+          }
+        />
         {renderRegisterSteps()}
 
-        <ModalDescription
-          className={cn('text-gray-500', 'mt-3', 'text-[11px]', 'text-center')}
-        >
-          {t('continue_terms_text')}{' '}
-          <span
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.replace('/terms');
-            }}
-            className={cn(
-              'text-gray-600',
-              'underline',
-              'font-bold',
-              'cursor-pointer',
-            )}
-          >
-            {t('terms_link_text')}
-          </span>
+        <ModalDescription asChild>
+          <div>
+            <AuthTerms
+              text={t('continue_terms_text')}
+              link={t('terms_link_text')}
+            />
+          </div>
         </ModalDescription>
       </ModalContent>
     </Modal>

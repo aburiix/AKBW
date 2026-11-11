@@ -225,7 +225,7 @@ declare const messages: {
     "close_btn": "Yopish",
     "china": "Xitoy (Ombor)",
     "uzbekistan": "O'zbekiston (Bojxona)",
-    "delivering": "Yetkazilmoqda (UzPost)",
+    "delivering": "Yetkazilmoqda (BTS)",
     "delivered": "Yetkazildi",
     "trackingActive": "Tracking Active",
     "onTheWay": "Yo‘lda",
@@ -280,6 +280,7 @@ declare const messages: {
     "viewProducts": "Mahsulotlarni ko'rish"
   },
   "FilterPage": {
+    "products_error": "Mahsulotlarni yuklashda xatolik",
     "breadcrumbs": "Bosh sahifa / Filtrlar",
     "filters": "Filtrlar",
     "price": "Narx",
@@ -495,7 +496,7 @@ declare const messages: {
       {
         "title": "4. Yetkazib berish shartlari",
         "isImportant": true,
-        "content": "Mahsulotlar Uzpost pochta xizmati orqali yetkazib beriladi va yetkazib berish ikki bosqichdan iborat:",
+        "content": "Mahsulotlar BTS pochta xizmati orqali yetkazib beriladi va yetkazib berish ikki bosqichdan iborat:",
         "stages": [
           {
             "title": "1-bosqich:",
@@ -508,7 +509,7 @@ declare const messages: {
           {
             "title": "2-bosqich:",
             "items": [
-              "Mahsulot Toshkent shahridan foydalanuvchi ko'rsatgan manzilga Uzpost orqali yuboriladi."
+              "Mahsulot Toshkent shahridan foydalanuvchi ko'rsatgan manzilga BTS orqali yuboriladi."
             ]
           }
         ],
@@ -544,7 +545,7 @@ declare const messages: {
       {
         "title": "7. Javobgarlikni cheklash",
         "list": [
-          "Platforma uchinchi tomon xizmatlari (Uzpost, to'lov tizimlari) faoliyati uchun to'liq javobgar emas.",
+          "Platforma uchinchi tomon xizmatlari (BTS, to'lov tizimlari) faoliyati uchun to'liq javobgar emas.",
           "Platforma foydalanuvchining noto'g'ri harakatlari sababli yuzaga kelgan zararlar uchun javobgar emas."
         ]
       },

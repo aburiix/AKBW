@@ -97,10 +97,8 @@ export const OrderProgress = ({ shipments }: OrderProgressProps) => {
   }
 
   return (
-    <div className="space-y-4 py-6">
-      <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400">
-        Yuklar holati
-      </h3>
+    <div className="space-y-3">
+      <h3 className="lbl text-ivory/45">Yuklar holati</h3>
       {shipments.map((shipment) => {
         const statuses =
           shipment.type === 'FACTORY'
@@ -113,7 +111,7 @@ export const OrderProgress = ({ shipments }: OrderProgressProps) => {
         return (
           <div
             key={shipment.id}
-            className="bg-gray-50/50 rounded-2xl p-4 border border-gray-100"
+            className="rounded-2xl p-4 border border-line bg-ivory/[0.03]"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
@@ -127,12 +125,12 @@ export const OrderProgress = ({ shipments }: OrderProgressProps) => {
                   <StatusIcon size={14} />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-black">
+                  <p className="text-[13px] text-ivory">
                     {shipment.type === 'FACTORY'
                       ? shipment.factory?.name || 'Zavod'
                       : 'AKBW'}
                   </p>
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wider">
+                  <p className="lbl !text-[10px] text-ivory/40">
                     Yuk #{shipment.id}
                   </p>
                 </div>
@@ -168,7 +166,7 @@ export const OrderProgress = ({ shipments }: OrderProgressProps) => {
                           <motion.div
                             className={cn(
                               'absolute top-1/2 left-0 h-0.5 -translate-y-1/2',
-                              isCompleted ? 'bg-green-500' : 'bg-gray-200',
+                              isCompleted ? 'bg-ok' : 'bg-ivory/15',
                             )}
                             initial={{ width: 0 }}
                             animate={{ width: '100%' }}
@@ -182,10 +180,10 @@ export const OrderProgress = ({ shipments }: OrderProgressProps) => {
                           className={cn(
                             'relative z-10 mx-auto w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-300',
                             isCompleted
-                              ? 'bg-green-500 border-green-500 text-white'
+                              ? 'bg-ok border-ok text-night'
                               : isCurrent
                                 ? `${stepConfig.bgColor} ${stepConfig.color} border-current`
-                                : 'bg-white border-gray-300 text-gray-400',
+                                : 'bg-surface-2 border-line-2 text-ivory/35',
                           )}
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
@@ -204,10 +202,10 @@ export const OrderProgress = ({ shipments }: OrderProgressProps) => {
                         className={cn(
                           'mt-2 text-[10px] font-medium text-center',
                           isCompleted
-                            ? 'text-green-600'
+                            ? 'text-ok'
                             : isCurrent
                               ? stepConfig.color
-                              : 'text-gray-400',
+                              : 'text-ivory/35',
                         )}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}

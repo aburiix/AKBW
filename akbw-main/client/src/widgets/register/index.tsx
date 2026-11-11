@@ -22,7 +22,7 @@ import {
 import { X } from 'lucide-react';
 import React from 'react';
 import * as z from 'zod';
-import { cn } from '../../shared/lib/utils';
+import { AuthHeader, AuthTerms } from '@/shared/ui/auth';
 
 const registerSchema = z.object({
   name: z.string().min(2, 'name_invalid'),
@@ -225,65 +225,44 @@ function Register({ trigger }: RegisterProps) {
         {trigger ? (
           <div>{trigger}</div>
         ) : (
-          <Button
-            variant={'outline'}
-            className={cn(
-              'bg-[#fff]/50',
-              'text-[#000]',
-              'btn-register-padding',
-              'hover:bg-[#fff]/80',
-              'border-1',
-              'border-[#000]/20',
-              'shadow-xl',
-              'text-sm',
-              'font-bold',
-            )}
-          >
-            {t('register_btn')}
-          </Button>
+          <Button variant="outline">{t('register_btn')}</Button>
         )}
       </ModalTrigger>
-      <ModalContent>
+      <ModalContent className="max-w-[480px]">
         <ModalClose>
           <X />
         </ModalClose>
 
-        <h1
-          className={cn(
-            'font-display',
-            'text-2xl',
-            'md:text-3xl',
-            'font-bold',
-            'w-full',
-            'text-center',
-          )}
-        >
-          AKBW
-        </h1>
-        <ModalTitle className="text-center">
+        <ModalTitle className="sr-only">
           {steps === 'register' ? t('register_title') : t('verify_title')}
         </ModalTitle>
+        <AuthHeader
+          step={steps === 'register' ? 1 : 2}
+          title={steps === 'register' ? t('register_title') : t('verify_title')}
+          subtitle={
+            steps === 'verify' ? (
+              t('otp_sent_text', { phone })
+            ) : referralCode ? (
+              <span className="inline-flex items-center gap-2 rounded-full border border-star/30 bg-star/10 px-3 py-1 lbl !tracking-[0.16em] text-star">
+                Referral · {referralCode}
+              </span>
+            ) : (
+              <span className="lbl !tracking-[0.24em] text-ivory/40">
+                AKBW Club
+              </span>
+            )
+          }
+        />
 
         {renderRegisterSteps()}
 
-        <ModalDescription
-          className={cn('text-gray-500', 'mt-3', 'text-[11px]', 'text-center')}
-        >
-          {t('continue_terms_text')}{' '}
-          <span
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.replace('/terms');
-            }}
-            className={cn(
-              'text-gray-600',
-              'underline',
-              'font-bold',
-              'cursor-pointer',
-            )}
-          >
-            {t('terms_link_text')}
-          </span>
+        <ModalDescription asChild>
+          <div>
+            <AuthTerms
+              text={t('continue_terms_text')}
+              link={t('terms_link_text')}
+            />
+          </div>
         </ModalDescription>
       </ModalContent>
     </Modal>

@@ -1,5 +1,4 @@
 import { Link } from '@/shared/config/i18n/navigation';
-import { cn } from '@/shared/lib/utils';
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
 
@@ -15,27 +14,24 @@ export default function MenuItems({
   onClose,
 }: Props) {
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {menuItems.map((item) => {
         const Icon = item.icon;
 
         const content = (
           <>
-            <div
-              className={cn(
-                'p-3 rounded-lg bg-gradient-to-br text-white',
-                item.color,
-              )}
-            >
-              <Icon size={24} />
+            <div className="grid place-items-center size-11 shrink-0 rounded-2xl border border-line-2 bg-ivory/[0.04] text-ivory/80 group-hover:bg-ivory group-hover:text-night transition-colors">
+              <Icon size={19} />
             </div>
             <div className="flex-1 text-left">
-              <h4 className="font-semibold text-gray-900">{item.title}</h4>
-              <p className="text-sm text-gray-500">{item.description}</p>
+              <h4 className="text-[15px] text-ivory">{item.title}</h4>
+              <p className="text-[12.5px] text-ivory/45 mt-0.5">
+                {item.description}
+              </p>
             </div>
             <ChevronRight
               size={20}
-              className="text-gray-400 group-hover:text-gray-600 transition-colors"
+              className="text-ivory/30 group-hover:text-ivory group-hover:translate-x-0.5 transition-all"
             />
           </>
         );
@@ -46,7 +42,7 @@ export default function MenuItems({
               key={item.id}
               href={item.href}
               onClick={onClose}
-              className="w-full cursor-pointer flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all group"
+              className="w-full cursor-pointer flex items-center gap-4 p-3 pr-4 rounded-[20px] border border-line hover:border-line-2 hover:bg-ivory/[0.03] transition-all group"
             >
               {content}
             </Link>
@@ -57,7 +53,7 @@ export default function MenuItems({
           <button
             key={item.id}
             onClick={() => setProfileSubSection(item.id)}
-            className="w-full cursor-pointer flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all group"
+            className="w-full cursor-pointer flex items-center gap-4 p-3 pr-4 rounded-[20px] border border-line hover:border-line-2 hover:bg-ivory/[0.03] transition-all group"
           >
             {content}
           </button>

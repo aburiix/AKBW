@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useCartStore } from '@/shared/store/cart.store';
-import { Minus, Plus, Trash2 } from 'lucide-react';
+import { Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from '@/shared/ui/toast';
 import React from 'react';
@@ -22,86 +22,86 @@ export default function CartItems() {
   };
 
   return (
-    <div className="flex-1 w-full bg-white/40 backdrop-blur-sm border border-white/60 rounded-[32px] p-4 md:p-8 space-y-8">
+    <div className="flex-1 w-full min-w-0 flex flex-col gap-3">
       {cartItems.length > 0 ? (
-        cartItems.map((item, idx) => (
-          <React.Fragment key={item.id}>
-            <div className="flex gap-4 md:gap-6 items-center">
-              <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden bg-gray-100 shrink-0">
-                <Image
-                  src={item.product_images?.[0] || '/assets/product.png'}
-                  alt={item.name}
-                  fill
-                  className="object-cover"
-                  sizes="128px"
-                />
-              </div>
+        cartItems.map((item) => (
+          <div
+            key={item.id}
+            className="flex gap-4 md:gap-5 p-3 md:p-4 rounded-[24px] border border-line bg-surface"
+          >
+            <div className="relative w-[92px] md:w-[120px] aspect-[3/4] rounded-2xl overflow-hidden bg-surface-2 shrink-0">
+              <Image
+                src={item.product_images?.[0] || '/assets/product.png'}
+                alt={item.name}
+                fill
+                className="object-cover"
+                sizes="120px"
+              />
+            </div>
 
-              <div className="flex-1 flex flex-col justify-between h-24 md:h-32">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-bold text-lg md:text-xl">
-                      {item.name}
-                    </h3>
+            <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
+              <div className="flex justify-between items-start gap-3">
+                <div className="min-w-0">
+                  <h3 className="serif text-[20px] md:text-[24px] leading-tight text-ivory truncate">
+                    {item.name}
+                  </h3>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
                     {item.selectedSize && (
-                      <p className="text-sm text-gray-500">
-                        {t('size')}:{' '}
-                        <span className="text-gray-400">
-                          {item.selectedSize}
-                        </span>
-                      </p>
+                      <span className="rounded-full border border-line-2 px-2.5 py-1 text-[11px] text-ivory/60">
+                        {t('size')}: {item.selectedSize}
+                      </span>
                     )}
                     {item.selectedColor && (
-                      <p className="text-sm text-gray-500">
-                        {t('color')}:{' '}
-                        <span className="text-gray-400">
-                          {item.selectedColor}
-                        </span>
-                      </p>
+                      <span className="rounded-full border border-line-2 px-2.5 py-1 text-[11px] text-ivory/60">
+                        {t('color')}: {item.selectedColor}
+                      </span>
                     )}
                   </div>
-                  <button
-                    onClick={() => handleRemoveItem(item.id, item.name)}
-                    className="text-red-500 hover:text-red-600 transition-colors p-1 cursor-pointer"
-                  >
-                    <Trash2 size={24} />
-                  </button>
                 </div>
+                <button
+                  type="button"
+                  aria-label="delete"
+                  onClick={() => handleRemoveItem(item.id, item.name)}
+                  className="grid place-items-center size-9 shrink-0 rounded-full text-ivory/40 hover:text-sale hover:bg-sale/10 transition-colors cursor-pointer"
+                >
+                  <Trash2 size={17} />
+                </button>
+              </div>
 
-                <div className="flex justify-between items-end">
-                  <span className="text-xl md:text-2xl font-bold">
-                    {item.price.toLocaleString()} so&apos;m
+              <div className="flex justify-between items-end gap-2 mt-3">
+                <span className="text-[16px] md:text-[20px] text-ivory tabular-nums whitespace-nowrap">
+                  {item.price.toLocaleString()} so&apos;m
+                </span>
+                <div className="flex items-center h-10 rounded-full border border-line-2 px-1">
+                  <button
+                    type="button"
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    className="grid place-items-center size-8 rounded-full text-ivory/60 hover:text-ivory hover:bg-ivory/[0.06] cursor-pointer"
+                  >
+                    <Minus size={14} />
+                  </button>
+                  <span className="w-7 text-center text-ivory tabular-nums">
+                    {item.quantity}
                   </span>
-                  <div className="flex items-center gap-4 bg-gray-100 rounded-full px-4 py-2">
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="hover:text-black transition-colors opacity-60 hover:opacity-100 cursor-pointer"
-                    >
-                      <Minus size={18} />
-                    </button>
-                    <span className="font-bold">{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="hover:text-black transition-colors opacity-60 hover:opacity-100 cursor-pointer"
-                    >
-                      <Plus size={18} />
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    className="grid place-items-center size-8 rounded-full text-ivory/60 hover:text-ivory hover:bg-ivory/[0.06] cursor-pointer"
+                  >
+                    <Plus size={14} />
+                  </button>
                 </div>
               </div>
             </div>
-            {idx !== cartItems.length - 1 && (
-              <hr className="border-gray-50 my-8" />
-            )}
-          </React.Fragment>
+          </div>
         ))
       ) : (
-        <div className="py-20 text-center">
-          <p className="text-gray-400 text-lg">{t('empty_cart_text')}</p>
-          <Link
-            href="/filters"
-            className="mt-6 inline-block rounded-full px-5 py-3 font-bold bg-black text-white hover:bg-black/90 transition-colors"
-          >
+        <div className="py-20 px-6 flex flex-col items-center text-center rounded-[28px] border border-dashed border-line-2">
+          <span className="grid place-items-center size-16 rounded-full glass mb-5">
+            <ShoppingBag size={22} className="text-ivory/70" />
+          </span>
+          <p className="serif text-[26px] text-ivory">{t('empty_cart_text')}</p>
+          <Link href="/filters" className="mt-6 pill pill-ivory">
             {t('view_products_btn')}
           </Link>
         </div>

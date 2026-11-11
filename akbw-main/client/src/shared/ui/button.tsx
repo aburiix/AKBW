@@ -10,11 +10,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-[#000000]/50 text-white rounded-lg btn-default-padding cursor-pointer hover:bg-[#000000] transition-all',
+          'bg-ivory text-night rounded-full btn-default-padding cursor-pointer hover:bg-[#fff] active:scale-[0.98] font-[family-name:var(--font-futura)] uppercase tracking-[0.18em] text-[11.5px] transition-all',
         destructive:
           'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
         outline:
-          'border-1 border-[#efefef] bg-[#000000]/50 text-white btn-default-padding transition-all hover:bg-[#000000]',
+          'border border-line-2 bg-transparent text-ivory rounded-full btn-default-padding transition-all hover:bg-ivory/[0.06] font-[family-name:var(--font-futura)] uppercase tracking-[0.18em] text-[11.5px]',
         secondary:
           'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
         ghost:
@@ -22,7 +22,7 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: 'h-9 px-4 py-2 has-[>svg]:px-3',
+        default: 'h-12 px-6 py-2 has-[>svg]:px-5',
         sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
         lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
         icon: 'size-9',

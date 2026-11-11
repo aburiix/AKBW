@@ -9,18 +9,14 @@ import {
   Instagram,
   Send,
   Clock,
+  ArrowUpRight,
+  Plus,
 } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/shared/config/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import {
-  FadeUp,
-  SlideLeft,
-  SlideRight,
-  StaggerContainer,
-  StaggerItem,
-  AnimatedLine,
-} from '@/shared/ui/animations';
+import { FadeUp, StaggerContainer, StaggerItem } from '@/shared/ui/animations';
+import { cn } from '@/shared/lib/utils';
 
 export default function ContactPage() {
   const contactMethods = [
@@ -48,265 +44,199 @@ export default function ContactPage() {
   ];
 
   const socials = [
-    {
-      icon: Send,
-      name: 'Telegram',
-      link: 'https://t.me/akbwuz',
-      color: 'hover:text-blue-500',
-    },
+    { icon: Send, name: 'Telegram', link: 'https://t.me/akbwuz' },
     {
       icon: Instagram,
       name: 'Instagram',
       link: 'https://instagram.com/akbw.uz',
-      color: 'hover:text-pink-600',
     },
-    { icon: Globe, name: 'Website', link: '/', color: 'hover:text-black' },
+    { icon: Globe, name: 'akbw.uz', link: '/' },
   ];
 
   const t = useTranslations('ContactPage');
 
+  const faqs = [
+    { q: t('faq.delivery_question'), a: t('faq.delivery_answer') },
+    { q: t('faq.payment_question'), a: t('faq.payment_answer') },
+    {
+      q: t('faq.partnership_question'),
+      a: t('faq.partnership_answer', { email: 'akbw.uz@gmail.com' }),
+    },
+    { q: t('faq.why_first_pay'), a: t('faq.why_first_pay_answer') },
+  ];
+  const [openFaq, setOpenFaq] = React.useState<number | null>(0);
+
   return (
-    <div className="min-h-screen bg-gray-50 text-black font-sans overflow-hidden">
-      {/* Header Section */}
-      <div className="bg-white border-b border-gray-100">
-        <div className="container mx-auto px-6 py-16 md:py-24 text-center">
+    <div className="min-h-screen overflow-hidden">
+      <div className="wrap pt-6 md:pt-10 pb-16">
+        {/* Sarlavha */}
+        <div className="max-w-3xl">
+          <span className="lbl text-ivory/40">AKBW · {t('title')}</span>
           <motion.h1
-            className="text-4xl md:text-6xl font-bold mb-6 tracking-tight"
-            initial={{ opacity: 0, y: 30 }}
+            className="serif text-[44px] md:text-[80px] leading-[0.98] text-ivory mt-4"
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           >
             {t('title')}
           </motion.h1>
           <motion.p
-            className="text-xl text-gray-500 max-w-2xl mx-auto font-light"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-[16px] md:text-[18px] text-ivory/55 mt-5 max-w-2xl"
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.2,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
+            transition={{ duration: 0.8, delay: 0.15 }}
           >
             {t('subtitle')}
           </motion.p>
-          <motion.div
-            className="w-16 h-1 bg-black mx-auto mt-8"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.4,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-          />
         </div>
-      </div>
 
-      {/* Contact Cards */}
-      <div className="container mx-auto px-6 py-12 -mt-10 md:-mt-16 relative z-10">
+        {/* Aloqa kartochkalari */}
         <StaggerContainer
-          className="grid md:grid-cols-3 gap-6 md:gap-8"
-          staggerDelay={0.15}
-          delay={0.3}
+          className="mt-10 md:mt-14 grid md:grid-cols-3 gap-3"
+          staggerDelay={0.12}
+          delay={0.2}
         >
-          {contactMethods.map((method, idx) => (
-            <StaggerItem key={idx}>
-              <motion.div
-                className="bg-white p-8 rounded-2xl shadow-lg shadow-gray-100/50 border border-gray-100 flex flex-col items-center text-center h-full"
-                whileHover={{
-                  y: -8,
-                  boxShadow: '0 25px 50px rgba(0, 0, 0, 0.1)',
-                  transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
-                }}
-              >
-                <motion.div
-                  className="w-16 h-16 bg-neutral-900 text-white rounded-2xl flex items-center justify-center mb-6 shadow-neutral-200 shadow-xl"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                >
-                  <method.icon size={28} strokeWidth={1.5} />
-                </motion.div>
-                <h3 className="text-xl font-bold mb-2">{t(method.title)}</h3>
+          {contactMethods.map((method, idx) => {
+            const inner = (
+              <>
+                <div className="flex items-start justify-between">
+                  <span className="grid place-items-center size-12 rounded-2xl glass text-ivory">
+                    <method.icon size={20} strokeWidth={1.5} />
+                  </span>
+                  {method.action && (
+                    <ArrowUpRight
+                      size={18}
+                      className="text-ivory/30 group-hover:text-ivory group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all"
+                    />
+                  )}
+                </div>
+                <p className="lbl text-ivory/45 mt-10">{t(method.title)}</p>
+                <p className="serif text-[22px] md:text-[24px] text-ivory mt-2 break-words">
+                  {t(method.value)}
+                </p>
+                <p className="text-[13px] text-ivory/45 mt-2">
+                  {t(method.description)}
+                </p>
+              </>
+            );
+            const cls =
+              'group h-full flex flex-col rounded-[24px] border border-line bg-surface p-6 md:p-7 transition-all hover:border-line-2 hover:-translate-y-1';
+            return (
+              <StaggerItem key={idx}>
                 {method.action ? (
-                  <motion.a
-                    href={method.action}
-                    className="text-lg font-medium hover:text-blue-600 transition-colors mb-2"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    {t(method.value)}
-                  </motion.a>
+                  <a href={method.action} className={cls}>
+                    {inner}
+                  </a>
                 ) : (
-                  <p className="text-lg font-medium mb-2">{t(method.value)}</p>
+                  <div className={cls}>{inner}</div>
                 )}
-                <p className="text-sm text-gray-400">{t(method.description)}</p>
-              </motion.div>
-            </StaggerItem>
-          ))}
+              </StaggerItem>
+            );
+          })}
         </StaggerContainer>
-      </div>
 
-      {/* Main Content Area */}
-      <div className="container mx-auto px-6 py-12 md:py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Social Media & Info */}
-          <div className="space-y-8">
-            <div>
-              <SlideLeft>
-                <h2 className="text-3xl font-bold mb-4">
+        <div className="mt-3 grid lg:grid-cols-[1fr_1.25fr] gap-3 items-start">
+          <div className="flex flex-col gap-3">
+            {/* Ijtimoiy tarmoqlar */}
+            <FadeUp>
+              <div className="rounded-[24px] border border-line bg-surface p-6 md:p-8">
+                <h2 className="serif text-[28px] md:text-[34px] text-ivory leading-tight">
                   {t('socials_title')}
                 </h2>
-              </SlideLeft>
-              <FadeUp delay={0.1}>
-                <p className="text-gray-600 text-lg mb-8">
+                <p className="text-[14.5px] text-ivory/55 mt-3">
                   {t('socials_description')}
                 </p>
-              </FadeUp>
-              <StaggerContainer
-                className="flex flex-wrap gap-4"
-                staggerDelay={0.1}
-                delay={0.2}
-              >
-                {socials.map((social, idx) => (
-                  <StaggerItem key={idx}>
-                    <motion.a
-                      href={social.link}
-                      target="_blank"
+                <div className="mt-6 flex flex-col gap-2">
+                  {socials.map((s) => (
+                    <a
+                      key={s.name}
+                      href={s.link}
+                      target={s.link.startsWith('http') ? '_blank' : undefined}
                       rel="noopener noreferrer"
-                      className={`flex items-center gap-3 px-6 py-4 bg-white border border-gray-200 rounded-xl text-gray-700 font-medium transition-colors ${social.color}`}
-                      whileHover={{
-                        scale: 1.05,
-                        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-                        transition: { duration: 0.2 },
-                      }}
-                      whileTap={{ scale: 0.95 }}
+                      className="group flex items-center gap-3 h-14 px-4 rounded-2xl border border-line-2 text-ivory/80 hover:bg-ivory hover:text-night hover:border-ivory transition-all"
                     >
-                      <motion.div
-                        whileHover={{ rotate: 10 }}
-                        transition={{ type: 'spring', stiffness: 400 }}
-                      >
-                        <social.icon size={22} />
-                      </motion.div>
-                      <span>{social.name}</span>
-                    </motion.a>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-            </div>
-
-            <FadeUp delay={0.4}>
-              <motion.div
-                className="bg-neutral-900 text-white p-8 rounded-2xl mt-8"
-                whileHover={{
-                  scale: 1.02,
-                  transition: { duration: 0.3 },
-                }}
-              >
-                <div className="flex items-start gap-4 mb-4">
-                  <motion.div
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      repeatDelay: 2,
-                    }}
-                  >
-                    <Clock className="text-neutral-400 mt-1" />
-                  </motion.div>
-                  <div>
-                    <h3 className="font-bold text-lg mb-1">
-                      {t('working_hours_title')}
-                    </h3>
-                    <p className="text-neutral-400">{t('working_days')}</p>
-                    <p className="text-white text-xl font-medium mt-1">
-                      {t('working_time')}
-                    </p>
-                    <p className="text-neutral-500 text-sm mt-3">
-                      {t('weekend')}
-                    </p>
-                  </div>
+                      <s.icon size={18} />
+                      <span className="text-[15px]">{s.name}</span>
+                      <ArrowUpRight
+                        size={16}
+                        className="ml-auto opacity-40 group-hover:opacity-100"
+                      />
+                    </a>
+                  ))}
                 </div>
-              </motion.div>
+              </div>
+            </FadeUp>
+
+            {/* Ish vaqti */}
+            <FadeUp delay={0.15}>
+              <div className="rounded-[24px] p-6 md:p-8 bg-ivory text-night">
+                <div className="flex items-center gap-2.5">
+                  <Clock size={18} />
+                  <span className="lbl">{t('working_hours_title')}</span>
+                </div>
+                <p className="text-night/60 mt-6">{t('working_days')}</p>
+                <p className="serif text-[34px] md:text-[40px] leading-none mt-1">
+                  {t('working_time')}
+                </p>
+                <p className="text-[13px] text-night/50 mt-4">{t('weekend')}</p>
+              </div>
             </FadeUp>
           </div>
 
-          {/* FAQ / Simple Support Text */}
-          <SlideRight delay={0.2}>
-            <motion.div
-              className="bg-white p-8 md:p-10 rounded-2xl border border-gray-100"
-              whileHover={{
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
-                transition: { duration: 0.3 },
-              }}
-            >
-              <FadeUp>
-                <h2 className="text-2xl font-bold mb-6">{t('faq_title')}</h2>
-              </FadeUp>
-              <div className="space-y-6">
-                <FadeUp delay={0.1}>
-                  <motion.div
-                    className="pb-6 border-b border-gray-100"
-                    whileHover={{ x: 5, transition: { duration: 0.2 } }}
-                  >
-                    <h4 className="font-semibold text-lg mb-2">
-                      {t('faq.delivery_question')}
-                    </h4>
-                    <p className="text-gray-600">{t('faq.delivery_answer')}</p>
-                  </motion.div>
-                </FadeUp>
-                <FadeUp delay={0.2}>
-                  <motion.div
-                    className="pb-6 border-b border-gray-100"
-                    whileHover={{ x: 5, transition: { duration: 0.2 } }}
-                  >
-                    <h4 className="font-semibold text-lg mb-2">
-                      {t('faq.payment_question')}
-                    </h4>
-                    <p className="text-gray-600">{t('faq.payment_answer')}</p>
-                  </motion.div>
-                </FadeUp>
-                <FadeUp delay={0.3}>
-                  <motion.div
-                    whileHover={{ x: 5, transition: { duration: 0.2 } }}
-                  >
-                    <h4 className="font-semibold text-lg mb-2">
-                      {t('faq.partnership_question')}
-                    </h4>
-                    <p className="text-gray-600">
-                      {t('faq.partnership_answer', {
-                        email: 'akbw.uz@gmail.com',
-                      })}
-                    </p>
-                  </motion.div>
-                </FadeUp>
-                <FadeUp delay={0.3}>
-                  <motion.div
-                    whileHover={{ x: 5, transition: { duration: 0.2 } }}
-                  >
-                    <h4 className="font-semibold text-lg mb-2">
-                      {t('faq.why_first_pay')}
-                    </h4>
-                    <p className="text-gray-600">
-                      {t('faq.why_first_pay_answer')}
-                    </p>
-                  </motion.div>
-                </FadeUp>
+          {/* Savollar */}
+          <FadeUp delay={0.1}>
+            <div className="rounded-[24px] border border-line bg-surface p-6 md:p-8">
+              <h2 className="serif text-[28px] md:text-[34px] text-ivory leading-tight mb-4">
+                {t('faq_title')}
+              </h2>
+              <div className="divide-y divide-line">
+                {faqs.map((f, i) => {
+                  const open = openFaq === i;
+                  return (
+                    <div key={i}>
+                      <button
+                        type="button"
+                        onClick={() => setOpenFaq(open ? null : i)}
+                        aria-expanded={open}
+                        className="w-full flex items-center justify-between gap-4 py-5 text-left cursor-pointer"
+                      >
+                        <span className="text-[15.5px] text-ivory">{f.q}</span>
+                        <span
+                          className={cn(
+                            'grid place-items-center size-8 shrink-0 rounded-full border border-line-2 text-ivory/70 transition-transform duration-300',
+                            open &&
+                              'rotate-45 bg-ivory text-night border-ivory',
+                          )}
+                        >
+                          <Plus size={15} />
+                        </span>
+                      </button>
+                      <div
+                        className={cn(
+                          'grid transition-all duration-300',
+                          open
+                            ? 'grid-rows-[1fr] opacity-100 pb-5'
+                            : 'grid-rows-[0fr] opacity-0',
+                        )}
+                      >
+                        <p className="overflow-hidden text-[14.5px] text-ivory/55 leading-relaxed pr-10">
+                          {f.a}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <FadeUp delay={0.4}>
-                <div className="mt-8 pt-6 border-t border-gray-100">
-                  <AnimatedLine className="w-12 mb-4" />
-                  <motion.div whileHover={{ x: 3 }}>
-                    <Link
-                      href="/terms"
-                      className="text-sm text-gray-400 hover:text-black transition-colors"
-                    >
-                      {t('terms_link')}
-                    </Link>
-                  </motion.div>
-                </div>
-              </FadeUp>
-            </motion.div>
-          </SlideRight>
+              <div className="mt-4 pt-5 border-t border-line">
+                <Link
+                  href="/terms"
+                  className="lbl text-ivory/45 hover:text-ivory transition-colors"
+                >
+                  {t('terms_link')} →
+                </Link>
+              </div>
+            </div>
+          </FadeUp>
         </div>
       </div>
     </div>

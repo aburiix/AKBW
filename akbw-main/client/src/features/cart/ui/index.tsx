@@ -5,7 +5,6 @@ import { ArrowRight, Tag, MapPin, ChevronDown } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { cn } from '@/shared/lib/utils';
-import { monsterrat } from '@/shared/fonts';
 import { toast } from '@/shared/ui/toast';
 import { useCartStore } from '@/shared/store/cart.store';
 import { useCreateOrder } from '@/features/order/lib/hooks';
@@ -208,24 +207,15 @@ export default function Cart() {
   };
 
   return (
-    <div className={cn('min-h-screen', 'bg-[#F6F4F0]')}>
-      <div className={cn('container', 'py-10', 'px-4', 'md:px-6')}>
-        <div
-          className={cn('flex', 'gap-2', 'text-sm', 'text-gray-500', 'mb-10')}
-        >
+    <div className="min-h-screen">
+      <div className="wrap pt-6 md:pt-10 pb-10">
+        <div className="flex gap-2 lbl text-ivory/40 mb-4">
           <span>{t('breadcrumb_home')}</span>
           <span>/</span>
-          <span className={cn('text-black', 'font-medium')}>
-            {t('breadcrumb_cart')}
-          </span>
+          <span className="text-ivory/75">{t('breadcrumb_cart')}</span>
         </div>
 
-        <h1
-          className={cn(
-            'text-4xl md:text-5xl font-black uppercase mb-10',
-            monsterrat.className,
-          )}
-        >
+        <h1 className="serif text-[40px] md:text-[60px] leading-none text-ivory mb-8 md:mb-12">
           {t('title')}
         </h1>
 
@@ -244,70 +234,43 @@ export default function Cart() {
           <div
             className={cn(
               'w-full',
-              'lg:w-105',
-              'bg-[#D6D3CC]',
+              'lg:w-[420px]',
+              'shrink-0',
+              'bg-surface',
               'border',
-              'border-white/20',
-              'shadow-2xl',
-              'shadow-black/5',
-              'rounded-[40px]',
-              'p-8',
-              'space-y-8',
-              'sticky',
-              'top-24',
+              'border-line',
+              'rounded-[28px]',
+              'p-6 md:p-8',
+              'space-y-7',
+              'lg:sticky',
+              'lg:top-28',
             )}
           >
-            <h2
-              className={cn(
-                'text-2xl',
-                'font-black',
-                'uppercase',
-                'tracking-tight',
-              )}
-            >
+            <h2 className="serif text-[28px] leading-none text-ivory">
               {t('order_summary')}
             </h2>
 
             <div className="space-y-4">
               <div className="space-y-4">
-                <h3
-                  className={cn(
-                    'font-bold',
-                    'text-lg',
-                    'flex',
-                    'items-center',
-                    'gap-2',
-                    'text-black',
-                  )}
-                >
-                  <MapPin size={20} />
+                <h3 className="lbl text-ivory/70 flex items-center gap-2">
+                  <MapPin size={15} />
                   {t('delivery_address')}
                 </h3>
-                <div className={cn('grid', 'grid-cols-2', 'gap-4', "max-sm:grid-cols-1")}>
+                <div
+                  className={cn(
+                    'grid',
+                    'grid-cols-2',
+                    'gap-4',
+                    'max-sm:grid-cols-1',
+                  )}
+                >
                   <div className="space-y-1.5">
                     {btsCitiesGettingError || btsGettingError ? (
-                      <label
-                        className={cn(
-                          'text-[10px]',
-                          'font-bold',
-                          'uppercase',
-                          'tracking-widest',
-                          'px-1',
-                        )}
-                      >
+                      <label className="lbl text-ivory/45 px-1">
                         {t('bts_try_again_error')}
                       </label>
                     ) : (
-                      <label
-                        className={cn(
-                          'text-[10px]',
-                          'font-bold',
-                          'uppercase',
-                          'tracking-widest',
-                          'text-black/50',
-                          'px-1',
-                        )}
-                      >
+                      <label className="lbl text-ivory/45 px-1">
                         {t('region')}
                       </label>
                     )}
@@ -318,20 +281,7 @@ export default function Cart() {
                           setRegion(e.target.value);
                           setDistrict('');
                         }}
-                        className={cn(
-                          'w-full',
-                          'bg-gray-50',
-                          'border-none',
-                          'rounded-2xl',
-                          'h-14',
-                          'px-5',
-                          'text-sm',
-                          'font-semibold',
-                          'appearance-none',
-                          'cursor-pointer',
-                          'focus:ring-2',
-                          'focus:ring-black/5',
-                        )}
+                        className="w-full h-12 rounded-2xl border border-line-2 bg-ivory/[0.04] px-4 text-[14px] text-ivory appearance-none cursor-pointer outline-none focus-visible:border-ivory/60 focus-visible:ring-4 focus-visible:ring-ivory/10 disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={isRegionsLoading}
                       >
                         <option value="">
@@ -345,28 +295,12 @@ export default function Cart() {
                       </select>
                       <ChevronDown
                         size={18}
-                        className={cn(
-                          'absolute',
-                          'right-4',
-                          'top-1/2',
-                          '-translate-y-1/2',
-                          'text-black/50',
-                          'pointer-events-none',
-                        )}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-ivory/45 pointer-events-none"
                       />
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <label
-                      className={cn(
-                        'text-[10px]',
-                        'font-bold',
-                        'uppercase',
-                        'tracking-widest',
-                        'text-black/50',
-                        'px-1',
-                      )}
-                    >
+                    <label className="lbl text-ivory/45 px-1">
                       {t('district')}
                     </label>
                     <div className="relative">
@@ -374,21 +308,7 @@ export default function Cart() {
                         value={district}
                         disabled={!region || isCitiesLoading}
                         onChange={(e) => setDistrict(e.target.value)}
-                        className={cn(
-                          'w-full',
-                          'bg-gray-50',
-                          'border-none',
-                          'rounded-2xl',
-                          'h-14',
-                          'px-5',
-                          'text-sm',
-                          'font-semibold',
-                          'appearance-none',
-                          'cursor-pointer',
-                          'focus:ring-2',
-                          'focus:ring-black/5',
-                          'disabled:opacity-50',
-                        )}
+                        className="w-full h-12 rounded-2xl border border-line-2 bg-ivory/[0.04] px-4 text-[14px] text-ivory appearance-none cursor-pointer outline-none focus-visible:border-ivory/60 focus-visible:ring-4 focus-visible:ring-ivory/10 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <option value="">
                           {isCitiesLoading
@@ -403,14 +323,7 @@ export default function Cart() {
                       </select>
                       <ChevronDown
                         size={18}
-                        className={cn(
-                          'absolute',
-                          'right-4',
-                          'top-1/2',
-                          '-translate-y-1/2',
-                          'text-gray-400',
-                          'pointer-events-none',
-                        )}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-ivory/45 pointer-events-none"
                       />
                     </div>
                   </div>
@@ -421,29 +334,11 @@ export default function Cart() {
                   branchesData.data.items.length > 0 && (
                     <div className="space-y-1.5">
                       {btsBranchesGettingError || btsGettingError ? (
-                        <label
-                          className={cn(
-                            'text-[10px]',
-                            'font-bold',
-                            'uppercase',
-                            'tracking-widest',
-                            'text-black/50',
-                            'px-1',
-                          )}
-                        >
+                        <label className="lbl text-ivory/45 px-1">
                           {t('bts_try_again_error')}
                         </label>
                       ) : (
-                        <label
-                          className={cn(
-                            'text-[10px]',
-                            'font-bold',
-                            'uppercase',
-                            'tracking-widest',
-                            'text-black/50',
-                            'px-1',
-                          )}
-                        >
+                        <label className="lbl text-ivory/45 px-1">
                           {t('choose_delivery_branch')}
                         </label>
                       )}
@@ -457,110 +352,47 @@ export default function Cart() {
                   )}
 
                 <div className="space-y-1.5">
-                  <label
-                    className={cn(
-                      'text-[10px]',
-                      'font-bold',
-                      'uppercase',
-                      'tracking-widest',
-                      'text-black/50',
-                      'px-1',
-                    )}
-                  >
+                  <label className="lbl text-ivory/45 px-1">
                     {t('detailed_address_label')}
                   </label>
                   <Input
                     value={detailedAddress}
                     onChange={(e) => setDetailedAddress(e.target.value)}
                     placeholder={t('detailed_address_placeholder')}
-                    className={cn(
-                      'h-14',
-                      'rounded-2xl',
-                      'bg-gray-50',
-                      'border-none',
-                      'placeholder:text-black/50',
-                      'placeholder:opacity-50',
-                      'px-5',
-                      'text-sm',
-                      'font-semibold',
-                      'focus:ring-2',
-                      'focus:ring-black/5',
-                    )}
+                    className="h-12 rounded-2xl px-4"
                   />
                 </div>
               </div>
 
-              <hr className="border-gray-50" />
+              <hr className="border-line" />
 
               <div className={cn('flex', 'justify-between', 'items-center')}>
-                <span
-                  className={cn(
-                    'text-black/50',
-                    'font-bold',
-                    'uppercase',
-                    'tracking-widest',
-                    'text-[10px]',
-                  )}
-                >
-                  {t('subtotal')}
-                </span>
-                <span className={cn('font-black', 'text-lg')}>
+                <span className="lbl text-ivory/45 px-1">{t('subtotal')}</span>
+                <span className="text-[16px] text-ivory tabular-nums">
                   {subtotal.toLocaleString()} so&apos;m
                 </span>
               </div>
               <div className={cn('flex', 'justify-between', 'items-center')}>
-                <span
-                  className={cn(
-                    'text-black/50',
-                    'font-bold',
-                    'uppercase',
-                    'tracking-widest',
-                    'text-[10px]',
-                  )}
-                >
+                <span className="lbl text-ivory/45 px-1">
                   {t('discount')}{' '}
                   {appliedDiscount > 0 ? `(-${appliedDiscount}%)` : ''}
                 </span>
-                <span className={cn('font-black', 'text-lg', 'text-red-600')}>
+                <span className="text-[16px] text-sale tabular-nums">
                   -{discount.toLocaleString()} so&apos;m
                 </span>
               </div>
               <div className={cn('flex', 'justify-between', 'items-center')}>
-                <span
-                  className={cn(
-                    'text-black/50',
-                    'font-bold',
-                    'uppercase',
-                    'tracking-widest',
-                    'text-[10px]',
-                  )}
-                >
+                <span className="lbl text-ivory/45 px-1">
                   {t('delivery_fee')}
                 </span>
-                <span className={cn('font-black', 'text-lg')}>
+                <span className="text-[16px] text-ivory tabular-nums">
                   {deliveryFee.toLocaleString()} so&apos;m
                 </span>
               </div>
 
-              <div
-                className={cn(
-                  'flex',
-                  'justify-between',
-                  'items-center',
-                  'py-2',
-                )}
-              >
-                <span
-                  className={cn(
-                    'text-xs',
-                    'font-black',
-                    'uppercase',
-                    'tracking-widest',
-                  )}
-                >
-                  {t('total')}
-                </span>
-                <span className={cn('text-3xl', 'font-black')}>
+              <div className="flex justify-between items-end pt-4 border-t border-line">
+                <span className="lbl text-ivory/70">{t('total')}</span>
+                <span className="serif text-[34px] leading-none text-ivory tabular-nums">
                   {total.toLocaleString()} so&apos;m
                 </span>
               </div>
@@ -575,28 +407,16 @@ export default function Cart() {
                       'left-4',
                       'top-1/2',
                       '-translate-y-1/2',
-                      'text-gray-400',
+                      'text-ivory/40',
                     )}
                   >
-                    <Tag size={20} />
+                    <Tag size={18} />
                   </span>
                   <Input
                     value={promoCode}
                     onChange={(e) => setPromoCode(e.target.value)}
                     placeholder={t('promo_placeholder')}
-                    className={cn(
-                      'pl-12',
-                      'rounded-full',
-                      'placeholder:text-black/50',
-                      'h-14',
-                      'bg-white/50',
-                      'border-none',
-                      'shadow-inner',
-                      'text-sm',
-                      'focus:bg-white',
-                      'transition-all',
-                      'font-bold',
-                    )}
+                    className="pl-12 rounded-full h-[52px] text-sm"
                   />
                 </div>
                 <Button
@@ -605,21 +425,8 @@ export default function Cart() {
                       ? handleRemovePromoCode
                       : handleApplyPromoCode
                   }
-                  className={cn(
-                    'rounded-full',
-                    'px-8',
-                    'py-7',
-                    'h-14',
-                    'font-black',
-                    'uppercase',
-                    'text-[10px]',
-                    'tracking-widest',
-                    'bg-black',
-                    'text-white',
-                    'hover:bg-black/80',
-                    'transition-all',
-                    'cursor-pointer',
-                  )}
+                  variant="outline"
+                  className="h-[52px] px-6"
                 >
                   {appliedDiscount > 0 ? t('remove_promo_btn') : t('apply_btn')}
                 </Button>
@@ -629,36 +436,10 @@ export default function Cart() {
             <Button
               onClick={handleCheckout}
               disabled={cartItems.length === 0}
-              className={cn(
-                'w-full',
-                'rounded-full',
-                'py-9',
-                'max-sm:text-[15px]',
-                'font-black',
-                'text-xs',
-                'bg-white',
-                'text-black',
-                'hover:bg-white/90',
-                'shadow-2xl',
-                'shadow-black/5',
-                'hover:scale-[1.02]',
-                'active:scale-[0.98]',
-                'transition-all',
-                'uppercase',
-                'tracking-[0.2em]',
-                'flex',
-                'items-center',
-                'justify-center',
-                'gap-3',
-                'cursor-pointer',
-                'border-none',
-                'mt-4',
-                "max-sm:text-[10px]",
-                "cursor-pointer"
-              )}
+              className="w-full !h-14 gap-3 mt-2"
             >
               {t('checkout_btn')}
-              <ArrowRight size={22} />
+              <ArrowRight size={18} />
             </Button>
           </div>
         </div>

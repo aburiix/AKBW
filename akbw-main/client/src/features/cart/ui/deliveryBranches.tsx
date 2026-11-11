@@ -3,6 +3,7 @@
 import React from 'react';
 import { IBtsBranch } from '@/shared/config/api/bts/bts.model';
 import { Phone, Clock, MapPin, Play, ExternalLink } from 'lucide-react';
+import { getTelegram } from '@/shared/lib/telegram';
 import { cn } from '@/shared/lib/utils';
 import { useTranslations } from 'next-intl';
 
@@ -31,7 +32,7 @@ export default function DeliveryBranches({
 
   if (error) {
     return (
-      <div className="w-full bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-xs font-medium">
+      <div className="w-full rounded-2xl border border-sale/30 bg-sale/10 p-3 text-sale text-xs">
         {error}
       </div>
     );
@@ -39,12 +40,10 @@ export default function DeliveryBranches({
 
   if (isLoading) {
     return (
-      <div className="w-full bg-gray-50 rounded-xl p-4 flex items-center justify-center min-h-20">
+      <div className="w-full rounded-2xl border border-line bg-ivory/[0.03] p-4 flex items-center justify-center min-h-20">
         <div className="flex flex-col items-center gap-2">
-          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-black"></div>
-          <span className="text-xs text-gray-500 font-medium">
-            Loading branches...
-          </span>
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-ivory"></div>
+          <span className="text-xs text-ivory/50">Loading branches...</span>
         </div>
       </div>
     );
@@ -54,7 +53,7 @@ export default function DeliveryBranches({
     <div className="space-y-3 w-full mt-3">
       <div className="grid grid-cols-1 gap-2.5 max-h-80 overflow-y-auto pr-1">
         {branches.length === 0 ? (
-          <div className="col-span-full text-center py-8 text-gray-400 text-sm">
+          <div className="col-span-full text-center py-8 text-ivory/40 text-sm">
             No branches available
           </div>
         ) : (
@@ -63,20 +62,18 @@ export default function DeliveryBranches({
               key={branch.code}
               onClick={() => onSelectBranch(branch)}
               className={cn(
-                'text-left p-3 rounded-xl border-2 transition-all cursor-pointer group hover:shadow-md',
+                'text-left p-3.5 rounded-2xl border transition-all cursor-pointer group',
                 selectedBranch?.code === branch.code
-                  ? 'border-black bg-black/5 shadow-sm'
-                  : 'border-gray-200 bg-white hover:border-gray-300',
+                  ? 'border-ivory bg-ivory/[0.08]'
+                  : 'border-line-2 hover:border-ivory/40',
               )}
             >
               {/* Branch Name */}
-              <h4 className="font-bold text-sm text-black truncate group-hover:text-black transition-colors">
-                {branch.name}
-              </h4>
+              <h4 className="text-[14px] text-ivory truncate">{branch.name}</h4>
 
               {/* Address */}
-              <div className="flex gap-1.5 mt-1.5 text-xs text-gray-600 line-clamp-1">
-                <MapPin size={12} className="shrink-0 mt-0.5 text-gray-400" />
+              <div className="flex gap-1.5 mt-1.5 text-xs text-ivory/55 line-clamp-1">
+                <MapPin size={12} className="shrink-0 mt-0.5 text-ivory/35" />
                 <span className="truncate">{branch.address}</span>
               </div>
 
@@ -84,12 +81,12 @@ export default function DeliveryBranches({
               <span
                 onClick={(e) => {
                   e.stopPropagation();
-                  window.open(
-                    `https://www.google.com/maps/dir/?api=1&destination=${branch.lat_long}`,
-                    '_blank',
-                  );
+                  const url = `https://www.google.com/maps/dir/?api=1&destination=${branch.lat_long}`;
+                  const tg = getTelegram();
+                  if (tg) tg.openLink(url);
+                  else window.open(url, '_blank');
                 }}
-                className="flex items-center gap-1 mt-2 text-xs text-blue-600 hover:text-blue-700 hover:underline font-medium cursor-pointer"
+                className="flex items-center gap-1 mt-2 text-xs text-star hover:underline cursor-pointer"
               >
                 <ExternalLink size={10} />
                 {t('open_in_map')}
@@ -100,12 +97,12 @@ export default function DeliveryBranches({
                 <a
                   href={`tel:${branch.phone}`}
                   onClick={(e) => e.stopPropagation()}
-                  className="flex items-center gap-0.5 text-blue-600 hover:underline font-medium"
+                  className="flex items-center gap-0.5 text-star hover:underline"
                 >
                   <Phone size={11} />
                   {branch.phone}
                 </a>
-                <div className="flex items-center gap-0.5 text-gray-500 ml-auto">
+                <div className="flex items-center gap-0.5 text-ivory/45 ml-auto">
                   <Clock size={11} />
                   <span className="font-medium">
                     {getTodayHours(branch.working_hours)}
@@ -120,7 +117,7 @@ export default function DeliveryBranches({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="flex items-center gap-1 text-xs text-blue-600 hover:underline font-medium mt-2"
+                  className="flex items-center gap-1 text-xs text-star hover:underline mt-2"
                 >
                   <Play size={10} fill="currentColor" />
                   Video

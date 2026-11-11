@@ -97,7 +97,7 @@ export default function ReviewView({ activeTab, productId }: ReviewViewProps) {
           />
 
           {token && (
-            <div className="mb-10 p-8 border border-gray-100 rounded-[32px] bg-[#D6D3CC]/40 shadow-sm">
+            <div className="mb-10 p-8 border border-gray-100 rounded-[32px] bg-[var(--color-akbw-filter-bg)]/40 shadow-sm">
               <h3 className="text-xl font-bold mb-6">
                 {t('rating.leaveReview')}
               </h3>

@@ -43,7 +43,7 @@ export function AnimatedProductCard({
           onHoverEnd={() => setIsHovered(false)}
         >
           {/* Image Container */}
-          <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-[#D6D3CC]/30">
+          <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-[var(--color-akbw-filter-bg)]/30">
             {/* Main Image */}
             <motion.div
               className="absolute inset-0"

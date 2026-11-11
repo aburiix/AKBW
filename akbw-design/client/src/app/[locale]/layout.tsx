@@ -1,10 +1,8 @@
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Metadata } from 'next';
 import '../globals.css';
 import { inter } from '@/shared/config/fonts';
 import { ThemeProvider } from '@/shared/config/theme-provider';
-import { PRODUCT_INFO } from '@/shared/constants/data';
 import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl';
 import { routing } from '@/shared/config/i18n/routing';
 import { notFound } from 'next/navigation';

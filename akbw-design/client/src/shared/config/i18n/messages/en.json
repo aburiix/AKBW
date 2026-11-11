@@ -270,6 +270,7 @@
     "viewProducts": "View Products"
   },
   "FilterPage": {
+    "products_error": "Failed to load products",
     "breadcrumbs": "Home / Filters",
     "filters": "Filters",
     "price": "Price",

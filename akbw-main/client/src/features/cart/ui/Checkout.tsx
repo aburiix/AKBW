@@ -9,7 +9,6 @@ import {
   ModalClose,
 } from '@/shared/ui/modal';
 import { OrderProgress } from './order-progress';
-import { Radiant } from '@/shared/fonts';
 import Image from 'next/image';
 import ProductImage from '../../../../public/assets/product.png';
 import { IOrder } from '@/shared/config/api/order/order.model';
@@ -20,7 +19,6 @@ import { toast } from '@/shared/ui/toast';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/shared/lib/utils';
 import { useClickLink, usePaynetLink } from '../lib/hooks';
-import { inter } from '@/shared/config/fonts';
 
 interface CheckoutProps {
   isCheckoutOpen: boolean;
@@ -95,337 +93,182 @@ function Checkout({
         });
     }
   };
+  const thumbs = (size: 'lg' | 'sm') => (
+    <div
+      className={cn(
+        'flex no-scrollbar',
+        size === 'lg'
+          ? '-space-x-6 overflow-x-auto py-1'
+          : 'justify-center -space-x-3',
+      )}
+    >
+      {selectedOrder?.orderItems.map((item: any, i: number) => (
+        <div
+          key={i}
+          className={cn(
+            'relative shrink-0 overflow-hidden border-2 border-surface-2 bg-surface-3 shadow-[0_14px_30px_-12px_rgba(0,0,0,0.8)] transition-transform hover:-translate-y-1.5',
+            size === 'lg'
+              ? 'w-[76px] aspect-[3/4] rounded-2xl'
+              : 'size-14 rounded-full',
+          )}
+        >
+          <Image
+            src={item.product?.product_images?.[0] || ProductImage.src}
+            alt={item.product?.translations?.[0]?.name || 'product'}
+            fill
+            sizes="80px"
+            className="object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  );
+
+  const header = (title: string, desc: string, center = false) => (
+    <div className={cn('space-y-2', center && 'text-center')}>
+      <ModalTitle className="serif text-[30px] md:text-[36px] leading-[1.05] text-ivory font-normal tracking-normal">
+        {title}
+      </ModalTitle>
+      <ModalDescription className="text-[13.5px] leading-relaxed text-ivory/55">
+        {desc}
+      </ModalDescription>
+    </div>
+  );
+
   return (
     <Modal open={isCheckoutOpen} onOpenChange={setIsCheckoutOpen}>
-      <ModalContent
-        className={cn(
-          'max-w-2xl',
-          'bg-white',
-          'p-0',
-          'overflow-hidden',
-          'border-none',
-          'rounded-[32px]',
-          'shadow-2xl',
-          'max-h-[90vh]',
-          'overflow-y-auto',
-          'no-scrollbar',
-        )}
-      >
+      <ModalContent className="max-w-[560px] p-0 no-scrollbar">
         {modalMode === 'checkout' ? (
-          <div className={cn('p-8', 'space-y-8')}>
-            <div className="space-y-2">
-              <ModalTitle
-                className={cn(
-                  'text-3xl font-black uppercase tracking-tight',
-                  inter.className,
-                  inter.variable,
-                )}
-              >
-                {t('modal_finalize_title')}
-              </ModalTitle>
-              <ModalDescription className={cn('text-gray-400', 'font-medium')}>
-                {t('modal_finalize_desc')}
-              </ModalDescription>
+          <div className="p-6 md:p-9 flex flex-col gap-7">
+            <div className="pr-10">
+              <span className="lbl text-ivory/40">
+                AKBW · {t('payment_method')}
+              </span>
+              <div className="mt-3">
+                {header(t('modal_finalize_title'), t('modal_finalize_desc'))}
+              </div>
             </div>
 
-            <div
-              className={cn(
-                'flex',
-                '-space-x-10',
-                'overflow-x-auto',
-                'py-2',
-                'no-scrollbar',
-              )}
-            >
-              {selectedOrder?.orderItems.map((item: any, i: number) => (
-                <div
-                  key={i}
-                  className={cn(
-                    'w-24',
-                    'h-24',
-                    'rounded-2xl',
-                    'overflow-hidden',
-                    'border-4',
-                    'border-white',
-                    'shadow-xl',
-                    'hover:-translate-y-2',
-                    'transition-transform',
-                    'shrink-0',
-                  )}
-                >
-                  <Image
-                    src={item.product?.product_images?.[0] || ProductImage.src}
-                    alt={item.product?.translations?.[0]?.name || 'product'}
-                    width={96}
-                    height={96}
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
+            {thumbs('lg')}
 
-            <div className="space-y-4">
-              <h3
-                className={cn(
-                  'font-bold',
-                  'text-lg',
-                  'flex',
-                  'items-center',
-                  'gap-2',
-                )}
-              >
-                <CreditCard size={20} className="text-black" />
+            <div>
+              <h3 className="lbl text-ivory/45 mb-3 flex items-center gap-2">
+                <CreditCard size={14} />
                 {t('payment_method')}
               </h3>
-              <div className={cn('grid', 'grid-cols-3', 'gap-4')}>
+              <div className="grid grid-cols-3 gap-2.5">
                 {[
                   { id: 'payme', name: 'Payme', icon: paymentIcons.payme },
                   { id: 'click', name: 'Click', icon: paymentIcons.click },
                   { id: 'paynet', name: 'Paynet', icon: paymentIcons.paynet },
                 ].map((method) => {
+                  const on = paymentMethod === method.id;
                   return (
-                    <div
+                    <button
+                      type="button"
                       key={method.id}
+                      aria-pressed={on}
                       onClick={() => setPaymentMethod(method.id as any)}
                       className={cn(
-                        'flex flex-col items-center justify-center p-2 rounded-xl border-2 transition-all cursor-pointer gap-2',
-                        paymentMethod === method.id
-                          ? 'border-black bg-black/5 shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]'
-                          : 'border-gray-50 bg-gray-50/50 hover:border-black/10',
+                        'relative flex flex-col items-center gap-2 p-2 pb-2.5 rounded-2xl border transition-all cursor-pointer',
+                        on
+                          ? 'border-ivory bg-ivory/[0.08]'
+                          : 'border-line-2 hover:border-ivory/40',
                       )}
                     >
-                      <Image
-                        src={method.icon}
-                        alt={method.name}
-                        width={120}
-                        height={120}
-                      />
-                    </div>
+                      <span className="grid place-items-center w-full h-12 rounded-xl bg-[#f6f1e7] px-3">
+                        <Image
+                          src={method.icon}
+                          alt={method.name}
+                          width={90}
+                          height={30}
+                          className="h-6 w-auto object-contain"
+                        />
+                      </span>
+                      <span
+                        className={cn(
+                          'lbl !tracking-[0.14em]',
+                          on ? 'text-ivory' : 'text-ivory/50',
+                        )}
+                      >
+                        {method.name}
+                      </span>
+                      {on && (
+                        <span className="absolute -top-2 -right-2 grid place-items-center size-6 rounded-full bg-ivory text-night">
+                          <Check size={13} strokeWidth={3} />
+                        </span>
+                      )}
+                    </button>
                   );
                 })}
               </div>
             </div>
 
-            <div
-              className={cn(
-                'bg-black',
-                'rounded-[28px]',
-                'p-6',
-                'space-y-4',
-                'text-white',
-                'shadow-xl',
-                'shadow-black/10',
-              )}
-            >
-              <div className={cn('flex', 'justify-between', 'items-start')}>
-                <div className={cn('flex', 'flex-col')}>
-                  <span
-                    className={cn(
-                      'text-gray-400',
-                      'text-xs',
-                      'font-bold',
-                      'uppercase',
-                      'tracking-widest',
-                      'mb-1',
-                    )}
-                  >
+            <div className="rounded-[24px] border border-line-2 bg-[radial-gradient(90%_120%_at_100%_0%,rgba(200,152,106,0.18),transparent_60%)] p-5 md:p-6">
+              <div className="flex items-end justify-between gap-4 flex-wrap">
+                <div className="flex flex-col">
+                  <span className="lbl text-ivory/45 mb-1.5">
                     {t('total_to_pay')}
                   </span>
-                  <span className={cn('text-3xl', 'font-black')}>
+                  <span className="text-[28px] md:text-[32px] text-ivory tabular-nums leading-none">
                     {Number(selectedOrder?.total_price).toLocaleString()}{' '}
                     so&apos;m
                   </span>
                 </div>
                 <Button
                   onClick={finalizePayment}
-                  className={cn(
-                    'rounded-full',
-                    'px-10',
-                    'py-7',
-                    'font-black',
-                    'text-lg',
-                    'bg-white',
-                    'text-black',
-                    'hover:bg-white/90',
-                    'transition-all',
-                    'uppercase',
-                    'tracking-widest',
-                    'cursor-pointer',
-                    'border-none',
-                  )}
+                  className="!h-[52px] px-8 max-sm:w-full"
                 >
                   {t('pay_now_btn')}
                 </Button>
               </div>
-
-              <div className={cn('pt-4', 'border-t', 'border-white/20')}>
-                <p
-                  className={cn('text-xs', 'text-gray-300', 'leading-relaxed')}
-                >
-                  {t('rest_will_be_paid_at_delivery')}
-                </p>
-              </div>
+              <p className="mt-5 pt-4 border-t border-line text-[12px] text-ivory/50 leading-relaxed">
+                {t('rest_will_be_paid_at_delivery')}
+              </p>
             </div>
           </div>
         ) : modalMode === 'shipments' ? (
-          <div className="p-8">
-            <div className={cn('text-center', 'mb-8', 'space-y-2')}>
-              <ModalTitle
-                className={cn(
-                  'text-3xl font-black uppercase tracking-tight',
-                  inter.className,
-                  inter.variable,
-                )}
-              >
-                {t('shipments_progress_title')}
-              </ModalTitle>
-              <ModalDescription className={cn('text-gray-400', 'font-medium')}>
-                {t('shipments_progress_desc')}
-              </ModalDescription>
-            </div>
-
-            <div
-              className={cn(
-                'bg-gray-50',
-                'rounded-[24px]',
-                'p-6',
-                'shadow-sm',
-                'border',
-                'border-gray-100',
-              )}
-            >
-              <OrderProgress shipments={selectedOrder?.shipments || []} />
-            </div>
-
-            <div className="mt-8">
-              <Button
-                onClick={() => setIsCheckoutOpen(false)}
-                className={cn(
-                  'w-full',
-                  'rounded-full',
-                  'py-7',
-                  'font-bold',
-                  'text-lg',
-                  'bg-black',
-                  'text-white',
-                  'hover:bg-black/80',
-                  'transition-all',
-                  'cursor-pointer',
-                )}
-              >
-                {t('close_btn')}
-              </Button>
-            </div>
+          <div className="p-6 md:p-9 flex flex-col gap-7">
+            {header(
+              t('shipments_progress_title'),
+              t('shipments_progress_desc'),
+              true,
+            )}
+            {(selectedOrder?.shipments?.length ?? 0) > 0 && (
+              <div className="rounded-[24px] border border-line bg-surface p-5 md:p-6">
+                <OrderProgress shipments={selectedOrder?.shipments || []} />
+              </div>
+            )}
+            <Button onClick={() => setIsCheckoutOpen(false)} className="w-full">
+              {t('close_btn')}
+            </Button>
           </div>
         ) : (
-          <div className="p-8">
-            <div className={cn('text-center', 'mb-10', 'space-y-2')}>
-              <div
-                className={cn(
-                  'w-16',
-                  'h-16',
-                  'bg-green-100',
-                  'text-green-600',
-                  'rounded-full',
-                  'flex',
-                  'items-center',
-                  'justify-center',
-                  'mx-auto',
-                  'mb-6',
-                )}
-              >
-                <Check size={32} strokeWidth={3} />
-              </div>
-              <ModalTitle
-                className={cn(
-                  'text-3xl font-black uppercase tracking-tight',
-                  Radiant.className,
-                )}
-              >
-                {t('order_received_title')}
-              </ModalTitle>
-              <ModalDescription className={cn('text-gray-400', 'font-medium')}>
-                {t('order_received_desc')}
-              </ModalDescription>
-            </div>
-
-            <div
-              className={cn('flex', 'justify-center', '-space-x-4', 'mb-10')}
-            >
-              {selectedOrder?.orderItems.map((item: any, i: number) => (
-                <div
-                  key={i}
-                  className={cn(
-                    'w-16',
-                    'h-16',
-                    'rounded-full',
-                    'overflow-hidden',
-                    'border-2',
-                    'border-white',
-                    'shadow-lg',
-                  )}
-                >
-                  <Image
-                    src={item.product?.product_images?.[0] || ProductImage.src}
-                    alt={item.product?.translations?.[0]?.name || 'product'}
-                    width={64}
-                    height={64}
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div
-              className={cn(
-                'bg-gray-50',
-                'rounded-[24px]',
-                'p-6',
-                'shadow-sm',
-                'border',
-                'border-gray-100',
+          <div className="p-6 md:p-9 flex flex-col gap-7">
+            <div className="flex flex-col items-center">
+              <span className="relative grid place-items-center size-16 rounded-full border border-ok/40 bg-ok/10 text-ok mb-5">
+                <span className="absolute inset-0 rounded-full border border-ok/30 animate-ping [animation-iteration-count:2]" />
+                <Check size={28} strokeWidth={2.5} />
+              </span>
+              {header(
+                t('order_received_title'),
+                t('order_received_desc'),
+                true,
               )}
-            >
-              <OrderProgress shipments={selectedOrder?.shipments || []} />
             </div>
-
-            <div className="mt-8">
-              <Button
-                onClick={() => setIsCheckoutOpen(false)}
-                className={cn(
-                  'w-full',
-                  'rounded-full',
-                  'py-7',
-                  'font-bold',
-                  'text-lg',
-                  'bg-black',
-                  'text-white',
-                  'hover:bg-black/80',
-                  'transition-all',
-                  'cursor-pointer',
-                )}
-              >
-                {t('close_btn')}
-              </Button>
-            </div>
+            {thumbs('sm')}
+            {(selectedOrder?.shipments?.length ?? 0) > 0 && (
+              <div className="rounded-[24px] border border-line bg-surface p-5 md:p-6">
+                <OrderProgress shipments={selectedOrder?.shipments || []} />
+              </div>
+            )}
+            <Button onClick={() => setIsCheckoutOpen(false)} className="w-full">
+              {t('close_btn')}
+            </Button>
           </div>
         )}
-        <ModalClose
-          className={cn(
-            'bg-white/80',
-            'backdrop-blur-md',
-            'rounded-full',
-            'p-2',
-            'hover:bg-white',
-            'transition-all',
-            'shadow-sm',
-            'absolute',
-            'top-4',
-            'right-4',
-            'focus:ring-0',
-          )}
-        >
-          <X size={20} />
+        <ModalClose>
+          <X />
         </ModalClose>
       </ModalContent>
     </Modal>

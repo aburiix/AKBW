@@ -280,6 +280,7 @@ declare const messages: {
     "viewProducts": "Mahsulotlarni ko'rish"
   },
   "FilterPage": {
+    "products_error": "Mahsulotlarni yuklashda xatolik",
     "breadcrumbs": "Bosh sahifa / Filtrlar",
     "filters": "Filtrlar",
     "price": "Narx",

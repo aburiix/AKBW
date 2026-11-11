@@ -1,8 +1,15 @@
 'use client';
 
 import React from 'react';
-import { Leaf, Globe, ShieldCheck } from 'lucide-react';
-import Link from 'next/link';
+import {
+  Leaf,
+  Globe,
+  ShieldCheck,
+  Sparkles,
+  Rocket,
+  ArrowRight,
+} from 'lucide-react';
+import { Link } from '@/shared/config/i18n/navigation';
 import Image from 'next/image';
 import AkbaraAbout from '../../../../public/assets/akbw-about.jpg';
 import { useTranslations } from 'next-intl';
@@ -14,7 +21,6 @@ import {
   TextReveal,
   StaggerContainer,
   StaggerItem,
-  AnimatedLine,
   ImageReveal,
 } from '@/shared/ui/animations';
 
@@ -40,275 +46,199 @@ export default function AboutPage() {
   const t = useTranslations('AboutPage');
 
   return (
-    <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white overflow-hidden">
-      {/* Hero Section */}
-      <div className="relative h-[60vh] md:h-[70vh] w-full overflow-hidden bg-gray-100 flex items-center justify-center">
-        <motion.div
-          className="absolute inset-0 bg-neutral-900/10 z-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        />
-        <div className="relative z-10 text-center max-w-4xl px-6">
-          <motion.h1
-            className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter uppercase font-display"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.2,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-          >
-            <TextReveal text="AKBW" staggerDelay={0.08} />
-          </motion.h1>
-          <motion.p
-            className="text-xl md:text-2xl font-light text-neutral-600 max-w-2xl mx-auto tracking-wide"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.6,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-          >
-            {t('hero_subtitle')}
-          </motion.p>
-          <motion.div
-            className="h-1 w-24 bg-black mx-auto mt-8"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 1, ease: [0.25, 0.1, 0.25, 1] }}
-          />
-        </div>
-      </div>
-
-      {/* Introduction Section */}
-      <section className="py-20 md:py-32 px-6">
-        <div className="container mx-auto max-w-4xl">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <SlideLeft>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-                  {t('intro_title')}
-                </h2>
-              </SlideLeft>
-              <FadeUp delay={0.2}>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  <span className="font-bold text-black">
-                    {t('akbw_full_name')}
-                  </span>{' '}
-                  {t('intro_description_1')}
-                </p>
-              </FadeUp>
-              <FadeUp delay={0.3}>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  {t('intro_description_2')}
-                </p>
-              </FadeUp>
-            </div>
-            <SlideRight delay={0.2}>
-              <ImageReveal
-                direction="left"
-                className="h-full min-h-[400px] rounded-2xl"
-              >
-                <div className="h-full min-h-[400px] bg-gray-200 rounded-2xl overflow-hidden group relative">
-                  <Image
-                    src={AkbaraAbout.src}
-                    alt="AKBW"
-                    className="w-full h-full object-cover"
-                    fill
-                  />
-                </div>
-              </ImageReveal>
-            </SlideRight>
+    <div className="min-h-screen overflow-hidden">
+      <div className="wrap pt-4 md:pt-5">
+        {/* Hero */}
+        <section className="relative rounded-[28px] overflow-hidden border border-line min-h-[clamp(420px,62vh,640px)] grid place-items-center text-center bg-[radial-gradient(70%_70%_at_50%_30%,#6e4a2e,#24180f_60%,#120d09)]">
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_30%,rgba(14,13,11,0.9))]" />
+          <div className="relative z-10 px-6 max-w-3xl">
+            <span className="lbl text-ivory/55">{t('akbw_full_name')}</span>
+            <motion.h1
+              className="font-display text-[72px] md:text-[150px] leading-[0.9] text-ivory mt-4"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.1,
+                ease: [0.25, 0.1, 0.25, 1],
+              }}
+            >
+              <TextReveal text="AKBW" staggerDelay={0.08} />
+            </motion.h1>
+            <motion.p
+              className="serif text-[22px] md:text-[30px] leading-snug text-ivory/80 mt-4"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              {t('hero_subtitle')}
+            </motion.p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Philosophy & Vision - Alternating Layout */}
-      <section className="bg-neutral-50 py-20 md:py-32 px-6">
-        <div className="container mx-auto max-w-5xl">
-          {/* Vision Block */}
-          <div className="mb-24">
-            <div className="max-w-3xl mx-auto text-center space-y-8">
-              <FadeUp>
-                <span className="text-sm font-semibold tracking-widest uppercase text-gray-500">
-                  {t('vision_label')}
-                </span>
-              </FadeUp>
-              <FadeUp delay={0.1}>
-                <h3 className="text-3xl md:text-5xl font-bold leading-tight">
-                  {t('vision_title')}
-                </h3>
-              </FadeUp>
-              <FadeUp delay={0.2}>
-                <p className="text-xl text-gray-600 leading-relaxed font-light">
-                  {t('vision_description')}
-                </p>
-              </FadeUp>
-              <FadeUp delay={0.3}>
-                <div className="pt-4">
-                  <AnimatedLine className="w-32 mx-auto mb-4" />
-                  <div className="inline-block pt-4">
-                    <p className="font-bold text-lg">{t('founder_name')}</p>
-                    <p className="text-sm text-gray-500">{t('founder_role')}</p>
-                  </div>
-                </div>
-              </FadeUp>
-            </div>
+        {/* Kirish */}
+        <section className="mt-14 md:mt-24 grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          <div className="space-y-5">
+            <SlideLeft>
+              <span className="lbl text-ivory/40">01 · AKBW</span>
+              <h2 className="serif text-[34px] md:text-[52px] leading-[1.02] text-ivory mt-3">
+                {t('intro_title')}
+              </h2>
+            </SlideLeft>
+            <FadeUp delay={0.2}>
+              <p className="text-[16px] text-ivory/60 leading-relaxed">
+                <span className="text-ivory">{t('akbw_full_name')}</span>{' '}
+                {t('intro_description_1')}
+              </p>
+            </FadeUp>
+            <FadeUp delay={0.3}>
+              <p className="text-[16px] text-ivory/60 leading-relaxed">
+                {t('intro_description_2')}
+              </p>
+            </FadeUp>
           </div>
-
-          {/* Process Grid */}
-          <StaggerContainer
-            className="grid md:grid-cols-3 gap-8"
-            staggerDelay={0.15}
-          >
-            {features.map((item, idx) => (
-              <StaggerItem key={idx}>
-                <motion.div
-                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 h-full"
-                  whileHover={{
-                    y: -8,
-                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
-                    transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
-                  }}
-                >
-                  <motion.div
-                    className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mb-6"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                  >
-                    <item.icon size={24} strokeWidth={1.5} />
-                  </motion.div>
-                  <h4 className="text-xl font-bold mb-3">{t(item.title)}</h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    {t(item.description)}
-                  </p>
-                </motion.div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
-
-      {/* Organization & Growth */}
-      <section className="py-20 md:py-32 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-12 gap-12">
-            <div className="lg:col-span-5 space-y-8">
-              <SlideLeft>
-                <h2 className="text-3xl md:text-4xl font-bold">
-                  {t('growth_title')}
-                </h2>
-              </SlideLeft>
-              <div className="space-y-6 text-gray-600 text-lg">
-                <FadeUp delay={0.2}>
-                  <p>{t('growth_description_1')}</p>
-                </FadeUp>
-                <FadeUp delay={0.3}>
-                  <p>{t('growth_description_2')}</p>
-                </FadeUp>
+          <SlideRight delay={0.2}>
+            <ImageReveal direction="left" className="rounded-[28px]">
+              <div className="relative aspect-[4/5] rounded-[28px] overflow-hidden border border-line bg-surface-2">
+                <Image
+                  src={AkbaraAbout}
+                  alt="AKBW"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                />
               </div>
-            </div>
+            </ImageReveal>
+          </SlideRight>
+        </section>
 
-            <div className="lg:col-span-7 grid grid-cols-2 gap-4">
-              <FadeUp delay={0.2}>
-                <motion.div
-                  className="bg-neutral-100 rounded-2xl p-8 flex flex-col justify-end min-h-[300px]"
-                  whileHover={{
-                    scale: 1.02,
-                    backgroundColor: '#e5e5e5',
-                    transition: { duration: 0.3 },
-                  }}
-                >
-                  <motion.span
-                    className="text-5xl mb-4"
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatDelay: 3,
-                    }}
-                  >
-                    ✨
-                  </motion.span>
-                  <h4 className="text-xl font-bold mb-2">
-                    {t('values.honesty_title')}
-                  </h4>
-                  <p className="text-gray-600">
-                    {t('values.honesty_description')}
-                  </p>
-                </motion.div>
-              </FadeUp>
-              <FadeUp delay={0.4}>
-                <motion.div
-                  className="bg-neutral-900 text-white rounded-2xl p-8 flex flex-col justify-end min-h-[300px] mt-12"
-                  whileHover={{
-                    scale: 1.02,
-                    backgroundColor: '#262626',
-                    transition: { duration: 0.3 },
-                  }}
-                >
-                  <motion.span
-                    className="text-5xl mb-4"
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      repeatDelay: 2,
-                    }}
-                  >
-                    🚀
-                  </motion.span>
-                  <h4 className="text-xl font-bold mb-2">
-                    {t('values.online_exp_title')}
-                  </h4>
-                  <p className="text-gray-400">
-                    {t('values.online_exp_description')}
-                  </p>
-                </motion.div>
-              </FadeUp>
-            </div>
+        {/* Vizyon */}
+        <section className="mt-14 md:mt-24 rounded-[28px] border border-line bg-surface px-6 py-14 md:py-20 text-center">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <FadeUp>
+              <span className="lbl text-ivory/40">{t('vision_label')}</span>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <h3 className="serif text-[30px] md:text-[48px] leading-[1.08] text-ivory">
+                {t('vision_title')}
+              </h3>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p className="text-[16px] md:text-[18px] text-ivory/60 leading-relaxed">
+                {t('vision_description')}
+              </p>
+            </FadeUp>
+            <FadeUp delay={0.3}>
+              <div className="pt-6 flex flex-col items-center gap-1">
+                <span className="h-px w-16 bg-ivory/30 mb-4" />
+                <p className="serif text-[22px] text-ivory">
+                  {t('founder_name')}
+                </p>
+                <p className="lbl text-ivory/45">{t('founder_role')}</p>
+              </div>
+            </FadeUp>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Bottom Statement */}
-      <section className="bg-black text-white py-24 px-6 text-center overflow-hidden">
-        <div className="container mx-auto max-w-3xl">
-          <FadeUp>
-            <h2 className="text-2xl md:text-4xl font-bold mb-8 leading-snug">
-              {t('bottom_quote')}
-            </h2>
-          </FadeUp>
-          <FadeUp delay={0.2}>
-            <p className="text-neutral-400 text-lg md:text-xl mb-10 font-light">
-              {t('bottom_description')}
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.4}>
-            <div className="flex justify-center gap-6">
-              <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-                <Link
-                  href="/"
-                  className="border-b border-white pb-1 hover:text-gray-300 hover:border-gray-300 transition-all"
-                >
+        {/* Afzalliklar */}
+        <StaggerContainer
+          className="mt-3 grid md:grid-cols-3 gap-3"
+          staggerDelay={0.12}
+        >
+          {features.map((item, idx) => (
+            <StaggerItem key={idx}>
+              <div className="group h-full rounded-[24px] border border-line bg-surface p-6 md:p-8 transition-all hover:-translate-y-1 hover:border-line-2">
+                <div className="flex items-center justify-between mb-8">
+                  <span className="grid place-items-center size-12 rounded-2xl glass text-ivory">
+                    <item.icon size={20} strokeWidth={1.5} />
+                  </span>
+                  <span className="lbl text-ivory/25">0{idx + 1}</span>
+                </div>
+                <h4 className="serif text-[24px] text-ivory mb-2">
+                  {t(item.title)}
+                </h4>
+                <p className="text-[14.5px] text-ivory/55 leading-relaxed">
+                  {t(item.description)}
+                </p>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        {/* O'sish */}
+        <section className="mt-14 md:mt-24 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="lg:col-span-5 space-y-5">
+            <SlideLeft>
+              <span className="lbl text-ivory/40">02 · AKBW</span>
+              <h2 className="serif text-[34px] md:text-[48px] leading-[1.04] text-ivory mt-3">
+                {t('growth_title')}
+              </h2>
+            </SlideLeft>
+            <FadeUp delay={0.2}>
+              <p className="text-[16px] text-ivory/60 leading-relaxed">
+                {t('growth_description_1')}
+              </p>
+            </FadeUp>
+            <FadeUp delay={0.3}>
+              <p className="text-[16px] text-ivory/60 leading-relaxed">
+                {t('growth_description_2')}
+              </p>
+            </FadeUp>
+          </div>
+
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <FadeUp delay={0.2}>
+              <div className="h-full min-h-[260px] rounded-[24px] border border-line bg-surface p-7 flex flex-col">
+                <Sparkles size={26} strokeWidth={1.4} className="text-star" />
+                <h4 className="serif text-[24px] text-ivory mt-auto pt-10 mb-2">
+                  {t('values.honesty_title')}
+                </h4>
+                <p className="text-[14.5px] text-ivory/55 leading-relaxed">
+                  {t('values.honesty_description')}
+                </p>
+              </div>
+            </FadeUp>
+            <FadeUp delay={0.35}>
+              <div className="h-full min-h-[260px] sm:mt-10 rounded-[24px] p-7 flex flex-col bg-ivory text-night">
+                <Rocket size={26} strokeWidth={1.4} />
+                <h4 className="serif text-[24px] mt-auto pt-10 mb-2">
+                  {t('values.online_exp_title')}
+                </h4>
+                <p className="text-[14.5px] text-night/60 leading-relaxed">
+                  {t('values.online_exp_description')}
+                </p>
+              </div>
+            </FadeUp>
+          </div>
+        </section>
+
+        {/* Yakun */}
+        <section className="mt-14 md:mt-24 mb-16 rounded-[28px] overflow-hidden border border-line px-6 py-16 md:py-24 text-center bg-[radial-gradient(60%_90%_at_50%_0%,rgba(200,152,106,0.22),transparent_70%)]">
+          <div className="max-w-3xl mx-auto">
+            <FadeUp>
+              <h2 className="serif text-[28px] md:text-[44px] leading-[1.12] text-ivory">
+                {t('bottom_quote')}
+              </h2>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p className="text-ivory/55 text-[16px] md:text-[18px] mt-6">
+                {t('bottom_description')}
+              </p>
+            </FadeUp>
+            <FadeUp delay={0.35}>
+              <div className="mt-9 flex flex-wrap justify-center gap-3">
+                <Link href="/" className="pill pill-ivory">
                   {t('home_link')}
+                  <ArrowRight size={15} />
                 </Link>
-              </motion.div>
-              <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-                <Link
-                  href="/contact"
-                  className="border-b border-white pb-1 hover:text-gray-300 hover:border-gray-300 transition-all"
-                >
+                <Link href="/contact" className="pill pill-ghost">
                   {t('contact_link')}
                 </Link>
-              </motion.div>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
+              </div>
+            </FadeUp>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

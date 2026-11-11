@@ -1,10 +1,8 @@
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Metadata } from 'next';
 import '../globals.css';
 import { inter } from '@/shared/config/fonts';
 import { ThemeProvider } from '@/shared/config/theme-provider';
-import { PRODUCT_INFO } from '@/shared/constants/data';
 import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl';
 import { routing } from '@/shared/config/i18n/routing';
 import { notFound } from 'next/navigation';
@@ -14,6 +12,8 @@ import { ReactNode } from 'react';
 import { setRequestLocale } from 'next-intl/server';
 import QueryProvider from '@/shared/config/react-query/QueryProvider';
 import { Toaster } from '@/shared/ui/toast';
+import Script from 'next/script';
+import TelegramProvider from '@/shared/config/telegram-provider';
 
 import { Kenao, Radiant, Didot, Granjon, Rosan, Futura } from '@/shared/fonts';
 
@@ -41,6 +41,11 @@ export default async function RootLayout({ children, params }: Props) {
       className={`${Kenao.variable} ${Radiant.variable} ${Didot.variable} ${Granjon.variable} ${inter.variable} ${Rosan.variable} ${Futura.variable}`}
     >
       <body className="antialiased">
+        {/* Telegram Mini App: bot ichida ochilganda ishlaydi, oddiy brauzerda jim turadi */}
+        <Script
+          src="https://telegram.org/js/telegram-web-app.js"
+          strategy="beforeInteractive"
+        />
         <NextIntlClientProvider locale={locale}>
           <ThemeProvider
             attribute={'class'}
@@ -54,6 +59,7 @@ export default async function RootLayout({ children, params }: Props) {
               <Analytics />
               <SpeedInsights />
               <Toaster />
+              <TelegramProvider />
             </QueryProvider>
           </ThemeProvider>
         </NextIntlClientProvider>

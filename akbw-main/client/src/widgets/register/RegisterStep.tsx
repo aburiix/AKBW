@@ -1,7 +1,7 @@
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
-import { ChevronDown } from 'lucide-react';
+import { Field, Segmented, fieldError } from '@/shared/ui/auth';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -34,97 +34,63 @@ export default function RegisterStep({
 }: Props) {
   const t = useTranslations('Register');
   return (
-    <>
-      <div className={cn('flex', 'flex-col', 'gap-1', 'mt-3')}>
-        <label className={cn('text-sm', 'font-medium')}>
-          {t('name_label')}
-        </label>
-        <Input
-          placeholder={t('name_placeholder')}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={errors.name ? 'border-red-500' : 'placeholder:opacity-50'}
-        />
-        {errors.name && (
-          <p className={cn('text-xs', 'text-red-500')}>{errors.name}</p>
-        )}
-      </div>
-
-      <div className={cn('flex', 'flex-col', 'gap-1', 'mt-3')}>
-        <label className={cn('text-sm', 'font-medium')}>
-          {t('lastname_label')}
-        </label>
-        <Input
-          placeholder={t('lastname_placeholder')}
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          className={
-            errors.lastName ? 'border-red-500' : 'placeholder:opacity-50'
-          }
-        />
-        {errors.lastName && (
-          <p className={cn('text-xs', 'text-red-500')}>{errors.lastName}</p>
-        )}
-      </div>
-
-      <div className={cn('flex', 'flex-col', 'gap-1', 'mt-3')}>
-        <label className={cn('text-sm', 'font-medium')}>
-          {t('gender_label')}
-        </label>
-        <div className="relative">
-          <select
-            name="gender"
-            id="gender"
-            className={cn(
-              'flex h-10 w-full rounded-md px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 appearance-none pr-8 bg-white shadow-lg border-none outline-none',
-              errors.gender ? 'border-1 border-red-500' : '',
-            )}
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-          >
-            <option value="male">{t('gender_male')}</option>
-            <option value="female">{t('gender_female')}</option>
-          </select>
-          <ChevronDown
-            className={cn(
-              'absolute',
-              'right-3',
-              'top-1/2',
-              '-translate-y-1/2',
-              'h-4',
-              'w-4',
-              'text-gray-500',
-              'pointer-events-none',
-            )}
+    <form
+      className="mt-7 flex flex-col gap-4"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleRegister();
+      }}
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Field label={t('name_label')} error={errors.name}>
+          <Input
+            autoComplete="given-name"
+            placeholder={t('name_placeholder')}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className={fieldError(errors.name)}
           />
-        </div>
-        {errors.gender && (
-          <p className={cn('text-xs', 'text-red-500')}>{errors.gender}</p>
-        )}
+        </Field>
+        <Field label={t('lastname_label')} error={errors.lastName}>
+          <Input
+            autoComplete="family-name"
+            placeholder={t('lastname_placeholder')}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className={fieldError(errors.lastName)}
+          />
+        </Field>
       </div>
 
-      <div className={cn('flex', 'flex-col', 'gap-1', 'mt-3')}>
-        <label className={cn('text-sm', 'font-medium')}>
-          {t('phone_label')}
-        </label>
+      <Field label={t('gender_label')} error={errors.gender}>
+        <Segmented
+          value={gender}
+          onChange={setGender}
+          options={[
+            { value: 'male', label: t('gender_male') },
+            { value: 'female', label: t('gender_female') },
+          ]}
+        />
+      </Field>
+
+      <Field label={t('phone_label')} error={errors.phone}>
         <Input
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
           placeholder={t('phone_placeholder')}
           value={phone}
           onChange={handlePhoneChange}
-          className={errors.phone ? 'border-red-500' : 'placeholder:opacity-50'}
+          className={cn(
+            'h-14 text-[17px] tracking-[0.04em]',
+            fieldError(errors.phone),
+          )}
         />
-        {errors.phone && (
-          <p className={cn('text-xs', 'text-red-500')}>{errors.phone}</p>
-        )}
-      </div>
+      </Field>
 
-      <Button
-        onClick={handleRegister}
-        className={cn('mt-5', 'w-full')}
-        disabled={isLoading}
-      >
+      <Button type="submit" className="mt-2 w-full" disabled={isLoading}>
         {isLoading ? t('sending') : t('send_code_btn')}
       </Button>
-    </>
+    </form>
   );
 }

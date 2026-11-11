@@ -15,6 +15,7 @@ import {
   getPaymeLink,
   getPaynetLink,
 } from '@/shared/config/api/checkout/checkout.requests';
+import { openExternal } from '@/shared/lib/telegram';
 
 export const useBtsRegions = () => {
   return useQuery({
@@ -76,7 +77,7 @@ export const useClickLink = () => {
     onError: (err) => onError(err, t('order_submit_error')),
     onSuccess: (data) => {
       if (data.link) {
-        window.location.replace(data.link);
+        openExternal(data.link);
       }
     },
   });
@@ -90,7 +91,7 @@ export const usePaynetLink = () => {
     onError: (err) => onError(err, t('order_submit_error')),
     onSuccess: (data) => {
       if (data.link) {
-        window.location.replace(data.link);
+        openExternal(data.link);
       }
     },
   });

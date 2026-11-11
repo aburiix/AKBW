@@ -52,7 +52,7 @@
   "Login": {
     "phone_label": "Phone Number",
     "verify": "Verifying...",
-    "sending":"Sending",
+    "sending": "Sending",
     "phone_placeholder": "+998 90 123 45 67",
     "phone_invalid": "Invalid phone number",
     "not_registered_text": "If you are not registered",
@@ -71,7 +71,7 @@
   },
   "Register": {
     "name_invalid": "Name must be at least 2 letters long",
-    "sending":"Sending",
+    "sending": "Sending",
     "verifying": "Verifying",
     "lastname_invalid": "Lastname must be at least 2 letters long",
     "gender_invalid": "Gender must be at least 2 letters long",
@@ -215,7 +215,7 @@
     "close_btn": "Close",
     "china": "China (Warehouse)",
     "uzbekistan": "Uzbekistan (Customs)",
-    "delivering": "Delivering (UzPost)",
+    "delivering": "Delivering (BTS)",
     "delivered": "Delivered",
     "trackingActive": "Tracking Active",
     "onTheWay": "On the way",
@@ -270,6 +270,7 @@
     "viewProducts": "View Products"
   },
   "FilterPage": {
+    "products_error": "Failed to load products",
     "breadcrumbs": "Home / Filters",
     "filters": "Filters",
     "price": "Price",
@@ -484,7 +485,7 @@
       {
         "title": "4. Delivery Terms",
         "isImportant": true,
-        "content": "Products are delivered through the Uzpost postal service, and delivery consists of two stages:",
+        "content": "Products are delivered through the BTS postal service, and delivery consists of two stages:",
         "stages": [
           {
             "title": "Stage 1:",
@@ -497,7 +498,7 @@
           {
             "title": "Stage 2:",
             "items": [
-              "The product is sent from Tashkent to the address specified by the user via Uzpost."
+              "The product is sent from Tashkent to the address specified by the user via BTS."
             ]
           }
         ],
@@ -533,7 +534,7 @@
       {
         "title": "7. Limitation of Liability",
         "list": [
-          "The platform is not fully responsible for the activities of third-party services (Uzpost, payment systems).",
+          "The platform is not fully responsible for the activities of third-party services (BTS, payment systems).",
           "The platform is not responsible for damages caused by incorrect actions of the user."
         ]
       },
@@ -652,5 +653,11 @@
   },
   "Common": {
     "error": "Error getting data!"
+  },
+  "Bonus": {
+    "title": "My Bonuses",
+    "welcome_bonus": "Welcome bonus",
+    "referral_bonus": "Referral bonus",
+    "referrer_bonus": "Referrer bonus"
   }
 }

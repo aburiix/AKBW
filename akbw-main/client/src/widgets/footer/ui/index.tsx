@@ -6,75 +6,108 @@ import Link from 'next/link';
 import { Instagram, Send, Globe2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+const PAYMENTS = [
+  { src: '/icons/payme.png', alt: 'Payme' },
+  { src: '/icons/click.png', alt: 'Click' },
+  { src: '/icons/uzum.png', alt: 'Uzum' },
+  { src: '/icons/paynet.svg', alt: 'Paynet' },
+];
+
 const Footer = () => {
   const openProfileChat = useUIStore((state) => state.openProfileChat);
-
   const t = useTranslations('Footer');
 
-  const footerLinks = {
-    shop: [
-      { name: t('new_arrivals'), href: '/new' },
-      { name: t('best_sellers'), href: '/best' },
-      { name: t('all_products'), href: '/filters' },
-    ],
-    support: [
-      { name: t('contact_us'), href: '/contact' },
-      { name: t('chat'), href: '/' },
-    ],
-    company: [
-      { name: t('about_akbw'), href: '/about' },
-      { name: t('privacy_policy'), href: PRODUCT_INFO.privacy_policy },
-      { name: t('terms_of_use'), href: PRODUCT_INFO.terms_of_use },
-    ],
-  };
+  const columns = [
+    {
+      title: t('shop'),
+      links: [
+        { name: t('new_arrivals'), href: '/new' },
+        { name: t('best_sellers'), href: '/best' },
+        { name: t('all_products'), href: '/filters' },
+      ],
+    },
+    {
+      title: t('support'),
+      links: [
+        { name: t('contact_us'), href: '/contact' },
+        { name: t('chat'), href: '/', chat: true },
+      ],
+    },
+    {
+      title: t('company'),
+      links: [
+        { name: t('about_akbw'), href: '/about' },
+        { name: t('privacy_policy'), href: PRODUCT_INFO.privacy_policy },
+        { name: t('terms_of_use'), href: PRODUCT_INFO.terms_of_use },
+      ],
+    },
+  ];
+
+  const socials = [
+    {
+      href: PRODUCT_INFO.socials.instagram,
+      label: 'Instagram',
+      Icon: Instagram,
+      blank: true,
+    },
+    {
+      href: PRODUCT_INFO.socials.telegram,
+      label: 'Telegram',
+      Icon: Send,
+      blank: true,
+    },
+    {
+      href: PRODUCT_INFO.socials.website,
+      label: 'Website',
+      Icon: Globe2Icon,
+      blank: false,
+    },
+  ];
 
   return (
-    <footer className="bg-[#D6D3CC] py-10 text-black mt-[100px]">
-      <div className="container section-padding">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
-          <div>
+    <footer className="mt-16 md:mt-28 border-t border-line pt-12 pb-8 text-ivory">
+      <div className="wrap">
+        <div className="grid grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-8 lg:gap-10">
+          <div className="col-span-2 lg:col-span-1">
             <Link
               href="/"
-              className="text-2xl font-display text-akbw-black hover:opacity-70 transition-opacity inline-block mb-4"
+              className="font-display !normal-case text-[28px] tracking-[0.05em]"
             >
               {PRODUCT_INFO.name}
             </Link>
-            <p className="text-black text-sm leading-relaxed">
+            <p className="text-ivory/60 text-sm leading-relaxed my-4 max-w-[340px]">
               {t('footer-desc')}
             </p>
+            <div className="flex flex-wrap gap-1.5">
+              {PAYMENTS.map((p) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={p.alt}
+                  src={p.src}
+                  alt={p.alt}
+                  className="h-[30px] w-[64px] rounded-md bg-[#f4f1ea] px-1.5 py-1 object-contain"
+                />
+              ))}
+            </div>
           </div>
 
-          <div className="lg:col-span-3 grid grid-cols-3 gap-3 justify-between items-start lg:flex lg:justify-between lg:w-full">
-            <div>
-              <h3 className="text-sm font-bold mb-3 md:mb-4">{t('shop')}</h3>
-              <ul className="space-y-2 md:space-y-3">
-                {footerLinks.shop.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-black hover:border-b hover:border-black transition-colors pb-0.5"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-bold mb-3 md:mb-4">{t('support')}</h3>
-              <ul className="space-y-2 md:space-y-3">
-                {footerLinks.support.map((link) => (
+          {columns.map((col) => (
+            <div key={col.title}>
+              <h3 className="lbl text-ivory/60 mb-4 font-normal">
+                {col.title}
+              </h3>
+              <ul className="space-y-2.5">
+                {col.links.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
                       onClick={(e) => {
-                        if (link.name === 'Chat') {
+                        if ('chat' in link && link.chat) {
                           e.preventDefault();
                           openProfileChat();
                         }
                       }}
-                      className="text-sm text-black hover:border-b hover:border-black transition-colors pb-0.5"
+                      className="text-sm text-ivory/60 hover:text-ivory transition-colors"
                     >
                       {link.name}
                     </Link>
@@ -82,71 +115,41 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-
-            <div>
-              <h3 className="text-sm font-bold mb-3 md:mb-4">{t('company')}</h3>
-              <ul className="space-y-2 md:space-y-3 mb-6">
-                {footerLinks.company.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-black hover:border-b hover:border-black transition-colors pb-0.5"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="flex space-x-4">
-              <a
-                href={PRODUCT_INFO.socials.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-black hover:border-b hover:border-black transition-colors pb-0.5"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5 icon-minimal" />
-              </a>
-              <a
-                href={PRODUCT_INFO.socials.telegram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-black hover:border-b hover:border-black transition-colors pb-0.5"
-                aria-label="Telegram"
-              >
-                <Send className="w-5 h-5 icon-minimal" />
-              </a>
-              <a
-                href={PRODUCT_INFO.socials.website}
-                rel="noopener noreferrer"
-                className="text-black hover:border-b hover:border-black transition-colors pb-0.5"
-                aria-label="Website"
-              >
-                <Globe2Icon className="w-5 h-5 icon-minimal" />
-              </a>
-            </div>
-          </div>
+          ))}
         </div>
 
-        <hr />
-        <div className="pt-8 border-t border-white/10">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm text-black">{t('copyright')}</p>
-            <div className="flex space-x-6 text-sm text-black">
-              <Link
-                href={PRODUCT_INFO.privacy_policy}
-                className="hover:border-b hover:border-black transition-colors pb-0.5"
-              >
-                {t('privacy')}
-              </Link>
-              <Link
-                href={PRODUCT_INFO.terms_of_use}
-                className="hover:border-b hover:border-black transition-colors pb-0.5"
-              >
-                {t('terms')}
-              </Link>
+        <div
+          aria-hidden
+          className="font-display !normal-case text-center select-none leading-[0.8] tracking-[0.03em] mt-12 text-[clamp(80px,20vw,280px)] bg-gradient-to-b from-ivory/25 to-transparent bg-clip-text text-transparent"
+        >
+          AKBW
+        </div>
+
+        <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-4 pt-8 mt-8 border-t border-line text-xs text-ivory/40">
+          <p>{t('copyright')}</p>
+          <div className="flex items-center gap-5">
+            <Link
+              href={PRODUCT_INFO.privacy_policy}
+              className="hover:text-ivory"
+            >
+              {t('privacy')}
+            </Link>
+            <Link href={PRODUCT_INFO.terms_of_use} className="hover:text-ivory">
+              {t('terms')}
+            </Link>
+            <div className="flex gap-1.5">
+              {socials.map(({ href, label, Icon, blank }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={blank ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="size-10 rounded-full border border-line grid place-items-center text-ivory/70 hover:text-ivory hover:border-line-2"
+                >
+                  <Icon className="size-4" />
+                </a>
+              ))}
             </div>
           </div>
         </div>
