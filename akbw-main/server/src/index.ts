@@ -70,6 +70,11 @@ app.use(
         "http://localhost:3000",
         "http://localhost:3001",
         "http://localhost:3002",
+        // Qo'shimcha domenlar (masalan, sinov manzili): CORS_EXTRA_ORIGINS=https://a.com,https://b.com
+        ...(process.env.CORS_EXTRA_ORIGINS || "")
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
       ];
       // The browser extension sends requests from a per-install
       // chrome-extension://<id> origin, so allow any extension origin.
