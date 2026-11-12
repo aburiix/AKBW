@@ -1,0 +1,73 @@
+name: AKBW CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'akbw-main/client/**'
+      - 'akbw-main/server/**'
+      - 'akbw-main/admin/**'
+      - 'akbw-main/bot/**'
+      - 'akbw-design/shop-bot/**'
+      - 'deploy/**'
+      - '.github/workflows/deploy.yml'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Tekshiruv (client)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: akbw-main/client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: akbw-main/client/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - name: TypeScript
+        run: npx tsc --noEmit -p .
+
+  deploy:
+    name: Serverga chiqarish
+    needs: check
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: SSH sozlash
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Kodni serverga yuborish (rsync)
+        env:
+          HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          rsync -az --delete \
+            --exclude '.env' --exclude '.env.*' --exclude 'node_modules' --exclude '.next' \
+            --exclude 'uploads' --exclude 'tsconfig.tsbuildinfo' \
+            -R akbw-main/client akbw-main/server akbw-main/admin akbw-main/bot \
+               akbw-design/shop-bot deploy \
+            "deploy@${HOST}:/opt/akbw/"
+
+      - name: Build va ishga tushirish
+        env:
+          HOST: ${{ secrets.SSH_HOST }}
+        run: ssh "deploy@${HOST}" 'bash /opt/akbw/deploy/deploy.sh'

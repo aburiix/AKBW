@@ -1,0 +1,116 @@
+# AKBW — production (server: /opt/akbw/deploy)
+# Maxfiy qiymatlar faqat serverdagi /opt/akbw-env/*.env fayllarida turadi (GitHub'ga chiqmaydi).
+# Hamma portlar faqat 127.0.0.1 ga ochiladi — tashqaridan faqat Nginx (80/443) orqali kiriladi.
+
+name: akbw
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: '10m'
+    max-file: '3'
+
+services:
+  db:
+    image: postgres:15
+    container_name: akbw-db
+    env_file: /opt/akbw-env/db.env
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: akbw
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_backups:/backups
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: always
+    logging: *logging
+
+  server:
+    build:
+      context: ../akbw-main/server
+    image: akbw-server:latest
+    container_name: akbw-server
+    env_file: /opt/akbw-env/server.env
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    # Avval migratsiyalar, keyin PM2
+    command: sh -c "npx prisma migrate deploy && pm2-runtime start ecosystem.config.cjs"
+    ports:
+      - '127.0.0.1:8000:3000'
+    volumes:
+      - uploads_data:/app/uploads
+      - server_logs:/app/logs
+      - postgres_backups:/app/backups
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    logging: *logging
+    deploy:
+      resources:
+        limits:
+          memory: 1536M
+
+  client:
+    build:
+      context: ../akbw-main/client
+      args:
+        NEXT_PUBLIC_API_URL: ${PUBLIC_API_URL:-https://api.akbw.uz/api}
+    image: akbw-client:latest
+    container_name: akbw-client
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    ports:
+      - '127.0.0.1:3000:3000'
+    depends_on:
+      - server
+    restart: always
+    logging: *logging
+
+  admin:
+    build:
+      context: ../akbw-main/admin
+      args:
+        NEXT_PUBLIC_API_URL: ${PUBLIC_API_URL:-https://api.akbw.uz/api}
+    image: akbw-admin:latest
+    container_name: akbw-admin
+    environment:
+      NODE_ENV: production
+    ports:
+      - '127.0.0.1:3001:3001'
+    depends_on:
+      - server
+    restart: always
+    logging: *logging
+
+  bot:
+    build:
+      context: ../akbw-main/bot
+    image: akbw-bot:latest
+    container_name: akbw-bot
+    env_file: /opt/akbw-env/bot.env
+    restart: always
+    logging: *logging
+
+  shop-bot:
+    build:
+      context: ../akbw-design/shop-bot
+    image: akbw-shop-bot:latest
+    container_name: akbw-shop-bot
+    env_file: /opt/akbw-env/shop-bot.env
+    restart: always
+    logging: *logging
+
+volumes:
+  postgres_data:
+  uploads_data:
+  server_logs:
+  postgres_backups:
