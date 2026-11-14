@@ -283,3 +283,17 @@
 .btn-hero-padding {
   padding: 5px 20px;
 }
+/* Pastki menyu: iOS (ayniqsa Telegram ichki brauzeri) klaviatura yopilgach yoki sahifa
+   almashgach fixed panelni ko'rinadigan maydondan chiqarib yubormasligi uchun alohida qatlam */
+.tabbar {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+/* Telegram Mini App: panelni Telegram bergan haqiqiy ko'rinadigan balandlikka mahkamlash */
+html.tg-app .tabbar {
+  bottom: auto;
+  top: var(--tg-viewport-stable-height, 100dvh);
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+}

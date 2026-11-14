@@ -43,7 +43,6 @@ class SmsService {
             data.append("email", this.username);
             data.append("password", this.password_token);
 
-            console.log("getToken data: ", data);
 
             const response = await axios.post(`${this.baseUrl}/auth/login`, data, {
                 headers: {
@@ -53,7 +52,7 @@ class SmsService {
             this.token = response.data.data.token;
             return response.data;
         } catch (error) {
-            console.error("Failed to get Eskiz token:", error);
+            console.error("Failed to get Eskiz token:", (error as any)?.response?.data || (error as any)?.message);
             throw error;
         }
     };

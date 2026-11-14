@@ -33,6 +33,13 @@ const shopKeyboard = (ctx) => {
 
 const bot = new Telegraf(TOKEN);
 
+// Har bir kelgan xabarni logga yozish (diagnostika uchun; matn yozilmaydi)
+bot.use((ctx, next) => {
+  console.log(`[update] ${ctx.updateType} from=${ctx.from?.id ?? "-"} lang=${ctx.from?.language_code ?? "-"}`);
+  return next();
+});
+bot.catch((err, ctx) => console.error(`[xato] ${ctx?.updateType}:`, err?.message || err));
+
 bot.start((ctx) =>
   ctx.reply(T[lang(ctx)].hi(ctx.from?.first_name || ""), { parse_mode: "HTML", ...shopKeyboard(ctx) }),
 );

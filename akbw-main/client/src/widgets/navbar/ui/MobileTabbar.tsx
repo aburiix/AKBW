@@ -42,7 +42,7 @@ export default function MobileTabbar() {
   };
 
   return (
-    <nav className="md:hidden fixed z-[60] inset-x-0 bottom-0 grid grid-cols-5 px-1.5 pt-2 pb-[calc(8px+env(safe-area-inset-bottom))] bg-night/90 backdrop-blur-xl border-t border-line">
+    <nav className="tabbar md:hidden fixed z-[60] inset-x-0 bottom-0 grid grid-cols-5 px-1.5 pt-2 pb-[calc(8px+env(safe-area-inset-bottom))] bg-night/90 backdrop-blur-xl border-t border-line">
       {tab('/', 'Asosiy', Home)}
       {tab('/filters', 'Katalog', LayoutGrid)}
       {tab(
