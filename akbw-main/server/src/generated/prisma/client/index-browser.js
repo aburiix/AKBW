@@ -430,9 +430,42 @@ exports.Prisma.TryOnScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.AssistantThreadScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AssistantMessageScalarFieldEnum = {
+  id: 'id',
+  threadId: 'threadId',
+  role: 'role',
+  api: 'api',
+  ui: 'ui',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AssistantMemoryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  fact: 'fact',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -443,6 +476,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.FulfillmentType = exports.$Enums.FulfillmentType = {
   SELF: 'SELF',
@@ -510,7 +549,10 @@ exports.Prisma.ModelName = {
   Adresses: 'Adresses',
   SenderConfig: 'SenderConfig',
   Shipment: 'Shipment',
-  TryOn: 'TryOn'
+  TryOn: 'TryOn',
+  AssistantThread: 'AssistantThread',
+  AssistantMessage: 'AssistantMessage',
+  AssistantMemory: 'AssistantMemory'
 };
 
 /**

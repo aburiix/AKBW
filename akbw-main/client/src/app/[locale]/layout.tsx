@@ -12,6 +12,7 @@ import QueryProvider from '@/shared/config/react-query/QueryProvider';
 import { Toaster } from '@/shared/ui/toast';
 import Script from 'next/script';
 import TelegramProvider from '@/shared/config/telegram-provider';
+import Assistant from '@/features/assistant/ui';
 
 import { Kenao, Radiant, Didot, Granjon, Rosan, Futura } from '@/shared/fonts';
 
@@ -56,6 +57,7 @@ export default async function RootLayout({ children, params }: Props) {
               <Footer />
               <Toaster />
               <TelegramProvider />
+              <Assistant />
             </QueryProvider>
           </ThemeProvider>
         </NextIntlClientProvider>

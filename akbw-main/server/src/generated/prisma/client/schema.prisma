@@ -33,6 +33,8 @@ model User {
   totalUsedBonus     Int                  @default(0) // Total bonus used (in so'm)
   adresses           Adresses[]
   tryOns             TryOn[]
+  assistantThreads   AssistantThread[]
+  assistantMemories  AssistantMemory[]
 }
 
 model Verify {
@@ -460,4 +462,39 @@ model TryOn {
   createdAt DateTime @default(now())
 
   @@index([userId, createdAt])
+}
+
+// AKBW shaxsiy AI yordamchi: suhbatlar, xabarlar (API bloklari bilan) va uzoq muddatli xotira
+model AssistantThread {
+  id        String             @id @default(uuid())
+  userId    String
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String             @default("")
+  messages  AssistantMessage[]
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  @@index([userId, updatedAt])
+}
+
+model AssistantMessage {
+  id        Int             @id @default(autoincrement())
+  threadId  String
+  thread    AssistantThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  role      String // user | assistant
+  api       Json // Claude API'ga qaytariladigan content bloklari (o'zgartirilmaydi)
+  ui        Json? // foydalanuvchiga ko'rsatiladigan qism (matn, kartochkalar); null = yashirin
+  createdAt DateTime        @default(now())
+
+  @@index([threadId, id])
+}
+
+model AssistantMemory {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fact      String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }

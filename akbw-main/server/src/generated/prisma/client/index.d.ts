@@ -158,6 +158,21 @@ export type Shipment = $Result.DefaultSelection<Prisma.$ShipmentPayload>
  * 
  */
 export type TryOn = $Result.DefaultSelection<Prisma.$TryOnPayload>
+/**
+ * Model AssistantThread
+ * 
+ */
+export type AssistantThread = $Result.DefaultSelection<Prisma.$AssistantThreadPayload>
+/**
+ * Model AssistantMessage
+ * 
+ */
+export type AssistantMessage = $Result.DefaultSelection<Prisma.$AssistantMessagePayload>
+/**
+ * Model AssistantMemory
+ * 
+ */
+export type AssistantMemory = $Result.DefaultSelection<Prisma.$AssistantMemoryPayload>
 
 /**
  * Enums
@@ -675,6 +690,36 @@ export class PrismaClient<
     * ```
     */
   get tryOn(): Prisma.TryOnDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.assistantThread`: Exposes CRUD operations for the **AssistantThread** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AssistantThreads
+    * const assistantThreads = await prisma.assistantThread.findMany()
+    * ```
+    */
+  get assistantThread(): Prisma.AssistantThreadDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.assistantMessage`: Exposes CRUD operations for the **AssistantMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AssistantMessages
+    * const assistantMessages = await prisma.assistantMessage.findMany()
+    * ```
+    */
+  get assistantMessage(): Prisma.AssistantMessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.assistantMemory`: Exposes CRUD operations for the **AssistantMemory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AssistantMemories
+    * const assistantMemories = await prisma.assistantMemory.findMany()
+    * ```
+    */
+  get assistantMemory(): Prisma.AssistantMemoryDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1137,7 +1182,10 @@ export namespace Prisma {
     Adresses: 'Adresses',
     SenderConfig: 'SenderConfig',
     Shipment: 'Shipment',
-    TryOn: 'TryOn'
+    TryOn: 'TryOn',
+    AssistantThread: 'AssistantThread',
+    AssistantMessage: 'AssistantMessage',
+    AssistantMemory: 'AssistantMemory'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1153,7 +1201,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "verify" | "admins" | "access" | "products" | "productTranslations" | "categories" | "styles" | "categoryTranslations" | "sizes" | "sizeTranslations" | "colors" | "colorTranslations" | "reviews" | "coupons" | "orders" | "orderItem" | "notifications" | "helpChat" | "helpChatMessages" | "askForChat" | "askForChatMessages" | "transactions" | "factories" | "workers" | "adresses" | "senderConfig" | "shipment" | "tryOn"
+      modelProps: "user" | "verify" | "admins" | "access" | "products" | "productTranslations" | "categories" | "styles" | "categoryTranslations" | "sizes" | "sizeTranslations" | "colors" | "colorTranslations" | "reviews" | "coupons" | "orders" | "orderItem" | "notifications" | "helpChat" | "helpChatMessages" | "askForChat" | "askForChatMessages" | "transactions" | "factories" | "workers" | "adresses" | "senderConfig" | "shipment" | "tryOn" | "assistantThread" | "assistantMessage" | "assistantMemory"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3303,6 +3351,228 @@ export namespace Prisma {
           }
         }
       }
+      AssistantThread: {
+        payload: Prisma.$AssistantThreadPayload<ExtArgs>
+        fields: Prisma.AssistantThreadFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssistantThreadFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssistantThreadFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload>
+          }
+          findFirst: {
+            args: Prisma.AssistantThreadFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssistantThreadFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload>
+          }
+          findMany: {
+            args: Prisma.AssistantThreadFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload>[]
+          }
+          create: {
+            args: Prisma.AssistantThreadCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload>
+          }
+          createMany: {
+            args: Prisma.AssistantThreadCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AssistantThreadCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload>[]
+          }
+          delete: {
+            args: Prisma.AssistantThreadDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload>
+          }
+          update: {
+            args: Prisma.AssistantThreadUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload>
+          }
+          deleteMany: {
+            args: Prisma.AssistantThreadDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssistantThreadUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AssistantThreadUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload>[]
+          }
+          upsert: {
+            args: Prisma.AssistantThreadUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantThreadPayload>
+          }
+          aggregate: {
+            args: Prisma.AssistantThreadAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAssistantThread>
+          }
+          groupBy: {
+            args: Prisma.AssistantThreadGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssistantThreadGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssistantThreadCountArgs<ExtArgs>
+            result: $Utils.Optional<AssistantThreadCountAggregateOutputType> | number
+          }
+        }
+      }
+      AssistantMessage: {
+        payload: Prisma.$AssistantMessagePayload<ExtArgs>
+        fields: Prisma.AssistantMessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssistantMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssistantMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload>
+          }
+          findFirst: {
+            args: Prisma.AssistantMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssistantMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload>
+          }
+          findMany: {
+            args: Prisma.AssistantMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload>[]
+          }
+          create: {
+            args: Prisma.AssistantMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload>
+          }
+          createMany: {
+            args: Prisma.AssistantMessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AssistantMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload>[]
+          }
+          delete: {
+            args: Prisma.AssistantMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload>
+          }
+          update: {
+            args: Prisma.AssistantMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.AssistantMessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssistantMessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AssistantMessageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload>[]
+          }
+          upsert: {
+            args: Prisma.AssistantMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMessagePayload>
+          }
+          aggregate: {
+            args: Prisma.AssistantMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAssistantMessage>
+          }
+          groupBy: {
+            args: Prisma.AssistantMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssistantMessageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssistantMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<AssistantMessageCountAggregateOutputType> | number
+          }
+        }
+      }
+      AssistantMemory: {
+        payload: Prisma.$AssistantMemoryPayload<ExtArgs>
+        fields: Prisma.AssistantMemoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssistantMemoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssistantMemoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload>
+          }
+          findFirst: {
+            args: Prisma.AssistantMemoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssistantMemoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload>
+          }
+          findMany: {
+            args: Prisma.AssistantMemoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload>[]
+          }
+          create: {
+            args: Prisma.AssistantMemoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload>
+          }
+          createMany: {
+            args: Prisma.AssistantMemoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AssistantMemoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload>[]
+          }
+          delete: {
+            args: Prisma.AssistantMemoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload>
+          }
+          update: {
+            args: Prisma.AssistantMemoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.AssistantMemoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssistantMemoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AssistantMemoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.AssistantMemoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssistantMemoryPayload>
+          }
+          aggregate: {
+            args: Prisma.AssistantMemoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAssistantMemory>
+          }
+          groupBy: {
+            args: Prisma.AssistantMemoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssistantMemoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssistantMemoryCountArgs<ExtArgs>
+            result: $Utils.Optional<AssistantMemoryCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3440,6 +3710,9 @@ export namespace Prisma {
     senderConfig?: SenderConfigOmit
     shipment?: ShipmentOmit
     tryOn?: TryOnOmit
+    assistantThread?: AssistantThreadOmit
+    assistantMessage?: AssistantMessageOmit
+    assistantMemory?: AssistantMemoryOmit
   }
 
   /* Types for Logging */
@@ -3530,6 +3803,8 @@ export namespace Prisma {
     referrals: number
     adresses: number
     tryOns: number
+    assistantThreads: number
+    assistantMemories: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3543,6 +3818,8 @@ export namespace Prisma {
     referrals?: boolean | UserCountOutputTypeCountReferralsArgs
     adresses?: boolean | UserCountOutputTypeCountAdressesArgs
     tryOns?: boolean | UserCountOutputTypeCountTryOnsArgs
+    assistantThreads?: boolean | UserCountOutputTypeCountAssistantThreadsArgs
+    assistantMemories?: boolean | UserCountOutputTypeCountAssistantMemoriesArgs
   }
 
   // Custom InputTypes
@@ -3624,6 +3901,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountTryOnsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TryOnWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAssistantThreadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssistantThreadWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAssistantMemoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssistantMemoryWhereInput
   }
 
 
@@ -4184,6 +4475,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type AssistantThreadCountOutputType
+   */
+
+  export type AssistantThreadCountOutputType = {
+    messages: number
+  }
+
+  export type AssistantThreadCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    messages?: boolean | AssistantThreadCountOutputTypeCountMessagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AssistantThreadCountOutputType without action
+   */
+  export type AssistantThreadCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThreadCountOutputType
+     */
+    select?: AssistantThreadCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AssistantThreadCountOutputType without action
+   */
+  export type AssistantThreadCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssistantMessageWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -4476,6 +4798,8 @@ export namespace Prisma {
     referrals?: boolean | User$referralsArgs<ExtArgs>
     adresses?: boolean | User$adressesArgs<ExtArgs>
     tryOns?: boolean | User$tryOnsArgs<ExtArgs>
+    assistantThreads?: boolean | User$assistantThreadsArgs<ExtArgs>
+    assistantMemories?: boolean | User$assistantMemoriesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4545,6 +4869,8 @@ export namespace Prisma {
     referrals?: boolean | User$referralsArgs<ExtArgs>
     adresses?: boolean | User$adressesArgs<ExtArgs>
     tryOns?: boolean | User$tryOnsArgs<ExtArgs>
+    assistantThreads?: boolean | User$assistantThreadsArgs<ExtArgs>
+    assistantMemories?: boolean | User$assistantMemoriesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4568,6 +4894,8 @@ export namespace Prisma {
       referrals: Prisma.$UserPayload<ExtArgs>[]
       adresses: Prisma.$AdressesPayload<ExtArgs>[]
       tryOns: Prisma.$TryOnPayload<ExtArgs>[]
+      assistantThreads: Prisma.$AssistantThreadPayload<ExtArgs>[]
+      assistantMemories: Prisma.$AssistantMemoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4989,6 +5317,8 @@ export namespace Prisma {
     referrals<T extends User$referralsArgs<ExtArgs> = {}>(args?: Subset<T, User$referralsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     adresses<T extends User$adressesArgs<ExtArgs> = {}>(args?: Subset<T, User$adressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdressesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tryOns<T extends User$tryOnsArgs<ExtArgs> = {}>(args?: Subset<T, User$tryOnsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assistantThreads<T extends User$assistantThreadsArgs<ExtArgs> = {}>(args?: Subset<T, User$assistantThreadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assistantMemories<T extends User$assistantMemoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$assistantMemoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5689,6 +6019,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TryOnScalarFieldEnum | TryOnScalarFieldEnum[]
+  }
+
+  /**
+   * User.assistantThreads
+   */
+  export type User$assistantThreadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+    where?: AssistantThreadWhereInput
+    orderBy?: AssistantThreadOrderByWithRelationInput | AssistantThreadOrderByWithRelationInput[]
+    cursor?: AssistantThreadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AssistantThreadScalarFieldEnum | AssistantThreadScalarFieldEnum[]
+  }
+
+  /**
+   * User.assistantMemories
+   */
+  export type User$assistantMemoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+    where?: AssistantMemoryWhereInput
+    orderBy?: AssistantMemoryOrderByWithRelationInput | AssistantMemoryOrderByWithRelationInput[]
+    cursor?: AssistantMemoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AssistantMemoryScalarFieldEnum | AssistantMemoryScalarFieldEnum[]
   }
 
   /**
@@ -38388,6 +38766,3285 @@ export namespace Prisma {
 
 
   /**
+   * Model AssistantThread
+   */
+
+  export type AggregateAssistantThread = {
+    _count: AssistantThreadCountAggregateOutputType | null
+    _min: AssistantThreadMinAggregateOutputType | null
+    _max: AssistantThreadMaxAggregateOutputType | null
+  }
+
+  export type AssistantThreadMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    title: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AssistantThreadMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    title: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AssistantThreadCountAggregateOutputType = {
+    id: number
+    userId: number
+    title: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AssistantThreadMinAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AssistantThreadMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AssistantThreadCountAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AssistantThreadAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssistantThread to aggregate.
+     */
+    where?: AssistantThreadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantThreads to fetch.
+     */
+    orderBy?: AssistantThreadOrderByWithRelationInput | AssistantThreadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssistantThreadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantThreads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantThreads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AssistantThreads
+    **/
+    _count?: true | AssistantThreadCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssistantThreadMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssistantThreadMaxAggregateInputType
+  }
+
+  export type GetAssistantThreadAggregateType<T extends AssistantThreadAggregateArgs> = {
+        [P in keyof T & keyof AggregateAssistantThread]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAssistantThread[P]>
+      : GetScalarType<T[P], AggregateAssistantThread[P]>
+  }
+
+
+
+
+  export type AssistantThreadGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssistantThreadWhereInput
+    orderBy?: AssistantThreadOrderByWithAggregationInput | AssistantThreadOrderByWithAggregationInput[]
+    by: AssistantThreadScalarFieldEnum[] | AssistantThreadScalarFieldEnum
+    having?: AssistantThreadScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssistantThreadCountAggregateInputType | true
+    _min?: AssistantThreadMinAggregateInputType
+    _max?: AssistantThreadMaxAggregateInputType
+  }
+
+  export type AssistantThreadGroupByOutputType = {
+    id: string
+    userId: string
+    title: string
+    createdAt: Date
+    updatedAt: Date
+    _count: AssistantThreadCountAggregateOutputType | null
+    _min: AssistantThreadMinAggregateOutputType | null
+    _max: AssistantThreadMaxAggregateOutputType | null
+  }
+
+  type GetAssistantThreadGroupByPayload<T extends AssistantThreadGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssistantThreadGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssistantThreadGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssistantThreadGroupByOutputType[P]>
+            : GetScalarType<T[P], AssistantThreadGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssistantThreadSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    messages?: boolean | AssistantThread$messagesArgs<ExtArgs>
+    _count?: boolean | AssistantThreadCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assistantThread"]>
+
+  export type AssistantThreadSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assistantThread"]>
+
+  export type AssistantThreadSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assistantThread"]>
+
+  export type AssistantThreadSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AssistantThreadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "createdAt" | "updatedAt", ExtArgs["result"]["assistantThread"]>
+  export type AssistantThreadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    messages?: boolean | AssistantThread$messagesArgs<ExtArgs>
+    _count?: boolean | AssistantThreadCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AssistantThreadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AssistantThreadIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $AssistantThreadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AssistantThread"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      messages: Prisma.$AssistantMessagePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      title: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["assistantThread"]>
+    composites: {}
+  }
+
+  type AssistantThreadGetPayload<S extends boolean | null | undefined | AssistantThreadDefaultArgs> = $Result.GetResult<Prisma.$AssistantThreadPayload, S>
+
+  type AssistantThreadCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssistantThreadFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssistantThreadCountAggregateInputType | true
+    }
+
+  export interface AssistantThreadDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssistantThread'], meta: { name: 'AssistantThread' } }
+    /**
+     * Find zero or one AssistantThread that matches the filter.
+     * @param {AssistantThreadFindUniqueArgs} args - Arguments to find a AssistantThread
+     * @example
+     * // Get one AssistantThread
+     * const assistantThread = await prisma.assistantThread.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssistantThreadFindUniqueArgs>(args: SelectSubset<T, AssistantThreadFindUniqueArgs<ExtArgs>>): Prisma__AssistantThreadClient<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AssistantThread that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssistantThreadFindUniqueOrThrowArgs} args - Arguments to find a AssistantThread
+     * @example
+     * // Get one AssistantThread
+     * const assistantThread = await prisma.assistantThread.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssistantThreadFindUniqueOrThrowArgs>(args: SelectSubset<T, AssistantThreadFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssistantThreadClient<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssistantThread that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantThreadFindFirstArgs} args - Arguments to find a AssistantThread
+     * @example
+     * // Get one AssistantThread
+     * const assistantThread = await prisma.assistantThread.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssistantThreadFindFirstArgs>(args?: SelectSubset<T, AssistantThreadFindFirstArgs<ExtArgs>>): Prisma__AssistantThreadClient<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssistantThread that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantThreadFindFirstOrThrowArgs} args - Arguments to find a AssistantThread
+     * @example
+     * // Get one AssistantThread
+     * const assistantThread = await prisma.assistantThread.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssistantThreadFindFirstOrThrowArgs>(args?: SelectSubset<T, AssistantThreadFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssistantThreadClient<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AssistantThreads that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantThreadFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AssistantThreads
+     * const assistantThreads = await prisma.assistantThread.findMany()
+     * 
+     * // Get first 10 AssistantThreads
+     * const assistantThreads = await prisma.assistantThread.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assistantThreadWithIdOnly = await prisma.assistantThread.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssistantThreadFindManyArgs>(args?: SelectSubset<T, AssistantThreadFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AssistantThread.
+     * @param {AssistantThreadCreateArgs} args - Arguments to create a AssistantThread.
+     * @example
+     * // Create one AssistantThread
+     * const AssistantThread = await prisma.assistantThread.create({
+     *   data: {
+     *     // ... data to create a AssistantThread
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssistantThreadCreateArgs>(args: SelectSubset<T, AssistantThreadCreateArgs<ExtArgs>>): Prisma__AssistantThreadClient<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AssistantThreads.
+     * @param {AssistantThreadCreateManyArgs} args - Arguments to create many AssistantThreads.
+     * @example
+     * // Create many AssistantThreads
+     * const assistantThread = await prisma.assistantThread.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssistantThreadCreateManyArgs>(args?: SelectSubset<T, AssistantThreadCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AssistantThreads and returns the data saved in the database.
+     * @param {AssistantThreadCreateManyAndReturnArgs} args - Arguments to create many AssistantThreads.
+     * @example
+     * // Create many AssistantThreads
+     * const assistantThread = await prisma.assistantThread.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AssistantThreads and only return the `id`
+     * const assistantThreadWithIdOnly = await prisma.assistantThread.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AssistantThreadCreateManyAndReturnArgs>(args?: SelectSubset<T, AssistantThreadCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AssistantThread.
+     * @param {AssistantThreadDeleteArgs} args - Arguments to delete one AssistantThread.
+     * @example
+     * // Delete one AssistantThread
+     * const AssistantThread = await prisma.assistantThread.delete({
+     *   where: {
+     *     // ... filter to delete one AssistantThread
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssistantThreadDeleteArgs>(args: SelectSubset<T, AssistantThreadDeleteArgs<ExtArgs>>): Prisma__AssistantThreadClient<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AssistantThread.
+     * @param {AssistantThreadUpdateArgs} args - Arguments to update one AssistantThread.
+     * @example
+     * // Update one AssistantThread
+     * const assistantThread = await prisma.assistantThread.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssistantThreadUpdateArgs>(args: SelectSubset<T, AssistantThreadUpdateArgs<ExtArgs>>): Prisma__AssistantThreadClient<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AssistantThreads.
+     * @param {AssistantThreadDeleteManyArgs} args - Arguments to filter AssistantThreads to delete.
+     * @example
+     * // Delete a few AssistantThreads
+     * const { count } = await prisma.assistantThread.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssistantThreadDeleteManyArgs>(args?: SelectSubset<T, AssistantThreadDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssistantThreads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantThreadUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AssistantThreads
+     * const assistantThread = await prisma.assistantThread.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssistantThreadUpdateManyArgs>(args: SelectSubset<T, AssistantThreadUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssistantThreads and returns the data updated in the database.
+     * @param {AssistantThreadUpdateManyAndReturnArgs} args - Arguments to update many AssistantThreads.
+     * @example
+     * // Update many AssistantThreads
+     * const assistantThread = await prisma.assistantThread.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AssistantThreads and only return the `id`
+     * const assistantThreadWithIdOnly = await prisma.assistantThread.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AssistantThreadUpdateManyAndReturnArgs>(args: SelectSubset<T, AssistantThreadUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AssistantThread.
+     * @param {AssistantThreadUpsertArgs} args - Arguments to update or create a AssistantThread.
+     * @example
+     * // Update or create a AssistantThread
+     * const assistantThread = await prisma.assistantThread.upsert({
+     *   create: {
+     *     // ... data to create a AssistantThread
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AssistantThread we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssistantThreadUpsertArgs>(args: SelectSubset<T, AssistantThreadUpsertArgs<ExtArgs>>): Prisma__AssistantThreadClient<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AssistantThreads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantThreadCountArgs} args - Arguments to filter AssistantThreads to count.
+     * @example
+     * // Count the number of AssistantThreads
+     * const count = await prisma.assistantThread.count({
+     *   where: {
+     *     // ... the filter for the AssistantThreads we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssistantThreadCountArgs>(
+      args?: Subset<T, AssistantThreadCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssistantThreadCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AssistantThread.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantThreadAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssistantThreadAggregateArgs>(args: Subset<T, AssistantThreadAggregateArgs>): Prisma.PrismaPromise<GetAssistantThreadAggregateType<T>>
+
+    /**
+     * Group by AssistantThread.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantThreadGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssistantThreadGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssistantThreadGroupByArgs['orderBy'] }
+        : { orderBy?: AssistantThreadGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssistantThreadGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssistantThreadGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AssistantThread model
+   */
+  readonly fields: AssistantThreadFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AssistantThread.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssistantThreadClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    messages<T extends AssistantThread$messagesArgs<ExtArgs> = {}>(args?: Subset<T, AssistantThread$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AssistantThread model
+   */
+  interface AssistantThreadFieldRefs {
+    readonly id: FieldRef<"AssistantThread", 'String'>
+    readonly userId: FieldRef<"AssistantThread", 'String'>
+    readonly title: FieldRef<"AssistantThread", 'String'>
+    readonly createdAt: FieldRef<"AssistantThread", 'DateTime'>
+    readonly updatedAt: FieldRef<"AssistantThread", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AssistantThread findUnique
+   */
+  export type AssistantThreadFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantThread to fetch.
+     */
+    where: AssistantThreadWhereUniqueInput
+  }
+
+  /**
+   * AssistantThread findUniqueOrThrow
+   */
+  export type AssistantThreadFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantThread to fetch.
+     */
+    where: AssistantThreadWhereUniqueInput
+  }
+
+  /**
+   * AssistantThread findFirst
+   */
+  export type AssistantThreadFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantThread to fetch.
+     */
+    where?: AssistantThreadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantThreads to fetch.
+     */
+    orderBy?: AssistantThreadOrderByWithRelationInput | AssistantThreadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssistantThreads.
+     */
+    cursor?: AssistantThreadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantThreads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantThreads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssistantThreads.
+     */
+    distinct?: AssistantThreadScalarFieldEnum | AssistantThreadScalarFieldEnum[]
+  }
+
+  /**
+   * AssistantThread findFirstOrThrow
+   */
+  export type AssistantThreadFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantThread to fetch.
+     */
+    where?: AssistantThreadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantThreads to fetch.
+     */
+    orderBy?: AssistantThreadOrderByWithRelationInput | AssistantThreadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssistantThreads.
+     */
+    cursor?: AssistantThreadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantThreads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantThreads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssistantThreads.
+     */
+    distinct?: AssistantThreadScalarFieldEnum | AssistantThreadScalarFieldEnum[]
+  }
+
+  /**
+   * AssistantThread findMany
+   */
+  export type AssistantThreadFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantThreads to fetch.
+     */
+    where?: AssistantThreadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantThreads to fetch.
+     */
+    orderBy?: AssistantThreadOrderByWithRelationInput | AssistantThreadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AssistantThreads.
+     */
+    cursor?: AssistantThreadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantThreads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantThreads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssistantThreads.
+     */
+    distinct?: AssistantThreadScalarFieldEnum | AssistantThreadScalarFieldEnum[]
+  }
+
+  /**
+   * AssistantThread create
+   */
+  export type AssistantThreadCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AssistantThread.
+     */
+    data: XOR<AssistantThreadCreateInput, AssistantThreadUncheckedCreateInput>
+  }
+
+  /**
+   * AssistantThread createMany
+   */
+  export type AssistantThreadCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AssistantThreads.
+     */
+    data: AssistantThreadCreateManyInput | AssistantThreadCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AssistantThread createManyAndReturn
+   */
+  export type AssistantThreadCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * The data used to create many AssistantThreads.
+     */
+    data: AssistantThreadCreateManyInput | AssistantThreadCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssistantThread update
+   */
+  export type AssistantThreadUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AssistantThread.
+     */
+    data: XOR<AssistantThreadUpdateInput, AssistantThreadUncheckedUpdateInput>
+    /**
+     * Choose, which AssistantThread to update.
+     */
+    where: AssistantThreadWhereUniqueInput
+  }
+
+  /**
+   * AssistantThread updateMany
+   */
+  export type AssistantThreadUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AssistantThreads.
+     */
+    data: XOR<AssistantThreadUpdateManyMutationInput, AssistantThreadUncheckedUpdateManyInput>
+    /**
+     * Filter which AssistantThreads to update
+     */
+    where?: AssistantThreadWhereInput
+    /**
+     * Limit how many AssistantThreads to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssistantThread updateManyAndReturn
+   */
+  export type AssistantThreadUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * The data used to update AssistantThreads.
+     */
+    data: XOR<AssistantThreadUpdateManyMutationInput, AssistantThreadUncheckedUpdateManyInput>
+    /**
+     * Filter which AssistantThreads to update
+     */
+    where?: AssistantThreadWhereInput
+    /**
+     * Limit how many AssistantThreads to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssistantThread upsert
+   */
+  export type AssistantThreadUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AssistantThread to update in case it exists.
+     */
+    where: AssistantThreadWhereUniqueInput
+    /**
+     * In case the AssistantThread found by the `where` argument doesn't exist, create a new AssistantThread with this data.
+     */
+    create: XOR<AssistantThreadCreateInput, AssistantThreadUncheckedCreateInput>
+    /**
+     * In case the AssistantThread was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssistantThreadUpdateInput, AssistantThreadUncheckedUpdateInput>
+  }
+
+  /**
+   * AssistantThread delete
+   */
+  export type AssistantThreadDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+    /**
+     * Filter which AssistantThread to delete.
+     */
+    where: AssistantThreadWhereUniqueInput
+  }
+
+  /**
+   * AssistantThread deleteMany
+   */
+  export type AssistantThreadDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssistantThreads to delete
+     */
+    where?: AssistantThreadWhereInput
+    /**
+     * Limit how many AssistantThreads to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssistantThread.messages
+   */
+  export type AssistantThread$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+    where?: AssistantMessageWhereInput
+    orderBy?: AssistantMessageOrderByWithRelationInput | AssistantMessageOrderByWithRelationInput[]
+    cursor?: AssistantMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AssistantMessageScalarFieldEnum | AssistantMessageScalarFieldEnum[]
+  }
+
+  /**
+   * AssistantThread without action
+   */
+  export type AssistantThreadDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantThread
+     */
+    select?: AssistantThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantThread
+     */
+    omit?: AssistantThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantThreadInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AssistantMessage
+   */
+
+  export type AggregateAssistantMessage = {
+    _count: AssistantMessageCountAggregateOutputType | null
+    _avg: AssistantMessageAvgAggregateOutputType | null
+    _sum: AssistantMessageSumAggregateOutputType | null
+    _min: AssistantMessageMinAggregateOutputType | null
+    _max: AssistantMessageMaxAggregateOutputType | null
+  }
+
+  export type AssistantMessageAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type AssistantMessageSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type AssistantMessageMinAggregateOutputType = {
+    id: number | null
+    threadId: string | null
+    role: string | null
+    createdAt: Date | null
+  }
+
+  export type AssistantMessageMaxAggregateOutputType = {
+    id: number | null
+    threadId: string | null
+    role: string | null
+    createdAt: Date | null
+  }
+
+  export type AssistantMessageCountAggregateOutputType = {
+    id: number
+    threadId: number
+    role: number
+    api: number
+    ui: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AssistantMessageAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type AssistantMessageSumAggregateInputType = {
+    id?: true
+  }
+
+  export type AssistantMessageMinAggregateInputType = {
+    id?: true
+    threadId?: true
+    role?: true
+    createdAt?: true
+  }
+
+  export type AssistantMessageMaxAggregateInputType = {
+    id?: true
+    threadId?: true
+    role?: true
+    createdAt?: true
+  }
+
+  export type AssistantMessageCountAggregateInputType = {
+    id?: true
+    threadId?: true
+    role?: true
+    api?: true
+    ui?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AssistantMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssistantMessage to aggregate.
+     */
+    where?: AssistantMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantMessages to fetch.
+     */
+    orderBy?: AssistantMessageOrderByWithRelationInput | AssistantMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssistantMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AssistantMessages
+    **/
+    _count?: true | AssistantMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AssistantMessageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AssistantMessageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssistantMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssistantMessageMaxAggregateInputType
+  }
+
+  export type GetAssistantMessageAggregateType<T extends AssistantMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateAssistantMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAssistantMessage[P]>
+      : GetScalarType<T[P], AggregateAssistantMessage[P]>
+  }
+
+
+
+
+  export type AssistantMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssistantMessageWhereInput
+    orderBy?: AssistantMessageOrderByWithAggregationInput | AssistantMessageOrderByWithAggregationInput[]
+    by: AssistantMessageScalarFieldEnum[] | AssistantMessageScalarFieldEnum
+    having?: AssistantMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssistantMessageCountAggregateInputType | true
+    _avg?: AssistantMessageAvgAggregateInputType
+    _sum?: AssistantMessageSumAggregateInputType
+    _min?: AssistantMessageMinAggregateInputType
+    _max?: AssistantMessageMaxAggregateInputType
+  }
+
+  export type AssistantMessageGroupByOutputType = {
+    id: number
+    threadId: string
+    role: string
+    api: JsonValue
+    ui: JsonValue | null
+    createdAt: Date
+    _count: AssistantMessageCountAggregateOutputType | null
+    _avg: AssistantMessageAvgAggregateOutputType | null
+    _sum: AssistantMessageSumAggregateOutputType | null
+    _min: AssistantMessageMinAggregateOutputType | null
+    _max: AssistantMessageMaxAggregateOutputType | null
+  }
+
+  type GetAssistantMessageGroupByPayload<T extends AssistantMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssistantMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssistantMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssistantMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], AssistantMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssistantMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    threadId?: boolean
+    role?: boolean
+    api?: boolean
+    ui?: boolean
+    createdAt?: boolean
+    thread?: boolean | AssistantThreadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assistantMessage"]>
+
+  export type AssistantMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    threadId?: boolean
+    role?: boolean
+    api?: boolean
+    ui?: boolean
+    createdAt?: boolean
+    thread?: boolean | AssistantThreadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assistantMessage"]>
+
+  export type AssistantMessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    threadId?: boolean
+    role?: boolean
+    api?: boolean
+    ui?: boolean
+    createdAt?: boolean
+    thread?: boolean | AssistantThreadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assistantMessage"]>
+
+  export type AssistantMessageSelectScalar = {
+    id?: boolean
+    threadId?: boolean
+    role?: boolean
+    api?: boolean
+    ui?: boolean
+    createdAt?: boolean
+  }
+
+  export type AssistantMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "threadId" | "role" | "api" | "ui" | "createdAt", ExtArgs["result"]["assistantMessage"]>
+  export type AssistantMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    thread?: boolean | AssistantThreadDefaultArgs<ExtArgs>
+  }
+  export type AssistantMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    thread?: boolean | AssistantThreadDefaultArgs<ExtArgs>
+  }
+  export type AssistantMessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    thread?: boolean | AssistantThreadDefaultArgs<ExtArgs>
+  }
+
+  export type $AssistantMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AssistantMessage"
+    objects: {
+      thread: Prisma.$AssistantThreadPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      threadId: string
+      role: string
+      api: Prisma.JsonValue
+      ui: Prisma.JsonValue | null
+      createdAt: Date
+    }, ExtArgs["result"]["assistantMessage"]>
+    composites: {}
+  }
+
+  type AssistantMessageGetPayload<S extends boolean | null | undefined | AssistantMessageDefaultArgs> = $Result.GetResult<Prisma.$AssistantMessagePayload, S>
+
+  type AssistantMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssistantMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssistantMessageCountAggregateInputType | true
+    }
+
+  export interface AssistantMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssistantMessage'], meta: { name: 'AssistantMessage' } }
+    /**
+     * Find zero or one AssistantMessage that matches the filter.
+     * @param {AssistantMessageFindUniqueArgs} args - Arguments to find a AssistantMessage
+     * @example
+     * // Get one AssistantMessage
+     * const assistantMessage = await prisma.assistantMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssistantMessageFindUniqueArgs>(args: SelectSubset<T, AssistantMessageFindUniqueArgs<ExtArgs>>): Prisma__AssistantMessageClient<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AssistantMessage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssistantMessageFindUniqueOrThrowArgs} args - Arguments to find a AssistantMessage
+     * @example
+     * // Get one AssistantMessage
+     * const assistantMessage = await prisma.assistantMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssistantMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, AssistantMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssistantMessageClient<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssistantMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMessageFindFirstArgs} args - Arguments to find a AssistantMessage
+     * @example
+     * // Get one AssistantMessage
+     * const assistantMessage = await prisma.assistantMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssistantMessageFindFirstArgs>(args?: SelectSubset<T, AssistantMessageFindFirstArgs<ExtArgs>>): Prisma__AssistantMessageClient<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssistantMessage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMessageFindFirstOrThrowArgs} args - Arguments to find a AssistantMessage
+     * @example
+     * // Get one AssistantMessage
+     * const assistantMessage = await prisma.assistantMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssistantMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, AssistantMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssistantMessageClient<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AssistantMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AssistantMessages
+     * const assistantMessages = await prisma.assistantMessage.findMany()
+     * 
+     * // Get first 10 AssistantMessages
+     * const assistantMessages = await prisma.assistantMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assistantMessageWithIdOnly = await prisma.assistantMessage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssistantMessageFindManyArgs>(args?: SelectSubset<T, AssistantMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AssistantMessage.
+     * @param {AssistantMessageCreateArgs} args - Arguments to create a AssistantMessage.
+     * @example
+     * // Create one AssistantMessage
+     * const AssistantMessage = await prisma.assistantMessage.create({
+     *   data: {
+     *     // ... data to create a AssistantMessage
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssistantMessageCreateArgs>(args: SelectSubset<T, AssistantMessageCreateArgs<ExtArgs>>): Prisma__AssistantMessageClient<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AssistantMessages.
+     * @param {AssistantMessageCreateManyArgs} args - Arguments to create many AssistantMessages.
+     * @example
+     * // Create many AssistantMessages
+     * const assistantMessage = await prisma.assistantMessage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssistantMessageCreateManyArgs>(args?: SelectSubset<T, AssistantMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AssistantMessages and returns the data saved in the database.
+     * @param {AssistantMessageCreateManyAndReturnArgs} args - Arguments to create many AssistantMessages.
+     * @example
+     * // Create many AssistantMessages
+     * const assistantMessage = await prisma.assistantMessage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AssistantMessages and only return the `id`
+     * const assistantMessageWithIdOnly = await prisma.assistantMessage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AssistantMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, AssistantMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AssistantMessage.
+     * @param {AssistantMessageDeleteArgs} args - Arguments to delete one AssistantMessage.
+     * @example
+     * // Delete one AssistantMessage
+     * const AssistantMessage = await prisma.assistantMessage.delete({
+     *   where: {
+     *     // ... filter to delete one AssistantMessage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssistantMessageDeleteArgs>(args: SelectSubset<T, AssistantMessageDeleteArgs<ExtArgs>>): Prisma__AssistantMessageClient<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AssistantMessage.
+     * @param {AssistantMessageUpdateArgs} args - Arguments to update one AssistantMessage.
+     * @example
+     * // Update one AssistantMessage
+     * const assistantMessage = await prisma.assistantMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssistantMessageUpdateArgs>(args: SelectSubset<T, AssistantMessageUpdateArgs<ExtArgs>>): Prisma__AssistantMessageClient<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AssistantMessages.
+     * @param {AssistantMessageDeleteManyArgs} args - Arguments to filter AssistantMessages to delete.
+     * @example
+     * // Delete a few AssistantMessages
+     * const { count } = await prisma.assistantMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssistantMessageDeleteManyArgs>(args?: SelectSubset<T, AssistantMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssistantMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AssistantMessages
+     * const assistantMessage = await prisma.assistantMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssistantMessageUpdateManyArgs>(args: SelectSubset<T, AssistantMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssistantMessages and returns the data updated in the database.
+     * @param {AssistantMessageUpdateManyAndReturnArgs} args - Arguments to update many AssistantMessages.
+     * @example
+     * // Update many AssistantMessages
+     * const assistantMessage = await prisma.assistantMessage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AssistantMessages and only return the `id`
+     * const assistantMessageWithIdOnly = await prisma.assistantMessage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AssistantMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, AssistantMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AssistantMessage.
+     * @param {AssistantMessageUpsertArgs} args - Arguments to update or create a AssistantMessage.
+     * @example
+     * // Update or create a AssistantMessage
+     * const assistantMessage = await prisma.assistantMessage.upsert({
+     *   create: {
+     *     // ... data to create a AssistantMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AssistantMessage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssistantMessageUpsertArgs>(args: SelectSubset<T, AssistantMessageUpsertArgs<ExtArgs>>): Prisma__AssistantMessageClient<$Result.GetResult<Prisma.$AssistantMessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AssistantMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMessageCountArgs} args - Arguments to filter AssistantMessages to count.
+     * @example
+     * // Count the number of AssistantMessages
+     * const count = await prisma.assistantMessage.count({
+     *   where: {
+     *     // ... the filter for the AssistantMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssistantMessageCountArgs>(
+      args?: Subset<T, AssistantMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssistantMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AssistantMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssistantMessageAggregateArgs>(args: Subset<T, AssistantMessageAggregateArgs>): Prisma.PrismaPromise<GetAssistantMessageAggregateType<T>>
+
+    /**
+     * Group by AssistantMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssistantMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssistantMessageGroupByArgs['orderBy'] }
+        : { orderBy?: AssistantMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssistantMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssistantMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AssistantMessage model
+   */
+  readonly fields: AssistantMessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AssistantMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssistantMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    thread<T extends AssistantThreadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssistantThreadDefaultArgs<ExtArgs>>): Prisma__AssistantThreadClient<$Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AssistantMessage model
+   */
+  interface AssistantMessageFieldRefs {
+    readonly id: FieldRef<"AssistantMessage", 'Int'>
+    readonly threadId: FieldRef<"AssistantMessage", 'String'>
+    readonly role: FieldRef<"AssistantMessage", 'String'>
+    readonly api: FieldRef<"AssistantMessage", 'Json'>
+    readonly ui: FieldRef<"AssistantMessage", 'Json'>
+    readonly createdAt: FieldRef<"AssistantMessage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AssistantMessage findUnique
+   */
+  export type AssistantMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantMessage to fetch.
+     */
+    where: AssistantMessageWhereUniqueInput
+  }
+
+  /**
+   * AssistantMessage findUniqueOrThrow
+   */
+  export type AssistantMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantMessage to fetch.
+     */
+    where: AssistantMessageWhereUniqueInput
+  }
+
+  /**
+   * AssistantMessage findFirst
+   */
+  export type AssistantMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantMessage to fetch.
+     */
+    where?: AssistantMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantMessages to fetch.
+     */
+    orderBy?: AssistantMessageOrderByWithRelationInput | AssistantMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssistantMessages.
+     */
+    cursor?: AssistantMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssistantMessages.
+     */
+    distinct?: AssistantMessageScalarFieldEnum | AssistantMessageScalarFieldEnum[]
+  }
+
+  /**
+   * AssistantMessage findFirstOrThrow
+   */
+  export type AssistantMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantMessage to fetch.
+     */
+    where?: AssistantMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantMessages to fetch.
+     */
+    orderBy?: AssistantMessageOrderByWithRelationInput | AssistantMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssistantMessages.
+     */
+    cursor?: AssistantMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssistantMessages.
+     */
+    distinct?: AssistantMessageScalarFieldEnum | AssistantMessageScalarFieldEnum[]
+  }
+
+  /**
+   * AssistantMessage findMany
+   */
+  export type AssistantMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantMessages to fetch.
+     */
+    where?: AssistantMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantMessages to fetch.
+     */
+    orderBy?: AssistantMessageOrderByWithRelationInput | AssistantMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AssistantMessages.
+     */
+    cursor?: AssistantMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssistantMessages.
+     */
+    distinct?: AssistantMessageScalarFieldEnum | AssistantMessageScalarFieldEnum[]
+  }
+
+  /**
+   * AssistantMessage create
+   */
+  export type AssistantMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AssistantMessage.
+     */
+    data: XOR<AssistantMessageCreateInput, AssistantMessageUncheckedCreateInput>
+  }
+
+  /**
+   * AssistantMessage createMany
+   */
+  export type AssistantMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AssistantMessages.
+     */
+    data: AssistantMessageCreateManyInput | AssistantMessageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AssistantMessage createManyAndReturn
+   */
+  export type AssistantMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * The data used to create many AssistantMessages.
+     */
+    data: AssistantMessageCreateManyInput | AssistantMessageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssistantMessage update
+   */
+  export type AssistantMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AssistantMessage.
+     */
+    data: XOR<AssistantMessageUpdateInput, AssistantMessageUncheckedUpdateInput>
+    /**
+     * Choose, which AssistantMessage to update.
+     */
+    where: AssistantMessageWhereUniqueInput
+  }
+
+  /**
+   * AssistantMessage updateMany
+   */
+  export type AssistantMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AssistantMessages.
+     */
+    data: XOR<AssistantMessageUpdateManyMutationInput, AssistantMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which AssistantMessages to update
+     */
+    where?: AssistantMessageWhereInput
+    /**
+     * Limit how many AssistantMessages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssistantMessage updateManyAndReturn
+   */
+  export type AssistantMessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * The data used to update AssistantMessages.
+     */
+    data: XOR<AssistantMessageUpdateManyMutationInput, AssistantMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which AssistantMessages to update
+     */
+    where?: AssistantMessageWhereInput
+    /**
+     * Limit how many AssistantMessages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssistantMessage upsert
+   */
+  export type AssistantMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AssistantMessage to update in case it exists.
+     */
+    where: AssistantMessageWhereUniqueInput
+    /**
+     * In case the AssistantMessage found by the `where` argument doesn't exist, create a new AssistantMessage with this data.
+     */
+    create: XOR<AssistantMessageCreateInput, AssistantMessageUncheckedCreateInput>
+    /**
+     * In case the AssistantMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssistantMessageUpdateInput, AssistantMessageUncheckedUpdateInput>
+  }
+
+  /**
+   * AssistantMessage delete
+   */
+  export type AssistantMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+    /**
+     * Filter which AssistantMessage to delete.
+     */
+    where: AssistantMessageWhereUniqueInput
+  }
+
+  /**
+   * AssistantMessage deleteMany
+   */
+  export type AssistantMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssistantMessages to delete
+     */
+    where?: AssistantMessageWhereInput
+    /**
+     * Limit how many AssistantMessages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssistantMessage without action
+   */
+  export type AssistantMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMessage
+     */
+    select?: AssistantMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMessage
+     */
+    omit?: AssistantMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMessageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AssistantMemory
+   */
+
+  export type AggregateAssistantMemory = {
+    _count: AssistantMemoryCountAggregateOutputType | null
+    _avg: AssistantMemoryAvgAggregateOutputType | null
+    _sum: AssistantMemorySumAggregateOutputType | null
+    _min: AssistantMemoryMinAggregateOutputType | null
+    _max: AssistantMemoryMaxAggregateOutputType | null
+  }
+
+  export type AssistantMemoryAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type AssistantMemorySumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type AssistantMemoryMinAggregateOutputType = {
+    id: number | null
+    userId: string | null
+    fact: string | null
+    createdAt: Date | null
+  }
+
+  export type AssistantMemoryMaxAggregateOutputType = {
+    id: number | null
+    userId: string | null
+    fact: string | null
+    createdAt: Date | null
+  }
+
+  export type AssistantMemoryCountAggregateOutputType = {
+    id: number
+    userId: number
+    fact: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AssistantMemoryAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type AssistantMemorySumAggregateInputType = {
+    id?: true
+  }
+
+  export type AssistantMemoryMinAggregateInputType = {
+    id?: true
+    userId?: true
+    fact?: true
+    createdAt?: true
+  }
+
+  export type AssistantMemoryMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    fact?: true
+    createdAt?: true
+  }
+
+  export type AssistantMemoryCountAggregateInputType = {
+    id?: true
+    userId?: true
+    fact?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AssistantMemoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssistantMemory to aggregate.
+     */
+    where?: AssistantMemoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantMemories to fetch.
+     */
+    orderBy?: AssistantMemoryOrderByWithRelationInput | AssistantMemoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssistantMemoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantMemories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantMemories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AssistantMemories
+    **/
+    _count?: true | AssistantMemoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AssistantMemoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AssistantMemorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssistantMemoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssistantMemoryMaxAggregateInputType
+  }
+
+  export type GetAssistantMemoryAggregateType<T extends AssistantMemoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateAssistantMemory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAssistantMemory[P]>
+      : GetScalarType<T[P], AggregateAssistantMemory[P]>
+  }
+
+
+
+
+  export type AssistantMemoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssistantMemoryWhereInput
+    orderBy?: AssistantMemoryOrderByWithAggregationInput | AssistantMemoryOrderByWithAggregationInput[]
+    by: AssistantMemoryScalarFieldEnum[] | AssistantMemoryScalarFieldEnum
+    having?: AssistantMemoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssistantMemoryCountAggregateInputType | true
+    _avg?: AssistantMemoryAvgAggregateInputType
+    _sum?: AssistantMemorySumAggregateInputType
+    _min?: AssistantMemoryMinAggregateInputType
+    _max?: AssistantMemoryMaxAggregateInputType
+  }
+
+  export type AssistantMemoryGroupByOutputType = {
+    id: number
+    userId: string
+    fact: string
+    createdAt: Date
+    _count: AssistantMemoryCountAggregateOutputType | null
+    _avg: AssistantMemoryAvgAggregateOutputType | null
+    _sum: AssistantMemorySumAggregateOutputType | null
+    _min: AssistantMemoryMinAggregateOutputType | null
+    _max: AssistantMemoryMaxAggregateOutputType | null
+  }
+
+  type GetAssistantMemoryGroupByPayload<T extends AssistantMemoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssistantMemoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssistantMemoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssistantMemoryGroupByOutputType[P]>
+            : GetScalarType<T[P], AssistantMemoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssistantMemorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    fact?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assistantMemory"]>
+
+  export type AssistantMemorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    fact?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assistantMemory"]>
+
+  export type AssistantMemorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    fact?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assistantMemory"]>
+
+  export type AssistantMemorySelectScalar = {
+    id?: boolean
+    userId?: boolean
+    fact?: boolean
+    createdAt?: boolean
+  }
+
+  export type AssistantMemoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "fact" | "createdAt", ExtArgs["result"]["assistantMemory"]>
+  export type AssistantMemoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AssistantMemoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AssistantMemoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $AssistantMemoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AssistantMemory"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: string
+      fact: string
+      createdAt: Date
+    }, ExtArgs["result"]["assistantMemory"]>
+    composites: {}
+  }
+
+  type AssistantMemoryGetPayload<S extends boolean | null | undefined | AssistantMemoryDefaultArgs> = $Result.GetResult<Prisma.$AssistantMemoryPayload, S>
+
+  type AssistantMemoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssistantMemoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssistantMemoryCountAggregateInputType | true
+    }
+
+  export interface AssistantMemoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssistantMemory'], meta: { name: 'AssistantMemory' } }
+    /**
+     * Find zero or one AssistantMemory that matches the filter.
+     * @param {AssistantMemoryFindUniqueArgs} args - Arguments to find a AssistantMemory
+     * @example
+     * // Get one AssistantMemory
+     * const assistantMemory = await prisma.assistantMemory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssistantMemoryFindUniqueArgs>(args: SelectSubset<T, AssistantMemoryFindUniqueArgs<ExtArgs>>): Prisma__AssistantMemoryClient<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AssistantMemory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssistantMemoryFindUniqueOrThrowArgs} args - Arguments to find a AssistantMemory
+     * @example
+     * // Get one AssistantMemory
+     * const assistantMemory = await prisma.assistantMemory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssistantMemoryFindUniqueOrThrowArgs>(args: SelectSubset<T, AssistantMemoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssistantMemoryClient<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssistantMemory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMemoryFindFirstArgs} args - Arguments to find a AssistantMemory
+     * @example
+     * // Get one AssistantMemory
+     * const assistantMemory = await prisma.assistantMemory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssistantMemoryFindFirstArgs>(args?: SelectSubset<T, AssistantMemoryFindFirstArgs<ExtArgs>>): Prisma__AssistantMemoryClient<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssistantMemory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMemoryFindFirstOrThrowArgs} args - Arguments to find a AssistantMemory
+     * @example
+     * // Get one AssistantMemory
+     * const assistantMemory = await prisma.assistantMemory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssistantMemoryFindFirstOrThrowArgs>(args?: SelectSubset<T, AssistantMemoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssistantMemoryClient<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AssistantMemories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMemoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AssistantMemories
+     * const assistantMemories = await prisma.assistantMemory.findMany()
+     * 
+     * // Get first 10 AssistantMemories
+     * const assistantMemories = await prisma.assistantMemory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assistantMemoryWithIdOnly = await prisma.assistantMemory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssistantMemoryFindManyArgs>(args?: SelectSubset<T, AssistantMemoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AssistantMemory.
+     * @param {AssistantMemoryCreateArgs} args - Arguments to create a AssistantMemory.
+     * @example
+     * // Create one AssistantMemory
+     * const AssistantMemory = await prisma.assistantMemory.create({
+     *   data: {
+     *     // ... data to create a AssistantMemory
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssistantMemoryCreateArgs>(args: SelectSubset<T, AssistantMemoryCreateArgs<ExtArgs>>): Prisma__AssistantMemoryClient<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AssistantMemories.
+     * @param {AssistantMemoryCreateManyArgs} args - Arguments to create many AssistantMemories.
+     * @example
+     * // Create many AssistantMemories
+     * const assistantMemory = await prisma.assistantMemory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssistantMemoryCreateManyArgs>(args?: SelectSubset<T, AssistantMemoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AssistantMemories and returns the data saved in the database.
+     * @param {AssistantMemoryCreateManyAndReturnArgs} args - Arguments to create many AssistantMemories.
+     * @example
+     * // Create many AssistantMemories
+     * const assistantMemory = await prisma.assistantMemory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AssistantMemories and only return the `id`
+     * const assistantMemoryWithIdOnly = await prisma.assistantMemory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AssistantMemoryCreateManyAndReturnArgs>(args?: SelectSubset<T, AssistantMemoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AssistantMemory.
+     * @param {AssistantMemoryDeleteArgs} args - Arguments to delete one AssistantMemory.
+     * @example
+     * // Delete one AssistantMemory
+     * const AssistantMemory = await prisma.assistantMemory.delete({
+     *   where: {
+     *     // ... filter to delete one AssistantMemory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssistantMemoryDeleteArgs>(args: SelectSubset<T, AssistantMemoryDeleteArgs<ExtArgs>>): Prisma__AssistantMemoryClient<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AssistantMemory.
+     * @param {AssistantMemoryUpdateArgs} args - Arguments to update one AssistantMemory.
+     * @example
+     * // Update one AssistantMemory
+     * const assistantMemory = await prisma.assistantMemory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssistantMemoryUpdateArgs>(args: SelectSubset<T, AssistantMemoryUpdateArgs<ExtArgs>>): Prisma__AssistantMemoryClient<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AssistantMemories.
+     * @param {AssistantMemoryDeleteManyArgs} args - Arguments to filter AssistantMemories to delete.
+     * @example
+     * // Delete a few AssistantMemories
+     * const { count } = await prisma.assistantMemory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssistantMemoryDeleteManyArgs>(args?: SelectSubset<T, AssistantMemoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssistantMemories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMemoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AssistantMemories
+     * const assistantMemory = await prisma.assistantMemory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssistantMemoryUpdateManyArgs>(args: SelectSubset<T, AssistantMemoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssistantMemories and returns the data updated in the database.
+     * @param {AssistantMemoryUpdateManyAndReturnArgs} args - Arguments to update many AssistantMemories.
+     * @example
+     * // Update many AssistantMemories
+     * const assistantMemory = await prisma.assistantMemory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AssistantMemories and only return the `id`
+     * const assistantMemoryWithIdOnly = await prisma.assistantMemory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AssistantMemoryUpdateManyAndReturnArgs>(args: SelectSubset<T, AssistantMemoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AssistantMemory.
+     * @param {AssistantMemoryUpsertArgs} args - Arguments to update or create a AssistantMemory.
+     * @example
+     * // Update or create a AssistantMemory
+     * const assistantMemory = await prisma.assistantMemory.upsert({
+     *   create: {
+     *     // ... data to create a AssistantMemory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AssistantMemory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssistantMemoryUpsertArgs>(args: SelectSubset<T, AssistantMemoryUpsertArgs<ExtArgs>>): Prisma__AssistantMemoryClient<$Result.GetResult<Prisma.$AssistantMemoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AssistantMemories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMemoryCountArgs} args - Arguments to filter AssistantMemories to count.
+     * @example
+     * // Count the number of AssistantMemories
+     * const count = await prisma.assistantMemory.count({
+     *   where: {
+     *     // ... the filter for the AssistantMemories we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssistantMemoryCountArgs>(
+      args?: Subset<T, AssistantMemoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssistantMemoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AssistantMemory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMemoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssistantMemoryAggregateArgs>(args: Subset<T, AssistantMemoryAggregateArgs>): Prisma.PrismaPromise<GetAssistantMemoryAggregateType<T>>
+
+    /**
+     * Group by AssistantMemory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssistantMemoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssistantMemoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssistantMemoryGroupByArgs['orderBy'] }
+        : { orderBy?: AssistantMemoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssistantMemoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssistantMemoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AssistantMemory model
+   */
+  readonly fields: AssistantMemoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AssistantMemory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssistantMemoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AssistantMemory model
+   */
+  interface AssistantMemoryFieldRefs {
+    readonly id: FieldRef<"AssistantMemory", 'Int'>
+    readonly userId: FieldRef<"AssistantMemory", 'String'>
+    readonly fact: FieldRef<"AssistantMemory", 'String'>
+    readonly createdAt: FieldRef<"AssistantMemory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AssistantMemory findUnique
+   */
+  export type AssistantMemoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantMemory to fetch.
+     */
+    where: AssistantMemoryWhereUniqueInput
+  }
+
+  /**
+   * AssistantMemory findUniqueOrThrow
+   */
+  export type AssistantMemoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantMemory to fetch.
+     */
+    where: AssistantMemoryWhereUniqueInput
+  }
+
+  /**
+   * AssistantMemory findFirst
+   */
+  export type AssistantMemoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantMemory to fetch.
+     */
+    where?: AssistantMemoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantMemories to fetch.
+     */
+    orderBy?: AssistantMemoryOrderByWithRelationInput | AssistantMemoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssistantMemories.
+     */
+    cursor?: AssistantMemoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantMemories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantMemories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssistantMemories.
+     */
+    distinct?: AssistantMemoryScalarFieldEnum | AssistantMemoryScalarFieldEnum[]
+  }
+
+  /**
+   * AssistantMemory findFirstOrThrow
+   */
+  export type AssistantMemoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantMemory to fetch.
+     */
+    where?: AssistantMemoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantMemories to fetch.
+     */
+    orderBy?: AssistantMemoryOrderByWithRelationInput | AssistantMemoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssistantMemories.
+     */
+    cursor?: AssistantMemoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantMemories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantMemories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssistantMemories.
+     */
+    distinct?: AssistantMemoryScalarFieldEnum | AssistantMemoryScalarFieldEnum[]
+  }
+
+  /**
+   * AssistantMemory findMany
+   */
+  export type AssistantMemoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+    /**
+     * Filter, which AssistantMemories to fetch.
+     */
+    where?: AssistantMemoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssistantMemories to fetch.
+     */
+    orderBy?: AssistantMemoryOrderByWithRelationInput | AssistantMemoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AssistantMemories.
+     */
+    cursor?: AssistantMemoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssistantMemories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssistantMemories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssistantMemories.
+     */
+    distinct?: AssistantMemoryScalarFieldEnum | AssistantMemoryScalarFieldEnum[]
+  }
+
+  /**
+   * AssistantMemory create
+   */
+  export type AssistantMemoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AssistantMemory.
+     */
+    data: XOR<AssistantMemoryCreateInput, AssistantMemoryUncheckedCreateInput>
+  }
+
+  /**
+   * AssistantMemory createMany
+   */
+  export type AssistantMemoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AssistantMemories.
+     */
+    data: AssistantMemoryCreateManyInput | AssistantMemoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AssistantMemory createManyAndReturn
+   */
+  export type AssistantMemoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many AssistantMemories.
+     */
+    data: AssistantMemoryCreateManyInput | AssistantMemoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssistantMemory update
+   */
+  export type AssistantMemoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AssistantMemory.
+     */
+    data: XOR<AssistantMemoryUpdateInput, AssistantMemoryUncheckedUpdateInput>
+    /**
+     * Choose, which AssistantMemory to update.
+     */
+    where: AssistantMemoryWhereUniqueInput
+  }
+
+  /**
+   * AssistantMemory updateMany
+   */
+  export type AssistantMemoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AssistantMemories.
+     */
+    data: XOR<AssistantMemoryUpdateManyMutationInput, AssistantMemoryUncheckedUpdateManyInput>
+    /**
+     * Filter which AssistantMemories to update
+     */
+    where?: AssistantMemoryWhereInput
+    /**
+     * Limit how many AssistantMemories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssistantMemory updateManyAndReturn
+   */
+  export type AssistantMemoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * The data used to update AssistantMemories.
+     */
+    data: XOR<AssistantMemoryUpdateManyMutationInput, AssistantMemoryUncheckedUpdateManyInput>
+    /**
+     * Filter which AssistantMemories to update
+     */
+    where?: AssistantMemoryWhereInput
+    /**
+     * Limit how many AssistantMemories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssistantMemory upsert
+   */
+  export type AssistantMemoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AssistantMemory to update in case it exists.
+     */
+    where: AssistantMemoryWhereUniqueInput
+    /**
+     * In case the AssistantMemory found by the `where` argument doesn't exist, create a new AssistantMemory with this data.
+     */
+    create: XOR<AssistantMemoryCreateInput, AssistantMemoryUncheckedCreateInput>
+    /**
+     * In case the AssistantMemory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssistantMemoryUpdateInput, AssistantMemoryUncheckedUpdateInput>
+  }
+
+  /**
+   * AssistantMemory delete
+   */
+  export type AssistantMemoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+    /**
+     * Filter which AssistantMemory to delete.
+     */
+    where: AssistantMemoryWhereUniqueInput
+  }
+
+  /**
+   * AssistantMemory deleteMany
+   */
+  export type AssistantMemoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssistantMemories to delete
+     */
+    where?: AssistantMemoryWhereInput
+    /**
+     * Limit how many AssistantMemories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssistantMemory without action
+   */
+  export type AssistantMemoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssistantMemory
+     */
+    select?: AssistantMemorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssistantMemory
+     */
+    omit?: AssistantMemoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssistantMemoryInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -38798,12 +42455,60 @@ export namespace Prisma {
   export type TryOnScalarFieldEnum = (typeof TryOnScalarFieldEnum)[keyof typeof TryOnScalarFieldEnum]
 
 
+  export const AssistantThreadScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    title: 'title',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AssistantThreadScalarFieldEnum = (typeof AssistantThreadScalarFieldEnum)[keyof typeof AssistantThreadScalarFieldEnum]
+
+
+  export const AssistantMessageScalarFieldEnum: {
+    id: 'id',
+    threadId: 'threadId',
+    role: 'role',
+    api: 'api',
+    ui: 'ui',
+    createdAt: 'createdAt'
+  };
+
+  export type AssistantMessageScalarFieldEnum = (typeof AssistantMessageScalarFieldEnum)[keyof typeof AssistantMessageScalarFieldEnum]
+
+
+  export const AssistantMemoryScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    fact: 'fact',
+    createdAt: 'createdAt'
+  };
+
+  export type AssistantMemoryScalarFieldEnum = (typeof AssistantMemoryScalarFieldEnum)[keyof typeof AssistantMemoryScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const QueryMode: {
@@ -38820,6 +42525,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -38965,6 +42679,20 @@ export namespace Prisma {
    */
   export type ListEnumShipmentStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShipmentState[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
   /**
    * Deep Input Types
    */
@@ -38999,6 +42727,8 @@ export namespace Prisma {
     referrals?: UserListRelationFilter
     adresses?: AdressesListRelationFilter
     tryOns?: TryOnListRelationFilter
+    assistantThreads?: AssistantThreadListRelationFilter
+    assistantMemories?: AssistantMemoryListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -39027,6 +42757,8 @@ export namespace Prisma {
     referrals?: UserOrderByRelationAggregateInput
     adresses?: AdressesOrderByRelationAggregateInput
     tryOns?: TryOnOrderByRelationAggregateInput
+    assistantThreads?: AssistantThreadOrderByRelationAggregateInput
+    assistantMemories?: AssistantMemoryOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -39058,6 +42790,8 @@ export namespace Prisma {
     referrals?: UserListRelationFilter
     adresses?: AdressesListRelationFilter
     tryOns?: TryOnListRelationFilter
+    assistantThreads?: AssistantThreadListRelationFilter
+    assistantMemories?: AssistantMemoryListRelationFilter
   }, "id" | "phone" | "refreshToken" | "referralCode">
 
   export type UserOrderByWithAggregationInput = {
@@ -41148,6 +44882,178 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"TryOn"> | Date | string
   }
 
+  export type AssistantThreadWhereInput = {
+    AND?: AssistantThreadWhereInput | AssistantThreadWhereInput[]
+    OR?: AssistantThreadWhereInput[]
+    NOT?: AssistantThreadWhereInput | AssistantThreadWhereInput[]
+    id?: StringFilter<"AssistantThread"> | string
+    userId?: StringFilter<"AssistantThread"> | string
+    title?: StringFilter<"AssistantThread"> | string
+    createdAt?: DateTimeFilter<"AssistantThread"> | Date | string
+    updatedAt?: DateTimeFilter<"AssistantThread"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    messages?: AssistantMessageListRelationFilter
+  }
+
+  export type AssistantThreadOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    messages?: AssistantMessageOrderByRelationAggregateInput
+  }
+
+  export type AssistantThreadWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AssistantThreadWhereInput | AssistantThreadWhereInput[]
+    OR?: AssistantThreadWhereInput[]
+    NOT?: AssistantThreadWhereInput | AssistantThreadWhereInput[]
+    userId?: StringFilter<"AssistantThread"> | string
+    title?: StringFilter<"AssistantThread"> | string
+    createdAt?: DateTimeFilter<"AssistantThread"> | Date | string
+    updatedAt?: DateTimeFilter<"AssistantThread"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    messages?: AssistantMessageListRelationFilter
+  }, "id">
+
+  export type AssistantThreadOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AssistantThreadCountOrderByAggregateInput
+    _max?: AssistantThreadMaxOrderByAggregateInput
+    _min?: AssistantThreadMinOrderByAggregateInput
+  }
+
+  export type AssistantThreadScalarWhereWithAggregatesInput = {
+    AND?: AssistantThreadScalarWhereWithAggregatesInput | AssistantThreadScalarWhereWithAggregatesInput[]
+    OR?: AssistantThreadScalarWhereWithAggregatesInput[]
+    NOT?: AssistantThreadScalarWhereWithAggregatesInput | AssistantThreadScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AssistantThread"> | string
+    userId?: StringWithAggregatesFilter<"AssistantThread"> | string
+    title?: StringWithAggregatesFilter<"AssistantThread"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AssistantThread"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AssistantThread"> | Date | string
+  }
+
+  export type AssistantMessageWhereInput = {
+    AND?: AssistantMessageWhereInput | AssistantMessageWhereInput[]
+    OR?: AssistantMessageWhereInput[]
+    NOT?: AssistantMessageWhereInput | AssistantMessageWhereInput[]
+    id?: IntFilter<"AssistantMessage"> | number
+    threadId?: StringFilter<"AssistantMessage"> | string
+    role?: StringFilter<"AssistantMessage"> | string
+    api?: JsonFilter<"AssistantMessage">
+    ui?: JsonNullableFilter<"AssistantMessage">
+    createdAt?: DateTimeFilter<"AssistantMessage"> | Date | string
+    thread?: XOR<AssistantThreadScalarRelationFilter, AssistantThreadWhereInput>
+  }
+
+  export type AssistantMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    threadId?: SortOrder
+    role?: SortOrder
+    api?: SortOrder
+    ui?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    thread?: AssistantThreadOrderByWithRelationInput
+  }
+
+  export type AssistantMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AssistantMessageWhereInput | AssistantMessageWhereInput[]
+    OR?: AssistantMessageWhereInput[]
+    NOT?: AssistantMessageWhereInput | AssistantMessageWhereInput[]
+    threadId?: StringFilter<"AssistantMessage"> | string
+    role?: StringFilter<"AssistantMessage"> | string
+    api?: JsonFilter<"AssistantMessage">
+    ui?: JsonNullableFilter<"AssistantMessage">
+    createdAt?: DateTimeFilter<"AssistantMessage"> | Date | string
+    thread?: XOR<AssistantThreadScalarRelationFilter, AssistantThreadWhereInput>
+  }, "id">
+
+  export type AssistantMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    threadId?: SortOrder
+    role?: SortOrder
+    api?: SortOrder
+    ui?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: AssistantMessageCountOrderByAggregateInput
+    _avg?: AssistantMessageAvgOrderByAggregateInput
+    _max?: AssistantMessageMaxOrderByAggregateInput
+    _min?: AssistantMessageMinOrderByAggregateInput
+    _sum?: AssistantMessageSumOrderByAggregateInput
+  }
+
+  export type AssistantMessageScalarWhereWithAggregatesInput = {
+    AND?: AssistantMessageScalarWhereWithAggregatesInput | AssistantMessageScalarWhereWithAggregatesInput[]
+    OR?: AssistantMessageScalarWhereWithAggregatesInput[]
+    NOT?: AssistantMessageScalarWhereWithAggregatesInput | AssistantMessageScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AssistantMessage"> | number
+    threadId?: StringWithAggregatesFilter<"AssistantMessage"> | string
+    role?: StringWithAggregatesFilter<"AssistantMessage"> | string
+    api?: JsonWithAggregatesFilter<"AssistantMessage">
+    ui?: JsonNullableWithAggregatesFilter<"AssistantMessage">
+    createdAt?: DateTimeWithAggregatesFilter<"AssistantMessage"> | Date | string
+  }
+
+  export type AssistantMemoryWhereInput = {
+    AND?: AssistantMemoryWhereInput | AssistantMemoryWhereInput[]
+    OR?: AssistantMemoryWhereInput[]
+    NOT?: AssistantMemoryWhereInput | AssistantMemoryWhereInput[]
+    id?: IntFilter<"AssistantMemory"> | number
+    userId?: StringFilter<"AssistantMemory"> | string
+    fact?: StringFilter<"AssistantMemory"> | string
+    createdAt?: DateTimeFilter<"AssistantMemory"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type AssistantMemoryOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    fact?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type AssistantMemoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AssistantMemoryWhereInput | AssistantMemoryWhereInput[]
+    OR?: AssistantMemoryWhereInput[]
+    NOT?: AssistantMemoryWhereInput | AssistantMemoryWhereInput[]
+    userId?: StringFilter<"AssistantMemory"> | string
+    fact?: StringFilter<"AssistantMemory"> | string
+    createdAt?: DateTimeFilter<"AssistantMemory"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type AssistantMemoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    fact?: SortOrder
+    createdAt?: SortOrder
+    _count?: AssistantMemoryCountOrderByAggregateInput
+    _avg?: AssistantMemoryAvgOrderByAggregateInput
+    _max?: AssistantMemoryMaxOrderByAggregateInput
+    _min?: AssistantMemoryMinOrderByAggregateInput
+    _sum?: AssistantMemorySumOrderByAggregateInput
+  }
+
+  export type AssistantMemoryScalarWhereWithAggregatesInput = {
+    AND?: AssistantMemoryScalarWhereWithAggregatesInput | AssistantMemoryScalarWhereWithAggregatesInput[]
+    OR?: AssistantMemoryScalarWhereWithAggregatesInput[]
+    NOT?: AssistantMemoryScalarWhereWithAggregatesInput | AssistantMemoryScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AssistantMemory"> | number
+    userId?: StringWithAggregatesFilter<"AssistantMemory"> | string
+    fact?: StringWithAggregatesFilter<"AssistantMemory"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AssistantMemory"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     phone: string
@@ -41173,6 +45079,8 @@ export namespace Prisma {
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -41200,6 +45108,8 @@ export namespace Prisma {
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -41227,6 +45137,8 @@ export namespace Prisma {
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -41254,6 +45166,8 @@ export namespace Prisma {
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -43368,6 +47282,169 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AssistantThreadCreateInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutAssistantThreadsInput
+    messages?: AssistantMessageCreateNestedManyWithoutThreadInput
+  }
+
+  export type AssistantThreadUncheckedCreateInput = {
+    id?: string
+    userId: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: AssistantMessageUncheckedCreateNestedManyWithoutThreadInput
+  }
+
+  export type AssistantThreadUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAssistantThreadsNestedInput
+    messages?: AssistantMessageUpdateManyWithoutThreadNestedInput
+  }
+
+  export type AssistantThreadUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: AssistantMessageUncheckedUpdateManyWithoutThreadNestedInput
+  }
+
+  export type AssistantThreadCreateManyInput = {
+    id?: string
+    userId: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AssistantThreadUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantThreadUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMessageCreateInput = {
+    role: string
+    api: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    thread: AssistantThreadCreateNestedOneWithoutMessagesInput
+  }
+
+  export type AssistantMessageUncheckedCreateInput = {
+    id?: number
+    threadId: string
+    role: string
+    api: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AssistantMessageUpdateInput = {
+    role?: StringFieldUpdateOperationsInput | string
+    api?: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    thread?: AssistantThreadUpdateOneRequiredWithoutMessagesNestedInput
+  }
+
+  export type AssistantMessageUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    threadId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    api?: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMessageCreateManyInput = {
+    id?: number
+    threadId: string
+    role: string
+    api: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AssistantMessageUpdateManyMutationInput = {
+    role?: StringFieldUpdateOperationsInput | string
+    api?: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMessageUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    threadId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    api?: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMemoryCreateInput = {
+    fact: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutAssistantMemoriesInput
+  }
+
+  export type AssistantMemoryUncheckedCreateInput = {
+    id?: number
+    userId: string
+    fact: string
+    createdAt?: Date | string
+  }
+
+  export type AssistantMemoryUpdateInput = {
+    fact?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAssistantMemoriesNestedInput
+  }
+
+  export type AssistantMemoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    fact?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMemoryCreateManyInput = {
+    id?: number
+    userId: string
+    fact: string
+    createdAt?: Date | string
+  }
+
+  export type AssistantMemoryUpdateManyMutationInput = {
+    fact?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMemoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    fact?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -43485,6 +47562,18 @@ export namespace Prisma {
     none?: TryOnWhereInput
   }
 
+  export type AssistantThreadListRelationFilter = {
+    every?: AssistantThreadWhereInput
+    some?: AssistantThreadWhereInput
+    none?: AssistantThreadWhereInput
+  }
+
+  export type AssistantMemoryListRelationFilter = {
+    every?: AssistantMemoryWhereInput
+    some?: AssistantMemoryWhereInput
+    none?: AssistantMemoryWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -43527,6 +47616,14 @@ export namespace Prisma {
   }
 
   export type TryOnOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AssistantThreadOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AssistantMemoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -45268,6 +49365,203 @@ export namespace Prisma {
     productId?: SortOrder
   }
 
+  export type AssistantMessageListRelationFilter = {
+    every?: AssistantMessageWhereInput
+    some?: AssistantMessageWhereInput
+    none?: AssistantMessageWhereInput
+  }
+
+  export type AssistantMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AssistantThreadCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AssistantThreadMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AssistantThreadMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type AssistantThreadScalarRelationFilter = {
+    is?: AssistantThreadWhereInput
+    isNot?: AssistantThreadWhereInput
+  }
+
+  export type AssistantMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    threadId?: SortOrder
+    role?: SortOrder
+    api?: SortOrder
+    ui?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AssistantMessageAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type AssistantMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    threadId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AssistantMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    threadId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AssistantMessageSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
+  export type AssistantMemoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    fact?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AssistantMemoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type AssistantMemoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    fact?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AssistantMemoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    fact?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AssistantMemorySumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
   export type HelpChatMessagesCreateNestedManyWithoutSenderInput = {
     create?: XOR<HelpChatMessagesCreateWithoutSenderInput, HelpChatMessagesUncheckedCreateWithoutSenderInput> | HelpChatMessagesCreateWithoutSenderInput[] | HelpChatMessagesUncheckedCreateWithoutSenderInput[]
     connectOrCreate?: HelpChatMessagesCreateOrConnectWithoutSenderInput | HelpChatMessagesCreateOrConnectWithoutSenderInput[]
@@ -45344,6 +49638,20 @@ export namespace Prisma {
     connect?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
   }
 
+  export type AssistantThreadCreateNestedManyWithoutUserInput = {
+    create?: XOR<AssistantThreadCreateWithoutUserInput, AssistantThreadUncheckedCreateWithoutUserInput> | AssistantThreadCreateWithoutUserInput[] | AssistantThreadUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AssistantThreadCreateOrConnectWithoutUserInput | AssistantThreadCreateOrConnectWithoutUserInput[]
+    createMany?: AssistantThreadCreateManyUserInputEnvelope
+    connect?: AssistantThreadWhereUniqueInput | AssistantThreadWhereUniqueInput[]
+  }
+
+  export type AssistantMemoryCreateNestedManyWithoutUserInput = {
+    create?: XOR<AssistantMemoryCreateWithoutUserInput, AssistantMemoryUncheckedCreateWithoutUserInput> | AssistantMemoryCreateWithoutUserInput[] | AssistantMemoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AssistantMemoryCreateOrConnectWithoutUserInput | AssistantMemoryCreateOrConnectWithoutUserInput[]
+    createMany?: AssistantMemoryCreateManyUserInputEnvelope
+    connect?: AssistantMemoryWhereUniqueInput | AssistantMemoryWhereUniqueInput[]
+  }
+
   export type HelpChatMessagesUncheckedCreateNestedManyWithoutSenderInput = {
     create?: XOR<HelpChatMessagesCreateWithoutSenderInput, HelpChatMessagesUncheckedCreateWithoutSenderInput> | HelpChatMessagesCreateWithoutSenderInput[] | HelpChatMessagesUncheckedCreateWithoutSenderInput[]
     connectOrCreate?: HelpChatMessagesCreateOrConnectWithoutSenderInput | HelpChatMessagesCreateOrConnectWithoutSenderInput[]
@@ -45412,6 +49720,20 @@ export namespace Prisma {
     connectOrCreate?: TryOnCreateOrConnectWithoutUserInput | TryOnCreateOrConnectWithoutUserInput[]
     createMany?: TryOnCreateManyUserInputEnvelope
     connect?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
+  }
+
+  export type AssistantThreadUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AssistantThreadCreateWithoutUserInput, AssistantThreadUncheckedCreateWithoutUserInput> | AssistantThreadCreateWithoutUserInput[] | AssistantThreadUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AssistantThreadCreateOrConnectWithoutUserInput | AssistantThreadCreateOrConnectWithoutUserInput[]
+    createMany?: AssistantThreadCreateManyUserInputEnvelope
+    connect?: AssistantThreadWhereUniqueInput | AssistantThreadWhereUniqueInput[]
+  }
+
+  export type AssistantMemoryUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AssistantMemoryCreateWithoutUserInput, AssistantMemoryUncheckedCreateWithoutUserInput> | AssistantMemoryCreateWithoutUserInput[] | AssistantMemoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AssistantMemoryCreateOrConnectWithoutUserInput | AssistantMemoryCreateOrConnectWithoutUserInput[]
+    createMany?: AssistantMemoryCreateManyUserInputEnvelope
+    connect?: AssistantMemoryWhereUniqueInput | AssistantMemoryWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -45584,6 +49906,34 @@ export namespace Prisma {
     deleteMany?: TryOnScalarWhereInput | TryOnScalarWhereInput[]
   }
 
+  export type AssistantThreadUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AssistantThreadCreateWithoutUserInput, AssistantThreadUncheckedCreateWithoutUserInput> | AssistantThreadCreateWithoutUserInput[] | AssistantThreadUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AssistantThreadCreateOrConnectWithoutUserInput | AssistantThreadCreateOrConnectWithoutUserInput[]
+    upsert?: AssistantThreadUpsertWithWhereUniqueWithoutUserInput | AssistantThreadUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AssistantThreadCreateManyUserInputEnvelope
+    set?: AssistantThreadWhereUniqueInput | AssistantThreadWhereUniqueInput[]
+    disconnect?: AssistantThreadWhereUniqueInput | AssistantThreadWhereUniqueInput[]
+    delete?: AssistantThreadWhereUniqueInput | AssistantThreadWhereUniqueInput[]
+    connect?: AssistantThreadWhereUniqueInput | AssistantThreadWhereUniqueInput[]
+    update?: AssistantThreadUpdateWithWhereUniqueWithoutUserInput | AssistantThreadUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AssistantThreadUpdateManyWithWhereWithoutUserInput | AssistantThreadUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AssistantThreadScalarWhereInput | AssistantThreadScalarWhereInput[]
+  }
+
+  export type AssistantMemoryUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AssistantMemoryCreateWithoutUserInput, AssistantMemoryUncheckedCreateWithoutUserInput> | AssistantMemoryCreateWithoutUserInput[] | AssistantMemoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AssistantMemoryCreateOrConnectWithoutUserInput | AssistantMemoryCreateOrConnectWithoutUserInput[]
+    upsert?: AssistantMemoryUpsertWithWhereUniqueWithoutUserInput | AssistantMemoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AssistantMemoryCreateManyUserInputEnvelope
+    set?: AssistantMemoryWhereUniqueInput | AssistantMemoryWhereUniqueInput[]
+    disconnect?: AssistantMemoryWhereUniqueInput | AssistantMemoryWhereUniqueInput[]
+    delete?: AssistantMemoryWhereUniqueInput | AssistantMemoryWhereUniqueInput[]
+    connect?: AssistantMemoryWhereUniqueInput | AssistantMemoryWhereUniqueInput[]
+    update?: AssistantMemoryUpdateWithWhereUniqueWithoutUserInput | AssistantMemoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AssistantMemoryUpdateManyWithWhereWithoutUserInput | AssistantMemoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AssistantMemoryScalarWhereInput | AssistantMemoryScalarWhereInput[]
+  }
+
   export type HelpChatMessagesUncheckedUpdateManyWithoutSenderNestedInput = {
     create?: XOR<HelpChatMessagesCreateWithoutSenderInput, HelpChatMessagesUncheckedCreateWithoutSenderInput> | HelpChatMessagesCreateWithoutSenderInput[] | HelpChatMessagesUncheckedCreateWithoutSenderInput[]
     connectOrCreate?: HelpChatMessagesCreateOrConnectWithoutSenderInput | HelpChatMessagesCreateOrConnectWithoutSenderInput[]
@@ -45722,6 +50072,34 @@ export namespace Prisma {
     update?: TryOnUpdateWithWhereUniqueWithoutUserInput | TryOnUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: TryOnUpdateManyWithWhereWithoutUserInput | TryOnUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: TryOnScalarWhereInput | TryOnScalarWhereInput[]
+  }
+
+  export type AssistantThreadUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AssistantThreadCreateWithoutUserInput, AssistantThreadUncheckedCreateWithoutUserInput> | AssistantThreadCreateWithoutUserInput[] | AssistantThreadUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AssistantThreadCreateOrConnectWithoutUserInput | AssistantThreadCreateOrConnectWithoutUserInput[]
+    upsert?: AssistantThreadUpsertWithWhereUniqueWithoutUserInput | AssistantThreadUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AssistantThreadCreateManyUserInputEnvelope
+    set?: AssistantThreadWhereUniqueInput | AssistantThreadWhereUniqueInput[]
+    disconnect?: AssistantThreadWhereUniqueInput | AssistantThreadWhereUniqueInput[]
+    delete?: AssistantThreadWhereUniqueInput | AssistantThreadWhereUniqueInput[]
+    connect?: AssistantThreadWhereUniqueInput | AssistantThreadWhereUniqueInput[]
+    update?: AssistantThreadUpdateWithWhereUniqueWithoutUserInput | AssistantThreadUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AssistantThreadUpdateManyWithWhereWithoutUserInput | AssistantThreadUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AssistantThreadScalarWhereInput | AssistantThreadScalarWhereInput[]
+  }
+
+  export type AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AssistantMemoryCreateWithoutUserInput, AssistantMemoryUncheckedCreateWithoutUserInput> | AssistantMemoryCreateWithoutUserInput[] | AssistantMemoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AssistantMemoryCreateOrConnectWithoutUserInput | AssistantMemoryCreateOrConnectWithoutUserInput[]
+    upsert?: AssistantMemoryUpsertWithWhereUniqueWithoutUserInput | AssistantMemoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AssistantMemoryCreateManyUserInputEnvelope
+    set?: AssistantMemoryWhereUniqueInput | AssistantMemoryWhereUniqueInput[]
+    disconnect?: AssistantMemoryWhereUniqueInput | AssistantMemoryWhereUniqueInput[]
+    delete?: AssistantMemoryWhereUniqueInput | AssistantMemoryWhereUniqueInput[]
+    connect?: AssistantMemoryWhereUniqueInput | AssistantMemoryWhereUniqueInput[]
+    update?: AssistantMemoryUpdateWithWhereUniqueWithoutUserInput | AssistantMemoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AssistantMemoryUpdateManyWithWhereWithoutUserInput | AssistantMemoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AssistantMemoryScalarWhereInput | AssistantMemoryScalarWhereInput[]
   }
 
   export type AccessCreateNestedManyWithoutAdminsInput = {
@@ -47535,6 +51913,90 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTryOnsInput, UserUpdateWithoutTryOnsInput>, UserUncheckedUpdateWithoutTryOnsInput>
   }
 
+  export type UserCreateNestedOneWithoutAssistantThreadsInput = {
+    create?: XOR<UserCreateWithoutAssistantThreadsInput, UserUncheckedCreateWithoutAssistantThreadsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssistantThreadsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type AssistantMessageCreateNestedManyWithoutThreadInput = {
+    create?: XOR<AssistantMessageCreateWithoutThreadInput, AssistantMessageUncheckedCreateWithoutThreadInput> | AssistantMessageCreateWithoutThreadInput[] | AssistantMessageUncheckedCreateWithoutThreadInput[]
+    connectOrCreate?: AssistantMessageCreateOrConnectWithoutThreadInput | AssistantMessageCreateOrConnectWithoutThreadInput[]
+    createMany?: AssistantMessageCreateManyThreadInputEnvelope
+    connect?: AssistantMessageWhereUniqueInput | AssistantMessageWhereUniqueInput[]
+  }
+
+  export type AssistantMessageUncheckedCreateNestedManyWithoutThreadInput = {
+    create?: XOR<AssistantMessageCreateWithoutThreadInput, AssistantMessageUncheckedCreateWithoutThreadInput> | AssistantMessageCreateWithoutThreadInput[] | AssistantMessageUncheckedCreateWithoutThreadInput[]
+    connectOrCreate?: AssistantMessageCreateOrConnectWithoutThreadInput | AssistantMessageCreateOrConnectWithoutThreadInput[]
+    createMany?: AssistantMessageCreateManyThreadInputEnvelope
+    connect?: AssistantMessageWhereUniqueInput | AssistantMessageWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutAssistantThreadsNestedInput = {
+    create?: XOR<UserCreateWithoutAssistantThreadsInput, UserUncheckedCreateWithoutAssistantThreadsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssistantThreadsInput
+    upsert?: UserUpsertWithoutAssistantThreadsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssistantThreadsInput, UserUpdateWithoutAssistantThreadsInput>, UserUncheckedUpdateWithoutAssistantThreadsInput>
+  }
+
+  export type AssistantMessageUpdateManyWithoutThreadNestedInput = {
+    create?: XOR<AssistantMessageCreateWithoutThreadInput, AssistantMessageUncheckedCreateWithoutThreadInput> | AssistantMessageCreateWithoutThreadInput[] | AssistantMessageUncheckedCreateWithoutThreadInput[]
+    connectOrCreate?: AssistantMessageCreateOrConnectWithoutThreadInput | AssistantMessageCreateOrConnectWithoutThreadInput[]
+    upsert?: AssistantMessageUpsertWithWhereUniqueWithoutThreadInput | AssistantMessageUpsertWithWhereUniqueWithoutThreadInput[]
+    createMany?: AssistantMessageCreateManyThreadInputEnvelope
+    set?: AssistantMessageWhereUniqueInput | AssistantMessageWhereUniqueInput[]
+    disconnect?: AssistantMessageWhereUniqueInput | AssistantMessageWhereUniqueInput[]
+    delete?: AssistantMessageWhereUniqueInput | AssistantMessageWhereUniqueInput[]
+    connect?: AssistantMessageWhereUniqueInput | AssistantMessageWhereUniqueInput[]
+    update?: AssistantMessageUpdateWithWhereUniqueWithoutThreadInput | AssistantMessageUpdateWithWhereUniqueWithoutThreadInput[]
+    updateMany?: AssistantMessageUpdateManyWithWhereWithoutThreadInput | AssistantMessageUpdateManyWithWhereWithoutThreadInput[]
+    deleteMany?: AssistantMessageScalarWhereInput | AssistantMessageScalarWhereInput[]
+  }
+
+  export type AssistantMessageUncheckedUpdateManyWithoutThreadNestedInput = {
+    create?: XOR<AssistantMessageCreateWithoutThreadInput, AssistantMessageUncheckedCreateWithoutThreadInput> | AssistantMessageCreateWithoutThreadInput[] | AssistantMessageUncheckedCreateWithoutThreadInput[]
+    connectOrCreate?: AssistantMessageCreateOrConnectWithoutThreadInput | AssistantMessageCreateOrConnectWithoutThreadInput[]
+    upsert?: AssistantMessageUpsertWithWhereUniqueWithoutThreadInput | AssistantMessageUpsertWithWhereUniqueWithoutThreadInput[]
+    createMany?: AssistantMessageCreateManyThreadInputEnvelope
+    set?: AssistantMessageWhereUniqueInput | AssistantMessageWhereUniqueInput[]
+    disconnect?: AssistantMessageWhereUniqueInput | AssistantMessageWhereUniqueInput[]
+    delete?: AssistantMessageWhereUniqueInput | AssistantMessageWhereUniqueInput[]
+    connect?: AssistantMessageWhereUniqueInput | AssistantMessageWhereUniqueInput[]
+    update?: AssistantMessageUpdateWithWhereUniqueWithoutThreadInput | AssistantMessageUpdateWithWhereUniqueWithoutThreadInput[]
+    updateMany?: AssistantMessageUpdateManyWithWhereWithoutThreadInput | AssistantMessageUpdateManyWithWhereWithoutThreadInput[]
+    deleteMany?: AssistantMessageScalarWhereInput | AssistantMessageScalarWhereInput[]
+  }
+
+  export type AssistantThreadCreateNestedOneWithoutMessagesInput = {
+    create?: XOR<AssistantThreadCreateWithoutMessagesInput, AssistantThreadUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: AssistantThreadCreateOrConnectWithoutMessagesInput
+    connect?: AssistantThreadWhereUniqueInput
+  }
+
+  export type AssistantThreadUpdateOneRequiredWithoutMessagesNestedInput = {
+    create?: XOR<AssistantThreadCreateWithoutMessagesInput, AssistantThreadUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: AssistantThreadCreateOrConnectWithoutMessagesInput
+    upsert?: AssistantThreadUpsertWithoutMessagesInput
+    connect?: AssistantThreadWhereUniqueInput
+    update?: XOR<XOR<AssistantThreadUpdateToOneWithWhereWithoutMessagesInput, AssistantThreadUpdateWithoutMessagesInput>, AssistantThreadUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type UserCreateNestedOneWithoutAssistantMemoriesInput = {
+    create?: XOR<UserCreateWithoutAssistantMemoriesInput, UserUncheckedCreateWithoutAssistantMemoriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssistantMemoriesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutAssistantMemoriesNestedInput = {
+    create?: XOR<UserCreateWithoutAssistantMemoriesInput, UserUncheckedCreateWithoutAssistantMemoriesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssistantMemoriesInput
+    upsert?: UserUpsertWithoutAssistantMemoriesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssistantMemoriesInput, UserUpdateWithoutAssistantMemoriesInput>, UserUncheckedUpdateWithoutAssistantMemoriesInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -47852,6 +52314,52 @@ export namespace Prisma {
     _min?: NestedEnumShipmentStateFilter<$PrismaModel>
     _max?: NestedEnumShipmentStateFilter<$PrismaModel>
   }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type HelpChatMessagesCreateWithoutSenderInput = {
     message: string
@@ -48084,6 +52592,8 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReferralsInput = {
@@ -48110,6 +52620,8 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReferralsInput = {
@@ -48141,6 +52653,8 @@ export namespace Prisma {
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReferrerInput = {
@@ -48167,6 +52681,8 @@ export namespace Prisma {
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReferrerInput = {
@@ -48231,6 +52747,53 @@ export namespace Prisma {
 
   export type TryOnCreateManyUserInputEnvelope = {
     data: TryOnCreateManyUserInput | TryOnCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AssistantThreadCreateWithoutUserInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: AssistantMessageCreateNestedManyWithoutThreadInput
+  }
+
+  export type AssistantThreadUncheckedCreateWithoutUserInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: AssistantMessageUncheckedCreateNestedManyWithoutThreadInput
+  }
+
+  export type AssistantThreadCreateOrConnectWithoutUserInput = {
+    where: AssistantThreadWhereUniqueInput
+    create: XOR<AssistantThreadCreateWithoutUserInput, AssistantThreadUncheckedCreateWithoutUserInput>
+  }
+
+  export type AssistantThreadCreateManyUserInputEnvelope = {
+    data: AssistantThreadCreateManyUserInput | AssistantThreadCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AssistantMemoryCreateWithoutUserInput = {
+    fact: string
+    createdAt?: Date | string
+  }
+
+  export type AssistantMemoryUncheckedCreateWithoutUserInput = {
+    id?: number
+    fact: string
+    createdAt?: Date | string
+  }
+
+  export type AssistantMemoryCreateOrConnectWithoutUserInput = {
+    where: AssistantMemoryWhereUniqueInput
+    create: XOR<AssistantMemoryCreateWithoutUserInput, AssistantMemoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type AssistantMemoryCreateManyUserInputEnvelope = {
+    data: AssistantMemoryCreateManyUserInput | AssistantMemoryCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -48476,6 +53039,8 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReferralsInput = {
@@ -48502,6 +53067,8 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutReferrerInput = {
@@ -48595,6 +53162,59 @@ export namespace Prisma {
     resultUrl?: StringFilter<"TryOn"> | string
     status?: StringFilter<"TryOn"> | string
     createdAt?: DateTimeFilter<"TryOn"> | Date | string
+  }
+
+  export type AssistantThreadUpsertWithWhereUniqueWithoutUserInput = {
+    where: AssistantThreadWhereUniqueInput
+    update: XOR<AssistantThreadUpdateWithoutUserInput, AssistantThreadUncheckedUpdateWithoutUserInput>
+    create: XOR<AssistantThreadCreateWithoutUserInput, AssistantThreadUncheckedCreateWithoutUserInput>
+  }
+
+  export type AssistantThreadUpdateWithWhereUniqueWithoutUserInput = {
+    where: AssistantThreadWhereUniqueInput
+    data: XOR<AssistantThreadUpdateWithoutUserInput, AssistantThreadUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AssistantThreadUpdateManyWithWhereWithoutUserInput = {
+    where: AssistantThreadScalarWhereInput
+    data: XOR<AssistantThreadUpdateManyMutationInput, AssistantThreadUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type AssistantThreadScalarWhereInput = {
+    AND?: AssistantThreadScalarWhereInput | AssistantThreadScalarWhereInput[]
+    OR?: AssistantThreadScalarWhereInput[]
+    NOT?: AssistantThreadScalarWhereInput | AssistantThreadScalarWhereInput[]
+    id?: StringFilter<"AssistantThread"> | string
+    userId?: StringFilter<"AssistantThread"> | string
+    title?: StringFilter<"AssistantThread"> | string
+    createdAt?: DateTimeFilter<"AssistantThread"> | Date | string
+    updatedAt?: DateTimeFilter<"AssistantThread"> | Date | string
+  }
+
+  export type AssistantMemoryUpsertWithWhereUniqueWithoutUserInput = {
+    where: AssistantMemoryWhereUniqueInput
+    update: XOR<AssistantMemoryUpdateWithoutUserInput, AssistantMemoryUncheckedUpdateWithoutUserInput>
+    create: XOR<AssistantMemoryCreateWithoutUserInput, AssistantMemoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type AssistantMemoryUpdateWithWhereUniqueWithoutUserInput = {
+    where: AssistantMemoryWhereUniqueInput
+    data: XOR<AssistantMemoryUpdateWithoutUserInput, AssistantMemoryUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AssistantMemoryUpdateManyWithWhereWithoutUserInput = {
+    where: AssistantMemoryScalarWhereInput
+    data: XOR<AssistantMemoryUpdateManyMutationInput, AssistantMemoryUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type AssistantMemoryScalarWhereInput = {
+    AND?: AssistantMemoryScalarWhereInput | AssistantMemoryScalarWhereInput[]
+    OR?: AssistantMemoryScalarWhereInput[]
+    NOT?: AssistantMemoryScalarWhereInput | AssistantMemoryScalarWhereInput[]
+    id?: IntFilter<"AssistantMemory"> | number
+    userId?: StringFilter<"AssistantMemory"> | string
+    fact?: StringFilter<"AssistantMemory"> | string
+    createdAt?: DateTimeFilter<"AssistantMemory"> | Date | string
   }
 
   export type AccessCreateWithoutAdminsInput = {
@@ -50141,6 +54761,8 @@ export namespace Prisma {
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -50167,6 +54789,8 @@ export namespace Prisma {
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -50255,6 +54879,8 @@ export namespace Prisma {
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -50281,6 +54907,8 @@ export namespace Prisma {
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductsUpsertWithoutReviewsInput = {
@@ -50410,6 +55038,8 @@ export namespace Prisma {
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -50436,6 +55066,8 @@ export namespace Prisma {
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -50640,6 +55272,8 @@ export namespace Prisma {
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -50666,6 +55300,8 @@ export namespace Prisma {
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrderItemUpsertWithWhereUniqueWithoutOrderInput = {
@@ -51185,6 +55821,8 @@ export namespace Prisma {
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutHelpChatsInput = {
@@ -51211,6 +55849,8 @@ export namespace Prisma {
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutHelpChatsInput = {
@@ -51280,6 +55920,8 @@ export namespace Prisma {
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutHelpChatsInput = {
@@ -51306,6 +55948,8 @@ export namespace Prisma {
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type HelpChatMessagesUpsertWithWhereUniqueWithoutChatInput = {
@@ -51368,6 +56012,8 @@ export namespace Prisma {
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutHelpChatMessagesInput = {
@@ -51394,6 +56040,8 @@ export namespace Prisma {
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutHelpChatMessagesInput = {
@@ -51494,6 +56142,8 @@ export namespace Prisma {
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutHelpChatMessagesInput = {
@@ -51520,6 +56170,8 @@ export namespace Prisma {
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AdminsUpsertWithoutHelpChatMessagesInput = {
@@ -51613,6 +56265,8 @@ export namespace Prisma {
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAskForChatsInput = {
@@ -51639,6 +56293,8 @@ export namespace Prisma {
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAskForChatsInput = {
@@ -51697,6 +56353,8 @@ export namespace Prisma {
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAskForChatsInput = {
@@ -51723,6 +56381,8 @@ export namespace Prisma {
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AskForChatCreateWithoutMessagesInput = {
@@ -51769,6 +56429,8 @@ export namespace Prisma {
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAskForChatMessagesInput = {
@@ -51795,6 +56457,8 @@ export namespace Prisma {
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAskForChatMessagesInput = {
@@ -51895,6 +56559,8 @@ export namespace Prisma {
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAskForChatMessagesInput = {
@@ -51921,6 +56587,8 @@ export namespace Prisma {
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AdminsUpsertWithoutAskForChatMessagesInput = {
@@ -51985,6 +56653,8 @@ export namespace Prisma {
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -52011,6 +56681,8 @@ export namespace Prisma {
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -52083,6 +56755,8 @@ export namespace Prisma {
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -52109,6 +56783,8 @@ export namespace Prisma {
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrdersUpsertWithoutTransactionsInput = {
@@ -52456,6 +57132,8 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAdressesInput = {
@@ -52482,6 +57160,8 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAdressesInput = {
@@ -52559,6 +57239,8 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAdressesInput = {
@@ -52585,6 +57267,8 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrdersUpsertWithWhereUniqueWithoutAddressInput = {
@@ -52844,6 +57528,8 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTryOnsInput = {
@@ -52870,6 +57556,8 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTryOnsInput = {
@@ -52912,6 +57600,8 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTryOnsInput = {
@@ -52938,6 +57628,365 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutAssistantThreadsInput = {
+    id?: string
+    phone: string
+    refreshToken?: string | null
+    name: string
+    lastName: string
+    gender: string
+    profile_picture?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    referralCode?: string
+    availableBonus?: number
+    totalEarnedBonus?: number
+    totalUsedBonus?: number
+    helpChatMessages?: HelpChatMessagesCreateNestedManyWithoutSenderInput
+    askForChatMessages?: AskForChatMessagesCreateNestedManyWithoutSenderInput
+    reviews?: ReviewsCreateNestedManyWithoutUserInput
+    orders?: OrdersCreateNestedManyWithoutUserInput
+    helpChats?: HelpChatCreateNestedManyWithoutUserInput
+    askForChats?: AskForChatCreateNestedManyWithoutUserInput
+    transactions?: TransactionsCreateNestedManyWithoutUserInput
+    referrer?: UserCreateNestedOneWithoutReferralsInput
+    referrals?: UserCreateNestedManyWithoutReferrerInput
+    adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAssistantThreadsInput = {
+    id?: string
+    phone: string
+    refreshToken?: string | null
+    name: string
+    lastName: string
+    gender: string
+    profile_picture?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    referralCode?: string
+    referredBy?: string | null
+    availableBonus?: number
+    totalEarnedBonus?: number
+    totalUsedBonus?: number
+    helpChatMessages?: HelpChatMessagesUncheckedCreateNestedManyWithoutSenderInput
+    askForChatMessages?: AskForChatMessagesUncheckedCreateNestedManyWithoutSenderInput
+    reviews?: ReviewsUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrdersUncheckedCreateNestedManyWithoutUserInput
+    helpChats?: HelpChatUncheckedCreateNestedManyWithoutUserInput
+    askForChats?: AskForChatUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
+    referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
+    adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantMemories?: AssistantMemoryUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAssistantThreadsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAssistantThreadsInput, UserUncheckedCreateWithoutAssistantThreadsInput>
+  }
+
+  export type AssistantMessageCreateWithoutThreadInput = {
+    role: string
+    api: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AssistantMessageUncheckedCreateWithoutThreadInput = {
+    id?: number
+    role: string
+    api: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AssistantMessageCreateOrConnectWithoutThreadInput = {
+    where: AssistantMessageWhereUniqueInput
+    create: XOR<AssistantMessageCreateWithoutThreadInput, AssistantMessageUncheckedCreateWithoutThreadInput>
+  }
+
+  export type AssistantMessageCreateManyThreadInputEnvelope = {
+    data: AssistantMessageCreateManyThreadInput | AssistantMessageCreateManyThreadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutAssistantThreadsInput = {
+    update: XOR<UserUpdateWithoutAssistantThreadsInput, UserUncheckedUpdateWithoutAssistantThreadsInput>
+    create: XOR<UserCreateWithoutAssistantThreadsInput, UserUncheckedCreateWithoutAssistantThreadsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAssistantThreadsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAssistantThreadsInput, UserUncheckedUpdateWithoutAssistantThreadsInput>
+  }
+
+  export type UserUpdateWithoutAssistantThreadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    profile_picture?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referralCode?: StringFieldUpdateOperationsInput | string
+    availableBonus?: IntFieldUpdateOperationsInput | number
+    totalEarnedBonus?: IntFieldUpdateOperationsInput | number
+    totalUsedBonus?: IntFieldUpdateOperationsInput | number
+    helpChatMessages?: HelpChatMessagesUpdateManyWithoutSenderNestedInput
+    askForChatMessages?: AskForChatMessagesUpdateManyWithoutSenderNestedInput
+    reviews?: ReviewsUpdateManyWithoutUserNestedInput
+    orders?: OrdersUpdateManyWithoutUserNestedInput
+    helpChats?: HelpChatUpdateManyWithoutUserNestedInput
+    askForChats?: AskForChatUpdateManyWithoutUserNestedInput
+    transactions?: TransactionsUpdateManyWithoutUserNestedInput
+    referrer?: UserUpdateOneWithoutReferralsNestedInput
+    referrals?: UserUpdateManyWithoutReferrerNestedInput
+    adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAssistantThreadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    profile_picture?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referralCode?: StringFieldUpdateOperationsInput | string
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    availableBonus?: IntFieldUpdateOperationsInput | number
+    totalEarnedBonus?: IntFieldUpdateOperationsInput | number
+    totalUsedBonus?: IntFieldUpdateOperationsInput | number
+    helpChatMessages?: HelpChatMessagesUncheckedUpdateManyWithoutSenderNestedInput
+    askForChatMessages?: AskForChatMessagesUncheckedUpdateManyWithoutSenderNestedInput
+    reviews?: ReviewsUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrdersUncheckedUpdateManyWithoutUserNestedInput
+    helpChats?: HelpChatUncheckedUpdateManyWithoutUserNestedInput
+    askForChats?: AskForChatUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
+    referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
+    adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type AssistantMessageUpsertWithWhereUniqueWithoutThreadInput = {
+    where: AssistantMessageWhereUniqueInput
+    update: XOR<AssistantMessageUpdateWithoutThreadInput, AssistantMessageUncheckedUpdateWithoutThreadInput>
+    create: XOR<AssistantMessageCreateWithoutThreadInput, AssistantMessageUncheckedCreateWithoutThreadInput>
+  }
+
+  export type AssistantMessageUpdateWithWhereUniqueWithoutThreadInput = {
+    where: AssistantMessageWhereUniqueInput
+    data: XOR<AssistantMessageUpdateWithoutThreadInput, AssistantMessageUncheckedUpdateWithoutThreadInput>
+  }
+
+  export type AssistantMessageUpdateManyWithWhereWithoutThreadInput = {
+    where: AssistantMessageScalarWhereInput
+    data: XOR<AssistantMessageUpdateManyMutationInput, AssistantMessageUncheckedUpdateManyWithoutThreadInput>
+  }
+
+  export type AssistantMessageScalarWhereInput = {
+    AND?: AssistantMessageScalarWhereInput | AssistantMessageScalarWhereInput[]
+    OR?: AssistantMessageScalarWhereInput[]
+    NOT?: AssistantMessageScalarWhereInput | AssistantMessageScalarWhereInput[]
+    id?: IntFilter<"AssistantMessage"> | number
+    threadId?: StringFilter<"AssistantMessage"> | string
+    role?: StringFilter<"AssistantMessage"> | string
+    api?: JsonFilter<"AssistantMessage">
+    ui?: JsonNullableFilter<"AssistantMessage">
+    createdAt?: DateTimeFilter<"AssistantMessage"> | Date | string
+  }
+
+  export type AssistantThreadCreateWithoutMessagesInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutAssistantThreadsInput
+  }
+
+  export type AssistantThreadUncheckedCreateWithoutMessagesInput = {
+    id?: string
+    userId: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AssistantThreadCreateOrConnectWithoutMessagesInput = {
+    where: AssistantThreadWhereUniqueInput
+    create: XOR<AssistantThreadCreateWithoutMessagesInput, AssistantThreadUncheckedCreateWithoutMessagesInput>
+  }
+
+  export type AssistantThreadUpsertWithoutMessagesInput = {
+    update: XOR<AssistantThreadUpdateWithoutMessagesInput, AssistantThreadUncheckedUpdateWithoutMessagesInput>
+    create: XOR<AssistantThreadCreateWithoutMessagesInput, AssistantThreadUncheckedCreateWithoutMessagesInput>
+    where?: AssistantThreadWhereInput
+  }
+
+  export type AssistantThreadUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: AssistantThreadWhereInput
+    data: XOR<AssistantThreadUpdateWithoutMessagesInput, AssistantThreadUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type AssistantThreadUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAssistantThreadsNestedInput
+  }
+
+  export type AssistantThreadUncheckedUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateWithoutAssistantMemoriesInput = {
+    id?: string
+    phone: string
+    refreshToken?: string | null
+    name: string
+    lastName: string
+    gender: string
+    profile_picture?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    referralCode?: string
+    availableBonus?: number
+    totalEarnedBonus?: number
+    totalUsedBonus?: number
+    helpChatMessages?: HelpChatMessagesCreateNestedManyWithoutSenderInput
+    askForChatMessages?: AskForChatMessagesCreateNestedManyWithoutSenderInput
+    reviews?: ReviewsCreateNestedManyWithoutUserInput
+    orders?: OrdersCreateNestedManyWithoutUserInput
+    helpChats?: HelpChatCreateNestedManyWithoutUserInput
+    askForChats?: AskForChatCreateNestedManyWithoutUserInput
+    transactions?: TransactionsCreateNestedManyWithoutUserInput
+    referrer?: UserCreateNestedOneWithoutReferralsInput
+    referrals?: UserCreateNestedManyWithoutReferrerInput
+    adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAssistantMemoriesInput = {
+    id?: string
+    phone: string
+    refreshToken?: string | null
+    name: string
+    lastName: string
+    gender: string
+    profile_picture?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    referralCode?: string
+    referredBy?: string | null
+    availableBonus?: number
+    totalEarnedBonus?: number
+    totalUsedBonus?: number
+    helpChatMessages?: HelpChatMessagesUncheckedCreateNestedManyWithoutSenderInput
+    askForChatMessages?: AskForChatMessagesUncheckedCreateNestedManyWithoutSenderInput
+    reviews?: ReviewsUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrdersUncheckedCreateNestedManyWithoutUserInput
+    helpChats?: HelpChatUncheckedCreateNestedManyWithoutUserInput
+    askForChats?: AskForChatUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
+    referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
+    adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
+    assistantThreads?: AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAssistantMemoriesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAssistantMemoriesInput, UserUncheckedCreateWithoutAssistantMemoriesInput>
+  }
+
+  export type UserUpsertWithoutAssistantMemoriesInput = {
+    update: XOR<UserUpdateWithoutAssistantMemoriesInput, UserUncheckedUpdateWithoutAssistantMemoriesInput>
+    create: XOR<UserCreateWithoutAssistantMemoriesInput, UserUncheckedCreateWithoutAssistantMemoriesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAssistantMemoriesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAssistantMemoriesInput, UserUncheckedUpdateWithoutAssistantMemoriesInput>
+  }
+
+  export type UserUpdateWithoutAssistantMemoriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    profile_picture?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referralCode?: StringFieldUpdateOperationsInput | string
+    availableBonus?: IntFieldUpdateOperationsInput | number
+    totalEarnedBonus?: IntFieldUpdateOperationsInput | number
+    totalUsedBonus?: IntFieldUpdateOperationsInput | number
+    helpChatMessages?: HelpChatMessagesUpdateManyWithoutSenderNestedInput
+    askForChatMessages?: AskForChatMessagesUpdateManyWithoutSenderNestedInput
+    reviews?: ReviewsUpdateManyWithoutUserNestedInput
+    orders?: OrdersUpdateManyWithoutUserNestedInput
+    helpChats?: HelpChatUpdateManyWithoutUserNestedInput
+    askForChats?: AskForChatUpdateManyWithoutUserNestedInput
+    transactions?: TransactionsUpdateManyWithoutUserNestedInput
+    referrer?: UserUpdateOneWithoutReferralsNestedInput
+    referrals?: UserUpdateManyWithoutReferrerNestedInput
+    adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAssistantMemoriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    profile_picture?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referralCode?: StringFieldUpdateOperationsInput | string
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    availableBonus?: IntFieldUpdateOperationsInput | number
+    totalEarnedBonus?: IntFieldUpdateOperationsInput | number
+    totalUsedBonus?: IntFieldUpdateOperationsInput | number
+    helpChatMessages?: HelpChatMessagesUncheckedUpdateManyWithoutSenderNestedInput
+    askForChatMessages?: AskForChatMessagesUncheckedUpdateManyWithoutSenderNestedInput
+    reviews?: ReviewsUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrdersUncheckedUpdateManyWithoutUserNestedInput
+    helpChats?: HelpChatUncheckedUpdateManyWithoutUserNestedInput
+    askForChats?: AskForChatUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
+    referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
+    adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type HelpChatMessagesCreateManySenderInput = {
@@ -53037,6 +58086,19 @@ export namespace Prisma {
     productId: number
     resultUrl?: string
     status?: string
+    createdAt?: Date | string
+  }
+
+  export type AssistantThreadCreateManyUserInput = {
+    id?: string
+    title?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AssistantMemoryCreateManyUserInput = {
+    id?: number
+    fact: string
     createdAt?: Date | string
   }
 
@@ -53268,6 +58330,8 @@ export namespace Prisma {
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReferrerInput = {
@@ -53294,6 +58358,8 @@ export namespace Prisma {
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
     tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
+    assistantThreads?: AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+    assistantMemories?: AssistantMemoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutReferrerInput = {
@@ -53361,6 +58427,46 @@ export namespace Prisma {
     productId?: IntFieldUpdateOperationsInput | number
     resultUrl?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantThreadUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: AssistantMessageUpdateManyWithoutThreadNestedInput
+  }
+
+  export type AssistantThreadUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: AssistantMessageUncheckedUpdateManyWithoutThreadNestedInput
+  }
+
+  export type AssistantThreadUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMemoryUpdateWithoutUserInput = {
+    fact?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMemoryUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fact?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMemoryUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fact?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -54642,6 +59748,37 @@ export namespace Prisma {
     state?: EnumOrderItemStateFieldUpdateOperationsInput | $Enums.OrderItemState
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMessageCreateManyThreadInput = {
+    id?: number
+    role: string
+    api: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AssistantMessageUpdateWithoutThreadInput = {
+    role?: StringFieldUpdateOperationsInput | string
+    api?: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMessageUncheckedUpdateWithoutThreadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    role?: StringFieldUpdateOperationsInput | string
+    api?: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssistantMessageUncheckedUpdateManyWithoutThreadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    role?: StringFieldUpdateOperationsInput | string
+    api?: JsonNullValueInput | InputJsonValue
+    ui?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

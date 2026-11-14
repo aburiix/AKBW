@@ -52,6 +52,17 @@ export default function Product({ id }: ProductProps) {
     }
   }, [product]);
 
+  // AI yordamchi o'lcham tavsiya qilsa ("Tanlash" tugmasi) — sahifadagi o'lchamni belgilaydi
+  React.useEffect(() => {
+    const onPick = (e: Event) => {
+      const name = String((e as CustomEvent).detail?.size ?? '').toUpperCase();
+      const hit = product?.sizes?.find((s) => s.name.toUpperCase() === name);
+      if (hit) setSelectedSize(hit.id);
+    };
+    window.addEventListener('akbw:select-size', onPick);
+    return () => window.removeEventListener('akbw:select-size', onPick);
+  }, [product]);
+
   if (isLoading) {
     return (
       <div className="wrap pt-6 md:pt-10 pb-16 animate-pulse">
@@ -285,6 +296,17 @@ export default function Product({ id }: ProductProps) {
                       </button>
                     ))}
                   </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      window.dispatchEvent(
+                        new CustomEvent('akbw:assistant', { detail: { prompt: tUi('size_prompt') } }),
+                      )
+                    }
+                    className="mt-3 inline-flex items-center gap-2 text-[13.5px] text-ivory border-b border-dashed border-line-2 pb-0.5 cursor-pointer hover:border-ivory/60"
+                  >
+                    <Sparkles size={14} /> {tUi('size_ai')}
+                  </button>
                 </div>
               )}
 
