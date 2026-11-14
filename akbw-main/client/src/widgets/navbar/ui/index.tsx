@@ -14,6 +14,7 @@ import {
   ShoppingBag,
   User,
   ArrowRight,
+  Sparkles,
 } from 'lucide-react';
 import { useCategories } from '../lib/hooks';
 import { useTranslations, useLocale } from 'next-intl';
@@ -179,6 +180,20 @@ const Navbar = () => {
           </form>
 
           <div className="flex items-center gap-0.5">
+            <button
+              onClick={() =>
+                window.dispatchEvent(new CustomEvent('akbw:assistant'))
+              }
+              aria-label="AKBW AI"
+              className={cn(iconBtn, 'hidden md:grid')}
+            >
+              <span className="flex flex-col items-center gap-0.5 leading-none">
+                <Sparkles size={18} strokeWidth={1.5} />
+                <span className="text-[9px] font-semibold tracking-[0.08em]">
+                  AI
+                </span>
+              </span>
+            </button>
             <Link
               href="/search"
               aria-label="Qidiruv"

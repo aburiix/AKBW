@@ -2,7 +2,14 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { Heart, Home, LayoutGrid, ShoppingBag, User } from 'lucide-react';
+import {
+  Heart,
+  Home,
+  LayoutGrid,
+  ShoppingBag,
+  Sparkles,
+  User,
+} from 'lucide-react';
 import { Link, usePathname } from '@/shared/config/i18n/navigation';
 import { useCartStore } from '@/shared/store/cart.store';
 import { cn } from '@/shared/lib/utils';
@@ -11,7 +18,7 @@ import { useTranslations } from 'next-intl';
 const Profile = dynamic(() => import('@/widgets/profile'), { ssr: false });
 
 const item =
-  'relative flex flex-col items-center gap-1 py-1.5 text-[9px] leading-none tracking-[0.1em] uppercase font-[family-name:var(--font-futura)] transition-colors';
+  'relative flex flex-col items-center gap-1 py-1.5 text-[8.5px] leading-none tracking-[0.06em] uppercase whitespace-nowrap font-[family-name:var(--font-futura)] transition-colors';
 
 /** Telefon uchun pastki menyu (md dan kichik ekranlarda) */
 export default function MobileTabbar() {
@@ -44,7 +51,7 @@ export default function MobileTabbar() {
   };
 
   return (
-    <nav className="tabbar md:hidden fixed z-[60] inset-x-0 bottom-0 grid grid-cols-5 px-1.5 pt-2 pb-[calc(8px+env(safe-area-inset-bottom))] bg-night/90 backdrop-blur-xl border-t border-line">
+    <nav className="tabbar md:hidden fixed z-[60] inset-x-0 bottom-0 grid grid-cols-6 px-1 pt-2 pb-[calc(8px+env(safe-area-inset-bottom))] bg-night/90 backdrop-blur-xl border-t border-line">
       {tab('/', t('tab_home'), Home)}
       {tab('/filters', t('tab_catalog'), LayoutGrid)}
       {tab(
@@ -57,6 +64,14 @@ export default function MobileTabbar() {
           </span>
         ) : null,
       )}
+      <button
+        onClick={() => window.dispatchEvent(new CustomEvent('akbw:assistant'))}
+        className={cn(item, 'text-ivory/40 hover:text-ivory cursor-pointer')}
+        aria-label="AKBW AI"
+      >
+        <Sparkles size={21} strokeWidth={1.4} />
+        AI
+      </button>
       {tab('/favorites', t('tab_fav'), Heart)}
       <Profile>
         <button className={cn(item, 'text-ivory/40 w-full')}>

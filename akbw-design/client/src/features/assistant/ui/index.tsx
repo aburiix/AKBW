@@ -62,120 +62,6 @@ function Rich({ text }: { text: string }) {
 const orb =
   'grid place-items-center rounded-full text-white bg-[radial-gradient(circle_at_35%_30%,#f6e2c8,#8a6243_60%,#3a2414)] shadow-[inset_0_0_12px_rgba(255,255,255,.25)]';
 
-const FAB_KEY = 'akbw-ai-fab';
-type Pos = { x: number; y: number };
-
-/** Ixcham, sudrab joyi o'zgartiriladigan "AKBW AI" tugmasi. Joyi brauzerda eslab qolinadi. */
-function AiFab({
-  label,
-  hint,
-  onOpen,
-}: {
-  label: string;
-  hint: string;
-  onOpen: () => void;
-}) {
-  const ref = useRef<HTMLButtonElement>(null);
-  const [pos, setPos] = useState<Pos | null>(null);
-  const drag = useRef<{
-    dx: number;
-    dy: number;
-    sx: number;
-    sy: number;
-    moved: boolean;
-  } | null>(null);
-  const last = useRef<Pos | null>(null);
-  const justDragged = useRef(false);
-
-  const clamp = useCallback((p: Pos): Pos => {
-    const w = ref.current?.offsetWidth ?? 120;
-    const h = ref.current?.offsetHeight ?? 44;
-    return {
-      x: Math.min(Math.max(8, p.x), window.innerWidth - w - 8),
-      y: Math.min(Math.max(8, p.y), window.innerHeight - h - 8),
-    };
-  }, []);
-
-  useEffect(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem(FAB_KEY) || 'null');
-      if (saved && typeof saved.x === 'number') setPos(clamp(saved));
-    } catch {
-      /* saqlangan joy yo'q — standart joy */
-    }
-    const onResize = () => setPos((p) => (p ? clamp(p) : p));
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, [clamp]);
-
-  return (
-    <button
-      ref={ref}
-      aria-label={label}
-      title={hint}
-      onPointerDown={(e) => {
-        const r = ref.current!.getBoundingClientRect();
-        drag.current = {
-          dx: e.clientX - r.left,
-          dy: e.clientY - r.top,
-          sx: e.clientX,
-          sy: e.clientY,
-          moved: false,
-        };
-        ref.current!.setPointerCapture(e.pointerId);
-      }}
-      onPointerMove={(e) => {
-        const d = drag.current;
-        if (!d) return;
-        if (!d.moved && Math.hypot(e.clientX - d.sx, e.clientY - d.sy) < 6)
-          return;
-        d.moved = true;
-        const p = clamp({ x: e.clientX - d.dx, y: e.clientY - d.dy });
-        last.current = p;
-        setPos(p);
-      }}
-      onPointerUp={() => {
-        const d = drag.current;
-        drag.current = null;
-        if (d?.moved) {
-          justDragged.current = true;
-          try {
-            if (last.current)
-              localStorage.setItem(FAB_KEY, JSON.stringify(last.current));
-          } catch {
-            /* xotira yopiq — joy faqat shu sahifada qoladi */
-          }
-        }
-      }}
-      onPointerCancel={() => (drag.current = null)}
-      onClick={() => {
-        if (justDragged.current) {
-          justDragged.current = false;
-          return;
-        }
-        onOpen();
-      }}
-      style={
-        pos
-          ? { left: pos.x, top: pos.y, right: 'auto', bottom: 'auto' }
-          : undefined
-      }
-      className={cn(
-        'fixed z-[55] flex items-center gap-2 h-11 pl-1.5 pr-3.5 rounded-full bg-ivory text-night shadow-[0_14px_32px_-10px_rgba(0,0,0,.75)] touch-none select-none cursor-grab active:cursor-grabbing',
-        !pos &&
-          'right-3.5 md:right-6 bottom-[calc(150px+env(safe-area-inset-bottom))] md:bottom-6',
-      )}
-    >
-      <span className={cn(orb, 'size-8 animate-pulse [animation-duration:3s]')}>
-        <Sparkles size={14} />
-      </span>
-      <span className="font-[family-name:var(--font-futura)] text-[11px] tracking-[0.14em] uppercase">
-        {label}
-      </span>
-    </button>
-  );
-}
-
 export default function Assistant() {
   const t = useTranslations('Assistant');
   const token = useUserStore((s) => s.token);
@@ -334,14 +220,6 @@ export default function Assistant() {
 
   return (
     <>
-      {!open && (
-        <AiFab
-          label={t('fab')}
-          hint={t('drag_hint')}
-          onOpen={() => setOpen(true)}
-        />
-      )}
-
       {open && (
         <section
           aria-label={t('title')}
