@@ -91,7 +91,8 @@ export async function generateMetadata({
 export default async function ProductPage({ params }: ProductPageProps) {
   const { id, locale } = await params;
   const baseUrl = 'https://akbw.uz';
-  const product = await getProductByIdRequest(id);
+  // Mahsulot topilmasa (404) yoki API xato bersa sahifa yiqilmaydi — klient "topilmadi" holatini ko'rsatadi
+  const product = await getProductByIdRequest(id).catch(() => null);
 
   const jsonLd = product
     ? {

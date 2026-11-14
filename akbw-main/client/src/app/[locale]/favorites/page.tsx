@@ -1,11 +1,12 @@
+import type { Metadata } from 'next';
 import FavoritesPage from '@/features/favorites/ui';
+import { PRODUCT_INFO } from '@/shared/constants/data';
 
-interface FavoritesPageProps {
-  params: Promise<{
-    locale: string;
-  }>;
-}
+export const metadata: Metadata = {
+  title: `Favorites - ${PRODUCT_INFO.name}`,
+  robots: { index: false, follow: true },
+};
 
-export default async function Page(_params: FavoritesPageProps) {
+export default function Page() {
   return <FavoritesPage />;
 }

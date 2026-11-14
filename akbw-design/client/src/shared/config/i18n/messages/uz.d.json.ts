@@ -16,7 +16,8 @@ declare const messages: {
   "HomePage": {
     "hero_title": "Bizning Brendimiz — Uslub va Ishonch",
     "hero_subtitle": "Kiyimga bo'lgan munosabatni o'zgartiramiz. Sifatli kiyim sizning tarafingizdir.",
-    "explore_product": "MAXSULOTLARNI KO'RING",    "akbw-title": "AKBW YANGI AVLOD ONLINE KIYIM PLATFORMASI",
+    "explore_product": "MAXSULOTLARNI KO'RING",
+    "akbw-title": "AKBW YANGI AVLOD ONLINE KIYIM PLATFORMASI",
     "akbw-subtitle-1": "Maqsadimiz nafaqat O‘zbekistonda, balki xalqaro bozorda ham ishonchli brendga aylanish",
     "akbw-subtitle-2": "Biz kiyimga bo‘lgan munosabatni o‘zgartiramiz. Chunki kiyim — shunchaki kundalik vosita emas, u sizning tashqi ko‘rinishingiz va o‘zingizga bo‘lgan ishonchingizdir.",
     "watch_products_btn": "Maxsulotlarni ko'rish",
@@ -81,7 +82,7 @@ declare const messages: {
   "Register": {
     "name_invalid": "Ism kamida 2 ta harfdan iborat bo'lishi kerak",
     "sending": "Jo'natilmoqda",
-    "verifying":"Tasdiqlanmoqda",
+    "verifying": "Tasdiqlanmoqda",
     "lastname_invalid": "Familiya kamida 2 ta harfdan iborat bo'lishi kerak",
     "gender_invalid": "Jins kamida 2 ta harfdan iborat bo'lishi kerak",
     "phone_invalid": "Telefon raqami noto'g'ri",
@@ -700,6 +701,22 @@ declare const messages: {
   },
   "Common": {
     "error": "Malumotlarni olishda xatolik yuz berdi!"
+  },
+  "Ui": {
+    "ann_pay": "Payme · Click · Uzum · Paynet orqali to‘lov",
+    "ann_bts": "BTS orqali butun O‘zbekiston bo‘ylab yetkazish",
+    "ann_bonus": "Ro‘yxatdan o‘ting — birinchi xaridga 5% bonus",
+    "ann_brand": "AKBW — yangi avlod online kiyim platformasi",
+    "tab_home": "Asosiy",
+    "tab_catalog": "Katalog",
+    "tab_cart": "Savat",
+    "tab_fav": "Sevimlilar",
+    "tab_profile": "Profil",
+    "nf_title": "Sahifa topilmadi",
+    "nf_text": "Siz qidirayotgan sahifa mavjud emas yoki ko‘chirilgan bo‘lishi mumkin.",
+    "nf_home": "Bosh sahifaga qaytish",
+    "pnf_title": "Mahsulot topilmadi",
+    "pnf_text": "Siz qidirayotgan mahsulot mavjud emas yoki o‘chirilgan."
   }
 };
 export default messages;

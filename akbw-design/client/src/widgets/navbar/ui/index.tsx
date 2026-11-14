@@ -30,12 +30,7 @@ const LOCALES = [
   { code: 'en', label: 'English' },
 ];
 
-const ANNOUNCEMENTS = [
-  'Payme · Click · Uzum · Paynet orqali to’lov',
-  'BTS orqali butun O’zbekiston bo’ylab yetkazish',
-  'Ro’yxatdan o’ting — birinchi xaridga 5% bonus',
-  'AKBW — yangi avlod online kiyim platformasi',
-];
+const ANNOUNCEMENTS = ['ann_pay', 'ann_bts', 'ann_bonus', 'ann_brand'] as const;
 
 const iconBtn =
   'relative size-[42px] grid place-items-center rounded-full hover:bg-white/[0.07] transition-colors';
@@ -65,6 +60,7 @@ const Navbar = () => {
   const tLogin = useTranslations('Login');
   const tRegister = useTranslations('Register');
   const tHome = useTranslations('HomePage');
+  const tUi = useTranslations('Ui');
 
   const { data: categories, isError } = useCategories();
   const parents = categories?.filter((c) => !c.parentId) ?? [];
@@ -123,7 +119,7 @@ const Navbar = () => {
         <div className="marquee flex w-max py-2 lbl !text-[10.5px]">
           {[...ANNOUNCEMENTS, ...ANNOUNCEMENTS].map((a, i) => (
             <span key={i} className="flex gap-14 pr-14">
-              <span>{a}</span>
+              <span>{tUi(a)}</span>
               <span>✦</span>
             </span>
           ))}
@@ -219,14 +215,14 @@ const Navbar = () => {
 
             <Link
               href="/favorites"
-              aria-label="Sevimlilar"
+              aria-label={tUi('tab_fav')}
               className={cn(iconBtn, 'hidden md:grid')}
             >
               <Heart size={20} strokeWidth={1.5} />
               {mounted && favCount > 0 && <Badge n={favCount} />}
             </Link>
 
-            <Link href="/cart" aria-label="Savat" className={iconBtn}>
+            <Link href="/cart" aria-label={tUi('tab_cart')} className={iconBtn}>
               <ShoppingBag size={20} strokeWidth={1.5} />
               {mounted && cartCount > 0 && <Badge n={cartCount} />}
             </Link>

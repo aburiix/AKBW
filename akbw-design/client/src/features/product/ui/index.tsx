@@ -29,6 +29,7 @@ export default function Product({ id }: ProductProps) {
   const addItem = useCartStore((s) => s.addItem);
 
   const t = useTranslations('ProductPage');
+  const tUi = useTranslations('Ui');
 
   const productImages = useMemo(() => {
     if (product?.product_images && product.product_images.length > 0) {
@@ -73,8 +74,8 @@ export default function Product({ id }: ProductProps) {
       <div className="wrap min-h-[70vh] grid place-items-center text-center">
         <div className="flex flex-col items-center gap-3">
           <span className="font-display text-[44px] text-ivory/15">AKBW</span>
-          <h2 className="serif text-[32px] text-ivory">Maxsulot topilmadi!</h2>
-          <p className="text-ivory/50">Siz qidirayotgan maxsulot topilmadi.</p>
+          <h2 className="serif text-[32px] text-ivory">{tUi('pnf_title')}</h2>
+          <p className="text-ivory/50">{tUi('pnf_text')}</p>
         </div>
       </div>
     );

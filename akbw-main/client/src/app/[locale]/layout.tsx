@@ -1,5 +1,3 @@
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import '../globals.css';
 import { inter } from '@/shared/config/fonts';
 import { ThemeProvider } from '@/shared/config/theme-provider';
@@ -56,8 +54,6 @@ export default async function RootLayout({ children, params }: Props) {
               <Navbar />
               {children}
               <Footer />
-              <Analytics />
-              <SpeedInsights />
               <Toaster />
               <TelegramProvider />
             </QueryProvider>

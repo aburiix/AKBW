@@ -6,6 +6,7 @@ import { Heart, Home, LayoutGrid, ShoppingBag, User } from 'lucide-react';
 import { Link, usePathname } from '@/shared/config/i18n/navigation';
 import { useCartStore } from '@/shared/store/cart.store';
 import { cn } from '@/shared/lib/utils';
+import { useTranslations } from 'next-intl';
 
 const Profile = dynamic(() => import('@/widgets/profile'), { ssr: false });
 
@@ -15,6 +16,7 @@ const item =
 /** Telefon uchun pastki menyu (md dan kichik ekranlarda) */
 export default function MobileTabbar() {
   const pathname = usePathname();
+  const t = useTranslations('Ui');
   const [mounted, setMounted] = useState(false);
   const cartCount = useCartStore((s) =>
     s.items.reduce((sum, i) => sum + i.quantity, 0),
@@ -43,11 +45,11 @@ export default function MobileTabbar() {
 
   return (
     <nav className="tabbar md:hidden fixed z-[60] inset-x-0 bottom-0 grid grid-cols-5 px-1.5 pt-2 pb-[calc(8px+env(safe-area-inset-bottom))] bg-night/90 backdrop-blur-xl border-t border-line">
-      {tab('/', 'Asosiy', Home)}
-      {tab('/filters', 'Katalog', LayoutGrid)}
+      {tab('/', t('tab_home'), Home)}
+      {tab('/filters', t('tab_catalog'), LayoutGrid)}
       {tab(
         '/cart',
-        'Savat',
+        t('tab_cart'),
         ShoppingBag,
         mounted && cartCount > 0 ? (
           <span className="absolute top-0 left-[55%] min-w-4 h-4 px-1 rounded-full bg-ivory text-night text-[9px] font-semibold leading-4 text-center tracking-normal">
@@ -55,11 +57,11 @@ export default function MobileTabbar() {
           </span>
         ) : null,
       )}
-      {tab('/favorites', 'Sevimlilar', Heart)}
+      {tab('/favorites', t('tab_fav'), Heart)}
       <Profile>
         <button className={cn(item, 'text-ivory/40 w-full')}>
           <User size={21} strokeWidth={1.4} />
-          Profil
+          {t('tab_profile')}
         </button>
       </Profile>
     </nav>

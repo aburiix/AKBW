@@ -659,5 +659,21 @@
     "welcome_bonus": "Welcome bonus",
     "referral_bonus": "Referral bonus",
     "referrer_bonus": "Referrer bonus"
+  },
+  "Ui": {
+    "ann_pay": "Pay with Payme · Click · Uzum · Paynet",
+    "ann_bts": "BTS delivery across Uzbekistan",
+    "ann_bonus": "Sign up — 5% bonus on your first order",
+    "ann_brand": "AKBW — next-generation online clothing platform",
+    "tab_home": "Home",
+    "tab_catalog": "Catalog",
+    "tab_cart": "Cart",
+    "tab_fav": "Favorites",
+    "tab_profile": "Profile",
+    "nf_title": "Page not found",
+    "nf_text": "The page you are looking for does not exist or has been moved.",
+    "nf_home": "Back to home",
+    "pnf_title": "Product not found",
+    "pnf_text": "The product you are looking for does not exist or has been removed."
   }
 }
