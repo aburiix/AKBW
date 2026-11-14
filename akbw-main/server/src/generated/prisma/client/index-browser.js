@@ -421,6 +421,15 @@ exports.Prisma.ShipmentScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TryOnScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  resultUrl: 'resultUrl',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -500,7 +509,8 @@ exports.Prisma.ModelName = {
   Workers: 'Workers',
   Adresses: 'Adresses',
   SenderConfig: 'SenderConfig',
-  Shipment: 'Shipment'
+  Shipment: 'Shipment',
+  TryOn: 'TryOn'
 };
 
 /**

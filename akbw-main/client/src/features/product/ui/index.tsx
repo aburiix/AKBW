@@ -4,7 +4,8 @@ import { colorToCss } from '@/shared/lib/colorToCss';
 import { useProduct, useProducts } from '@/features/products/lib/hooks';
 import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { useCartStore } from '@/shared/store/cart.store';
-import { Star, Minus, Plus, Check, ShoppingBag } from 'lucide-react';
+import { Star, Minus, Plus, Check, ShoppingBag, Sparkles } from 'lucide-react';
+import { Link } from '@/shared/config/i18n/navigation';
 import ProductCard from '@/widgets/product';
 import { cn } from '@/shared/lib/utils';
 import { toast } from '@/shared/ui/toast';
@@ -318,6 +319,15 @@ export default function Product({ id }: ProductProps) {
                   {t('addToCart')}
                 </button>
               </div>
+
+              {/* AI kiyib ko'rish (faqat tizimga kirganlar uchun — sahifaning o'zida tekshiriladi) */}
+              <Link
+                href={`/try-on?product=${product.id}`}
+                className="pill pill-ghost w-full !h-[52px] mt-3"
+              >
+                <Sparkles size={16} />
+                {tUi('try_on')}
+              </Link>
             </div>
           </div>
         </div>

@@ -38,6 +38,7 @@ import chatRoutes from "./routers/chat.routes.js";
 import smsRoutes from "./routers/sms.routes.js";
 import BaseError from "./errors/base.errors.js";
 import botRoutes from "./routers/bot.routes.js";
+import tryonRoutes from "./routers/tryon.routes.js";
 import path from "path";
 
 // configure dotenv
@@ -124,6 +125,7 @@ app.use("/api/shipment", shipmentRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/coupon", couponRoutes);
 app.use("/api/bot", botRoutes);
+app.use("/api/tryon", tryonRoutes);
 
 // 404 handler
 app.use((req: Request, res: Response) => {

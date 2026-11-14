@@ -32,6 +32,7 @@ model User {
   totalEarnedBonus   Int                  @default(0) // Total bonus earned (in so'm)
   totalUsedBonus     Int                  @default(0) // Total bonus used (in so'm)
   adresses           Adresses[]
+  tryOns             TryOn[]
 }
 
 model Verify {
@@ -446,4 +447,17 @@ enum ShipmentState {
   SENT
   DELIVERED
   CANCELLED
+}
+
+// AI kiyib ko'rish (FASHN, fal.ai orqali). Kuniga cheklov shu jadvaldan hisoblanadi.
+model TryOn {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId Int
+  resultUrl String   @default("")
+  status    String   @default("pending") // pending | done | failed
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
 }

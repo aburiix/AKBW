@@ -297,3 +297,7 @@ html.tg-app .tabbar {
   -webkit-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
+
+/* Kiyib ko'rish: AI ishlayotganda skaner chizig'i */
+.tryon-scan { animation: tryon-scan 2.2s cubic-bezier(.45,0,.55,1) infinite; }
+@keyframes tryon-scan { from { top: -30%; } to { top: 100%; } }

@@ -153,6 +153,11 @@ export type SenderConfig = $Result.DefaultSelection<Prisma.$SenderConfigPayload>
  * 
  */
 export type Shipment = $Result.DefaultSelection<Prisma.$ShipmentPayload>
+/**
+ * Model TryOn
+ * 
+ */
+export type TryOn = $Result.DefaultSelection<Prisma.$TryOnPayload>
 
 /**
  * Enums
@@ -660,6 +665,16 @@ export class PrismaClient<
     * ```
     */
   get shipment(): Prisma.ShipmentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tryOn`: Exposes CRUD operations for the **TryOn** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TryOns
+    * const tryOns = await prisma.tryOn.findMany()
+    * ```
+    */
+  get tryOn(): Prisma.TryOnDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1121,7 +1136,8 @@ export namespace Prisma {
     Workers: 'Workers',
     Adresses: 'Adresses',
     SenderConfig: 'SenderConfig',
-    Shipment: 'Shipment'
+    Shipment: 'Shipment',
+    TryOn: 'TryOn'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1137,7 +1153,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "verify" | "admins" | "access" | "products" | "productTranslations" | "categories" | "styles" | "categoryTranslations" | "sizes" | "sizeTranslations" | "colors" | "colorTranslations" | "reviews" | "coupons" | "orders" | "orderItem" | "notifications" | "helpChat" | "helpChatMessages" | "askForChat" | "askForChatMessages" | "transactions" | "factories" | "workers" | "adresses" | "senderConfig" | "shipment"
+      modelProps: "user" | "verify" | "admins" | "access" | "products" | "productTranslations" | "categories" | "styles" | "categoryTranslations" | "sizes" | "sizeTranslations" | "colors" | "colorTranslations" | "reviews" | "coupons" | "orders" | "orderItem" | "notifications" | "helpChat" | "helpChatMessages" | "askForChat" | "askForChatMessages" | "transactions" | "factories" | "workers" | "adresses" | "senderConfig" | "shipment" | "tryOn"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3213,6 +3229,80 @@ export namespace Prisma {
           }
         }
       }
+      TryOn: {
+        payload: Prisma.$TryOnPayload<ExtArgs>
+        fields: Prisma.TryOnFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TryOnFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TryOnFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload>
+          }
+          findFirst: {
+            args: Prisma.TryOnFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TryOnFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload>
+          }
+          findMany: {
+            args: Prisma.TryOnFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload>[]
+          }
+          create: {
+            args: Prisma.TryOnCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload>
+          }
+          createMany: {
+            args: Prisma.TryOnCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TryOnCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload>[]
+          }
+          delete: {
+            args: Prisma.TryOnDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload>
+          }
+          update: {
+            args: Prisma.TryOnUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload>
+          }
+          deleteMany: {
+            args: Prisma.TryOnDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TryOnUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TryOnUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload>[]
+          }
+          upsert: {
+            args: Prisma.TryOnUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TryOnPayload>
+          }
+          aggregate: {
+            args: Prisma.TryOnAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTryOn>
+          }
+          groupBy: {
+            args: Prisma.TryOnGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TryOnGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TryOnCountArgs<ExtArgs>
+            result: $Utils.Optional<TryOnCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3349,6 +3439,7 @@ export namespace Prisma {
     adresses?: AdressesOmit
     senderConfig?: SenderConfigOmit
     shipment?: ShipmentOmit
+    tryOn?: TryOnOmit
   }
 
   /* Types for Logging */
@@ -3438,6 +3529,7 @@ export namespace Prisma {
     transactions: number
     referrals: number
     adresses: number
+    tryOns: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3450,6 +3542,7 @@ export namespace Prisma {
     transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
     referrals?: boolean | UserCountOutputTypeCountReferralsArgs
     adresses?: boolean | UserCountOutputTypeCountAdressesArgs
+    tryOns?: boolean | UserCountOutputTypeCountTryOnsArgs
   }
 
   // Custom InputTypes
@@ -3524,6 +3617,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAdressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AdressesWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTryOnsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TryOnWhereInput
   }
 
 
@@ -4375,6 +4475,7 @@ export namespace Prisma {
     referrer?: boolean | User$referrerArgs<ExtArgs>
     referrals?: boolean | User$referralsArgs<ExtArgs>
     adresses?: boolean | User$adressesArgs<ExtArgs>
+    tryOns?: boolean | User$tryOnsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4443,6 +4544,7 @@ export namespace Prisma {
     referrer?: boolean | User$referrerArgs<ExtArgs>
     referrals?: boolean | User$referralsArgs<ExtArgs>
     adresses?: boolean | User$adressesArgs<ExtArgs>
+    tryOns?: boolean | User$tryOnsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4465,6 +4567,7 @@ export namespace Prisma {
       referrer: Prisma.$UserPayload<ExtArgs> | null
       referrals: Prisma.$UserPayload<ExtArgs>[]
       adresses: Prisma.$AdressesPayload<ExtArgs>[]
+      tryOns: Prisma.$TryOnPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4885,6 +4988,7 @@ export namespace Prisma {
     referrer<T extends User$referrerArgs<ExtArgs> = {}>(args?: Subset<T, User$referrerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     referrals<T extends User$referralsArgs<ExtArgs> = {}>(args?: Subset<T, User$referralsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     adresses<T extends User$adressesArgs<ExtArgs> = {}>(args?: Subset<T, User$adressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdressesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tryOns<T extends User$tryOnsArgs<ExtArgs> = {}>(args?: Subset<T, User$tryOnsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5561,6 +5665,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AdressesScalarFieldEnum | AdressesScalarFieldEnum[]
+  }
+
+  /**
+   * User.tryOns
+   */
+  export type User$tryOnsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+    where?: TryOnWhereInput
+    orderBy?: TryOnOrderByWithRelationInput | TryOnOrderByWithRelationInput[]
+    cursor?: TryOnWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TryOnScalarFieldEnum | TryOnScalarFieldEnum[]
   }
 
   /**
@@ -37150,6 +37278,1116 @@ export namespace Prisma {
 
 
   /**
+   * Model TryOn
+   */
+
+  export type AggregateTryOn = {
+    _count: TryOnCountAggregateOutputType | null
+    _avg: TryOnAvgAggregateOutputType | null
+    _sum: TryOnSumAggregateOutputType | null
+    _min: TryOnMinAggregateOutputType | null
+    _max: TryOnMaxAggregateOutputType | null
+  }
+
+  export type TryOnAvgAggregateOutputType = {
+    productId: number | null
+  }
+
+  export type TryOnSumAggregateOutputType = {
+    productId: number | null
+  }
+
+  export type TryOnMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    productId: number | null
+    resultUrl: string | null
+    status: string | null
+    createdAt: Date | null
+  }
+
+  export type TryOnMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    productId: number | null
+    resultUrl: string | null
+    status: string | null
+    createdAt: Date | null
+  }
+
+  export type TryOnCountAggregateOutputType = {
+    id: number
+    userId: number
+    productId: number
+    resultUrl: number
+    status: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type TryOnAvgAggregateInputType = {
+    productId?: true
+  }
+
+  export type TryOnSumAggregateInputType = {
+    productId?: true
+  }
+
+  export type TryOnMinAggregateInputType = {
+    id?: true
+    userId?: true
+    productId?: true
+    resultUrl?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type TryOnMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    productId?: true
+    resultUrl?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type TryOnCountAggregateInputType = {
+    id?: true
+    userId?: true
+    productId?: true
+    resultUrl?: true
+    status?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type TryOnAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TryOn to aggregate.
+     */
+    where?: TryOnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TryOns to fetch.
+     */
+    orderBy?: TryOnOrderByWithRelationInput | TryOnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TryOnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TryOns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TryOns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TryOns
+    **/
+    _count?: true | TryOnCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TryOnAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TryOnSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TryOnMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TryOnMaxAggregateInputType
+  }
+
+  export type GetTryOnAggregateType<T extends TryOnAggregateArgs> = {
+        [P in keyof T & keyof AggregateTryOn]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTryOn[P]>
+      : GetScalarType<T[P], AggregateTryOn[P]>
+  }
+
+
+
+
+  export type TryOnGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TryOnWhereInput
+    orderBy?: TryOnOrderByWithAggregationInput | TryOnOrderByWithAggregationInput[]
+    by: TryOnScalarFieldEnum[] | TryOnScalarFieldEnum
+    having?: TryOnScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TryOnCountAggregateInputType | true
+    _avg?: TryOnAvgAggregateInputType
+    _sum?: TryOnSumAggregateInputType
+    _min?: TryOnMinAggregateInputType
+    _max?: TryOnMaxAggregateInputType
+  }
+
+  export type TryOnGroupByOutputType = {
+    id: string
+    userId: string
+    productId: number
+    resultUrl: string
+    status: string
+    createdAt: Date
+    _count: TryOnCountAggregateOutputType | null
+    _avg: TryOnAvgAggregateOutputType | null
+    _sum: TryOnSumAggregateOutputType | null
+    _min: TryOnMinAggregateOutputType | null
+    _max: TryOnMaxAggregateOutputType | null
+  }
+
+  type GetTryOnGroupByPayload<T extends TryOnGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TryOnGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TryOnGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TryOnGroupByOutputType[P]>
+            : GetScalarType<T[P], TryOnGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TryOnSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    productId?: boolean
+    resultUrl?: boolean
+    status?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tryOn"]>
+
+  export type TryOnSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    productId?: boolean
+    resultUrl?: boolean
+    status?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tryOn"]>
+
+  export type TryOnSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    productId?: boolean
+    resultUrl?: boolean
+    status?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tryOn"]>
+
+  export type TryOnSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    productId?: boolean
+    resultUrl?: boolean
+    status?: boolean
+    createdAt?: boolean
+  }
+
+  export type TryOnOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "productId" | "resultUrl" | "status" | "createdAt", ExtArgs["result"]["tryOn"]>
+  export type TryOnInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TryOnIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TryOnIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $TryOnPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TryOn"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      productId: number
+      resultUrl: string
+      status: string
+      createdAt: Date
+    }, ExtArgs["result"]["tryOn"]>
+    composites: {}
+  }
+
+  type TryOnGetPayload<S extends boolean | null | undefined | TryOnDefaultArgs> = $Result.GetResult<Prisma.$TryOnPayload, S>
+
+  type TryOnCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TryOnFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TryOnCountAggregateInputType | true
+    }
+
+  export interface TryOnDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TryOn'], meta: { name: 'TryOn' } }
+    /**
+     * Find zero or one TryOn that matches the filter.
+     * @param {TryOnFindUniqueArgs} args - Arguments to find a TryOn
+     * @example
+     * // Get one TryOn
+     * const tryOn = await prisma.tryOn.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TryOnFindUniqueArgs>(args: SelectSubset<T, TryOnFindUniqueArgs<ExtArgs>>): Prisma__TryOnClient<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TryOn that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TryOnFindUniqueOrThrowArgs} args - Arguments to find a TryOn
+     * @example
+     * // Get one TryOn
+     * const tryOn = await prisma.tryOn.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TryOnFindUniqueOrThrowArgs>(args: SelectSubset<T, TryOnFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TryOnClient<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TryOn that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TryOnFindFirstArgs} args - Arguments to find a TryOn
+     * @example
+     * // Get one TryOn
+     * const tryOn = await prisma.tryOn.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TryOnFindFirstArgs>(args?: SelectSubset<T, TryOnFindFirstArgs<ExtArgs>>): Prisma__TryOnClient<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TryOn that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TryOnFindFirstOrThrowArgs} args - Arguments to find a TryOn
+     * @example
+     * // Get one TryOn
+     * const tryOn = await prisma.tryOn.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TryOnFindFirstOrThrowArgs>(args?: SelectSubset<T, TryOnFindFirstOrThrowArgs<ExtArgs>>): Prisma__TryOnClient<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TryOns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TryOnFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TryOns
+     * const tryOns = await prisma.tryOn.findMany()
+     * 
+     * // Get first 10 TryOns
+     * const tryOns = await prisma.tryOn.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tryOnWithIdOnly = await prisma.tryOn.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TryOnFindManyArgs>(args?: SelectSubset<T, TryOnFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TryOn.
+     * @param {TryOnCreateArgs} args - Arguments to create a TryOn.
+     * @example
+     * // Create one TryOn
+     * const TryOn = await prisma.tryOn.create({
+     *   data: {
+     *     // ... data to create a TryOn
+     *   }
+     * })
+     * 
+     */
+    create<T extends TryOnCreateArgs>(args: SelectSubset<T, TryOnCreateArgs<ExtArgs>>): Prisma__TryOnClient<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TryOns.
+     * @param {TryOnCreateManyArgs} args - Arguments to create many TryOns.
+     * @example
+     * // Create many TryOns
+     * const tryOn = await prisma.tryOn.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TryOnCreateManyArgs>(args?: SelectSubset<T, TryOnCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TryOns and returns the data saved in the database.
+     * @param {TryOnCreateManyAndReturnArgs} args - Arguments to create many TryOns.
+     * @example
+     * // Create many TryOns
+     * const tryOn = await prisma.tryOn.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TryOns and only return the `id`
+     * const tryOnWithIdOnly = await prisma.tryOn.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TryOnCreateManyAndReturnArgs>(args?: SelectSubset<T, TryOnCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TryOn.
+     * @param {TryOnDeleteArgs} args - Arguments to delete one TryOn.
+     * @example
+     * // Delete one TryOn
+     * const TryOn = await prisma.tryOn.delete({
+     *   where: {
+     *     // ... filter to delete one TryOn
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TryOnDeleteArgs>(args: SelectSubset<T, TryOnDeleteArgs<ExtArgs>>): Prisma__TryOnClient<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TryOn.
+     * @param {TryOnUpdateArgs} args - Arguments to update one TryOn.
+     * @example
+     * // Update one TryOn
+     * const tryOn = await prisma.tryOn.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TryOnUpdateArgs>(args: SelectSubset<T, TryOnUpdateArgs<ExtArgs>>): Prisma__TryOnClient<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TryOns.
+     * @param {TryOnDeleteManyArgs} args - Arguments to filter TryOns to delete.
+     * @example
+     * // Delete a few TryOns
+     * const { count } = await prisma.tryOn.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TryOnDeleteManyArgs>(args?: SelectSubset<T, TryOnDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TryOns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TryOnUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TryOns
+     * const tryOn = await prisma.tryOn.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TryOnUpdateManyArgs>(args: SelectSubset<T, TryOnUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TryOns and returns the data updated in the database.
+     * @param {TryOnUpdateManyAndReturnArgs} args - Arguments to update many TryOns.
+     * @example
+     * // Update many TryOns
+     * const tryOn = await prisma.tryOn.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TryOns and only return the `id`
+     * const tryOnWithIdOnly = await prisma.tryOn.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TryOnUpdateManyAndReturnArgs>(args: SelectSubset<T, TryOnUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TryOn.
+     * @param {TryOnUpsertArgs} args - Arguments to update or create a TryOn.
+     * @example
+     * // Update or create a TryOn
+     * const tryOn = await prisma.tryOn.upsert({
+     *   create: {
+     *     // ... data to create a TryOn
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TryOn we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TryOnUpsertArgs>(args: SelectSubset<T, TryOnUpsertArgs<ExtArgs>>): Prisma__TryOnClient<$Result.GetResult<Prisma.$TryOnPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TryOns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TryOnCountArgs} args - Arguments to filter TryOns to count.
+     * @example
+     * // Count the number of TryOns
+     * const count = await prisma.tryOn.count({
+     *   where: {
+     *     // ... the filter for the TryOns we want to count
+     *   }
+     * })
+    **/
+    count<T extends TryOnCountArgs>(
+      args?: Subset<T, TryOnCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TryOnCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TryOn.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TryOnAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TryOnAggregateArgs>(args: Subset<T, TryOnAggregateArgs>): Prisma.PrismaPromise<GetTryOnAggregateType<T>>
+
+    /**
+     * Group by TryOn.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TryOnGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TryOnGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TryOnGroupByArgs['orderBy'] }
+        : { orderBy?: TryOnGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TryOnGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTryOnGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TryOn model
+   */
+  readonly fields: TryOnFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TryOn.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TryOnClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TryOn model
+   */
+  interface TryOnFieldRefs {
+    readonly id: FieldRef<"TryOn", 'String'>
+    readonly userId: FieldRef<"TryOn", 'String'>
+    readonly productId: FieldRef<"TryOn", 'Int'>
+    readonly resultUrl: FieldRef<"TryOn", 'String'>
+    readonly status: FieldRef<"TryOn", 'String'>
+    readonly createdAt: FieldRef<"TryOn", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TryOn findUnique
+   */
+  export type TryOnFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+    /**
+     * Filter, which TryOn to fetch.
+     */
+    where: TryOnWhereUniqueInput
+  }
+
+  /**
+   * TryOn findUniqueOrThrow
+   */
+  export type TryOnFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+    /**
+     * Filter, which TryOn to fetch.
+     */
+    where: TryOnWhereUniqueInput
+  }
+
+  /**
+   * TryOn findFirst
+   */
+  export type TryOnFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+    /**
+     * Filter, which TryOn to fetch.
+     */
+    where?: TryOnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TryOns to fetch.
+     */
+    orderBy?: TryOnOrderByWithRelationInput | TryOnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TryOns.
+     */
+    cursor?: TryOnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TryOns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TryOns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TryOns.
+     */
+    distinct?: TryOnScalarFieldEnum | TryOnScalarFieldEnum[]
+  }
+
+  /**
+   * TryOn findFirstOrThrow
+   */
+  export type TryOnFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+    /**
+     * Filter, which TryOn to fetch.
+     */
+    where?: TryOnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TryOns to fetch.
+     */
+    orderBy?: TryOnOrderByWithRelationInput | TryOnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TryOns.
+     */
+    cursor?: TryOnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TryOns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TryOns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TryOns.
+     */
+    distinct?: TryOnScalarFieldEnum | TryOnScalarFieldEnum[]
+  }
+
+  /**
+   * TryOn findMany
+   */
+  export type TryOnFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+    /**
+     * Filter, which TryOns to fetch.
+     */
+    where?: TryOnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TryOns to fetch.
+     */
+    orderBy?: TryOnOrderByWithRelationInput | TryOnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TryOns.
+     */
+    cursor?: TryOnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TryOns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TryOns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TryOns.
+     */
+    distinct?: TryOnScalarFieldEnum | TryOnScalarFieldEnum[]
+  }
+
+  /**
+   * TryOn create
+   */
+  export type TryOnCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TryOn.
+     */
+    data: XOR<TryOnCreateInput, TryOnUncheckedCreateInput>
+  }
+
+  /**
+   * TryOn createMany
+   */
+  export type TryOnCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TryOns.
+     */
+    data: TryOnCreateManyInput | TryOnCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TryOn createManyAndReturn
+   */
+  export type TryOnCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * The data used to create many TryOns.
+     */
+    data: TryOnCreateManyInput | TryOnCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TryOn update
+   */
+  export type TryOnUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TryOn.
+     */
+    data: XOR<TryOnUpdateInput, TryOnUncheckedUpdateInput>
+    /**
+     * Choose, which TryOn to update.
+     */
+    where: TryOnWhereUniqueInput
+  }
+
+  /**
+   * TryOn updateMany
+   */
+  export type TryOnUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TryOns.
+     */
+    data: XOR<TryOnUpdateManyMutationInput, TryOnUncheckedUpdateManyInput>
+    /**
+     * Filter which TryOns to update
+     */
+    where?: TryOnWhereInput
+    /**
+     * Limit how many TryOns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TryOn updateManyAndReturn
+   */
+  export type TryOnUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * The data used to update TryOns.
+     */
+    data: XOR<TryOnUpdateManyMutationInput, TryOnUncheckedUpdateManyInput>
+    /**
+     * Filter which TryOns to update
+     */
+    where?: TryOnWhereInput
+    /**
+     * Limit how many TryOns to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TryOn upsert
+   */
+  export type TryOnUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TryOn to update in case it exists.
+     */
+    where: TryOnWhereUniqueInput
+    /**
+     * In case the TryOn found by the `where` argument doesn't exist, create a new TryOn with this data.
+     */
+    create: XOR<TryOnCreateInput, TryOnUncheckedCreateInput>
+    /**
+     * In case the TryOn was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TryOnUpdateInput, TryOnUncheckedUpdateInput>
+  }
+
+  /**
+   * TryOn delete
+   */
+  export type TryOnDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+    /**
+     * Filter which TryOn to delete.
+     */
+    where: TryOnWhereUniqueInput
+  }
+
+  /**
+   * TryOn deleteMany
+   */
+  export type TryOnDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TryOns to delete
+     */
+    where?: TryOnWhereInput
+    /**
+     * Limit how many TryOns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TryOn without action
+   */
+  export type TryOnDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TryOn
+     */
+    select?: TryOnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TryOn
+     */
+    omit?: TryOnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TryOnInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -37548,6 +38786,18 @@ export namespace Prisma {
   export type ShipmentScalarFieldEnum = (typeof ShipmentScalarFieldEnum)[keyof typeof ShipmentScalarFieldEnum]
 
 
+  export const TryOnScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    productId: 'productId',
+    resultUrl: 'resultUrl',
+    status: 'status',
+    createdAt: 'createdAt'
+  };
+
+  export type TryOnScalarFieldEnum = (typeof TryOnScalarFieldEnum)[keyof typeof TryOnScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -37748,6 +38998,7 @@ export namespace Prisma {
     referrer?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     referrals?: UserListRelationFilter
     adresses?: AdressesListRelationFilter
+    tryOns?: TryOnListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -37775,6 +39026,7 @@ export namespace Prisma {
     referrer?: UserOrderByWithRelationInput
     referrals?: UserOrderByRelationAggregateInput
     adresses?: AdressesOrderByRelationAggregateInput
+    tryOns?: TryOnOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -37805,6 +39057,7 @@ export namespace Prisma {
     referrer?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     referrals?: UserListRelationFilter
     adresses?: AdressesListRelationFilter
+    tryOns?: TryOnListRelationFilter
   }, "id" | "phone" | "refreshToken" | "referralCode">
 
   export type UserOrderByWithAggregationInput = {
@@ -39833,6 +41086,68 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Shipment"> | Date | string
   }
 
+  export type TryOnWhereInput = {
+    AND?: TryOnWhereInput | TryOnWhereInput[]
+    OR?: TryOnWhereInput[]
+    NOT?: TryOnWhereInput | TryOnWhereInput[]
+    id?: StringFilter<"TryOn"> | string
+    userId?: StringFilter<"TryOn"> | string
+    productId?: IntFilter<"TryOn"> | number
+    resultUrl?: StringFilter<"TryOn"> | string
+    status?: StringFilter<"TryOn"> | string
+    createdAt?: DateTimeFilter<"TryOn"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type TryOnOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    productId?: SortOrder
+    resultUrl?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type TryOnWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TryOnWhereInput | TryOnWhereInput[]
+    OR?: TryOnWhereInput[]
+    NOT?: TryOnWhereInput | TryOnWhereInput[]
+    userId?: StringFilter<"TryOn"> | string
+    productId?: IntFilter<"TryOn"> | number
+    resultUrl?: StringFilter<"TryOn"> | string
+    status?: StringFilter<"TryOn"> | string
+    createdAt?: DateTimeFilter<"TryOn"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type TryOnOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    productId?: SortOrder
+    resultUrl?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    _count?: TryOnCountOrderByAggregateInput
+    _avg?: TryOnAvgOrderByAggregateInput
+    _max?: TryOnMaxOrderByAggregateInput
+    _min?: TryOnMinOrderByAggregateInput
+    _sum?: TryOnSumOrderByAggregateInput
+  }
+
+  export type TryOnScalarWhereWithAggregatesInput = {
+    AND?: TryOnScalarWhereWithAggregatesInput | TryOnScalarWhereWithAggregatesInput[]
+    OR?: TryOnScalarWhereWithAggregatesInput[]
+    NOT?: TryOnScalarWhereWithAggregatesInput | TryOnScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TryOn"> | string
+    userId?: StringWithAggregatesFilter<"TryOn"> | string
+    productId?: IntWithAggregatesFilter<"TryOn"> | number
+    resultUrl?: StringWithAggregatesFilter<"TryOn"> | string
+    status?: StringWithAggregatesFilter<"TryOn"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"TryOn"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     phone: string
@@ -39857,6 +41172,7 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -39883,6 +41199,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -39909,6 +41226,7 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -39935,6 +41253,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -41987,6 +43306,68 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TryOnCreateInput = {
+    id?: string
+    productId: number
+    resultUrl?: string
+    status?: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutTryOnsInput
+  }
+
+  export type TryOnUncheckedCreateInput = {
+    id?: string
+    userId: string
+    productId: number
+    resultUrl?: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type TryOnUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: IntFieldUpdateOperationsInput | number
+    resultUrl?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTryOnsNestedInput
+  }
+
+  export type TryOnUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    productId?: IntFieldUpdateOperationsInput | number
+    resultUrl?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TryOnCreateManyInput = {
+    id?: string
+    userId: string
+    productId: number
+    resultUrl?: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type TryOnUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: IntFieldUpdateOperationsInput | number
+    resultUrl?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TryOnUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    productId?: IntFieldUpdateOperationsInput | number
+    resultUrl?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -42098,6 +43479,12 @@ export namespace Prisma {
     none?: AdressesWhereInput
   }
 
+  export type TryOnListRelationFilter = {
+    every?: TryOnWhereInput
+    some?: TryOnWhereInput
+    none?: TryOnWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -42136,6 +43523,10 @@ export namespace Prisma {
   }
 
   export type AdressesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TryOnOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -43842,6 +45233,41 @@ export namespace Prisma {
     _max?: NestedEnumShipmentStateFilter<$PrismaModel>
   }
 
+  export type TryOnCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    productId?: SortOrder
+    resultUrl?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TryOnAvgOrderByAggregateInput = {
+    productId?: SortOrder
+  }
+
+  export type TryOnMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    productId?: SortOrder
+    resultUrl?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TryOnMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    productId?: SortOrder
+    resultUrl?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TryOnSumOrderByAggregateInput = {
+    productId?: SortOrder
+  }
+
   export type HelpChatMessagesCreateNestedManyWithoutSenderInput = {
     create?: XOR<HelpChatMessagesCreateWithoutSenderInput, HelpChatMessagesUncheckedCreateWithoutSenderInput> | HelpChatMessagesCreateWithoutSenderInput[] | HelpChatMessagesUncheckedCreateWithoutSenderInput[]
     connectOrCreate?: HelpChatMessagesCreateOrConnectWithoutSenderInput | HelpChatMessagesCreateOrConnectWithoutSenderInput[]
@@ -43911,6 +45337,13 @@ export namespace Prisma {
     connect?: AdressesWhereUniqueInput | AdressesWhereUniqueInput[]
   }
 
+  export type TryOnCreateNestedManyWithoutUserInput = {
+    create?: XOR<TryOnCreateWithoutUserInput, TryOnUncheckedCreateWithoutUserInput> | TryOnCreateWithoutUserInput[] | TryOnUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TryOnCreateOrConnectWithoutUserInput | TryOnCreateOrConnectWithoutUserInput[]
+    createMany?: TryOnCreateManyUserInputEnvelope
+    connect?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
+  }
+
   export type HelpChatMessagesUncheckedCreateNestedManyWithoutSenderInput = {
     create?: XOR<HelpChatMessagesCreateWithoutSenderInput, HelpChatMessagesUncheckedCreateWithoutSenderInput> | HelpChatMessagesCreateWithoutSenderInput[] | HelpChatMessagesUncheckedCreateWithoutSenderInput[]
     connectOrCreate?: HelpChatMessagesCreateOrConnectWithoutSenderInput | HelpChatMessagesCreateOrConnectWithoutSenderInput[]
@@ -43972,6 +45405,13 @@ export namespace Prisma {
     connectOrCreate?: AdressesCreateOrConnectWithoutUserInput | AdressesCreateOrConnectWithoutUserInput[]
     createMany?: AdressesCreateManyUserInputEnvelope
     connect?: AdressesWhereUniqueInput | AdressesWhereUniqueInput[]
+  }
+
+  export type TryOnUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TryOnCreateWithoutUserInput, TryOnUncheckedCreateWithoutUserInput> | TryOnCreateWithoutUserInput[] | TryOnUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TryOnCreateOrConnectWithoutUserInput | TryOnCreateOrConnectWithoutUserInput[]
+    createMany?: TryOnCreateManyUserInputEnvelope
+    connect?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -44130,6 +45570,20 @@ export namespace Prisma {
     deleteMany?: AdressesScalarWhereInput | AdressesScalarWhereInput[]
   }
 
+  export type TryOnUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TryOnCreateWithoutUserInput, TryOnUncheckedCreateWithoutUserInput> | TryOnCreateWithoutUserInput[] | TryOnUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TryOnCreateOrConnectWithoutUserInput | TryOnCreateOrConnectWithoutUserInput[]
+    upsert?: TryOnUpsertWithWhereUniqueWithoutUserInput | TryOnUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TryOnCreateManyUserInputEnvelope
+    set?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
+    disconnect?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
+    delete?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
+    connect?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
+    update?: TryOnUpdateWithWhereUniqueWithoutUserInput | TryOnUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TryOnUpdateManyWithWhereWithoutUserInput | TryOnUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TryOnScalarWhereInput | TryOnScalarWhereInput[]
+  }
+
   export type HelpChatMessagesUncheckedUpdateManyWithoutSenderNestedInput = {
     create?: XOR<HelpChatMessagesCreateWithoutSenderInput, HelpChatMessagesUncheckedCreateWithoutSenderInput> | HelpChatMessagesCreateWithoutSenderInput[] | HelpChatMessagesUncheckedCreateWithoutSenderInput[]
     connectOrCreate?: HelpChatMessagesCreateOrConnectWithoutSenderInput | HelpChatMessagesCreateOrConnectWithoutSenderInput[]
@@ -44254,6 +45708,20 @@ export namespace Prisma {
     update?: AdressesUpdateWithWhereUniqueWithoutUserInput | AdressesUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AdressesUpdateManyWithWhereWithoutUserInput | AdressesUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AdressesScalarWhereInput | AdressesScalarWhereInput[]
+  }
+
+  export type TryOnUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TryOnCreateWithoutUserInput, TryOnUncheckedCreateWithoutUserInput> | TryOnCreateWithoutUserInput[] | TryOnUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TryOnCreateOrConnectWithoutUserInput | TryOnCreateOrConnectWithoutUserInput[]
+    upsert?: TryOnUpsertWithWhereUniqueWithoutUserInput | TryOnUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TryOnCreateManyUserInputEnvelope
+    set?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
+    disconnect?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
+    delete?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
+    connect?: TryOnWhereUniqueInput | TryOnWhereUniqueInput[]
+    update?: TryOnUpdateWithWhereUniqueWithoutUserInput | TryOnUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TryOnUpdateManyWithWhereWithoutUserInput | TryOnUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TryOnScalarWhereInput | TryOnScalarWhereInput[]
   }
 
   export type AccessCreateNestedManyWithoutAdminsInput = {
@@ -46053,6 +47521,20 @@ export namespace Prisma {
     deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
   }
 
+  export type UserCreateNestedOneWithoutTryOnsInput = {
+    create?: XOR<UserCreateWithoutTryOnsInput, UserUncheckedCreateWithoutTryOnsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTryOnsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTryOnsNestedInput = {
+    create?: XOR<UserCreateWithoutTryOnsInput, UserUncheckedCreateWithoutTryOnsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTryOnsInput
+    upsert?: UserUpsertWithoutTryOnsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTryOnsInput, UserUpdateWithoutTryOnsInput>, UserUncheckedUpdateWithoutTryOnsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -46601,6 +48083,7 @@ export namespace Prisma {
     transactions?: TransactionsCreateNestedManyWithoutUserInput
     referrer?: UserCreateNestedOneWithoutReferralsInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReferralsInput = {
@@ -46626,6 +48109,7 @@ export namespace Prisma {
     askForChats?: AskForChatUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReferralsInput = {
@@ -46656,6 +48140,7 @@ export namespace Prisma {
     transactions?: TransactionsCreateNestedManyWithoutUserInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReferrerInput = {
@@ -46681,6 +48166,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReferrerInput = {
@@ -46719,6 +48205,32 @@ export namespace Prisma {
 
   export type AdressesCreateManyUserInputEnvelope = {
     data: AdressesCreateManyUserInput | AdressesCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TryOnCreateWithoutUserInput = {
+    id?: string
+    productId: number
+    resultUrl?: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type TryOnUncheckedCreateWithoutUserInput = {
+    id?: string
+    productId: number
+    resultUrl?: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type TryOnCreateOrConnectWithoutUserInput = {
+    where: TryOnWhereUniqueInput
+    create: XOR<TryOnCreateWithoutUserInput, TryOnUncheckedCreateWithoutUserInput>
+  }
+
+  export type TryOnCreateManyUserInputEnvelope = {
+    data: TryOnCreateManyUserInput | TryOnCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -46963,6 +48475,7 @@ export namespace Prisma {
     transactions?: TransactionsUpdateManyWithoutUserNestedInput
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReferralsInput = {
@@ -46988,6 +48501,7 @@ export namespace Prisma {
     askForChats?: AskForChatUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutReferrerInput = {
@@ -47053,6 +48567,34 @@ export namespace Prisma {
     branch_code?: StringFilter<"Adresses"> | string
     createdAt?: DateTimeFilter<"Adresses"> | Date | string
     updatedAt?: DateTimeFilter<"Adresses"> | Date | string
+  }
+
+  export type TryOnUpsertWithWhereUniqueWithoutUserInput = {
+    where: TryOnWhereUniqueInput
+    update: XOR<TryOnUpdateWithoutUserInput, TryOnUncheckedUpdateWithoutUserInput>
+    create: XOR<TryOnCreateWithoutUserInput, TryOnUncheckedCreateWithoutUserInput>
+  }
+
+  export type TryOnUpdateWithWhereUniqueWithoutUserInput = {
+    where: TryOnWhereUniqueInput
+    data: XOR<TryOnUpdateWithoutUserInput, TryOnUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TryOnUpdateManyWithWhereWithoutUserInput = {
+    where: TryOnScalarWhereInput
+    data: XOR<TryOnUpdateManyMutationInput, TryOnUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TryOnScalarWhereInput = {
+    AND?: TryOnScalarWhereInput | TryOnScalarWhereInput[]
+    OR?: TryOnScalarWhereInput[]
+    NOT?: TryOnScalarWhereInput | TryOnScalarWhereInput[]
+    id?: StringFilter<"TryOn"> | string
+    userId?: StringFilter<"TryOn"> | string
+    productId?: IntFilter<"TryOn"> | number
+    resultUrl?: StringFilter<"TryOn"> | string
+    status?: StringFilter<"TryOn"> | string
+    createdAt?: DateTimeFilter<"TryOn"> | Date | string
   }
 
   export type AccessCreateWithoutAdminsInput = {
@@ -48598,6 +50140,7 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -48623,6 +50166,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -48710,6 +50254,7 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -48735,6 +50280,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductsUpsertWithoutReviewsInput = {
@@ -48863,6 +50409,7 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -48888,6 +50435,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -49091,6 +50639,7 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -49116,6 +50665,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrderItemUpsertWithWhereUniqueWithoutOrderInput = {
@@ -49634,6 +51184,7 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutHelpChatsInput = {
@@ -49659,6 +51210,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutHelpChatsInput = {
@@ -49727,6 +51279,7 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutHelpChatsInput = {
@@ -49752,6 +51305,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type HelpChatMessagesUpsertWithWhereUniqueWithoutChatInput = {
@@ -49813,6 +51367,7 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutHelpChatMessagesInput = {
@@ -49838,6 +51393,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutHelpChatMessagesInput = {
@@ -49937,6 +51493,7 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutHelpChatMessagesInput = {
@@ -49962,6 +51519,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AdminsUpsertWithoutHelpChatMessagesInput = {
@@ -50054,6 +51612,7 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAskForChatsInput = {
@@ -50079,6 +51638,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAskForChatsInput = {
@@ -50136,6 +51696,7 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAskForChatsInput = {
@@ -50161,6 +51722,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AskForChatCreateWithoutMessagesInput = {
@@ -50206,6 +51768,7 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAskForChatMessagesInput = {
@@ -50231,6 +51794,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAskForChatMessagesInput = {
@@ -50330,6 +51894,7 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAskForChatMessagesInput = {
@@ -50355,6 +51920,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AdminsUpsertWithoutAskForChatMessagesInput = {
@@ -50418,6 +51984,7 @@ export namespace Prisma {
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
     adresses?: AdressesCreateNestedManyWithoutUserInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -50443,6 +52010,7 @@ export namespace Prisma {
     askForChats?: AskForChatUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
     adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -50514,6 +52082,7 @@ export namespace Prisma {
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -50539,6 +52108,7 @@ export namespace Prisma {
     askForChats?: AskForChatUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrdersUpsertWithoutTransactionsInput = {
@@ -50885,6 +52455,7 @@ export namespace Prisma {
     transactions?: TransactionsCreateNestedManyWithoutUserInput
     referrer?: UserCreateNestedOneWithoutReferralsInput
     referrals?: UserCreateNestedManyWithoutReferrerInput
+    tryOns?: TryOnCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAdressesInput = {
@@ -50910,6 +52481,7 @@ export namespace Prisma {
     askForChats?: AskForChatUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
     referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
+    tryOns?: TryOnUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAdressesInput = {
@@ -50986,6 +52558,7 @@ export namespace Prisma {
     transactions?: TransactionsUpdateManyWithoutUserNestedInput
     referrer?: UserUpdateOneWithoutReferralsNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAdressesInput = {
@@ -51011,6 +52584,7 @@ export namespace Prisma {
     askForChats?: AskForChatUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrdersUpsertWithWhereUniqueWithoutAddressInput = {
@@ -51246,6 +52820,126 @@ export namespace Prisma {
     data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyWithoutShipmentInput>
   }
 
+  export type UserCreateWithoutTryOnsInput = {
+    id?: string
+    phone: string
+    refreshToken?: string | null
+    name: string
+    lastName: string
+    gender: string
+    profile_picture?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    referralCode?: string
+    availableBonus?: number
+    totalEarnedBonus?: number
+    totalUsedBonus?: number
+    helpChatMessages?: HelpChatMessagesCreateNestedManyWithoutSenderInput
+    askForChatMessages?: AskForChatMessagesCreateNestedManyWithoutSenderInput
+    reviews?: ReviewsCreateNestedManyWithoutUserInput
+    orders?: OrdersCreateNestedManyWithoutUserInput
+    helpChats?: HelpChatCreateNestedManyWithoutUserInput
+    askForChats?: AskForChatCreateNestedManyWithoutUserInput
+    transactions?: TransactionsCreateNestedManyWithoutUserInput
+    referrer?: UserCreateNestedOneWithoutReferralsInput
+    referrals?: UserCreateNestedManyWithoutReferrerInput
+    adresses?: AdressesCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTryOnsInput = {
+    id?: string
+    phone: string
+    refreshToken?: string | null
+    name: string
+    lastName: string
+    gender: string
+    profile_picture?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    referralCode?: string
+    referredBy?: string | null
+    availableBonus?: number
+    totalEarnedBonus?: number
+    totalUsedBonus?: number
+    helpChatMessages?: HelpChatMessagesUncheckedCreateNestedManyWithoutSenderInput
+    askForChatMessages?: AskForChatMessagesUncheckedCreateNestedManyWithoutSenderInput
+    reviews?: ReviewsUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrdersUncheckedCreateNestedManyWithoutUserInput
+    helpChats?: HelpChatUncheckedCreateNestedManyWithoutUserInput
+    askForChats?: AskForChatUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionsUncheckedCreateNestedManyWithoutUserInput
+    referrals?: UserUncheckedCreateNestedManyWithoutReferrerInput
+    adresses?: AdressesUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTryOnsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTryOnsInput, UserUncheckedCreateWithoutTryOnsInput>
+  }
+
+  export type UserUpsertWithoutTryOnsInput = {
+    update: XOR<UserUpdateWithoutTryOnsInput, UserUncheckedUpdateWithoutTryOnsInput>
+    create: XOR<UserCreateWithoutTryOnsInput, UserUncheckedCreateWithoutTryOnsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTryOnsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTryOnsInput, UserUncheckedUpdateWithoutTryOnsInput>
+  }
+
+  export type UserUpdateWithoutTryOnsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    profile_picture?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referralCode?: StringFieldUpdateOperationsInput | string
+    availableBonus?: IntFieldUpdateOperationsInput | number
+    totalEarnedBonus?: IntFieldUpdateOperationsInput | number
+    totalUsedBonus?: IntFieldUpdateOperationsInput | number
+    helpChatMessages?: HelpChatMessagesUpdateManyWithoutSenderNestedInput
+    askForChatMessages?: AskForChatMessagesUpdateManyWithoutSenderNestedInput
+    reviews?: ReviewsUpdateManyWithoutUserNestedInput
+    orders?: OrdersUpdateManyWithoutUserNestedInput
+    helpChats?: HelpChatUpdateManyWithoutUserNestedInput
+    askForChats?: AskForChatUpdateManyWithoutUserNestedInput
+    transactions?: TransactionsUpdateManyWithoutUserNestedInput
+    referrer?: UserUpdateOneWithoutReferralsNestedInput
+    referrals?: UserUpdateManyWithoutReferrerNestedInput
+    adresses?: AdressesUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTryOnsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    profile_picture?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referralCode?: StringFieldUpdateOperationsInput | string
+    referredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    availableBonus?: IntFieldUpdateOperationsInput | number
+    totalEarnedBonus?: IntFieldUpdateOperationsInput | number
+    totalUsedBonus?: IntFieldUpdateOperationsInput | number
+    helpChatMessages?: HelpChatMessagesUncheckedUpdateManyWithoutSenderNestedInput
+    askForChatMessages?: AskForChatMessagesUncheckedUpdateManyWithoutSenderNestedInput
+    reviews?: ReviewsUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrdersUncheckedUpdateManyWithoutUserNestedInput
+    helpChats?: HelpChatUncheckedUpdateManyWithoutUserNestedInput
+    askForChats?: AskForChatUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
+    referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
+    adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type HelpChatMessagesCreateManySenderInput = {
     id?: number
     chat_id: number
@@ -51336,6 +53030,14 @@ export namespace Prisma {
     branch_code: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type TryOnCreateManyUserInput = {
+    id?: string
+    productId: number
+    resultUrl?: string
+    status?: string
+    createdAt?: Date | string
   }
 
   export type HelpChatMessagesUpdateWithoutSenderInput = {
@@ -51565,6 +53267,7 @@ export namespace Prisma {
     transactions?: TransactionsUpdateManyWithoutUserNestedInput
     referrals?: UserUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReferrerInput = {
@@ -51590,6 +53293,7 @@ export namespace Prisma {
     transactions?: TransactionsUncheckedUpdateManyWithoutUserNestedInput
     referrals?: UserUncheckedUpdateManyWithoutReferrerNestedInput
     adresses?: AdressesUncheckedUpdateManyWithoutUserNestedInput
+    tryOns?: TryOnUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutReferrerInput = {
@@ -51634,6 +53338,30 @@ export namespace Prisma {
     branch_code?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TryOnUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: IntFieldUpdateOperationsInput | number
+    resultUrl?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TryOnUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: IntFieldUpdateOperationsInput | number
+    resultUrl?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TryOnUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: IntFieldUpdateOperationsInput | number
+    resultUrl?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type HelpChatMessagesCreateManyAdminInput = {
