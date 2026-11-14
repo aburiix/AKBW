@@ -3,9 +3,21 @@ import { randomNumbers } from "../utils/random.utils.js";
 import { prisma } from "../db/client.js";
 import smsService from "../services/sms.service.js";
 
+// Sinov raqamlari (SMS yuborilmaydi, doimiy kod bilan kiriladi):
+//   TEST_LOGIN_PHONES=+998000000001,+998000000002   TEST_LOGIN_CODE=12345 (5 xonali)
+// Ikkalasi ham bo'sh bo'lsa — o'chiq.
+const digits = (v: unknown) => String(v ?? "").replace(/\D/g, "");
+const testCode = (phone: unknown): string | null => {
+  const code = process.env.TEST_LOGIN_CODE || "";
+  if (!/^\d{5}$/.test(code)) return null;
+  const list = (process.env.TEST_LOGIN_PHONES || "").split(",").map(digits).filter(Boolean);
+  return list.includes(digits(phone)) ? code : null;
+};
+
 export const send = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const randomDigitCode = randomNumbers();
+    const fixed = testCode(req.body.phone);
+    const randomDigitCode = fixed ?? randomNumbers();
 
     const existingVerify = await prisma.verify.findUnique({
       where: {
@@ -58,6 +70,16 @@ export const send = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     const text: string = `AKBW platformasi uchun tasdiqlash kodingiz: ${randomDigitCode}`;
+
+    if (fixed) {
+      console.log(`[sms] sinov raqami, SMS yuborilmadi: ${digits(req.body.phone).slice(-4)}`);
+      return res.status(201).json({
+        message: "Code created and sent successfully",
+        ok: true,
+        code: verifyCode.id,
+        isRegistered: !!user,
+      });
+    }
 
     try {
       await smsService.sendSms({
