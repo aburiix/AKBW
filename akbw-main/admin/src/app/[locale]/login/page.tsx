@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAdminAuthStore } from '@/shared/store/auth.store';
-import { ShieldCheck, Phone, Lock } from 'lucide-react';
+import { Phone, Lock } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { toast } from 'sonner';
@@ -45,21 +45,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa] flex items-center justify-center p-6">
+    <div className="min-h-screen bg-bg flex items-center justify-center p-6">
       <div className="max-w-md w-full">
         <div className="text-center mb-10">
-          <div className="w-20 h-20 rounded-[28px] bg-black flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-black/20">
-            <ShieldCheck size={40} className="text-white" />
-          </div>
-          <h1 className="text-3xl font-black uppercase tracking-tight mb-2">
-            AKBW ADMIN
-          </h1>
-          <p className="text-xs text-gray-400 font-bold uppercase tracking-widest leading-relaxed">
-            Dashboard'ga kirish telefon raqam va parol orqali
+          <div className="font-logo text-6xl leading-none tracking-wide mb-4">AKBW</div>
+          <span className="lbl inline-block border border-line2 rounded-md px-2 py-1.5 mb-5">Admin panel</span>
+          <p className="text-sm text-mute">
+            Boshqaruv paneliga telefon raqam va parol orqali kiring
           </p>
         </div>
 
-        <div className="bg-white p-10 rounded-[40px] border border-gray-100 shadow-2xl shadow-black/5">
+        <div className="bg-s1 p-8 sm:p-10 rounded-[18px] border border-line">
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3 block px-1">
@@ -75,7 +71,7 @@ export default function LoginPage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+998 XX XXX XX XX"
-                  className="pl-14 h-16 bg-gray-50 border-none rounded-3xl font-bold text-lg tracking-widest focus:ring-2 focus:ring-black/5 transition-all"
+                  className="pl-14 h-16 bg-gray-50 border-none rounded-xl font-bold text-lg tracking-widest focus:ring-2 focus:ring-black/5 transition-all"
                   required
                 />
               </div>
@@ -95,7 +91,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="pl-14 h-16 bg-gray-50 border-none rounded-3xl font-bold text-lg tracking-widest focus:ring-2 focus:ring-black/5 transition-all"
+                  className="pl-14 h-16 bg-gray-50 border-none rounded-xl font-bold text-lg tracking-widest focus:ring-2 focus:ring-black/5 transition-all"
                   required
                 />
               </div>
@@ -104,7 +100,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full h-16 bg-black text-white rounded-3xl font-black uppercase tracking-widest text-xs shadow-xl shadow-black/10 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-16 bg-black text-white rounded-xl font-black uppercase tracking-widest text-xs shadow-xl shadow-black/10 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? "Tekshirilmoqda..." : "Kirish"}
             </Button>

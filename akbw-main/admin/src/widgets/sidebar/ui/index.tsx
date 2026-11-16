@@ -1,153 +1,160 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, usePathname } from '@/shared/config/i18n/navigation';
 import { cn } from '@/shared/lib/utils';
-import {
-  LayoutDashboard,
-  Package,
-  ShoppingBag,
-  Users,
-  BarChart3,
-  CreditCard,
-  ShieldCheck,
-  LogOut,
-  ChevronLeft,
-  ChevronRight,
-  Layers,
-  Headphones,
-  HelpCircle,
-  Bell,
-  CloudSun,
-  Building2,
-  Ticket,
-  Truck,
-  Sparkles,
-  UserCog,
-} from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import { useAdminAuthStore } from '@/shared/store/auth.store';
+import { useAdminMe } from '@/widgets/header/lib/hooks';
+import { NAV_GROUPS } from '@/widgets/layout/model/nav';
+import { useBadges } from '@/widgets/layout/model/use-badges';
 
-const sidebarItems = [
-  { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-  { name: 'Mahsulotlar', icon: Package, href: '/products' },
-  { name: 'Kategoriyalar', icon: Layers, href: '/categories' },
-  { name: 'Zavodlar', icon: Building2, href: '/factory' },
-  { name: 'Ishchilar', icon: UserCog, href: '/workers' },
-  { name: 'Buyurtmalar', icon: ShoppingBag, href: '/orders' },
-  { name: 'Yuklar', icon: Truck, href: '/shipments' },
-  { name: 'Bildirishnomalar', icon: Bell, href: '/notifications' },
-  { name: 'Kuponlar', icon: Ticket, href: '/coupons' },
-  { name: 'Fasllar', icon: CloudSun, href: '/styles' },
-  { name: 'Mijozlar', icon: Users, href: '/users' },
-  { name: 'Statistika', icon: BarChart3, href: '/statistics' },
-  { name: 'To‘lovlar', icon: CreditCard, href: '/payments' },
-  // { name: 'Ombor', icon: Box, href: '/inventory' },
-  { name: 'Yordam', icon: Headphones, href: '/support' },
-  { name: 'AI suhbatlar', icon: Sparkles, href: '/ai-chats' },
-  { name: "Mahsulot So'rovi", icon: HelpCircle, href: '/product-support' },
-  // { name: 'Kontent', icon: ImageIcon, href: '/content-managment' },
-  { name: 'Rollar', icon: ShieldCheck, href: '/users-roles' },
-  // { name: 'Sozlamalar', icon: Settings, href: '/settings' },
-];
+type Props = {
+  collapsed: boolean;
+  mobileOpen: boolean;
+  onNavigate: () => void;
+};
 
-export default function Sidebar() {
-  const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = React.useState(false);
-
-  // Extract locale from pathname (e.g., /uz/dashboard -> /dashboard)
-  const getPathWithoutLocale = (path: string) => {
-    const parts = path.split('/');
-    if (parts.length > 2) {
-      return '/' + parts.slice(2).join('/');
-    }
-    return path;
-  };
-
-  const currentPath = getPathWithoutLocale(pathname);
+export default function Sidebar({ collapsed, mobileOpen, onNavigate }: Props) {
+  const pathname = usePathname(); // locale'siz: /dashboard
   const { logout } = useAdminAuthStore();
+  const { data: me } = useAdminMe();
+  const badges = useBadges();
+
+  const name: string = me?.admin?.name || 'Admin';
+  const initials = name
+    .split(' ')
+    .map((p: string) => p[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
 
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 h-screen bg-white border-r border-gray-100 transition-all duration-300 z-50 flex flex-col',
-        isCollapsed ? 'w-[80px]' : 'w-[280px]',
+        'fixed md:sticky left-0 top-0 z-[70] md:z-30 h-dvh flex flex-col bg-s1 border-r border-line overflow-hidden shrink-0',
+        'transition-[width,transform] duration-300',
+        'w-[280px]',
+        collapsed ? 'md:w-[76px]' : 'md:w-[264px]',
+        mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
       )}
     >
-      {/* Logo Section */}
-      <div className="p-6 mb-4 flex items-center justify-between">
-        {!isCollapsed && (
-          <span className="text-2xl font-black uppercase tracking-tighter">
-            AKBW<span className="text-gray-400 font-medium">.Admin</span>
-          </span>
+      {/* Logo */}
+      <Link
+        href="/dashboard"
+        onClick={onNavigate}
+        className={cn(
+          'flex items-center gap-2.5 px-[22px] pt-[22px] pb-[18px] whitespace-nowrap',
+          collapsed && 'md:justify-center md:px-0',
         )}
-        {isCollapsed && (
-          <span className="text-xl font-black uppercase tracking-tighter mx-auto">
-            AK
-          </span>
-        )}
-      </div>
+      >
+        <span className="font-logo text-[26px] leading-none tracking-wide">
+          {collapsed ? <span className="hidden md:inline">AK</span> : null}
+          <span className={cn(collapsed && 'md:hidden')}>AKBW</span>
+        </span>
+        <span
+          className={cn(
+            'lbl border border-line2 rounded-md px-1.5 py-1',
+            collapsed && 'md:hidden',
+          )}
+        >
+          Admin
+        </span>
+      </Link>
 
-      {/* Nav Items */}
-      <nav className="flex-1 px-4 space-y-1 overflow-y-auto no-scrollbar">
-        {sidebarItems.map((item) => {
-          const isActive =
-            currentPath === item.href ||
-            (currentPath === '' && item.href === '/dashboard');
-          const Icon = item.icon;
-
-          return (
-            <Link
-              key={item.href}
-              href={`/uz${item.href}`} // Fixed to use modern routing pattern or just locale-aware Link
+      {/* Navigatsiya */}
+      <nav className="flex-1 overflow-y-auto no-scrollbar px-3 pb-3">
+        {NAV_GROUPS.map((group) => (
+          <div
+            key={group.title}
+            className={cn(
+              'mt-[18px]',
+              collapsed && 'md:mt-2.5 md:pt-2.5 md:border-t md:border-line',
+            )}
+          >
+            <span
               className={cn(
-                'flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200 group',
-                isActive
-                  ? 'bg-black text-white shadow-lg shadow-black/10'
-                  : 'text-gray-500 hover:bg-gray-50 hover:text-black',
+                'lbl block px-3 pb-2 whitespace-nowrap',
+                collapsed && 'md:hidden',
               )}
             >
-              <Icon
-                size={22}
-                className={cn(
-                  'shrink-0 transition-transform duration-200 group-hover:scale-110',
-                  isActive
-                    ? 'text-white'
-                    : 'text-gray-400 group-hover:text-black',
-                )}
-              />
-              {!isCollapsed && (
-                <span className="font-bold text-sm uppercase tracking-wider">
-                  {item.name}
-                </span>
-              )}
-            </Link>
-          );
-        })}
+              {group.title}
+            </span>
+            {group.items.map((item) => {
+              const active =
+                pathname === item.href ||
+                pathname.startsWith(item.href + '/') ||
+                ((pathname === '/' || pathname === '') &&
+                  item.href === '/dashboard');
+              const Icon = item.icon;
+              const count = item.badge ? badges[item.badge] : 0;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={onNavigate}
+                  title={collapsed ? item.name : undefined}
+                  className={cn(
+                    'relative flex items-center gap-3 h-[38px] px-3 rounded-[10px] whitespace-nowrap text-[14px] transition-colors',
+                    active
+                      ? 'bg-ivory text-on-ivory'
+                      : 'text-mute hover:bg-s2 hover:text-ink',
+                    collapsed && 'md:justify-center md:px-0',
+                  )}
+                >
+                  <Icon size={18} strokeWidth={1.6} className="shrink-0" />
+                  <span className={cn(collapsed && 'md:hidden')}>
+                    {item.name}
+                  </span>
+                  {count > 0 && (
+                    <em
+                      className={cn(
+                        'not-italic ml-auto text-[11px] font-semibold leading-none px-[7px] py-1 rounded-full',
+                        active
+                          ? 'bg-on-ivory text-ivory'
+                          : 'bg-bronze text-[#f6f0e6]',
+                        collapsed &&
+                          'md:absolute md:top-1 md:right-2 md:px-1.5 md:py-0.5 md:text-[9px]',
+                      )}
+                    >
+                      {count > 99 ? '99+' : count}
+                    </em>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        ))}
       </nav>
 
-      {/* Bottom Section */}
-      <div className="p-4 border-t border-gray-50 space-y-2">
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="w-full flex items-center gap-4 px-4 py-3 text-gray-400 hover:text-black transition-colors rounded-xl hover:bg-gray-50 cursor-pointer"
-        >
-          {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-          {!isCollapsed && (
-            <span className="text-sm font-medium">Collapse</span>
+      {/* Pastki qism */}
+      <div className="border-t border-line p-3 grid gap-1">
+        <div
+          className={cn(
+            'flex items-center gap-2.5 p-2 rounded-xl whitespace-nowrap',
+            collapsed && 'md:justify-center',
           )}
-        </button>
-
+        >
+          <div className="w-[34px] h-[34px] rounded-full bg-bronze text-[#f6f0e6] grid place-items-center text-xs font-semibold shrink-0">
+            {initials}
+          </div>
+          <div className={cn('min-w-0', collapsed && 'md:hidden')}>
+            <b className="block text-[13px] font-semibold truncate">{name}</b>
+            <small className="text-mute2 text-[11.5px]">
+              {me?.admin?.phone || ''}
+            </small>
+          </div>
+        </div>
         <button
           onClick={logout}
-          className="w-full flex items-center gap-4 px-4 py-3 text-red-500 hover:bg-red-50 transition-all rounded-xl cursor-pointer"
-        >
-          <LogOut size={20} />
-          {!isCollapsed && (
-            <span className="text-sm font-bold uppercase tracking-wider">
-              Logout
-            </span>
+          title="Chiqish"
+          className={cn(
+            'flex items-center gap-3 h-[38px] px-3 rounded-[10px] text-sale hover:bg-s2 cursor-pointer whitespace-nowrap',
+            collapsed && 'md:justify-center md:px-0',
           )}
+        >
+          <LogOut size={18} strokeWidth={1.6} />
+          <span className={cn(collapsed && 'md:hidden')}>Chiqish</span>
         </button>
       </div>
     </aside>

@@ -32,3 +32,22 @@ const golosText = localFont({
 });
 
 export { golosText };
+
+// AKBW brend shriftlari (sayt bilan bir xil)
+const kenao = localFont({
+  src: '../../../public/fonts/Kenao.otf',
+  variable: '--font-kenao',
+  display: 'swap',
+});
+const didot = localFont({
+  src: '../../../public/fonts/DidotBold.otf',
+  variable: '--font-didot',
+  display: 'swap',
+});
+const futura = localFont({
+  src: '../../../public/fonts/futuralight.ttf',
+  variable: '--font-futura',
+  display: 'swap',
+});
+
+export { kenao, didot, futura };

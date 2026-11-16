@@ -1,11 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from '@/shared/config/i18n/navigation';
 import {
   MoreHorizontal,
   Eye,
   Copy,
+  Search,
+  Download,
+  X,
 } from 'lucide-react';
+import { Pill, stateOf } from '@/shared/ui/order-state';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,32 +24,21 @@ import { useOrders, useOrderStatus, useUpdateOrderStatus } from '../lib/hooks';
 import { IOrder } from '@/shared/config/api/order/order.model';
 import { toast } from 'sonner';
 
-const getStatusStyles = (state: string) => {
-  switch (state) {
-    case 'REVIEW':
-      return 'bg-yellow-50 text-yellow-600 border-yellow-100';
-    case 'PENDING':
-      return 'bg-blue-50 text-blue-600 border-blue-100';
-    case 'PAID':
-      return 'bg-green-50 text-green-600 border-green-100';
-    case 'SENT':
-      return 'bg-purple-50 text-purple-600 border-purple-100';
-    case 'CANCELLED':
-      return 'bg-red-50 text-red-600 border-red-100';
-    default:
-      return 'bg-gray-50 text-gray-600 border-gray-100';
-  }
-};
-
-
 export default function Orders() {
   const { data: ordersData, isLoading } = useOrders();
   const updateStatusMutation = useUpdateOrderStatus();
   const { data: statusData } = useOrderStatus();
 
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [filterStatus, setFilterStatus] = useState('Hammasi');
+  const [filterStatus, setFilterStatus] = useState(
+    searchParams.get('status') || 'Hammasi',
+  );
+  const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
+  const PER_PAGE = 20;
 
   const handleViewOrder = (order: any) => {
     setSelectedOrder(order);
@@ -59,41 +54,95 @@ export default function Orders() {
     }
   };
 
-  const filteredOrders =
-    ordersData?.data?.filter((order: any) => {
-      if (filterStatus === 'Hammasi') return true;
-      return order.state === filterStatus;
-    }) || [];
+  const allOrders: IOrder[] = useMemo(
+    () =>
+      [...((ordersData?.data || []) as IOrder[])].sort(
+        (a, b) => +new Date(b.createdAt) - +new Date(a.createdAt),
+      ),
+    [ordersData],
+  );
 
-  if (isLoading) return <div>Yuklanmoqda...</div>;
+  // URL: ?status=PENDING, ?order=123 (bildirishnoma / qidiruvdan)
+  useEffect(() => {
+    const st = searchParams.get('status');
+    const id = searchParams.get('order');
+    if (!st && !id) return;
+    if (id && !allOrders.length) return; // buyurtmalar yuklanishini kutamiz
+    if (st) setFilterStatus(st);
+    if (id) {
+      const found = allOrders.find((o) => String(o.id) === id);
+      if (found) handleViewOrder(found);
+    }
+    // parametr bir marta qo'llanadi — keyin URL tozalanadi
+    router.replace('/orders');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, allOrders]);
+
+  useEffect(() => setPage(1), [filterStatus, query]);
+
+  const statuses: string[] = useMemo(() => {
+    const fromApi = (statusData?.data || []).filter((s: string) => s !== 'Hammasi');
+    const list = fromApi.length ? fromApi : Array.from(new Set(allOrders.map((o) => o.state)));
+    return ['Hammasi', ...list];
+  }, [statusData, allOrders]);
+
+  const counts = useMemo(() => {
+    const c: Record<string, number> = { Hammasi: allOrders.length };
+    allOrders.forEach((o) => (c[o.state] = (c[o.state] || 0) + 1));
+    return c;
+  }, [allOrders]);
+
+  const nq = query.trim().toLowerCase().replace(/^#/, '');
+  const filteredOrders = allOrders.filter((order) => {
+    if (filterStatus !== 'Hammasi' && order.state !== filterStatus) return false;
+    if (!nq) return true;
+    const hay = `${order.id} ${order.user?.name || ''} ${order.user?.lastName || ''} ${order.user?.phone || ''} ${order.coupon?.code || ''}`.toLowerCase();
+    return hay.includes(nq);
+  });
+  const totalPages = Math.max(1, Math.ceil(filteredOrders.length / PER_PAGE));
+  const pageOrders = filteredOrders.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+
+  const exportCsv = () => {
+    const rows = [
+      ['ID', 'Sana', 'Mijoz', 'Telefon', 'Mahsulotlar soni', "Summa (so'm)", 'Kupon', 'Holat'],
+      ...filteredOrders.map((o) => [
+        o.id,
+        new Date(o.createdAt).toLocaleString('ru-RU'),
+        `${o.user?.name || ''} ${o.user?.lastName || ''}`.trim(),
+        o.user?.phone || '',
+        o.orderItems?.length || 0,
+        o.total_price,
+        o.coupon ? `${o.coupon.code} (-${o.coupon.discount}%)` : '',
+        stateOf(o.state).label,
+      ]),
+    ];
+    const csv = '\ufeff' + rows.map((r) => r.map((c) => `"${String(c ?? '').replace(/"/g, '""')}"`).join(';')).join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    a.download = `akbw-buyurtmalar-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  if (isLoading) return <div className="lbl animate-pulse p-10 text-center">Yuklanmoqda…</div>;
   return (
-    <div className="space-y-6 pb-10">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-black uppercase tracking-tight">
-          Buyurtmalar
-        </h1>
-        <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">
-          Savdo jarayonini kuzatish va boshqarish
-        </p>
-      </div>
-
-      {/* Quick Status Filters */}
-      <div className="flex gap-4 overflow-x-auto no-scrollbar py-2">
-        {statusData?.data?.map((status: string) => (
-          <button
-            key={status}
-            onClick={() => setFilterStatus(status)}
-            className={cn(
-              'px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shrink-0 cursor-pointer',
-              filterStatus === status
-                ? 'bg-black text-white shadow-lg'
-                : 'bg-white text-gray-400 border border-gray-100 hover:border-black hover:text-black',
-            )}
-          >
-            {status === 'Hammasi' ? 'Hammasi' : status}
-          </button>
-        ))}
+    <div className="pb-6">
+      {/* Sarlavha */}
+      <div className="flex items-end justify-between gap-4 flex-wrap mb-6">
+        <div>
+          <span className="lbl">Savdo</span>
+          <h1 className="mt-2">Buyurtmalar</h1>
+          <p className="text-mute mt-1.5">
+            Jami {allOrders.length} ta buyurtma · qatorni bossangiz tafsilot ochiladi
+          </p>
+        </div>
+        <button
+          onClick={exportCsv}
+          className="h-[38px] px-4 rounded-[10px] inline-flex items-center gap-2 border border-line2 hover:bg-s2 cursor-pointer font-medium"
+        >
+          <Download size={17} strokeWidth={1.6} />
+          Excel (CSV)
+        </button>
       </div>
 
       <OrderDetailModal
@@ -102,8 +151,40 @@ export default function Orders() {
         order={selectedOrder}
       />
 
-      {/* Orders Table */}
-      <div className="bg-white rounded-4xl border border-gray-100 overflow-hidden shadow-sm">
+      {/* Jadval */}
+      <div className="bg-s1 rounded-[18px] border border-line overflow-hidden">
+        <div className="flex items-center gap-2.5 p-3 md:px-4 border-b border-line flex-wrap">
+          <div className="flex gap-0.5 overflow-x-auto no-scrollbar max-w-full">
+            {statuses.map((status) => (
+              <button
+                key={status}
+                onClick={() => setFilterStatus(status)}
+                className={cn(
+                  'h-[34px] px-3 rounded-lg whitespace-nowrap text-[13.5px] cursor-pointer',
+                  filterStatus === status ? 'bg-s3 text-ink' : 'text-mute hover:text-ink',
+                )}
+              >
+                {status === 'Hammasi' ? 'Hammasi' : stateOf(status).label}
+                <em className="not-italic text-mute2 ml-1.5 text-xs">{counts[status] || 0}</em>
+              </button>
+            ))}
+          </div>
+          <div className="flex-1" />
+          <label className="flex items-center gap-2 h-[36px] px-3 rounded-[10px] bg-s2 border border-line w-full sm:w-[280px]">
+            <Search size={16} className="text-mute2 shrink-0" />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="ID, mijoz, telefon, kupon…"
+              className="flex-1 bg-transparent outline-none text-[14px] min-w-0"
+            />
+            {query && (
+              <button onClick={() => setQuery('')} className="text-mute2 hover:text-ink cursor-pointer">
+                <X size={15} />
+              </button>
+            )}
+          </label>
+        </div>
         <div className="overflow-x-auto no-scrollbar">
           <table className="w-full">
             <thead>
@@ -129,10 +210,14 @@ export default function Orders() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {filteredOrders.map((order: IOrder) => (
+              {pageOrders.map((order: IOrder) => (
                 <tr
                   key={order.id}
-                  className="hover:bg-gray-50/50 transition-colors group"
+                  onClick={(e) => {
+                    if ((e.target as HTMLElement).closest('button,[role=menu]')) return;
+                    handleViewOrder(order);
+                  }}
+                  className="hover:bg-s2 transition-colors group cursor-pointer"
                 >
                   <td className="px-8 py-6">
                     <div className="flex items-center gap-2">
@@ -177,15 +262,7 @@ export default function Orders() {
                     )}
                   </td>
                   <td className="px-8 py-6">
-                    <div
-                      className={cn(
-                        'inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border',
-                        getStatusStyles(order.state),
-                      )}
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                      {order.state}
-                    </div>
+                    <Pill state={order.state} />
                   </td>
                   <td className="px-8 py-6 text-right">
                     <div className="flex items-center justify-end gap-2">
@@ -209,7 +286,7 @@ export default function Orders() {
                             Statusni o‘zgartirish
                           </DropdownMenuLabel>
                           {
-                            statusData?.data.map((status: string, _) => (
+                            statuses.filter((st) => st !== 'Hammasi').map((status: string, _) => (
                               <DropdownMenuItem
                                 key={_}
                                 onClick={() =>
@@ -217,9 +294,7 @@ export default function Orders() {
                                 }
                                 className="rounded-xl gap-3 px-3 py-2 cursor-pointer"
                               >
-                                <span className="text-xs font-bold uppercase tracking-wider">
-                                  {status}
-                                </span>
+                                <Pill state={status} />
                               </DropdownMenuItem>
                             ))
                           }
@@ -231,6 +306,33 @@ export default function Orders() {
               ))}
             </tbody>
           </table>
+          {pageOrders.length === 0 && (
+            <p className="text-center text-mute2 py-14 text-sm">Buyurtma topilmadi</p>
+          )}
+        </div>
+        <div className="flex items-center justify-between gap-3 px-4 py-3.5 border-t border-line text-mute2 text-[13px] flex-wrap">
+          <span>
+            {filteredOrders.length === 0
+              ? '0'
+              : `${(page - 1) * PER_PAGE + 1}–${Math.min(page * PER_PAGE, filteredOrders.length)}`}{' '}
+            / {filteredOrders.length}
+          </span>
+          <div className="flex gap-2">
+            <button
+              disabled={page <= 1}
+              onClick={() => setPage((p) => p - 1)}
+              className="h-8 px-3 rounded-[10px] border border-line2 hover:bg-s2 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed"
+            >
+              ← Oldingi
+            </button>
+            <button
+              disabled={page >= totalPages}
+              onClick={() => setPage((p) => p + 1)}
+              className="h-8 px-3 rounded-[10px] border border-line2 hover:bg-s2 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed"
+            >
+              Keyingi →
+            </button>
+          </div>
         </div>
       </div>
     </div>

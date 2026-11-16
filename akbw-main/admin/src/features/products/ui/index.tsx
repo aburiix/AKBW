@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from '@/shared/config/i18n/navigation';
 import {
   Plus,
   Search,
@@ -36,10 +38,14 @@ type ISortOrder = 'asc' | 'desc';
 
 export default function Products() {
   const locale = useLocale();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>('all');
   const [sortOrder, setSortOrder] = useState<ISortOrder>('desc');
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>(
+    searchParams.get('q') || '',
+  );
   const [sortBy, setSortBy] = useState<string>('createdAt');
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
@@ -86,6 +92,35 @@ export default function Products() {
       setDeletingProduct(null);
     }
   };
+
+  // URL parametrlari: ?new=1 (yangi mahsulot), ?q= (qidiruv), ?view=ID (ko'rish)
+  const pendingView = useRef<string | null>(null);
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q !== null) {
+      setSearchQuery(q);
+      setPage(1);
+    }
+    if (searchParams.get('new') === '1') {
+      setEditingProduct(null);
+      setViewOnly(false);
+      setOpen(true);
+      router.replace('/products');
+    }
+    pendingView.current = searchParams.get('view');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  useEffect(() => {
+    const id = pendingView.current;
+    if (!id || !productsData?.data) return;
+    const found = productsData.data.find((p) => String(p.id) === id);
+    if (found) {
+      pendingView.current = null;
+      handleView(found);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productsData]);
 
   if (isLoadingProducts)
     return (
@@ -215,7 +250,13 @@ export default function Products() {
                   <div
                     className="flex items-center gap-2 cursor-pointer hover:text-black transition-colors"
                     onClick={() => {
-                      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+                      if (sortBy !== 'price') {
+                        setSortBy('price');
+                        setSortOrder('asc');
+                      } else {
+                        setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+                      }
+                      setPage(1);
                     }}
                   >
                     Narx{' '}
@@ -273,10 +314,7 @@ export default function Products() {
                     </div>
                   </td>
                   <td className="px-6 py-4 font-black text-sm">
-                    {new Intl.NumberFormat('uz-UZ', {
-                      style: 'currency',
-                      currency: 'UZS',
-                    }).format(product.price)}
+                    {Math.round(product.price || 0).toLocaleString('ru-RU')} so'm
                   </td>
                   <td className="px-6 py-4">
                     <div

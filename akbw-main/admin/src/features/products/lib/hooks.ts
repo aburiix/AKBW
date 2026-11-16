@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tanstack/react-query';
 import {
   getProductsRequest,
   createProductRequest,
@@ -12,10 +12,12 @@ import type {
 import { toast } from 'sonner';
 import { extractError } from '@/shared/lib/extractError';
 
-export const useProducts = (params: IProductFilters) => {
+export const useProducts = (params: IProductFilters, enabled = true) => {
   return useQuery({
     queryKey: ['products', params],
     queryFn: () => getProductsRequest(params),
+    enabled,
+    placeholderData: keepPreviousData,
   });
 };
 
