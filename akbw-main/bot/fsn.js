@@ -1,6 +1,13 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.akbw.uz/api/bot";
+const BASE_URL = (process.env.API_URL || "https://api.akbw.uz/api") + "/bot";
+
+// Server /api/bot yo'llari faqat shu maxfiy kalit bilan javob beradi (bot.env va server.env da bir xil)
+const api = axios.create({ timeout: 15000 });
+api.interceptors.request.use((cfg) => {
+  cfg.headers["X-Bot-Secret"] = process.env.BOT_API_SECRET || "";
+  return cfg;
+});
 
 const start = async (ctx) => {
   const userId = ctx.from.id;
@@ -21,7 +28,7 @@ const text = (ctx) => {
 
 const orders = async (ctx) => {
   try {
-    const response = await axios.get(`${BASE_URL}/orders?tg_id=${ctx.from.id}`);
+    const response = await api.get(`${BASE_URL}/orders?tg_id=${ctx.from.id}`);
     console.log("orders response: ", response.data);
     const shipments = response.data || [];
 
@@ -51,7 +58,7 @@ const orders = async (ctx) => {
 
 const history = async (ctx) => {
   try {
-    const response = await axios.get(
+    const response = await api.get(
       `${BASE_URL}/history?tg_id=${ctx.from.id}`,
     );
 
@@ -83,7 +90,7 @@ let message = `Hisobotlar (${shipments.length} ta):\n\n`;
 
 const checkWorker = async (ctx, next) => {
   try {
-    const response = await axios.get(
+    const response = await api.get(
       `${BASE_URL}/isWorker?tg_id=${ctx.from.id}`,
     );
     console.log("response data: ", response.data);
@@ -115,7 +122,7 @@ const handleCallbackQuery = async (ctx) => {
         return;
       }
 
-      const response = await axios.post(`${BASE_URL}/order-action`, {
+      const response = await api.post(`${BASE_URL}/order-action`, {
         tg_id: ctx.from.id,
         order_id: parseInt(orderId),
         action: action,
@@ -168,7 +175,7 @@ const handleCallbackQuery = async (ctx) => {
 
 const handleShipmentStatusUpdate = async (ctx, shipmentId, newState) => {
   try {
-    const response = await axios.post(`${BASE_URL}/shipment-status-update`, {
+    const response = await api.post(`${BASE_URL}/shipment-status-update`, {
       tg_id: ctx.from.id,
       shipment_id: parseInt(shipmentId),
       new_state: newState,

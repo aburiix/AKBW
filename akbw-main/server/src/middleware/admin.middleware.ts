@@ -45,6 +45,11 @@ export const checkAdmins = async (
       jwtSecret,
     ) as JwtPayload & { id: string | number };
 
+    // Fabrika tokeni (role: "factory") ham raqamli id'ga ega — uni admin deb qabul qilmaymiz
+    if ((decodedToken as any).role) {
+      return res.status(403).json({ error: "Forbidden", message: "Admin token required", ok: false });
+    }
+
     const adminId = parseInt(decodedToken.id?.toString());
 
     if (isNaN(adminId)) {

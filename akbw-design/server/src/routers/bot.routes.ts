@@ -1,3 +1,4 @@
+import { checkBotSecret } from "../middleware/security.middleware.js";
 import { Router } from "express";
 import {
   isWorker,
@@ -8,6 +9,8 @@ import {
 } from "../controllers/bot.controller.js";
 
 const router = Router();
+
+router.use(checkBotSecret);
 
 router.get("/isWorker", isWorker);
 router.get("/orders", getOrders);

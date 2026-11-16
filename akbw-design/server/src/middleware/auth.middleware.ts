@@ -17,7 +17,6 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
 
     const decodedToken: any = jwt.verify(token, jwtSecret);
 
-    console.log("DECODED-TOKEN: ", decodedToken);
 
     if (decodedToken.id) {
       req.user = decodedToken.id;

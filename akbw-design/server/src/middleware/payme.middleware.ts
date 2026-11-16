@@ -19,7 +19,6 @@ export const paymeMiddleware = (req: Request, res: Response, next: NextFunction)
         const auth = req.headers.authorization;
         const token = auth && auth.split(' ')[1];
         if (!token) throw new TransactionError(PaymeError.InvalidAuthorization, id);
-        console.log("token: ", token);
         const data = Buffer.from(token, 'base64').toString('utf-8');
 
         const testKey = process.env.PAYME_TEST_KEY?.replace(/['"]/g, '');

@@ -1,3 +1,4 @@
+import { smsSendLimiter, smsVerifyLimiter } from "../middleware/security.middleware.js";
 import {
     Router,
 } from "express";
@@ -10,7 +11,7 @@ import { sendSmsSchema, verifySmsSchema } from "../validators/sms.validator.js";
 
 const router = Router();
 
-router.post("/send", validate(sendSmsSchema), send);
-router.post("/verify", validate(verifySmsSchema), verify)
+router.post("/send", smsSendLimiter, validate(sendSmsSchema), send);
+router.post("/verify", smsVerifyLimiter, validate(verifySmsSchema), verify)
 
 export default router;

@@ -1,3 +1,4 @@
+import { checkAdmins } from "../middleware/admin.middleware.js";
 import {
     Router
 } from "express";
@@ -14,6 +15,6 @@ const router = Router();
 
 router.get("/me", auth, getMe);
 router.put("/me", auth, updateProfile);
-router.get("/", getUsers);
+router.get("/", checkAdmins, getUsers);
 
 export default router;

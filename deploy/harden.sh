@@ -144,3 +144,8 @@ sed -i 's/# server_tokens off;/server_tokens off;/' /etc/nginx/nginx.conf
 systemctl enable --now nginx
 
 echo "== TAYYOR"
+
+# Nginx: proksi javoblarini ham siqish (API JSON 10-17 barobar kichrayadi)
+sed -i -E "s/^\t# (gzip_vary on;)/\t\1/; s/^\t# (gzip_proxied any;)/\t\1/; s/^\t# gzip_comp_level 6;/\tgzip_comp_level 5;/; s/^\t# (gzip_buffers 16 8k;)/\t\1/; s/^\t# (gzip_http_version 1.1;)/\t\1/; s#^\t\# gzip_types .*#\tgzip_types text/plain text/css text/xml text/javascript application/json application/javascript application/xml application/rss+xml image/svg+xml;#" /etc/nginx/nginx.conf
+# certbot'dan keyin HTTP/2: sed -i -E 's/listen (\[::\]:)?443 ssl(;| ipv6only)/listen \1443 ssl http2\2/' /etc/nginx/sites-available/akbw.conf
+

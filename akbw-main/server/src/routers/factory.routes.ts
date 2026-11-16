@@ -1,3 +1,4 @@
+import { checkAdmins } from "../middleware/admin.middleware.js";
 import { Router } from "express";
 import { createFactory, getAllFactories, updateFactory, deleteFactory } from "../controllers/factory.controller.js";
 import { validate } from "../middleware/validate.middleware.js";
@@ -5,9 +6,9 @@ import { factoryCreateValidator, factoryUpdateValidator } from "../validators/fa
 
 const router = Router();
 
-router.post("/", validate(factoryCreateValidator), createFactory);
-router.get("/", getAllFactories);
-router.patch("/:id", validate(factoryUpdateValidator), updateFactory);
-router.delete("/:id", deleteFactory);
+router.post("/", checkAdmins, validate(factoryCreateValidator), createFactory);
+router.get("/", checkAdmins, getAllFactories);
+router.patch("/:id", checkAdmins, validate(factoryUpdateValidator), updateFactory);
+router.delete("/:id", checkAdmins, deleteFactory);
 
 export default router;

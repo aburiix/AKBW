@@ -173,6 +173,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 // start server
 app.listen(PORT, async () => {
-  await bootstrap();
+  // PM2 bir nechta nusxa ishga tushiradi — birinchi adminni faqat 0-nusxa yaratadi
+  if (!process.env.NODE_APP_INSTANCE || process.env.NODE_APP_INSTANCE === "0") await bootstrap();
   console.log(`Server is running on port ${PORT}`);
 });

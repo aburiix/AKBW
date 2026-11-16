@@ -54,9 +54,5 @@ export default async function bootstrap() {
         console.log(`Login with phone ${phone} and the ADMIN_PASSWORD from .env.`);
     } catch (error) {
         console.error("Bootstrap failed:", error);
-    } finally {
-        await prisma.$disconnect();
     }
 }
-
-bootstrap();

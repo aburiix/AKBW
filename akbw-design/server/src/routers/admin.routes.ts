@@ -1,3 +1,4 @@
+import { loginLimiterByAccount, loginLimiterByIp, logFailedLogin } from "../middleware/security.middleware.js";
 import { Router } from "express";
 import { validate } from "../middleware/validate.middleware.js";
 import { createRoleSchema, adminLoginSchema } from "../validators/admin.validator.js";
@@ -15,7 +16,7 @@ import { checkAdmins, requireAccess } from "../middleware/admin.middleware.js";
 
 const router = Router();
 
-router.post("/login", validate(adminLoginSchema), adminLogin);
+router.post("/login", logFailedLogin("admin"), loginLimiterByIp, loginLimiterByAccount, validate(adminLoginSchema), adminLogin);
 router.post("/refresh", refreshAdminToken);
 router.get("/me", checkAdmins, getAdminMe);
 router.get("/", checkAdmins, requireAccess("ko'rish"), getAdmins);

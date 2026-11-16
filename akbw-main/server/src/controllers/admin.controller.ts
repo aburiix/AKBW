@@ -8,8 +8,6 @@ export const adminLogin = async (req: Request, res: Response, next: NextFunction
     try {
         const { phone, password } = req.body;
 
-        console.log("phone: ", phone);
-        console.log("password: ", password);
 
         const admin = await prisma.admins.findUnique({
             where: { phone },
@@ -21,7 +19,6 @@ export const adminLogin = async (req: Request, res: Response, next: NextFunction
         }
 
         const isPasswordValid = await bcrypt.compare(password, admin.password);
-        console.log("compare: ", isPasswordValid)
         if (!isPasswordValid) {
             return res.status(401).json({ ok: false, message: "Telefon raqami yoki parol noto'g'ri" });
         }

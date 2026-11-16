@@ -1,3 +1,5 @@
+import { checkAdminOrFactory } from "../middleware/security.middleware.js";
+import { checkAdmins } from "../middleware/admin.middleware.js";
 import { Router } from "express";
 import {
     getShipmentStates,
@@ -12,8 +14,8 @@ const router = Router();
 
 router.get("/states", getShipmentStates);
 router.get("/factory", auth, getFactoryShipments);
-router.get("/admin", auth, getAdminShipments);
-router.get("/:id", getOrderShipments);
-router.patch("/:id/status", auth, updateShipmentStatus);
+router.get("/admin", checkAdmins, getAdminShipments);
+router.get("/:id", checkAdmins, getOrderShipments);
+router.patch("/:id/status", checkAdminOrFactory, updateShipmentStatus);
 
 export default router;

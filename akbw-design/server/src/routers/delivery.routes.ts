@@ -1,3 +1,4 @@
+import { checkAdmins } from "../middleware/admin.middleware.js";
 import {
     getRegions,
     getCities,
@@ -32,13 +33,13 @@ const router = Router();
 
 router.get("/regions", getRegions);
 router.get("/cities", getCities);
-router.post("/create-order", validate(deliveryCreatePostValidator), createOrder);
+router.post("/create-order", checkAdmins, validate(deliveryCreatePostValidator), createOrder);
 router.get("/branches", getBranches);
 router.get("/state", auth, getState);
 router.post("/calculate", validate(deliveryCalculateBodyValidator), calculateDelivery)
 router.post("/from-to-links", validate(deliveryFromToLinksQueryValidator), getDeliveryFromToLinks);
-router.get("/sender-config", getSenderConfig);
-router.put("/sender-config", auth, validate(senderConfigBodyValidator), saveSenderConfig);
+router.get("/sender-config", checkAdmins, getSenderConfig);
+router.put("/sender-config", checkAdmins, validate(senderConfigBodyValidator), saveSenderConfig);
 router.post("/distance", validate(distanceBodyValidator), getDistanceFromLocation);
 
 export default router;

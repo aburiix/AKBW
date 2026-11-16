@@ -1,3 +1,4 @@
+import { checkAdmins } from "../middleware/admin.middleware.js";
 import {
     Router
 } from "express";
@@ -17,8 +18,8 @@ import {
 const router = Router();
 
 router.get("/", getNotifications);
-router.post("/", validate(createNotificationValidator), createNotification);
-router.put("/:id", updateNotification);
-router.delete("/:id", deleteNotification);
+router.post("/", checkAdmins, validate(createNotificationValidator), createNotification);
+router.put("/:id", checkAdmins, updateNotification);
+router.delete("/:id", checkAdmins, deleteNotification);
 
 export default router;

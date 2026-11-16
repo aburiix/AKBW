@@ -46,7 +46,6 @@ export function basicAuth(req: Request, res: Response, next: NextFunction) {
 
     const base64: string = String(auth.split(" ")[1]);
     const [user, pass] = Buffer.from(base64, "base64").toString().split(":");
-    console.log("Paynet Auth Middleware: Decoded credentials", { user, pass });
 
     if (user !== USERNAME || pass !== PASSWORD) {
         console.log("Paynet Auth Middleware: Invalid credentials");
