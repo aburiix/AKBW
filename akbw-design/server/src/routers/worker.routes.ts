@@ -1,4 +1,6 @@
 import { checkAdminOrFactory } from "../middleware/security.middleware.js";
+import { checkAdmins } from "../middleware/admin.middleware.js";
+import { adminCreateWorker, adminDeleteWorker, adminListWorkers, adminUpdateWorker } from "../controllers/worker.controller.js";
 import { Router } from "express";
 import {
     getWorkers,
@@ -14,6 +16,12 @@ import {
 } from "../validators/worker.validator.js";
 
 const router = Router();
+
+// Admin panel (barcha zavodlar)
+router.get("/all", checkAdmins, adminListWorkers);
+router.post("/admin", checkAdmins, adminCreateWorker);
+router.put("/admin/:id", checkAdmins, adminUpdateWorker);
+router.delete("/admin/:id", checkAdmins, adminDeleteWorker);
 
 router.get("/", checkAdminOrFactory, getWorkers);
 router.post("/", checkAdminOrFactory, validate(workerCreateValidator), createWorker);

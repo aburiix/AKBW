@@ -24,6 +24,7 @@ import {
   Ticket,
   Truck,
   Sparkles,
+  UserCog,
 } from 'lucide-react';
 import { useAdminAuthStore } from '@/shared/store/auth.store';
 
@@ -32,6 +33,7 @@ const sidebarItems = [
   { name: 'Mahsulotlar', icon: Package, href: '/products' },
   { name: 'Kategoriyalar', icon: Layers, href: '/categories' },
   { name: 'Zavodlar', icon: Building2, href: '/factory' },
+  { name: 'Ishchilar', icon: UserCog, href: '/workers' },
   { name: 'Buyurtmalar', icon: ShoppingBag, href: '/orders' },
   { name: 'Yuklar', icon: Truck, href: '/shipments' },
   { name: 'Bildirishnomalar', icon: Bell, href: '/notifications' },

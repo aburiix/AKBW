@@ -80,7 +80,8 @@ export const getAllFactories = async (req: Request, res: Response, next: NextFun
         const factories = await prisma.factories.findMany({
             orderBy: {
                 createdAt: 'desc'
-            }
+            },
+            omit: { password: true },
         });
         res.status(200).json({ ok: true, data: factories });
     } catch (error) {
