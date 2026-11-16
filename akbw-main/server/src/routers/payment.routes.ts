@@ -16,9 +16,7 @@ import {
   paynetWebhook,
   getPaynetLink as generatePaynetLink
 } from "../controllers/paynet.controller.js";
-import {
-  auth
-} from "../middleware/auth.middleware.js";
+import { auth, userAuth } from "../middleware/auth.middleware.js";
 import {
   validate
 } from "../middleware/validate.middleware.js";
@@ -36,12 +34,12 @@ const router = Router();
 // PAYME
 router.post("/payme/pay", paymeMiddleware, paymePay);
 router.post("/payme/checkout", paymeMiddleware, paymeCheckout);
-router.post("/payme/generate-link", auth, validate(paymeLinkValidator), getPaymeLink);
+router.post("/payme/generate-link", userAuth, validate(paymeLinkValidator), getPaymeLink);
 
 // CLICK
 router.post("/click/prapere", clickPrapere);
 router.post("/click/complete", clickComplete);
-router.post("/click/checkout", validate(clickCheckoutValidator), auth, clickCheckout);
+router.post("/click/checkout", validate(clickCheckoutValidator), userAuth, clickCheckout);
 
 // UZUM
 //router.post("/uzum/pay");
@@ -50,7 +48,7 @@ router.post("/click/checkout", validate(clickCheckoutValidator), auth, clickChec
 
 // PAYNET
 router.post("/paynet/pay", paynetAuth, paynetWebhook);
-router.post("/paynet/link", auth, validate(paynetLinkValidator), generatePaynetLink);
+router.post("/paynet/link", userAuth, validate(paynetLinkValidator), generatePaynetLink);
 
 
 export default router;

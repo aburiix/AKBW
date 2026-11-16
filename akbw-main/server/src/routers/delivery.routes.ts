@@ -1,3 +1,4 @@
+import { publicApiLimiter } from "../middleware/security.middleware.js";
 import { checkAdmins } from "../middleware/admin.middleware.js";
 import {
     getRegions,
@@ -11,9 +12,7 @@ import {
     saveSenderConfig,
     getDistanceFromLocation
 } from "../controllers/delivery.controller.js";
-import {
-    auth
-} from "../middleware/auth.middleware.js";
+import { auth, userAuth } from "../middleware/auth.middleware.js";
 import {
     validate
 } from "../middleware/validate.middleware.js";
@@ -35,11 +34,11 @@ router.get("/regions", getRegions);
 router.get("/cities", getCities);
 router.post("/create-order", checkAdmins, validate(deliveryCreatePostValidator), createOrder);
 router.get("/branches", getBranches);
-router.get("/state", auth, getState);
-router.post("/calculate", validate(deliveryCalculateBodyValidator), calculateDelivery)
-router.post("/from-to-links", validate(deliveryFromToLinksQueryValidator), getDeliveryFromToLinks);
+router.get("/state", userAuth, getState);
+router.post("/calculate", publicApiLimiter, validate(deliveryCalculateBodyValidator), calculateDelivery)
+router.post("/from-to-links", publicApiLimiter, validate(deliveryFromToLinksQueryValidator), getDeliveryFromToLinks);
 router.get("/sender-config", checkAdmins, getSenderConfig);
 router.put("/sender-config", checkAdmins, validate(senderConfigBodyValidator), saveSenderConfig);
-router.post("/distance", validate(distanceBodyValidator), getDistanceFromLocation);
+router.post("/distance", publicApiLimiter, validate(distanceBodyValidator), getDistanceFromLocation);
 
 export default router;

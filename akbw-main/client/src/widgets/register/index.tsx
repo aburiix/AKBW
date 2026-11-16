@@ -78,6 +78,7 @@ function Register({ trigger }: RegisterProps) {
       lastName: string;
       phone: string;
       gender: string;
+      verifyToken: string;
     }) => register({ ...data, referralCode }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: (data: any) => {
@@ -130,12 +131,19 @@ function Register({ trigger }: RegisterProps) {
     mutationKey: ['verify-sms'],
     mutationFn: ({ phone, code }: { phone: string; code: string }) =>
       verifySms(phone, code),
-    onSuccess: async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onSuccess: async (res: any) => {
       setSteps('register');
       setTimeLeft(60);
       setErrors({});
 
-      await registerMutation.mutateAsync({ name, lastName, phone, gender });
+      await registerMutation.mutateAsync({
+        name,
+        lastName,
+        phone,
+        gender,
+        verifyToken: res?.data?.verifyToken ?? '',
+      });
     },
     onError: (err) => onError(err, t('error')),
   });

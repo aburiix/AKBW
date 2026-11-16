@@ -1,3 +1,0 @@
-# Crontab entry for daily PostgreSQL backup
-# Run backup script every day at 2:00 AM
-0 2 * * * /app/backup.sh >> /app/logs/backup.log 2>&1

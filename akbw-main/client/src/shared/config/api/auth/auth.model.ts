@@ -1,6 +1,7 @@
 interface LoginRequest {
   phone: string;
   password?: string;
+  verifyToken: string;
 }
 
 interface RegisterRequest {
@@ -9,6 +10,7 @@ interface RegisterRequest {
   gender: string;
   lastName: string;
   referralCode?: string;
+  verifyToken: string;
 }
 
 export type { LoginRequest, RegisterRequest };

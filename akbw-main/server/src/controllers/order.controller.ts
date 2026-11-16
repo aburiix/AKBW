@@ -1,3 +1,4 @@
+import { escapeHtml } from "../utils/html.util.js";
 import { FulfillmentType, OrderState, ShipmentState } from "../generated/prisma/client/index.js";
 import { type Request, type Response, type NextFunction } from "express";
 import type { GroupedItems, IOrderItem } from "../types/order.types.js";
@@ -46,7 +47,7 @@ async function notifyFactoryWorkers(shipmentId: number, factoryId: number | null
     const user = shipment.order.user;
     let message = `🆕 Yangi buyurtma!\n\n`;
     message += `Buyurtma raqami: #${shipment.order.id}\n`;
-    message += `Mijoz: ${user.name} ${user.lastName}\n`;
+    message += `Mijoz: ${escapeHtml(user.name)} ${escapeHtml(user.lastName)}\n`;
     message += `Telefon: ${user.phone}\n`;
     message += `Umumiy summa: ${shipment.orderItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0)} so'm\n\n`;
     message += `Mahsulotlar:\n`;
@@ -55,7 +56,7 @@ async function notifyFactoryWorkers(shipmentId: number, factoryId: number | null
       console.log("item: ", item);
       const productName =
         item?.product?.translations?.[0]?.name || `Mahsulot ${item.productId}`;
-      message += `${idx + 1}. ${productName} - ${item.quantity} ta\n`;
+      message += `${idx + 1}. ${escapeHtml(productName)} - ${item.quantity} ta\n`;
     });
 
     const keyboard = {
@@ -329,7 +330,9 @@ export const reviewOrder = async (
     for (const item of items) {
       const product = products.find(p => p.id === item.productId);
 
-      if (!product) return;
+      if (!product) {
+        return res.status(400).json({ ok: false, message: `Mahsulot topilmadi: ${item.productId}` });
+      }
 
       let shipmentKey: string = '';
 

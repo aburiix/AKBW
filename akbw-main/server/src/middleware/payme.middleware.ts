@@ -9,6 +9,7 @@ import type {
     Response
 } from "express";
 import dotenv from "dotenv";
+import { safeEqual } from "../utils/safeEqual.util.js";
 
 dotenv.config();
 
@@ -25,26 +26,16 @@ export const paymeMiddleware = (req: Request, res: Response, next: NextFunction)
         const prodKey = process.env.PAYME_PROD_KEY?.replace(/['"]/g, '');
         const merchantId = process.env.PAYME_ID?.replace(/['"]/g, '');
 
-        console.log("Authorization details:", {
-            decodedData: data,
-            merchantId,
-            testKeyMatch: data === `Paycom:${testKey}` || data === `${merchantId}:${testKey}`,
-            prodKeyMatch: data === `Paycom:${prodKey}` || data === `${merchantId}:${prodKey}`
-        });
-
-        const isAuthorized =
-            data === `Paycom:${testKey}` ||
-            data === `${merchantId}:${testKey}` ||
-            data === `Paycom:${prodKey}` ||
-            data === `${merchantId}:${prodKey}`;
-
-        console.log("isAuth: ", isAuthorized);
+        // Kalit loglarga yozilmaydi
+        const candidates = [testKey, prodKey]
+            .filter((k): k is string => !!k)
+            .flatMap((k) => [`Paycom:${k}`, ...(merchantId ? [`${merchantId}:${k}`] : [])]);
+        const isAuthorized = candidates.some((c) => safeEqual(data, c));
 
         if (!isAuthorized) {
-            console.log("Authorization failed for data:", data);
+            console.warn(`[payme] avtorizatsiya rad etildi ip=${req.ip}`);
             throw new TransactionError(PaymeError.InvalidAuthorization, id);
         }
-        console.log("Authorization successful");
 
         next();
     } catch (error) {

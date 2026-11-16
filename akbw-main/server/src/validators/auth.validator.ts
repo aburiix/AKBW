@@ -6,8 +6,10 @@ export const registerSchema = Joi.object({
   phone: Joi.string().required(),
   gender: Joi.string().required(),
   referralCode: Joi.string().allow("").optional(),
+  verifyToken: Joi.string().required(),
 });
 
 export const loginSchema = Joi.object({
   phone: Joi.string().required(),
+  verifyToken: Joi.string().required(),
 });

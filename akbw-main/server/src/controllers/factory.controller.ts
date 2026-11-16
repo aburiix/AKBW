@@ -57,7 +57,7 @@ export const createFactory = async (req: Request, res: Response, next: NextFunct
             throw new Error("JWT_SECRET is not defined");
         }
 
-        const token = jwt.sign({ id: factory.id, role: "factory" }, jwtSecret);
+        const token = jwt.sign({ id: factory.id, role: "factory" }, jwtSecret, { expiresIn: "30d" });
 
 
         return res.status(201).json({

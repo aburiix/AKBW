@@ -20,7 +20,7 @@ const tooMany = (minutes: number) => (_req: Request, res: Response) =>
   });
 
 // Nginx orqali kelgan haqiqiy IP (app "trust proxy" yoqilgan)
-const common = { standardHeaders: true, legacyHeaders: false, validate: { trustProxy: false } } as const;
+const common = { standardHeaders: true, legacyHeaders: false, validate: { trustProxy: false, xForwardedForHeader: false } } as const;
 
 /** Admin/fabrika login: bitta IP — 15 daqiqada 10 ta, bitta raqam — 15 daqiqada 5 ta muvaffaqiyatsiz urinish */
 export const loginLimiterByIp = rateLimit({
@@ -89,6 +89,7 @@ export const checkAdminOrFactory = (req: Request, res: Response, next: NextFunct
       const decoded: any = jwt.verify(token, secret);
       if (decoded?.role === "factory" && decoded.id) {
         req.user = String(decoded.id);
+        (req as any).factoryId = Number(decoded.id);
         return next();
       }
     }
@@ -97,3 +98,27 @@ export const checkAdminOrFactory = (req: Request, res: Response, next: NextFunct
   }
   return checkAdmins(req, res, next);
 };
+
+/** Ochiq forma (Bog'lanish): bitta IP — soatiga 5 ta (Telegram'ga spamga qarshi) */
+export const contactLimiter = rateLimit({
+  ...common,
+  windowMs: 60 * 60 * 1000,
+  limit: 5,
+  handler: tooMany(60),
+});
+
+/** Tashqi xizmatga murojaat qiladigan ochiq yo'llar (yetkazib berish narxi, masofa): IP — daqiqasiga 30 ta */
+export const publicApiLimiter = rateLimit({
+  ...common,
+  windowMs: 60 * 1000,
+  limit: 30,
+  handler: tooMany(1),
+});
+
+/** Ishchi bot so'rovlari: kalit oshkor bo'lsa ham zarar cheklansin — daqiqasiga 120 ta */
+export const botLimiter = rateLimit({
+  ...common,
+  windowMs: 60 * 1000,
+  limit: 120,
+  handler: tooMany(1),
+});

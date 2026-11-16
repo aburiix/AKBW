@@ -4,12 +4,15 @@ export const reviewOrderValidator = Joi.object({
   items: Joi.array()
     .items(
       Joi.object({
-        productId: Joi.number().required(),
-        quantity: Joi.number().required(),
-        colorId: Joi.number().required(),
-        sizeId: Joi.number().required(),
+        productId: Joi.number().integer().positive().required(),
+        // manfiy yoki kasr son umumiy summani buzardi
+        quantity: Joi.number().integer().min(1).max(100).required(),
+        colorId: Joi.number().integer().required(),
+        sizeId: Joi.number().integer().required(),
       }),
     )
+    .min(1)
+    .max(50)
     .required(),
   total_price: Joi.number().required(),
   coupon_code: Joi.string().allow(null, '').optional(),

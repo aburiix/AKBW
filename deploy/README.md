@@ -56,3 +56,13 @@ docker compose ps
 docker compose logs -f server
 docker compose exec db pg_dump -U postgres akbw > /root/akbw-$(date +%F).sql   # zaxira
 ```
+
+## Zaxira nusxa (backup)
+
+`backup` servisi (docker-compose) har kuni Toshkent vaqti bilan 02:00 da baza (`pg_dump -Fc`) va yuklangan rasmlarni
+`/opt/akbw-backups` ga yozadi va 14 kun saqlaydi. `deploy.sh` oxirida oxirgi nusxa qachon olinganini ko'rsatadi.
+
+- Qo'lda nusxa olish: `docker compose run --rm -e BACKUP_ONCE=1 backup`
+- Tiklanishini tekshirish (production'ga tegmaydi): `sudo sh /opt/akbw/deploy/backup/restore-test.sh`
+- **Serverdan tashqariga ko'chirish (majburiy tavsiya):** `backup/offsite.sh` — rclone bilan Backblaze B2 / Cloudflare R2 / Google Drive.
+  Sozlash yo'riqnomasi fayl boshida.

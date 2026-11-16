@@ -19,10 +19,13 @@ if grep -qE '^SHOP_BOT_TOKEN=.+' "$ENV_DIR/shop-bot.env"; then services+=(shop-b
 
 # Kichik server (4 GB RAM): build'lar navbat bilan
 for svc in "${services[@]}"; do
-  [ "$svc" = db ] && continue
+  [ "$svc" = db ] || [ "$svc" = backup ] && continue
   echo "== build: $svc"
   docker compose build "$svc"
 done
+
+# Zaxira nusxa servisi (tayyor image, build kerak emas)
+services+=(backup)
 
 echo "== up: ${services[*]}"
 docker compose up -d --remove-orphans "${services[@]}"
@@ -41,4 +44,11 @@ for url in http://127.0.0.1:3000/uz http://127.0.0.1:3001 http://127.0.0.1:8000/
   echo "$url -> $code"
   case "$code" in 2*|3*|401|404) ;; *) fail=1 ;; esac
 done
+# Zaxira nusxa oxirgi 26 soat ichida olinganmi
+if [ -f /opt/akbw-backups/LAST_OK ]; then
+  age=$(( $(date +%s) - $(cat /opt/akbw-backups/LAST_OK) ))
+  if [ "$age" -gt 93600 ]; then echo "!! backup: oxirgi nusxa $((age/3600)) soat oldin"; else echo "backup OK ($((age/3600)) soat oldin)"; fi
+else
+  echo "!! backup: hali nusxa yo'q (akbw-backup konteyneri loglarini tekshiring)"
+fi
 exit $fail

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express";
 import multer from "multer";
-import { auth } from "../middleware/auth.middleware.js";
+import { auth, userAuth } from "../middleware/auth.middleware.js";
 import { createTryOn, deleteTryOn, getMyTryOns } from "../controllers/tryon.controller.js";
 
 const router = Router();
@@ -28,8 +28,8 @@ const photo = (req: Request, res: Response, next: NextFunction) =>
 const wrap = (fn: (req: Request, res: Response) => Promise<unknown>) => (req: Request, res: Response, next: NextFunction) =>
   fn(req, res).catch(next);
 
-router.get("/me", auth, wrap(getMyTryOns));
-router.post("/", auth, photo, wrap(createTryOn));
-router.delete("/:id", auth, wrap(deleteTryOn));
+router.get("/me", userAuth, wrap(getMyTryOns));
+router.post("/", userAuth, photo, wrap(createTryOn));
+router.delete("/:id", userAuth, wrap(deleteTryOn));
 
 export default router;

@@ -53,7 +53,7 @@ export const registerFactory = async (req: Request, res: Response, next: NextFun
             throw new Error("JWT_SECRET is not defined in environment variables");
         }
 
-        const token = jwt.sign({ id: factory.id, role: "factory" }, jwtSecret);
+        const token = jwt.sign({ id: factory.id, role: "factory" }, jwtSecret, { expiresIn: "30d" });
 
 
         return res.status(201).json({
@@ -76,7 +76,8 @@ export const loginFactory = async (req: Request, res: Response, next: NextFuncti
         const { login, password } = req.body;
 
         const factory = await prisma.factories.findUnique({
-            where: { login }
+            where: { login },
+            omit: { password: false },
         });
 
         if (!factory) {
@@ -94,7 +95,7 @@ export const loginFactory = async (req: Request, res: Response, next: NextFuncti
             throw new Error("JWT_SECRET is not defined in environment variables");
         }
 
-        const token = jwt.sign({ id: factory.id, role: "factory" }, jwtSecret);
+        const token = jwt.sign({ id: factory.id, role: "factory" }, jwtSecret, { expiresIn: "30d" });
 
 
         return res.status(200).json({

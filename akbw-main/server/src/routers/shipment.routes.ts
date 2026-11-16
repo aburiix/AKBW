@@ -8,12 +8,12 @@ import {
     getAdminShipments,
     updateShipmentStatus
 } from "../controllers/shipment.controller.js";
-import { auth } from "../middleware/auth.middleware.js";
+import { auth, factoryAuth } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
 router.get("/states", getShipmentStates);
-router.get("/factory", auth, getFactoryShipments);
+router.get("/factory", factoryAuth, getFactoryShipments);
 router.get("/admin", checkAdmins, getAdminShipments);
 router.get("/:id", checkAdmins, getOrderShipments);
 router.patch("/:id/status", checkAdminOrFactory, updateShipmentStatus);

@@ -18,6 +18,15 @@ pool.on('error', (err) => {
 })
 
 const adapter = new PrismaPg(pool)
-const prisma = new PrismaClient({ adapter })
+// Maxfiy maydonlar hech qachon API javobiga tushmasin (masalan, sharhlarda `user: true`
+// mijozning refreshToken'ini hammaga ochib qo'ygan edi). Kerak bo'lgan joyda `omit: { password: false }`.
+const prisma = new PrismaClient({
+  adapter,
+  omit: {
+    user: { refreshToken: true },
+    admins: { password: true, refreshToken: true },
+    factories: { password: true },
+  },
+})
 
 export { prisma }

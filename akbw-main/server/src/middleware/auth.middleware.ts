@@ -40,3 +40,41 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+
+/**
+ * Rolga qarab ajratilgan tekshiruvlar.
+ * `auth` har qanday to'g'ri tokenni qabul qiladi (admin rasm yuklashi uchun kerak), shuning uchun
+ * mijoz va fabrika yo'llarida faqat o'z turidagi token o'tishi kerak — aks holda admin yoki fabrika
+ * tokeni bilan boshqa birovning nomidan ish qilish mumkin edi.
+ */
+const verifyToken = (req: Request): any | null => {
+  const token = req.headers.authorization?.split(" ")[1];
+  const jwtSecret = process.env.JWT_SECRET;
+  if (!token || !jwtSecret) return null;
+  try {
+    return jwt.verify(token, jwtSecret);
+  } catch {
+    return null;
+  }
+};
+
+/** Faqat mijoz tokeni: id — UUID qator, role yo'q */
+export const userAuth = (req: Request, res: Response, next: NextFunction) => {
+  const d = verifyToken(req);
+  if (!d || d.role || typeof d.id !== "string" || !d.id) {
+    return res.status(401).json({ message: "Unauthorized", ok: false });
+  }
+  req.user = d.id;
+  next();
+};
+
+/** Faqat fabrika tokeni: role === "factory" */
+export const factoryAuth = (req: Request, res: Response, next: NextFunction) => {
+  const d = verifyToken(req);
+  if (!d || d.role !== "factory" || !d.id) {
+    return res.status(401).json({ message: "Unauthorized", ok: false });
+  }
+  req.user = String(d.id);
+  (req as any).factoryId = Number(d.id);
+  next();
+};

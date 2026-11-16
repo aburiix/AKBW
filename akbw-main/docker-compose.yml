@@ -36,7 +36,6 @@ services:
       - uploads_data:/app/uploads
       - ./server/ecosystem.config.cjs:/app/ecosystem.config.cjs:ro
       - server_logs:/app/logs
-      - ./server/backup.sh:/app/backup.sh:ro
       - postgres_backups:/app/backups
     depends_on:
       db:

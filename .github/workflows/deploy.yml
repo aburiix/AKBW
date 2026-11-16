@@ -21,21 +21,37 @@ concurrency:
 
 jobs:
   check:
-    name: Tekshiruv (client)
+    name: Tekshiruv (${{ matrix.app }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [client, admin, server]
     defaults:
       run:
-        working-directory: akbw-main/client
+        working-directory: akbw-main/${{ matrix.app }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: akbw-main/client/package-lock.json
+          cache-dependency-path: akbw-main/${{ matrix.app }}/package-lock.json
       - run: npm ci --no-audit --no-fund
+      - name: Prisma sxemasi
+        if: matrix.app == 'server'
+        run: npx prisma validate && npx prisma generate
+        env:
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
       - name: TypeScript
         run: npx tsc --noEmit -p .
+      - name: Xavfsizlik testlari
+        if: matrix.app == 'server'
+        run: npm test
+      - name: Zaxira skriptlari sintaksisi
+        if: matrix.app == 'server'
+        working-directory: deploy/backup
+        run: for f in *.sh; do sh -n "$f"; done
 
   deploy:
     name: Serverga chiqarish

@@ -109,6 +109,25 @@ services:
     restart: always
     logging: *logging
 
+  # Har kunlik zaxira nusxa: baza + rasmlar → serverdagi /opt/akbw-backups (offsite: backup/offsite.sh)
+  backup:
+    image: postgres:15-alpine
+    container_name: akbw-backup
+    env_file: /opt/akbw-env/db.env
+    environment:
+      BACKUP_HOUR: '21'
+      BACKUP_KEEP_DAYS: '14'
+    entrypoint: ['sh', '/backup/run.sh']
+    volumes:
+      - ./backup:/backup:ro
+      - /opt/akbw-backups:/backups
+      - uploads_data:/uploads:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    logging: *logging
+
 volumes:
   postgres_data:
   uploads_data:

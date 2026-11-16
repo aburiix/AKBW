@@ -48,7 +48,9 @@ dotenv.config();
 // initialize express
 const app = express();
 
-app.set("trust proxy", true);
+// Faqat bitta proksi (Nginx) ga ishoniladi. `true` bo'lsa, X-Forwarded-For'ning eng chap qiymati —
+// ya'ni mijoz o'zi yozgan IP olinardi: Paynet IP ro'yxati va login cheklovlarini aylanib o'tish mumkin edi.
+app.set("trust proxy", Number(process.env.TRUST_PROXY_HOPS || 1));
 
 // environment variables
 const PORT = process.env.PORT || 3000;
@@ -93,8 +95,8 @@ app.use(
   }),
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "1mb" }));
+app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 app.use(langaugeMiddleware);
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
@@ -165,8 +167,10 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
       .json({ message: err.message, errors: err.errors });
   }
 
-  res.status(err.status || 500).json({
-    message: err.message || "Noma'lum xatolik yuz berdi",
+  const status = err.status || err.statusCode || 500;
+  res.status(status).json({
+    // 500 xatolarda ichki tafsilot (SQL, fayl yo'li) mijozga ko'rsatilmaydi
+    message: status >= 500 ? "Noma'lum xatolik yuz berdi" : err.message || "Xatolik",
     ok: false,
   });
 });

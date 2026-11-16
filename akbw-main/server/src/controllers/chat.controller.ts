@@ -51,6 +51,14 @@ export const createHelpChatMessage = async (req: Request, res: Response, next: N
         const sender_id = req.user;
         const admin_id = (req as any).admin?.id;
 
+        // Mijoz faqat o'z chatiga yoza oladi
+        if (!admin_id) {
+            const chat = await prisma.helpChat.findUnique({ where: { id: Number(chat_id) }, select: { user_id: true } });
+            if (!chat || chat.user_id !== sender_id) {
+                return res.status(403).json({ ok: false, message: "Forbidden" });
+            }
+        }
+
         const createHelpChatMessage = await prisma.helpChatMessages.create({
             data: {
                 message: message,
@@ -155,6 +163,14 @@ export const createAskForProductMessage = async (req: Request, res: Response, ne
         const { message, chat_id, photo } = req.body;
         const sender_id = req.user;
         const admin_id = (req as any).admin?.id;
+
+        // Mijoz faqat o'z chatiga yoza oladi
+        if (!admin_id) {
+            const chat = await prisma.askForChat.findUnique({ where: { id: Number(chat_id) }, select: { user_id: true } });
+            if (!chat || chat.user_id !== sender_id) {
+                return res.status(403).json({ ok: false, message: "Forbidden" });
+            }
+        }
 
         const askForProductChatMessage = await prisma.askForChatMessages.create({
             data: {

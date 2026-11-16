@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import {
     isIpInCidrs
 } from "../utils/ip.util.js";
+import { safeEqual } from "../utils/safeEqual.util.js";
 
 dotenv.config();
 
@@ -17,20 +18,14 @@ export function basicAuth(req: Request, res: Response, next: NextFunction) {
     const clientIP: string = req.ip || req.socket.remoteAddress || "";
     const isAllowed: boolean = isIpInCidrs(clientIP, PAYNET_WHITELIST);
 
-    console.log("isAllowed: ", isAllowed);
-
     if(!isAllowed) {
+        console.warn(`[paynet] IP ruxsat etilmagan: ${clientIP}`);
         return res.sendStatus(403);
     };
 
     const USERNAME = process.env.PAYNET_USERNAME;
     const PASSWORD = process.env.PAYNET_PASSWORD;
 
-    console.log("Paynet Auth Middleware: Checking credentials");
-    console.log({
-        "username": USERNAME ? USERNAME : "not configured",
-        "password": PASSWORD ? PASSWORD : "not configured",
-    });
 
     if (!USERNAME || !PASSWORD) {
         console.error("Paynet credentials not configured in environment variables");
@@ -45,9 +40,12 @@ export function basicAuth(req: Request, res: Response, next: NextFunction) {
     }
 
     const base64: string = String(auth.split(" ")[1]);
-    const [user, pass] = Buffer.from(base64, "base64").toString().split(":");
+    const decoded = Buffer.from(base64, "base64").toString();
+    const sep = decoded.indexOf(":");
+    const user = sep >= 0 ? decoded.slice(0, sep) : "";
+    const pass = sep >= 0 ? decoded.slice(sep + 1) : "";
 
-    if (user !== USERNAME || pass !== PASSWORD) {
+    if (!safeEqual(user, USERNAME) || !safeEqual(pass, PASSWORD)) {
         console.log("Paynet Auth Middleware: Invalid credentials");
 
         return res.sendStatus(401);

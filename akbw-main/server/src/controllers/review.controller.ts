@@ -39,7 +39,7 @@ export const getProductReviews = async (req: Request, res: Response) => {
         console.log(product_id, "PRODUCT ID");
 
         const page = parseInt(req.query.page as string) || 1;
-        const limit = parseInt(req.query.limit as string) || 10;
+        const limit = Math.min(50, Math.max(1, parseInt(req.query.limit as string) || 10));
         const skip = (page - 1) * limit;
 
         const [reviews, total] = await Promise.all([
@@ -49,7 +49,7 @@ export const getProductReviews = async (req: Request, res: Response) => {
                 skip,
                 take: limit,
                 include: {
-                    user: true,
+                    user: { select: { id: true, name: true, lastName: true, profile_picture: true } },
                 }
             }),
             prisma.reviews.count({
@@ -57,7 +57,6 @@ export const getProductReviews = async (req: Request, res: Response) => {
             }),
         ]);
 
-        console.log(reviews, "REVIES");
 
         res.json({
             data: reviews,
@@ -77,7 +76,7 @@ export const getProductReviews = async (req: Request, res: Response) => {
 export const getAllReviews = async (req: Request, res: Response) => {
     try {
         const page = parseInt(req.query.page as string) || 1;
-        const limit = parseInt(req.query.limit as string) || 10;
+        const limit = Math.min(50, Math.max(1, parseInt(req.query.limit as string) || 10));
         const skip = (page - 1) * limit;
 
         const [reviews, total] = await Promise.all([
@@ -116,6 +115,11 @@ export const updateReview = async (req: Request, res: Response) => {
     try {
         const { reviewId } = req.params;
         const { rating, comment } = req.body;
+
+        const own = await prisma.reviews.findUnique({ where: { id: Number(reviewId) }, select: { user_id: true } });
+        if (!own || own.user_id !== req.user) {
+            return res.status(403).json({ message: "Forbidden", ok: false });
+        }
 
         const review = await prisma.reviews.update({
             where: {
@@ -169,7 +173,7 @@ export const getTopReviews = async (req: Request, res: Response) => {
             },
             take: 20, // Limit to recent top reviews
             include: {
-                user: true
+                user: { select: { id: true, name: true, lastName: true, profile_picture: true } },
             }
         });
 
@@ -186,8 +190,10 @@ export const getTopReviews = async (req: Request, res: Response) => {
 export const deleteReview = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { reviewId } = req.params;
-        console.log(req.params, "DELETE REVIEW PARAMS");
-        console.log(reviewId, "this is review id");
+        const own = await prisma.reviews.findUnique({ where: { id: Number(reviewId) }, select: { user_id: true } });
+        if (!own || own.user_id !== req.user) {
+            return res.status(403).json({ message: "Forbidden", ok: false });
+        }
 
         await prisma.reviews.delete({
             where: {

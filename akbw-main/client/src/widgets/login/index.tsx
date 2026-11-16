@@ -122,9 +122,13 @@ function Login({ trigger, className }: LoginProps) {
     mutationKey: ['verify-sms'],
     mutationFn: ({ phone, code }: { phone: string; code: string }) =>
       verifySms(phone, code),
-    onSuccess: async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onSuccess: async (res: any) => {
       setErrors({});
-      await loginMutation.mutateAsync({ phone });
+      await loginMutation.mutateAsync({
+        phone,
+        verifyToken: res?.data?.verifyToken ?? '',
+      });
     },
     onError: () => {
       toast.error(t('login_error'));

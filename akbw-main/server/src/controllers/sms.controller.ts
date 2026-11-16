@@ -2,6 +2,7 @@ import { type NextFunction, type Response, type Request } from "express";
 import { randomNumbers } from "../utils/random.utils.js";
 import { prisma } from "../db/client.js";
 import smsService from "../services/sms.service.js";
+import { signPhoneProof } from "../utils/phoneProof.util.js";
 
 // Sinov raqamlari (SMS yuborilmaydi, doimiy kod bilan kiriladi):
 //   TEST_LOGIN_PHONES=+998000000001,+998000000002   TEST_LOGIN_CODE=12345 (5 xonali)
@@ -150,6 +151,7 @@ export const verify = async (
     return res.status(200).json({
       message: "Code verified successfully",
       ok: true,
+      verifyToken: signPhoneProof(req.body.phone),
     });
   } catch (error) {
     next(error);

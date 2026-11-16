@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { auth } from "../middleware/auth.middleware.js";
+import { auth, userAuth } from "../middleware/auth.middleware.js";
 import { checkAdmins } from "../middleware/admin.middleware.js";
 import {
     createAskForProductChat,
@@ -24,13 +24,13 @@ import {
 
 const router = Router();
 
-router.post("/", auth, validate(createHelpChatSchema), createHelpChat);
-router.get("/help-chat", auth, getHelpChat);
-router.post("/help-chat-message", auth, validate(createHelpMessageSchema), createHelpChatMessage);
+router.post("/", userAuth, validate(createHelpChatSchema), createHelpChat);
+router.get("/help-chat", userAuth, getHelpChat);
+router.post("/help-chat-message", userAuth, validate(createHelpMessageSchema), createHelpChatMessage);
 
-router.post("/ask-for-product-chat", auth, validate(createAskForProductChatSchema), createAskForProductChat)
-router.get("/ask-for-product-chat", auth, getAskForProductChat);
-router.post("/ask-for-product-message", auth, validate(createAskForProductMessageSchema), createAskForProductMessage);
+router.post("/ask-for-product-chat", userAuth, validate(createAskForProductChatSchema), createAskForProductChat)
+router.get("/ask-for-product-chat", userAuth, getAskForProductChat);
+router.post("/ask-for-product-message", userAuth, validate(createAskForProductMessageSchema), createAskForProductMessage);
 
 router.get("/admin/help-chats", checkAdmins, getAllHelpChats);
 router.post("/admin/help-chat-message", checkAdmins, validate(createHelpMessageSchema), createHelpChatMessage);

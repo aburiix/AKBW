@@ -12,6 +12,7 @@ export const adminLogin = async (req: Request, res: Response, next: NextFunction
         const admin = await prisma.admins.findUnique({
             where: { phone },
             include: { access: true },
+            omit: { password: false },
         });
 
         if (!admin) {

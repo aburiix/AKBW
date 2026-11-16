@@ -1,3 +1,4 @@
+import { escapeHtml } from "../utils/html.util.js";
 import { ShipmentState, OrderState } from "../generated/prisma/client/index.js";
 import type { NextFunction, Request, Response } from "express";
 import deliveryService from "../services/delivery.service.js";
@@ -63,14 +64,14 @@ async function notifyBTSOrderCreated(shipmentId: number, trackingNumber: string)
         message += `Yuk raqami: #${shipment.id}\n`;
         message += `BTS buyurtma ID: ${trackingNumber}\n`;
         message += `Buyurtma raqami: #${shipment.order.id}\n`;
-        message += `Mijoz: ${shipment.order.user.name} ${shipment.order.user.lastName}\n`;
+        message += `Mijoz: ${escapeHtml(shipment.order.user.name)} ${escapeHtml(shipment.order.user.lastName)}\n`;
         message += `Telefon: ${shipment.order.user.phone}\n\n`;
         message += `Buyurtma to'lov holati: ${shipment.order.state}`
         message += `Mahsulotlar:\n`;
 
         shipment.orderItems.forEach((item, idx) => {
             const productName = item?.product?.translations?.[0]?.name || `Mahsulot ${item.productId}`;
-            message += `${idx + 1}. ${productName} - ${item.quantity} ta\n`;
+            message += `${idx + 1}. ${escapeHtml(productName)} - ${item.quantity} ta\n`;
         });
 
         // Notify factory workers if factory shipment
@@ -310,6 +311,12 @@ export const updateShipmentStatus = async (req: Request, res: Response, next: Ne
                 ok: false,
                 error: "Shipment not found",
             });
+        }
+
+        // Fabrika faqat o'ziga tegishli jo'natmani o'zgartira oladi
+        const callerFactoryId = (req as any).factoryId;
+        if (callerFactoryId && shipment.factoryId !== callerFactoryId) {
+            return res.status(403).json({ ok: false, error: "Forbidden" });
         }
 
         const validNextStates = VALID_TRANSITIONS[shipment.state as ShipmentState] || [];

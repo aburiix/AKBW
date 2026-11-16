@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import { prisma } from "../db/client.js";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import { checkPhoneProof } from "../utils/phoneProof.util.js";
 
 export const register = async (
   req: Request,
@@ -9,6 +10,9 @@ export const register = async (
   next: NextFunction,
 ) => {
   try {
+    if (!checkPhoneProof(req.body.verifyToken, req.body.phone)) {
+      return res.status(401).json({ message: "Telefon raqami SMS kod bilan tasdiqlanmagan", ok: false });
+    }
     const user = await prisma.user.findUnique({
       where: {
         phone: req.body.phone,
@@ -70,6 +74,9 @@ export const register = async (
 
 export const login = async (req: Request, res: Response) => {
   try {
+    if (!checkPhoneProof(req.body.verifyToken, req.body.phone)) {
+      return res.status(401).json({ message: "Telefon raqami SMS kod bilan tasdiqlanmagan", ok: false });
+    }
     const user = await prisma.user.findUnique({
       where: {
         phone: req.body.phone,
