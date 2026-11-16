@@ -52,7 +52,9 @@ export default function MenuItems({
         return (
           <button
             key={item.id}
-            onClick={() => setProfileSubSection(item.id)}
+            onClick={() =>
+              item.action ? item.action() : setProfileSubSection(item.id)
+            }
             className="w-full cursor-pointer flex items-center gap-4 p-3 pr-4 rounded-[20px] border border-line hover:border-line-2 hover:bg-ivory/[0.03] transition-all group"
           >
             {content}

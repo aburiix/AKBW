@@ -18,12 +18,12 @@ import {
   MessageSquare,
   Menu as MenuIcon,
   Settings,
-  Headphones,
   HelpCircle,
   LogOut,
   Info,
   Phone,
   ChevronDown,
+  Sparkles,
 } from 'lucide-react';
 import React from 'react';
 import * as z from 'zod';
@@ -278,7 +278,12 @@ function Profile({ children }: ProfileProps) {
         id: 'supportChat' as SubSectionType,
         title: t('menu_items.support.title'),
         description: t('menu_items.support.desc'),
-        icon: Headphones,
+        icon: Sparkles,
+        // "Yordam" — AKBW AI chatini ochadi (profil oynasi yopiladi)
+        action: () => {
+          onOpenChange(false);
+          window.dispatchEvent(new CustomEvent('akbw:assistant'));
+        },
         color: 'from-teal-600 to-teal-700',
       },
       {

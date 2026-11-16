@@ -613,7 +613,7 @@ declare const messages: {
       },
       "support": {
         "title": "Yordam",
-        "desc": "Admin bilan bog'lanish"
+        "desc": "AKBW AI yordamchisi bilan suhbat"
       },
       "inquiry": {
         "title": "Mahsulot so'rash",
