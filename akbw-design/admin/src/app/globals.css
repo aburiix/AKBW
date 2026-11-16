@@ -3,10 +3,98 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * AKBW Admin — yangi dizayn (maket: dizayn-maket/admin-v1.html)
+ * Saytning v5 palitrasi: to'q iliq fon, fil suyagi (ivory) aksent, oltin/bronza.
+ * Eski sahifalardagi neytral Tailwind ranglari (white/black/gray-*) va holat ranglari
+ * (red/green/blue/yellow…) shu yerda brend tokenlariga bog'langan — shuning uchun
+ * har bir sahifa va modal tungi/kunduzgi rejimda avtomatik yangi uslubda chiqadi.
+ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-golos-text);
+  --font-sans: var(--font-golos-text), 'Inter', system-ui, sans-serif;
+  --font-serif: var(--font-didot), 'Didot', Georgia, serif;
+  --font-logo: var(--font-kenao), serif;
+  --font-label: var(--font-futura), 'Futura', sans-serif;
+
+  /* brend tokenlari (bg-s1, text-mute, border-line …) */
+  --color-bg: var(--bg);
+  --color-s1: var(--s1);
+  --color-s2: var(--s2);
+  --color-s3: var(--s3);
+  --color-ink: var(--text);
+  --color-mute: var(--mute);
+  --color-mute2: var(--mute2);
+  --color-line: var(--line);
+  --color-line2: var(--line2);
+  --color-ivory: var(--ivory);
+  --color-on-ivory: var(--on-ivory);
+  --color-bronze: var(--bronze);
+  --color-star: var(--star);
+  --color-ok: var(--ok);
+  --color-sale: var(--sale);
+  --color-info: var(--info);
+
+  /* neytral ranglar → brend */
+  --color-white: var(--n-white);
+  --color-black: var(--n-black);
+  --color-gray-50: var(--n-50);
+  --color-gray-100: var(--n-100);
+  --color-gray-200: var(--n-200);
+  --color-gray-300: var(--n-300);
+  --color-gray-400: var(--n-400);
+  --color-gray-500: var(--n-500);
+  --color-gray-600: var(--n-600);
+  --color-gray-700: var(--n-700);
+  --color-gray-800: var(--n-800);
+  --color-gray-900: var(--n-900);
+  --color-slate-50: var(--n-50);
+
+  /* holat ranglari → brend (ok / sale / info / star / lilac) */
+  --color-green-50: color-mix(in oklab, var(--ok) 13%, transparent);
+  --color-green-100: color-mix(in oklab, var(--ok) 24%, transparent);
+  --color-green-500: var(--ok);
+  --color-green-600: var(--ok);
+  --color-green-700: var(--ok);
+  --color-emerald-50: color-mix(in oklab, var(--ok) 13%, transparent);
+  --color-emerald-500: var(--ok);
+  --color-emerald-600: var(--ok);
+  --color-red-50: color-mix(in oklab, var(--sale) 13%, transparent);
+  --color-red-100: color-mix(in oklab, var(--sale) 24%, transparent);
+  --color-red-400: var(--sale);
+  --color-red-500: var(--sale);
+  --color-red-600: var(--sale);
+  --color-red-700: var(--sale);
+  --color-blue-50: color-mix(in oklab, var(--info) 13%, transparent);
+  --color-blue-100: color-mix(in oklab, var(--info) 24%, transparent);
+  --color-blue-500: var(--info);
+  --color-blue-600: var(--info);
+  --color-blue-700: var(--info);
+  --color-sky-500: var(--info);
+  --color-yellow-50: color-mix(in oklab, var(--star) 13%, transparent);
+  --color-yellow-100: color-mix(in oklab, var(--star) 24%, transparent);
+  --color-yellow-400: var(--star);
+  --color-yellow-600: var(--star);
+  --color-yellow-800: var(--star);
+  --color-amber-50: color-mix(in oklab, var(--star) 13%, transparent);
+  --color-amber-200: color-mix(in oklab, var(--star) 35%, transparent);
+  --color-amber-900: var(--star);
+  --color-orange-50: color-mix(in oklab, var(--star) 13%, transparent);
+  --color-orange-100: color-mix(in oklab, var(--star) 24%, transparent);
+  --color-orange-400: var(--star);
+  --color-orange-500: var(--star);
+  --color-orange-600: var(--star);
+  --color-purple-50: color-mix(in oklab, var(--lilac) 13%, transparent);
+  --color-purple-100: color-mix(in oklab, var(--lilac) 24%, transparent);
+  --color-purple-500: var(--lilac);
+  --color-purple-600: var(--lilac);
+  --color-purple-700: var(--lilac);
+  --color-indigo-50: color-mix(in oklab, var(--lilac) 13%, transparent);
+  --color-indigo-100: color-mix(in oklab, var(--lilac) 24%, transparent);
+  --color-indigo-600: var(--lilac);
+  --color-indigo-700: var(--lilac);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -42,82 +130,124 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* Ranglarni ko'rish uchun https://oklch.com/ saytidan foydalaning */
+/* ── Kunduzgi (light) ── */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(62.3% 0.214 259.815);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --bg: #f6f4f0;
+  --s1: #fbfaf7;
+  --s2: #f0ede7;
+  --s3: #e6e2da;
+  --text: #13110f;
+  --mute: rgba(19, 17, 15, 0.62);
+  --mute2: rgba(19, 17, 15, 0.42);
+  --line: rgba(19, 17, 15, 0.09);
+  --line2: rgba(19, 17, 15, 0.18);
+  --ivory: #13110f;
+  --on-ivory: #f6f0e6;
+  --bronze: #8a6243;
+  --star: #8a6243;
+  --ok: #4f7a3f;
+  --sale: #a94a33;
+  --info: #3e6488;
+  --lilac: #6a5a8a;
+
+  --n-white: #fbfaf7;
+  --n-black: #13110f;
+  --n-50: #f3f0ea;
+  --n-100: #e9e5dd;
+  --n-200: #dcd7cd;
+  --n-300: #bfb9ad;
+  --n-400: #857f75;
+  --n-500: #6f6a61;
+  --n-600: #5a554d;
+  --n-700: #45413b;
+  --n-800: #2c2925;
+  --n-900: #13110f;
+
+  --radius: 0.75rem;
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--s1);
+  --card-foreground: var(--text);
+  --popover: var(--s1);
+  --popover-foreground: var(--text);
+  --primary: var(--ivory);
+  --primary-foreground: var(--on-ivory);
+  --secondary: var(--s2);
+  --secondary-foreground: var(--text);
+  --muted: var(--s2);
+  --muted-foreground: var(--n-400);
+  --accent: var(--s2);
+  --accent-foreground: var(--text);
+  --destructive: var(--sale);
+  --border: var(--line);
+  --input: var(--line2);
+  --ring: var(--line2);
+  --chart-1: var(--star);
+  --chart-2: var(--ok);
+  --chart-3: var(--info);
+  --chart-4: var(--sale);
+  --chart-5: var(--lilac);
+  --sidebar: var(--s1);
+  --sidebar-foreground: var(--text);
+  --sidebar-primary: var(--ivory);
+  --sidebar-primary-foreground: var(--on-ivory);
+  --sidebar-accent: var(--s2);
+  --sidebar-accent-foreground: var(--text);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--line2);
 }
 
+/* ── Tungi (dark) — asosiy ── */
 .dark {
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(62.3% 0.214 259.815);
-  --primary-foreground: oklch(0.21 0.006 285.885);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.552 0.016 285.938);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.552 0.016 285.938);
+  --bg: #0e0d0b;
+  --s1: #161512;
+  --s2: #1d1b18;
+  --s3: #26231f;
+  --text: #f6f0e6;
+  --mute: rgba(246, 240, 230, 0.62);
+  --mute2: rgba(246, 240, 230, 0.4);
+  --line: rgba(246, 240, 230, 0.1);
+  --line2: rgba(246, 240, 230, 0.2);
+  --ivory: #efe8db;
+  --on-ivory: #13110f;
+  --bronze: #8a6243;
+  --star: #e6c58a;
+  --ok: #a9c49a;
+  --sale: #e0896f;
+  --info: #9fb4c9;
+  --lilac: #b9a6d0;
+
+  --n-white: #161512;
+  --n-black: #efe8db;
+  --n-50: #1d1b18;
+  --n-100: #26231f;
+  --n-200: #34302a;
+  --n-300: #5a554d;
+  --n-400: #9a9387;
+  --n-500: #aaa398;
+  --n-600: #bdb6aa;
+  --n-700: #d3ccc0;
+  --n-800: #e4ddd1;
+  --n-900: #f6f0e6;
+
+  --muted-foreground: var(--n-400);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
   body {
     @apply bg-background text-foreground;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--star) 35%, transparent);
   }
 }
 
@@ -125,4 +255,83 @@
   .custom-container {
     @apply container px-4 mx-auto;
   }
+  .lbl {
+    font: 500 10.5px/1 var(--font-futura), "Futura", sans-serif;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mute2);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+ * Eski sahifalar uchun uslub moslashtirish (layer'siz → utility'lardan ustun).
+ * Mantiq/funksiyaga tegmaydi, faqat ko'rinish.
+ */
+.akbw-main h1 {
+  font-family: var(--font-didot), "Didot", Georgia, serif;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-size: clamp(26px, 3vw, 34px);
+  line-height: 1.1;
+}
+.akbw-main h2,
+[role='dialog'] h2 {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+.akbw-main .font-black {
+  font-weight: 700;
+}
+.akbw-main .rounded-4xl,
+.akbw-main .rounded-\[32px\],
+.akbw-main .rounded-\[40px\],
+.akbw-main .rounded-3xl {
+  border-radius: 18px;
+}
+.akbw-main .rounded-\[24px\],
+.akbw-main .rounded-\[28px\] {
+  border-radius: 16px;
+}
+.akbw-main .shadow-sm,
+.akbw-main .shadow-md,
+.akbw-main .shadow-lg,
+.akbw-main .shadow-xl,
+.akbw-main .hover\:shadow-md:hover,
+.akbw-main .hover\:shadow-xl:hover {
+  box-shadow: none;
+}
+/* modal fonlari: qora pardani qora qoldiramiz (ivory'ga aylanmasin) */
+.bg-black\/20,
+.bg-black\/40,
+.bg-black\/50,
+.bg-black\/60 {
+  background-color: rgb(0 0 0 / 0.5) !important;
+}
+/* jadval sarlavhalari Futura yorliq uslubida */
+.akbw-main thead th {
+  font-family: var(--font-futura), "Futura", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--mute2);
+}
+
+@keyframes akbw-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+.akbw-page-in {
+  animation: akbw-in 0.3s ease;
 }

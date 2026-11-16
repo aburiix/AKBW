@@ -98,9 +98,9 @@ export default function Statistics() {
     })) || [];
 
   const trafficData = [
-    { name: 'Instagram', value: 45, color: '#000000', icon: Instagram },
-    { name: 'Telegram', value: 30, color: '#333333', icon: Send },
-    { name: 'Direct', value: 25, color: '#666666', icon: MousePointer2 },
+    { name: 'Instagram', value: 45, color: 'var(--star)', icon: Instagram },
+    { name: 'Telegram', value: 30, color: 'var(--info)', icon: Send },
+    { name: 'Direct', value: 25, color: 'var(--ok)', icon: MousePointer2 },
   ];
   return (
     <div className="space-y-8 pb-10">
@@ -153,26 +153,26 @@ export default function Statistics() {
               <AreaChart data={salesTrend}>
                 <defs>
                   <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#000" stopOpacity={0.1} />
-                    <stop offset="95%" stopColor="#000" stopOpacity={0} />
+                    <stop offset="5%" stopColor="var(--star)" stopOpacity={0.1} />
+                    <stop offset="95%" stopColor="var(--star)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid
                   strokeDasharray="3 3"
                   vertical={false}
-                  stroke="#f0f0f0"
+                  stroke="var(--line)"
                 />
                 <XAxis
                   dataKey="name"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fontWeight: 900, fill: '#999' }}
+                  tick={{ fontSize: 10, fontWeight: 900, fill: 'var(--mute2)' }}
                   dy={10}
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fontWeight: 900, fill: '#999' }}
+                  tick={{ fontSize: 10, fontWeight: 900, fill: 'var(--mute2)' }}
                 />
                 <Tooltip
                   contentStyle={{
@@ -191,7 +191,7 @@ export default function Statistics() {
                 <Area
                   type="monotone"
                   dataKey="sales"
-                  stroke="#000"
+                  stroke="var(--star)"
                   strokeWidth={3}
                   fillOpacity={1}
                   fill="url(#colorSales)"
