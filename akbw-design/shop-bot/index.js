@@ -5,6 +5,8 @@ import { Telegraf, Markup } from "telegraf";
 
 dotenv.config();
 
+// Telegram HTML: ismdagi < > & xabarni buzmasin
+const esc = (v) => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const TOKEN = process.env.SHOP_BOT_TOKEN;
 const BASE = (process.env.WEBAPP_URL || "https://akbw.uz").replace(/\/$/, "");
 if (!TOKEN) throw new Error("SHOP_BOT_TOKEN .env faylida yo'q");
@@ -41,7 +43,7 @@ bot.use((ctx, next) => {
 bot.catch((err, ctx) => console.error(`[xato] ${ctx?.updateType}:`, err?.message || err));
 
 bot.start((ctx) =>
-  ctx.reply(T[lang(ctx)].hi(ctx.from?.first_name || ""), { parse_mode: "HTML", ...shopKeyboard(ctx) }),
+  ctx.reply(T[lang(ctx)].hi(esc(ctx.from?.first_name || "")), { parse_mode: "HTML", ...shopKeyboard(ctx) }),
 );
 bot.command("shop", (ctx) => ctx.reply(T[lang(ctx)].help, shopKeyboard(ctx)));
 bot.on("message", (ctx) => ctx.reply(T[lang(ctx)].help, shopKeyboard(ctx)));
