@@ -76,7 +76,7 @@ class SmsService {
 
     async sendSms({
         phone_number,
-        from = '4546',
+        from = process.env.ESKIZ_FROM || '4546',
         message,
         callback_url = ''
     }: {
@@ -90,8 +90,10 @@ class SmsService {
                 await this.getToken();
             }
 
+            // Eskiz faqat raqamlarni qabul qiladi: "+998 90 123 45 67" -> "998901234567"
+            const digits = String(phone_number).replace(/\D/g, "");
             const data = new FormData();
-            data.append("mobile_phone", phone_number);
+            data.append("mobile_phone", digits);
             data.append("message", message);
             data.append("from", from);
             data.append('callback_url', callback_url);
