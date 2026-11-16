@@ -146,3 +146,85 @@ export const chat = async (req: Request, res: Response) => {
     if (!res.writableEnded) res.end();
   }
 };
+
+// ---------------- Admin: barcha AKBW AI suhbatlari (faqat ko'rish) ----------------
+export const adminListThreads = async (req: Request, res: Response) => {
+  const q = String(req.query.q ?? "").trim();
+  const page = Math.max(1, Number(req.query.page) || 1);
+  const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 30));
+  const where: any = q
+    ? {
+        OR: [
+          { title: { contains: q, mode: "insensitive" } },
+          { user: { name: { contains: q, mode: "insensitive" } } },
+          { user: { lastName: { contains: q, mode: "insensitive" } } },
+          { user: { phone: { contains: q } } },
+        ],
+      }
+    : {};
+  const [total, rows] = await Promise.all([
+    prisma.assistantThread.count({ where }),
+    prisma.assistantThread.findMany({
+      where,
+      orderBy: { updatedAt: "desc" },
+      skip: (page - 1) * limit,
+      take: limit,
+      select: {
+        id: true,
+        title: true,
+        createdAt: true,
+        updatedAt: true,
+        user: { select: { id: true, name: true, lastName: true, phone: true } },
+        _count: { select: { messages: { where: { NOT: { ui: { equals: null as any } } } } } },
+        messages: {
+          where: { NOT: { ui: { equals: null as any } } },
+          orderBy: { id: "desc" },
+          take: 1,
+          select: { role: true, ui: true, createdAt: true },
+        },
+      },
+    }),
+  ]);
+  res.json({
+    ok: true,
+    meta: { total, page, limit, totalPages: Math.ceil(total / limit) },
+    data: rows.map((t) => ({
+      id: t.id,
+      title: t.title,
+      createdAt: t.createdAt,
+      updatedAt: t.updatedAt,
+      user: t.user,
+      messageCount: t._count.messages,
+      last: t.messages[0]
+        ? { role: t.messages[0].role, text: String((t.messages[0].ui as any)?.text ?? "").slice(0, 160), createdAt: t.messages[0].createdAt }
+        : null,
+    })),
+  });
+};
+
+export const adminGetThread = async (req: Request, res: Response) => {
+  const thread = await prisma.assistantThread.findUnique({
+    where: { id: String(req.params.id) },
+    select: {
+      id: true,
+      title: true,
+      createdAt: true,
+      updatedAt: true,
+      user: { select: { id: true, name: true, lastName: true, phone: true, gender: true, createdAt: true } },
+    },
+  });
+  if (!thread) return res.status(404).json({ ok: false, message: "Topilmadi" });
+  const [messages, memories] = await Promise.all([
+    prisma.assistantMessage.findMany({
+      where: { threadId: thread.id, NOT: { ui: { equals: null as any } } },
+      orderBy: { id: "asc" },
+      select: { id: true, role: true, ui: true, createdAt: true },
+    }),
+    prisma.assistantMemory.findMany({
+      where: { userId: thread.user.id },
+      orderBy: { createdAt: "asc" },
+      select: { id: true, fact: true, createdAt: true },
+    }),
+  ]);
+  res.json({ ok: true, thread, messages, memories });
+};
