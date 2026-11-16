@@ -1,3 +1,4 @@
+import { checkAdminOrFactory } from "../middleware/security.middleware.js";
 import { Router } from "express";
 import {
     getWorkers,
@@ -14,9 +15,9 @@ import {
 
 const router = Router();
 
-router.get("/", auth, getWorkers);
-router.post("/", auth, validate(workerCreateValidator), createWorker);
-router.put("/:id", auth, validate(workerUpdateValidator), updateWorker);
-router.delete("/:id", auth, deleteWorker);
+router.get("/", checkAdminOrFactory, getWorkers);
+router.post("/", checkAdminOrFactory, validate(workerCreateValidator), createWorker);
+router.put("/:id", checkAdminOrFactory, validate(workerUpdateValidator), updateWorker);
+router.delete("/:id", checkAdminOrFactory, deleteWorker);
 
 export default router;
