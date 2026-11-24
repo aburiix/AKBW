@@ -45,11 +45,36 @@ export default function MobileTabbar() {
     if (!isIOS || isSafari || !vv || root.classList.contains('tg-app')) return;
 
     root.classList.add('ios-webview');
+    // Google ilovasi (GSA) pastki paneli sahifa ustida suzib turadi va sahifaga hech qanday
+    // o'lcham bermaydi (visualViewport/safe-area ham uni hisobga olmaydi). Skrinshotdan
+    // o'lchangan balandligi (panel + uy chizig'i) ≈ 77pt — menyuni shuncha yuqoriga ko'taramiz.
+    const overlayBar = /GSA\//.test(ua) && /iPhone|iPod/.test(ua) ? 77 : 0;
+    if (overlayBar) root.classList.add('ios-gsa');
+
+    // Diagnostika: akbw.uz/?vvdebug=1 — ekran o'lchamlarini ko'rsatadi
+    let dbg: HTMLDivElement | null = null;
+    if (/[?&]vvdebug=1/.test(location.search)) {
+      dbg = document.createElement('div');
+      dbg.style.cssText =
+        'position:fixed;top:0;left:0;right:0;z-index:99999;background:#000c;color:#0f0;font:11px/1.35 monospace;padding:6px;white-space:pre-wrap;pointer-events:none';
+      document.body.appendChild(dbg);
+    }
+
     let raf = 0;
     const update = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        root.style.setProperty('--vv-bottom', `${vv.offsetTop + vv.height}px`);
+        const bottom = vv.offsetTop + vv.height - overlayBar;
+        root.style.setProperty('--vv-bottom', `${bottom}px`);
+        if (dbg) {
+          const sa = getComputedStyle(root).getPropertyValue('--sab');
+          dbg.textContent = [
+            ua,
+            `inner ${innerWidth}x${innerHeight} client ${root.clientHeight} screen ${screen.width}x${screen.height}`,
+            `vv ${vv.width.toFixed(1)}x${vv.height.toFixed(1)} offTop ${vv.offsetTop.toFixed(1)} scale ${vv.scale}`,
+            `overlayBar ${overlayBar} -> --vv-bottom ${bottom.toFixed(1)} sab ${sa}`,
+          ].join('\n');
+        }
       });
     };
     update();
@@ -61,7 +86,8 @@ export default function MobileTabbar() {
       vv.removeEventListener('resize', update);
       vv.removeEventListener('scroll', update);
       window.removeEventListener('orientationchange', update);
-      root.classList.remove('ios-webview');
+      root.classList.remove('ios-webview', 'ios-gsa');
+      dbg?.remove();
     };
   }, []);
 

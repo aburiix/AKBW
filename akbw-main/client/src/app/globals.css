@@ -160,6 +160,8 @@
   /* Mobil pastki menyu uchun joy */
   @media (max-width: 767px) {
     body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+    /* iPhone Google ilovasi: menyu uning suzuvchi paneli ustiga (≈77pt) ko'tarilgan */
+    html.ios-gsa body { padding-bottom: calc(72px + 77px); }
   }
 }
 
@@ -299,6 +301,7 @@ html.tg-app .tabbar {
 }
 /* iPhone ichki brauzerlari (Google ilovasi, Instagram, Chrome…): panelni visualViewport
    pastiga mahkamlash — qiymatni MobileTabbar JS orqali yangilab turadi */
+:root { --sab: env(safe-area-inset-bottom); }
 html.ios-webview .tabbar {
   bottom: auto;
   top: var(--vv-bottom, 100dvh);
