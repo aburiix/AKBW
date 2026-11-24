@@ -30,6 +30,41 @@ export default function MobileTabbar() {
   );
   useEffect(() => setMounted(true), []);
 
+  // iPhone'dagi ichki brauzerlar (Google ilovasi, Instagram, Chrome va h.k.) — Safari emas.
+  // Ularda `bottom: 0` panel ilovaning pastki paneli ortida qolib ketadi, shuning uchun
+  // menyuni haqiqiy ko'rinadigan maydon (visualViewport) pastiga mahkamlaymiz.
+  // Telegram'ning o'z yechimi bor (html.tg-app), Safari'da esa oddiy `bottom: 0` ishlaydi.
+  useEffect(() => {
+    const ua = navigator.userAgent;
+    const isIOS =
+      /iPhone|iPad|iPod/.test(ua) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isSafari = /Version\/[\d.]+.*Safari\//.test(ua) && !/GSA\//.test(ua);
+    const vv = window.visualViewport;
+    const root = document.documentElement;
+    if (!isIOS || isSafari || !vv || root.classList.contains('tg-app')) return;
+
+    root.classList.add('ios-webview');
+    let raf = 0;
+    const update = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        root.style.setProperty('--vv-bottom', `${vv.offsetTop + vv.height}px`);
+      });
+    };
+    update();
+    vv.addEventListener('resize', update);
+    vv.addEventListener('scroll', update);
+    window.addEventListener('orientationchange', update);
+    return () => {
+      cancelAnimationFrame(raf);
+      vv.removeEventListener('resize', update);
+      vv.removeEventListener('scroll', update);
+      window.removeEventListener('orientationchange', update);
+      root.classList.remove('ios-webview');
+    };
+  }, []);
+
   const tab = (
     href: string,
     label: string,

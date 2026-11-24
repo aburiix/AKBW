@@ -297,6 +297,14 @@ html.tg-app .tabbar {
   -webkit-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
+/* iPhone ichki brauzerlari (Google ilovasi, Instagram, Chrome…): panelni visualViewport
+   pastiga mahkamlash — qiymatni MobileTabbar JS orqali yangilab turadi */
+html.ios-webview .tabbar {
+  bottom: auto;
+  top: var(--vv-bottom, 100dvh);
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+}
 
 /* Kiyib ko'rish: AI ishlayotganda skaner chizig'i */
 .tryon-scan { animation: tryon-scan 2.2s cubic-bezier(.45,0,.55,1) infinite; }
