@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { prisma } from "../db/client.js";
 
 export const auth = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -59,10 +60,19 @@ const verifyToken = (req: Request): any | null => {
 };
 
 /** Faqat mijoz tokeni: id — UUID qator, role yo'q */
-export const userAuth = (req: Request, res: Response, next: NextFunction) => {
+export const userAuth = async (req: Request, res: Response, next: NextFunction) => {
   const d = verifyToken(req);
   if (!d || d.role || typeof d.id !== "string" || !d.id) {
     return res.status(401).json({ message: "Unauthorized", ok: false });
+  }
+  // Token 7 kun amal qiladi: akkaunt o'chirilgan (yoki yo'q) bo'lsa, eski token ham ishlamasin
+  try {
+    const u = await prisma.user.findUnique({ where: { id: d.id }, select: { phone: true } });
+    if (!u || u.phone.startsWith("deleted:")) {
+      return res.status(401).json({ message: "Unauthorized", ok: false });
+    }
+  } catch (error) {
+    return next(error);
   }
   req.user = d.id;
   next();

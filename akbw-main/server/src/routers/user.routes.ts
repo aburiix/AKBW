@@ -5,7 +5,8 @@ import {
 import {
     getUsers,
     getMe,
-    updateProfile
+    updateProfile,
+    deleteMe
 } from "../controllers/user.controller.js";
 import { auth, userAuth } from "../middleware/auth.middleware.js";
 
@@ -13,6 +14,7 @@ const router = Router();
 
 router.get("/me", userAuth, getMe);
 router.put("/me", userAuth, updateProfile);
+router.delete("/me", userAuth, deleteMe);
 router.get("/", checkAdmins, getUsers);
 
 export default router;

@@ -20,6 +20,7 @@ const { signPhoneProof, checkPhoneProof } = await import("../src/utils/phoneProo
 const { safeEqual } = await import("../src/utils/safeEqual.util.js");
 const { checkSignatureToken } = await import("../src/utils/click.unit.js");
 const { userAuth, factoryAuth } = await import("../src/middleware/auth.middleware.js");
+const { prisma } = await import("../src/db/client.js");
 const { paymeMiddleware } = await import("../src/middleware/payme.middleware.js");
 const { basicAuth: paynetAuth } = await import("../src/middleware/paynet.middleware.js");
 const { checkBotSecret } = await import("../src/middleware/security.middleware.js");
@@ -65,7 +66,12 @@ test("telefon tasdig'i faqat o'sha raqam uchun ishlaydi", () => {
 
 // ── 2. Rollar aralashmasligi ──────────────────────────────────────
 test("userAuth: faqat mijoz tokeni", async () => {
+  // bazasiz test: foydalanuvchi qidiruvi soxtalashtiriladi
+  const users: Record<string, { phone: string }> = { "uuid-1": { phone: "+998 90 000 00 01" }, "uuid-del": { phone: "deleted:uuid-del" } };
+  (prisma.user as any).findUnique = async ({ where }: any) => users[where.id] ?? null;
   assert.equal((await run(userAuth, { headers: bearer({ id: "uuid-1" }) })).next, true);
+  assert.equal((await run(userAuth, { headers: bearer({ id: "uuid-del" }) })).status, 401, "o'chirilgan akkaunt tokeni");
+  assert.equal((await run(userAuth, { headers: bearer({ id: "uuid-yoq" }) })).status, 401, "mavjud bo'lmagan foydalanuvchi");
   assert.equal((await run(userAuth, { headers: bearer({ id: 1 }) })).status, 401, "admin tokeni");
   assert.equal((await run(userAuth, { headers: bearer({ id: 3, role: "factory" }) })).status, 401, "fabrika tokeni");
   assert.equal((await run(userAuth, { headers: { authorization: "Bearer " + jwt.sign({ id: "u" }, "boshqa") } })).status, 401);
