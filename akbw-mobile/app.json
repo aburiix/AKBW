@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "AKBW",
+    "slug": "akbw",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "akbw",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "uz.akbw.app",
+      "supportsTablet": false,
+      "icon": {
+        "dark": "./assets/images/icon.png",
+        "light": "./assets/images/icon-light.png",
+        "tinted": "./assets/images/icon-light.png"
+      }
+    },
+    "android": {
+      "package": "uz.akbw.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0E0D0B",
+        "foregroundImage": "./assets/images/icon-mark.png"
+      }
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F6F4F0",
+          "image": "./assets/images/icon-mark-dark.png",
+          "imageWidth": 110,
+          "dark": {
+            "backgroundColor": "#0E0D0B",
+            "image": "./assets/images/icon-mark.png"
+          }
+        }
+      ],
+      "expo-secure-store",
+      "expo-font",
+      "expo-web-browser",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Kiyib ko'rish uchun rasmingizni tanlashga ruxsat bering.",
+          "cameraPermission": "Kiyib ko'rish uchun suratga olishga ruxsat bering."
+        }
+      ],
+      "expo-localization"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
