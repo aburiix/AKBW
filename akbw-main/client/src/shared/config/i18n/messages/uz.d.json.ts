@@ -704,7 +704,9 @@ declare const messages: {
     "delete_account_confirm": "Ha, öçiriş",
     "delete_account_cancel": "Bekor qiliş",
     "delete_account_done": "Akkaunt öçirildi",
-    "delete_account_error": "Akkauntni öçirib bölmadi, qayta urinib köring"
+    "delete_account_error": "Akkauntni öçirib bölmadi, qayta urinib köring",
+    "gender_label": "Jins",
+    "phone_label": "Telefon"
   },
   "NewArrivalsPage": {
     "title": "Yangi Qöşilganlar",

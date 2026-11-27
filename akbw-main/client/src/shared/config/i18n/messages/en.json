@@ -692,7 +692,9 @@
     "delete_account_confirm": "Yes, delete",
     "delete_account_cancel": "Cancel",
     "delete_account_done": "Account deleted",
-    "delete_account_error": "Could not delete the account, please try again"
+    "delete_account_error": "Could not delete the account, please try again",
+    "gender_label": "Gender",
+    "phone_label": "Phone"
   },
   "NewArrivalsPage": {
     "title": "New Arrivals",

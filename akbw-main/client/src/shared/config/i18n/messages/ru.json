@@ -695,7 +695,9 @@
     "delete_account_confirm": "Да, удалить",
     "delete_account_cancel": "Отмена",
     "delete_account_done": "Аккаунт удалён",
-    "delete_account_error": "Не удалось удалить аккаунт, попробуйте ещё раз"
+    "delete_account_error": "Не удалось удалить аккаунт, попробуйте ещё раз",
+    "gender_label": "Пол",
+    "phone_label": "Телефон"
   },
   "NewArrivalsPage": {
     "title": "Новые поступления",

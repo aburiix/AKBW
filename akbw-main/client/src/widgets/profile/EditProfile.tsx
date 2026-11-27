@@ -1,125 +1,234 @@
-import { cn } from '@/shared/lib/utils';
-import { Button } from '@/shared/ui/button';
-import { Input } from '@/shared/ui/input';
-import { ArrowLeft, ChevronDown } from 'lucide-react';
-import React from 'react';
-import { useTranslations } from 'next-intl';
+'use client';
 
-interface Props {
-  handleBackMenu: () => void;
-  name: string;
-  lastName: string;
-  gender: string;
-  phone: string;
-  errors: Record<string, string>;
-  setName: (name: string) => void;
-  setLastName: (lastName: string) => void;
-  setGender: (gender: string) => void;
-  handlePhoneChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSaveProfile: () => void;
-}
+import React, { useEffect, useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
+import { ArrowLeft } from 'lucide-react';
+import { useUser, useUpdateUser } from '@/features/user/lib/hooks';
+import { toast } from '@/shared/ui/toast';
+import { cn } from '@/shared/lib/utils';
+import { Chip, PickerField } from '@/widgets/auth-sheet';
+import {
+  REGION_NAMES,
+  UZ_REGIONS,
+  toNewLatinName,
+} from '@/shared/constants/uzRegions';
+
+/**
+ * Profilni tahrirlash — ilovadagi ekran bilan bir xil: ro'yxatdan o'tishdagi barcha maydonlar
+ * (ism, familiya, jins, tug'ilgan sana, viloyat, tuman, email). Telefon faqat ko'rsatiladi.
+ */
+const LBL = 'lbl text-ivory/40';
+const input =
+  'w-full h-[54px] rounded-full bg-surface border border-line-2 px-[22px] text-[16px] text-ivory placeholder:text-ivory/40 outline-none focus:border-ivory/40';
 
 export default function EditProfile({
   handleBackMenu,
-  handleSaveProfile,
-  handlePhoneChange: _handlePhoneChange,
-  name,
-  lastName,
-  gender,
-  phone,
-  errors,
-  setName,
-  setLastName,
-  setGender,
-}: Props) {
-  const t = useTranslations('Profile');
-  const tReg = useTranslations('Register');
+  profileImage,
+}: {
+  handleBackMenu: () => void;
+  profileImage?: string;
+}) {
+  const t = useTranslations('Auth');
+  const tp = useTranslations('Profile');
+  const locale = useLocale();
+  const show = (v: string) => (locale === 'uz' ? toNewLatinName(v) : v);
+  const { data } = useUser();
+  const update = useUpdateUser();
+
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [gender, setGender] = useState('male');
+  const [day, setDay] = useState('');
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+  const [region, setRegion] = useState('');
+  const [district, setDistrict] = useState('');
+  const [email, setEmail] = useState('');
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const u = data?.data;
+    if (!u || loaded) return;
+    setName(u.name ?? '');
+    setLastName(u.lastName ?? '');
+    setGender(u.gender || 'male');
+    if (u.birthDate) {
+      const d = new Date(u.birthDate);
+      setDay(String(d.getUTCDate()));
+      setMonth(String(d.getUTCMonth() + 1));
+      setYear(String(d.getUTCFullYear()));
+    }
+    setRegion(u.region ?? '');
+    setDistrict(u.district ?? '');
+    setEmail(u.email ?? '');
+    setLoaded(true);
+  }, [data, loaded]);
+
+  const dateEmpty = !day && !month && !year;
+  const birthDate = (() => {
+    const d = Number(day),
+      m = Number(month),
+      y = Number(year);
+    if (!d || !m || year.length !== 4) return '';
+    const dt = new Date(Date.UTC(y, m - 1, d));
+    if (
+      dt.getUTCDate() !== d ||
+      dt.getUTCMonth() !== m - 1 ||
+      y < 1920 ||
+      dt > new Date()
+    )
+      return '';
+    return dt.toISOString().slice(0, 10);
+  })();
+  const emailOk =
+    !email.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const canSave =
+    name.trim().length >= 2 &&
+    lastName.trim().length >= 2 &&
+    (dateEmpty || !!birthDate) &&
+    emailOk;
+
+  const save = async () => {
+    try {
+      await update.mutateAsync({
+        name: name.trim(),
+        lastName: lastName.trim(),
+        gender,
+        email: email.trim(),
+        ...(birthDate ? { birthDate } : {}),
+        ...(region ? { region } : {}),
+        ...(district ? { district } : {}),
+        ...(profileImage !== undefined
+          ? { profile_picture: profileImage }
+          : {}),
+      });
+      toast.success(tp('messages.save_success'));
+      handleBackMenu();
+    } catch {
+      /* xato xabari useUpdateUser ichida */
+    }
+  };
+
+  const digits = (v: string, n: number) => v.replace(/\D/g, '').slice(0, n);
+
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-[18px] pb-4">
       <button
         onClick={handleBackMenu}
-        className="flex items-center gap-2 cursor-pointer text-gray-600 hover:text-black transition-colors mb-4"
+        className="flex items-center gap-2 text-ivory/60 hover:text-ivory text-[14px] w-fit"
       >
-        <ArrowLeft size={20} />
-        <span className="font-medium">{t('back_to_menu')}</span>
+        <ArrowLeft size={18} />
+        {tp('back_to_menu')}
       </button>
 
-      <div className="space-y-3.5">
-        <div className="flex flex-col gap-1.5">
-          <label className="lbl text-ivory/55">{tReg('name_label')}</label>
-          <Input
-            placeholder={tReg('name_placeholder')}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={cn(
-              'h-11 shadow-sm border-line-2 focus:border-black focus:ring-1 focus:ring-black transition-all',
-              errors.name ? 'border-red-500' : 'placeholder:opacity-40',
-            )}
-          />
-          {errors.name && <p className="text-xs text-sale">{errors.name}</p>}
+      <label className="flex flex-col gap-2.5">
+        <span className={LBL}>{t('name')}</span>
+        <input
+          className={input}
+          autoComplete="given-name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <label className="flex flex-col gap-2.5">
+        <span className={LBL}>{t('last_name')}</span>
+        <input
+          className={input}
+          autoComplete="family-name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+      </label>
+      <div className="flex flex-col gap-2.5">
+        <span className={LBL}>{tp('gender_label')}</span>
+        <div className="flex gap-2">
+          <Chip on={gender === 'male'} onClick={() => setGender('male')}>
+            {t('male')}
+          </Chip>
+          <Chip on={gender === 'female'} onClick={() => setGender('female')}>
+            {t('female')}
+          </Chip>
         </div>
-
-        <div className="flex flex-col gap-1.5">
-          <label className="lbl text-ivory/55">{tReg('lastname_label')}</label>
-          <Input
-            placeholder={tReg('lastname_placeholder')}
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            className={cn(
-              'h-11 shadow-sm border-line-2 focus:border-black focus:ring-1 focus:ring-black transition-all',
-              errors.lastName ? 'border-red-500' : 'placeholder:opacity-40',
-            )}
-          />
-          {errors.lastName && (
-            <p className="text-xs text-sale">{errors.lastName}</p>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <label className="lbl text-ivory/55">{tReg('gender_label')}</label>
-          <div className="relative">
-            <select
-              name="gender"
-              id="gender"
-              className={cn(
-                'flex h-11 w-full rounded-md px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black focus-visible:border-black disabled:cursor-not-allowed disabled:opacity-50 appearance-none pr-8 bg-white shadow-sm border border-line-2 transition-all',
-                errors.gender ? 'border-red-500' : '',
-              )}
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-            >
-              <option value="male">{tReg('gender_male')}</option>
-              <option value="female">{tReg('gender_female')}</option>
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-          </div>
-          {errors.gender && (
-            <p className="text-xs text-sale">{errors.gender}</p>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <label className="lbl text-ivory/55">{tReg('phone_label')}</label>
-          <Input
-            placeholder={tReg('phone_placeholder')}
-            value={phone}
-            readOnly
-            className={cn(
-              'h-11 shadow-sm border-line-2 bg-ivory/[0.03] cursor-not-allowed text-gray-500 placeholder:opacity-40',
-            )}
-          />
-          <p className="text-[10px] text-gray-400">
-            {t('phone_readonly_note')}
-          </p>
-        </div>
-
-        <Button
-          onClick={handleSaveProfile}
-          className="w-full mt-6 h-11 bg-black hover:bg-black/90 text-white font-semibold shadow-md hover:shadow-lg transition-all"
-        >
-          {t('save_btn')}
-        </Button>
       </div>
+      <div className="flex flex-col gap-2.5">
+        <span className={LBL}>{t('birth')}</span>
+        <div className="flex gap-2">
+          <input
+            inputMode="numeric"
+            placeholder={t('day')}
+            value={day}
+            onChange={(e) => setDay(digits(e.target.value, 2))}
+            className={cn(input, 'flex-1 min-w-0 text-center px-2')}
+          />
+          <input
+            inputMode="numeric"
+            placeholder={t('month')}
+            value={month}
+            onChange={(e) => setMonth(digits(e.target.value, 2))}
+            className={cn(input, 'flex-1 min-w-0 text-center px-2')}
+          />
+          <input
+            inputMode="numeric"
+            placeholder={t('year')}
+            value={year}
+            onChange={(e) => setYear(digits(e.target.value, 4))}
+            className={cn(input, 'flex-[1.4] min-w-0 text-center px-2')}
+          />
+        </div>
+        {!dateEmpty && !birthDate && day && month && year.length === 4 && (
+          <p className="text-sale text-[13px] ml-2">{t('bad_date')}</p>
+        )}
+      </div>
+      <PickerField
+        label={t('region')}
+        value={region ? show(region) : ''}
+        items={REGION_NAMES.map((r) => ({ code: r, name: show(r) }))}
+        onSelect={(v) => {
+          setRegion(v);
+          setDistrict('');
+        }}
+      />
+      <PickerField
+        label={t('district')}
+        value={district ? show(district) : ''}
+        items={(UZ_REGIONS[region] ?? []).map((d) => ({
+          code: d,
+          name: show(d),
+        }))}
+        disabled={!region}
+        onSelect={setDistrict}
+      />
+      <label className="flex flex-col gap-2.5">
+        <span className={LBL}>{t('email')}</span>
+        <input
+          className={input}
+          type="email"
+          autoComplete="email"
+          autoCapitalize="none"
+          placeholder="name@gmail.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        {!emailOk && (
+          <p className="text-sale text-[13px] ml-2">{t('bad_email')}</p>
+        )}
+      </label>
+      <label className="flex flex-col gap-2.5">
+        <span className={LBL}>{tp('phone_label')}</span>
+        <input
+          className={cn(input, 'text-ivory/60')}
+          value={data?.data?.phone ?? ''}
+          readOnly
+        />
+      </label>
+      <button
+        type="button"
+        disabled={!canSave || update.isPending}
+        onClick={save}
+        className="lbl !text-[11.5px] h-[50px] w-full rounded-full bg-ivory text-night mt-2 disabled:opacity-40"
+      >
+        {update.isPending ? '…' : tp('save_btn')}
+      </button>
     </div>
   );
 }

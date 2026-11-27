@@ -143,7 +143,16 @@ export const api = {
   }) =>
     request<{ token: string; refreshToken?: string }>('/auth/register', { method: 'POST', body }),
   me: () => request<{ data: User; ok: boolean }>('/user/me'),
-  updateMe: (body: { name?: string; lastName?: string; gender?: string; profile_picture?: string }) =>
+  updateMe: (body: {
+    name?: string;
+    lastName?: string;
+    gender?: string;
+    profile_picture?: string;
+    birthDate?: string;
+    region?: string;
+    district?: string;
+    email?: string;
+  }) =>
     request<{ data: User; ok: boolean }>('/user/me', { method: 'PUT', body }),
   // sharhlar
   reviews: (productId: number | string, page = 1) =>

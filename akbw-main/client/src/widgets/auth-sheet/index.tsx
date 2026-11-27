@@ -467,7 +467,7 @@ function AuthForm({
   );
 }
 
-function Chip({
+export function Chip({
   on,
   onClick,
   children,
@@ -544,7 +544,7 @@ function Consent({
 }
 
 /** Ilovadagi PickerField: maydon + to'liq ekranli qidiruvli ro'yxat */
-function PickerField({
+export function PickerField({
   label,
   value,
   items,

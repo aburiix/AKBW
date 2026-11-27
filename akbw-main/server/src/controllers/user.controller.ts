@@ -52,16 +52,23 @@ export const getMe = async (req: Request, res: Response, next: NextFunction) => 
 export const updateProfile = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user_id = (req as any).user;
-        const { name, lastName, gender, profile_picture } = req.body;
+        const { name, lastName, gender, profile_picture, birthDate, region, district, email } = req.body;
+
+        // faqat yuborilgan maydonlar yangilanadi
+        const data: Record<string, unknown> = {};
+        if (name !== undefined) data.name = name;
+        if (lastName !== undefined) data.lastName = lastName;
+        if (gender !== undefined) data.gender = gender;
+        if (profile_picture !== undefined) data.profile_picture = profile_picture;
+        if (birthDate) data.birthDate = new Date(birthDate);
+        if (region !== undefined) data.region = region;
+        if (district !== undefined) data.district = district;
+        // bo'sh satr — emailni o'chirish
+        if (email !== undefined) data.email = String(email).trim().toLowerCase() || null;
 
         const user = await prisma.user.update({
             where: { id: user_id },
-            data: {
-                name,
-                lastName,
-                gender,
-                profile_picture
-            }
+            data: data as any,
         });
 
         return res.status(200).json({ message: "Profile updated successfully", data: user, ok: true });

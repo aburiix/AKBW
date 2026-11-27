@@ -10,6 +10,10 @@ export interface IUser {
   reviews?: any[];
   orders?: any[];
   referralCode?: string;
+  birthDate?: string | null;
+  region?: string | null;
+  district?: string | null;
+  email?: string | null;
 }
 
 export interface IUpdateUserRequest {
@@ -18,4 +22,8 @@ export interface IUpdateUserRequest {
   gender?: string;
   phone?: string;
   profile_picture?: string;
+  birthDate?: string;
+  region?: string;
+  district?: string;
+  email?: string;
 }

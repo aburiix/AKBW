@@ -9,11 +9,13 @@ import {
     deleteMe
 } from "../controllers/user.controller.js";
 import { auth, userAuth } from "../middleware/auth.middleware.js";
+import { validate } from "../middleware/validate.middleware.js";
+import { updateProfileSchema } from "../validators/auth.validator.js";
 
 const router = Router();
 
 router.get("/me", userAuth, getMe);
-router.put("/me", userAuth, updateProfile);
+router.put("/me", userAuth, validate(updateProfileSchema), updateProfile);
 router.delete("/me", userAuth, deleteMe);
 router.get("/", checkAdmins, getUsers);
 

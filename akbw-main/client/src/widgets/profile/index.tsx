@@ -26,7 +26,6 @@ import {
   Sparkles,
 } from 'lucide-react';
 import React from 'react';
-import * as z from 'zod';
 import { useUIStore } from '@/shared/model/use-ui-store';
 import ProfileHeader from './ProfileHeader';
 import MenuItems from './MenuItems';
@@ -37,7 +36,7 @@ import FavoriteTab from './FavoriteTab';
 import Notifications from './Notifications';
 import ReviewTab from './ReviewTab';
 import { useUserStore } from '@/shared/store/user.store';
-import { useUser, useUpdateUser } from '@/features/user/lib/hooks';
+import { useUser } from '@/features/user/lib/hooks';
 import { useSupportChat, useProductInquiry } from './lib/hooks';
 import { toast } from '@/shared/ui/toast';
 import { userRequest } from '@/shared/config/api/user/user.request';
@@ -61,13 +60,10 @@ interface ProfileProps {
 
 function Profile({ children, page }: ProfileProps) {
   const { data: userData } = useUser();
-  const updateUserMutation = useUpdateUser();
 
   const [name, setName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [gender, setGender] = React.useState('');
-  const [phone, setPhone] = React.useState('');
-  const [errors, setErrors] = React.useState<Record<string, string>>({});
   const [profileImage, setProfileImage] = React.useState<string>('');
   const [chatMessage, setChatMessage] = React.useState('');
   const [selectedImage, setSelectedImage] = React.useState<File | null>(null);
@@ -85,7 +81,6 @@ function Profile({ children, page }: ProfileProps) {
       setName(user.name || '');
       setLastName(user.lastName || '');
       setGender(user.gender || 'male');
-      setPhone(user.phone || '');
       setProfileImage(user.profile_picture || '');
     }
   }, [userData]);
@@ -112,68 +107,6 @@ function Profile({ children, page }: ProfileProps) {
 
   const token = useUserStore((s) => s.token);
   const setToken = useUserStore((s) => s.setToken);
-
-  const formatPhone = (value: string) => {
-    let cleaned = value.replace(/[^\d+]/g, '');
-    if (!cleaned.startsWith('+998')) {
-      cleaned = '+998' + cleaned.replace('+', '').replace('998', '');
-    }
-
-    let formatted = '+998';
-    const digits = cleaned.slice(4).replace(/\D/g, '');
-
-    if (digits.length > 0) formatted += ' ' + digits.slice(0, 2);
-    if (digits.length > 2) formatted += ' ' + digits.slice(2, 5);
-    if (digits.length > 5) formatted += ' ' + digits.slice(5, 7);
-    if (digits.length > 7) formatted += ' ' + digits.slice(7, 9);
-
-    return formatted;
-  };
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhone(e.target.value);
-    if (formatted.length <= 19) {
-      setPhone(formatted);
-    }
-  };
-
-  const profileSchema = React.useMemo(
-    () =>
-      z.object({
-        name: z.string().min(2, t('validation.name_min')),
-        lastName: z.string().min(2, t('validation.lastname_min')),
-        gender: z.string().min(2, t('validation.gender_min')),
-      }),
-    [t],
-  );
-
-  const handleSaveProfile = async () => {
-    const result = profileSchema.safeParse({ name, lastName, gender });
-
-    if (!result.success) {
-      const newErrors: Record<string, string> = {};
-      result.error.issues.forEach((issue: z.ZodIssue) => {
-        newErrors[issue.path[0] as string] = issue.message;
-      });
-      setErrors(newErrors);
-      return;
-    }
-
-    setErrors({});
-
-    try {
-      await updateUserMutation.mutateAsync({
-        name,
-        lastName,
-        gender,
-        profile_picture: profileImage,
-      });
-      toast.success(t('messages.save_success'));
-      handleBackToMenu();
-    } catch {
-      toast.error(t('messages.save_error'));
-    }
-  };
 
   const {
     data: supportChat,
@@ -354,16 +287,7 @@ function Profile({ children, page }: ProfileProps) {
   const renderEditProfile = () => (
     <EditProfile
       handleBackMenu={handleBackToMenu}
-      handleSaveProfile={handleSaveProfile}
-      handlePhoneChange={handlePhoneChange}
-      name={name}
-      lastName={lastName}
-      gender={gender}
-      phone={phone}
-      errors={errors}
-      setName={setName}
-      setLastName={setLastName}
-      setGender={setGender}
+      profileImage={profileImage}
     />
   );
 

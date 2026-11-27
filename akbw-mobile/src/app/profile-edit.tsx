@@ -6,7 +6,9 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Button, Center, Chip, Label, Screen } from '@/components/ui';
 import { api, httpsUrl } from '@/lib/api';
-import { useT } from '@/lib/i18n';
+import { toNewLatin, useLang, useT } from '@/lib/i18n';
+import { PickerField } from '@/components/Picker';
+import { REGION_NAMES, UZ_REGIONS } from '@/lib/uzRegions';
 import { F, label, useColors, useStyles, type Palette } from '@/lib/theme';
 
 export default function ProfileEdit() {
@@ -22,6 +24,14 @@ export default function ProfileEdit() {
   const [avatar, setAvatar] = useState<string>(''); // serverdagi havola
   const [localPhoto, setLocalPhoto] = useState<string | null>(null); // yangi tanlangan, hali yuklanmagan
   const [removed, setRemoved] = useState(false);
+  const [day, setDay] = useState('');
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+  const [region, setRegion] = useState('');
+  const [district, setDistrict] = useState('');
+  const [email, setEmail] = useState('');
+  const lang = useLang((st) => st.lang);
+  const show = (v: string) => (lang === 'uz' ? toNewLatin(v) : v);
 
   const pickPhoto = async (camera: boolean) => {
     const perm = camera ? await ImagePicker.requestCameraPermissionsAsync() : await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -57,10 +67,31 @@ export default function ProfileEdit() {
         setGender(r.data.gender || 'male');
         setPhone(r.data.phone ?? '');
         setAvatar(r.data.profile_picture ?? '');
+        if (r.data.birthDate) {
+          const d = new Date(r.data.birthDate);
+          setDay(String(d.getUTCDate()));
+          setMonth(String(d.getUTCMonth() + 1));
+          setYear(String(d.getUTCFullYear()));
+        }
+        setRegion(r.data.region ?? '');
+        setDistrict(r.data.district ?? '');
+        setEmail(r.data.email ?? '');
       })
       .catch(() => {})
       .finally(() => setLoaded(true));
   }, []);
+
+  // Tug'ilgan sana: bo'sh qoldirilsa yuborilmaydi; to'ldirilsa haqiqiy sana bo'lishi kerak
+  const dateEmpty = !day && !month && !year;
+  const birthDate = (() => {
+    const d = Number(day), m = Number(month), y = Number(year);
+    if (!d || !m || year.length !== 4) return '';
+    const dt = new Date(Date.UTC(y, m - 1, d));
+    if (dt.getUTCDate() !== d || dt.getUTCMonth() !== m - 1 || y < 1920 || dt > new Date()) return '';
+    return dt.toISOString().slice(0, 10);
+  })();
+  const emailOk = !email.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const canSave = name.trim().length >= 2 && lastName.trim().length >= 2 && (dateEmpty || !!birthDate) && emailOk;
 
   const save = async () => {
     setBusy(true);
@@ -68,7 +99,16 @@ export default function ProfileEdit() {
       let profile_picture: string | undefined;
       if (localPhoto) profile_picture = (await api.uploadImage(localPhoto)).url;
       else if (removed) profile_picture = '';
-      await api.updateMe({ name: name.trim(), lastName: lastName.trim(), gender, ...(profile_picture !== undefined ? { profile_picture } : {}) });
+      await api.updateMe({
+        name: name.trim(),
+        lastName: lastName.trim(),
+        gender,
+        email: email.trim(),
+        ...(birthDate ? { birthDate } : {}),
+        ...(region ? { region } : {}),
+        ...(district ? { district } : {}),
+        ...(profile_picture !== undefined ? { profile_picture } : {}),
+      });
       router.back();
     } catch (e: any) {
       Alert.alert(t('Xatolik yuz berdi'), e.message);
@@ -119,10 +159,50 @@ export default function ProfileEdit() {
             </View>
           </View>
           <View style={s.field}>
+            <Label>{t("Tug'ilgan sana")}</Label>
+            <View style={{ flexDirection: 'row', gap: 8 }}>
+              <TextInput value={day} onChangeText={(v) => setDay(v.replace(/\D/g, '').slice(0, 2))} placeholder={t('Kun')} keyboardType="number-pad" style={[s.input, s.dateInput]} {...inputProps} />
+              <TextInput value={month} onChangeText={(v) => setMonth(v.replace(/\D/g, '').slice(0, 2))} placeholder={t('Oy')} keyboardType="number-pad" style={[s.input, s.dateInput]} {...inputProps} />
+              <TextInput value={year} onChangeText={(v) => setYear(v.replace(/\D/g, '').slice(0, 4))} placeholder={t('Yil')} keyboardType="number-pad" style={[s.input, s.dateInput, { flex: 1.4 }]} {...inputProps} />
+            </View>
+            {!dateEmpty && !birthDate && day && month && year.length === 4 && <Text style={s.error}>{t("Sana noto'g'ri")}</Text>}
+          </View>
+          <PickerField
+            label={t('Viloyat')}
+            value={region ? show(region) : undefined}
+            items={REGION_NAMES.map((r) => ({ code: r, name: show(r) }))}
+            onSelect={(v) => {
+              setRegion(v);
+              setDistrict('');
+            }}
+          />
+          <PickerField
+            label={t('Tuman / shahar')}
+            value={district ? show(district) : undefined}
+            items={(UZ_REGIONS[region] ?? []).map((d) => ({ code: d, name: show(d) }))}
+            disabled={!region}
+            onSelect={setDistrict}
+          />
+          <View style={s.field}>
+            <Label>{t('Email (ixtiyoriy)')}</Label>
+            <TextInput
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              textContentType="emailAddress"
+              placeholder="name@gmail.com"
+              style={s.input}
+              {...inputProps}
+            />
+            {!emailOk && <Text style={s.error}>{t("Email noto'g'ri")}</Text>}
+          </View>
+          <View style={s.field}>
             <Label>{t('Telefon')}</Label>
             <TextInput value={phone} editable={false} style={[s.input, { color: c.mute }]} {...inputProps} />
           </View>
-          <Button title={t('Saqlash')} loading={busy} disabled={name.trim().length < 2} onPress={save} style={{ marginTop: 8 }} />
+          <Button title={t('Saqlash')} loading={busy} disabled={!canSave} onPress={save} style={{ marginTop: 8 }} />
         </ScrollView>
       </KeyboardAvoidingView>
     </Screen>
@@ -144,6 +224,8 @@ const mk = (c: Palette) =>
       borderWidth: 1,
       borderColor: c.line2,
     },
+    dateInput: { flex: 1, textAlign: 'center', paddingHorizontal: 8 },
+    error: { color: c.sale, fontSize: 13, marginLeft: 8 },
     avatarLetter: { color: '#EFE8DB', fontSize: 44, fontFamily: F.serif },
     input: {
       height: 54,

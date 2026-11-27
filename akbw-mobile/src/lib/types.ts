@@ -33,6 +33,10 @@ export interface User {
   lastName: string;
   gender: string;
   profile_picture?: string | null;
+  birthDate?: string | null;
+  region?: string | null;
+  district?: string | null;
+  email?: string | null;
   referralCode?: string;
   availableBonus?: number;
   reviews?: { id: number; rating: number; comment: string; product_id: number; createdAt: string }[];
