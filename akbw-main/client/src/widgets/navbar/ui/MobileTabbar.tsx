@@ -35,8 +35,23 @@ export default function MobileTabbar() {
     )
       return;
     root.classList.add('ios-gsa');
-    return () => root.classList.remove('ios-gsa');
+    // Sahifa body ichida aylanadi — window.scrollTo (Next.js sahifa almashganda, savat va h.k.) body'ga yo'naltiriladi
+    const orig = window.scrollTo.bind(window);
+    window.scrollTo = ((...args: Parameters<typeof window.scrollTo>) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (document.body.scrollTo as any)(...args);
+    }) as typeof window.scrollTo;
+    return () => {
+      root.classList.remove('ios-gsa');
+      window.scrollTo = orig;
+    };
   }, []);
+
+  // Google ilovasi: yangi sahifaga o'tganda tepadan boshlansin (body aylanadi, window emas)
+  useEffect(() => {
+    if (document.documentElement.classList.contains('ios-gsa'))
+      document.body.scrollTop = 0;
+  }, [pathname]);
 
   const tab = (
     href: string,

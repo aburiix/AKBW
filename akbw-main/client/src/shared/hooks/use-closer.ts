@@ -29,9 +29,12 @@ const useCloser = (
 
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('scroll', handleScroll);
+    // Google ilovasida (html.ios-gsa) sahifa body ichida aylanadi
+    document.body.addEventListener('scroll', handleScroll);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('scroll', handleScroll);
+      document.body.removeEventListener('scroll', handleScroll);
     };
   }, [ref, closeFunction]);
 };

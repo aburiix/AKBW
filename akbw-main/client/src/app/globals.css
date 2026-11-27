@@ -401,6 +401,11 @@ html.tg-app .tabbar {
    doimiy ko'tariladi (JS bilan kuzatilmaydi — sahifa aylantirilganda menyu qo'zg'almaydi) */
 :root { --sab: env(safe-area-inset-bottom); }
 html.ios-gsa .tabbar { bottom: 77px; }
+/* Google ilovasi hujjat aylantirilganda o'z panelini yashiradi va `fixed` elementlarni faqat aylantirish
+   tugagach joyiga qo'yadi (menyu yo'qolib-paydo bo'lardi). Shuning uchun u yerda hujjat emas, body
+   aylanadi: Google paneli qimirlamaydi, menyu doim joyida. */
+html.ios-gsa { height: 100%; overflow: hidden; }
+html.ios-gsa body { height: 100%; overflow-y: auto; overscroll-behavior-y: none; }
 html.ios-gsa .above-tabbar { bottom: calc(80px + 77px); }
 
 
