@@ -627,7 +627,14 @@
       "name_min": "Name must be at least 2 characters long",
       "lastname_min": "Last name must be at least 2 characters long",
       "gender_min": "Gender must be at least 2 characters long"
-    }
+    },
+    "delete_account": "Delete account",
+    "delete_account_title": "Delete your account?",
+    "delete_account_desc": "Your name, phone number, AI chats and try-on photos will be permanently deleted. Order history is kept without personal data. This cannot be undone.",
+    "delete_account_confirm": "Yes, delete",
+    "delete_account_cancel": "Cancel",
+    "delete_account_done": "Account deleted",
+    "delete_account_error": "Could not delete the account, please try again"
   },
   "NewArrivalsPage": {
     "title": "New Arrivals",

@@ -1,39 +1,58 @@
 'use client';
 
-import { ArrowLeft, ArrowRight, BadgeCheck, Star } from 'lucide-react';
+import { ArrowRight, BadgeCheck, Star } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { IProduct } from '@/shared/config/api/product/product.model';
 import { IStyle } from '@/shared/config/api/product/style.model';
 import { Link } from '@/shared/config/i18n/navigation';
-import { useEffect, useRef, useState } from 'react';
 import Product from '../product';
 import Image from 'next/image';
 import {
   useRecommendedProducts,
   useStyles,
 } from '@/features/products/lib/hooks';
-import { useCategories } from '@/widgets/navbar/lib/hooks';
-import { FadeUp, StaggerContainer, StaggerItem } from '@/shared/ui/animations';
+import { FadeUp } from '@/shared/ui/animations';
 import { useTopReviews } from '@/features/reviews/lib/hooks';
-import { useUserStore } from '@/shared/store/user.store';
 import { useTranslations } from 'next-intl';
 
 const GlassLogo3D = dynamic(() => import('@/shared/ui/glass-logo-3d'), {
   ssr: false,
 });
-const Register = dynamic(() => import('@/widgets/register'), { ssr: false });
-const Profile = dynamic(() => import('@/widgets/profile'), { ssr: false });
 const RingCarousel = dynamic(() => import('@/shared/ui/ring-carousel'), {
   ssr: false,
 });
 
-const TILE_IMAGES = [
-  '/assets/oversize.jpg',
-  '/assets/sport-style.jpg',
-  '/assets/minimalistik.jpg',
-  '/assets/oldmoney.jpg',
-  '/assets/giamour.webp',
-  '/assets/welcome.jpg',
+/** Ilovadagi 4 fasl — bir xil gradientlar */
+const SEASONS = [
+  {
+    key: 'spring',
+    icon: '✿',
+    bg: 'radial-gradient(90% 80% at 70% 20%, #7C8466, #2A2C22 65%, #151610)',
+  },
+  {
+    key: 'summer',
+    icon: '☀',
+    bg: 'radial-gradient(90% 80% at 70% 20%, #C9A46A, #4A3520 65%, #1A130C)',
+  },
+  {
+    key: 'autumn',
+    icon: '❦',
+    bg: 'radial-gradient(90% 80% at 70% 20%, #8A6243, #3A2416 65%, #150E09)',
+  },
+  {
+    key: 'winter',
+    icon: '❄',
+    bg: 'radial-gradient(90% 80% at 70% 20%, #8FA3B8, #2A3440 65%, #10141A)',
+  },
+] as const;
+
+/** Brend uslub rasmlari — karusel to'liq bo'lishi uchun (ilovadagidek) */
+const BRAND_STYLES = [
+  { title: 'Old money', image: '/assets/oldmoney.jpg' },
+  { title: 'Oversize', image: '/assets/oversize.jpg' },
+  { title: 'Minimalistik', image: '/assets/minimalistik.jpg' },
+  { title: 'Sport', image: '/assets/sport-style.jpg' },
+  { title: 'Glamour', image: '/assets/giamour.webp' },
 ];
 
 function SectionHead({
@@ -49,7 +68,7 @@ function SectionHead({
 }) {
   return (
     <FadeUp>
-      <div className="flex items-end justify-between gap-4 mb-6">
+      <div className="flex items-end justify-between gap-4 mb-5 md:mb-6">
         <div>
           {eyebrow && (
             <span className="lbl text-ivory/50 block mb-2.5">{eyebrow}</span>
@@ -59,10 +78,7 @@ function SectionHead({
           </h2>
         </div>
         {href && (
-          <Link
-            href={href}
-            className="pill pill-ghost pill-sm hidden md:inline-flex"
-          >
+          <Link href={href} className="pill pill-ghost pill-sm">
             {hrefLabel}
           </Link>
         )}
@@ -71,77 +87,66 @@ function SectionHead({
   );
 }
 
-function ProductGrid({
+/** Telefonda — gorizontal qator (ilovadagidek), kompyuterda — 4 ustunli setka */
+function ProductRow({
   items,
   loading,
 }: {
   items: IProduct[];
   loading: boolean;
 }) {
+  const cell =
+    'shrink-0 w-[44%] max-w-[190px] md:w-auto md:max-w-none snap-start';
   return (
-    <StaggerContainer
-      className="grid grid-cols-2 lg:grid-cols-4 gap-x-2.5 gap-y-6 md:gap-x-3.5 md:gap-y-7"
-      staggerDelay={0.08}
-    >
+    <div className="flex md:grid md:grid-cols-4 gap-2.5 md:gap-x-3.5 md:gap-y-7 overflow-x-auto md:overflow-visible no-scrollbar snap-x -mx-4 px-4 md:mx-0 md:px-0">
       {loading
         ? [1, 2, 3, 4].map((i) => (
-            <StaggerItem key={i}>
+            <div key={i} className={cell}>
               <div className="w-full aspect-[3/4] rounded-2xl bg-surface-2 animate-pulse" />
-            </StaggerItem>
+            </div>
           ))
         : items.map((product) => (
-            <StaggerItem key={product.id}>
+            <div key={product.id} className={cell}>
               <Product product={product} />
-            </StaggerItem>
+            </div>
           ))}
-    </StaggerContainer>
+    </div>
   );
 }
 
 export default function Welcome() {
-  const { data: topReviewsData, isLoading: isLoadingReviews } = useTopReviews();
+  const { data: topReviewsData } = useTopReviews();
   const { data: recommendedData, isLoading } = useRecommendedProducts();
   const { data: stylesData } = useStyles();
-  const { data: categories } = useCategories();
-  const token = useUserStore((s) => s.token);
-  const [showAllMostSold, setShowAllMostSold] = useState(false);
-  const [showAllReviews, setShowAllReviews] = useState(false);
-  const [showAllNewest, setShowAllNewest] = useState(false);
-
-  const newest = recommendedData?.newest || [];
-  const mostSold = recommendedData?.mostSold || [];
-  const styles = stylesData?.data || [];
-  const subCategories = (categories ?? [])
-    .flatMap((c) => (c.children?.length ? c.children : c.parentId ? [] : [c]))
-    .slice(0, 6);
-
-  const displayNewest = showAllNewest ? newest : newest.slice(0, 8);
-  const displayMostSold = showAllMostSold ? mostSold : mostSold.slice(0, 4);
-
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const reviewRef = useRef<HTMLDivElement | null>(null);
-
-  const handleScroll = (direction: 'left' | 'right') => {
-    if (wrapperRef.current && reviewRef.current) {
-      const amount = reviewRef.current.offsetWidth + 14;
-      wrapperRef.current.scrollBy({
-        left: direction === 'left' ? -amount : amount,
-        behavior: 'smooth',
-      });
-    }
-  };
-
-  // Sharhlar bo'limi avvalgidek: kamida 10 ta sharh bo'lsa ko'rsatiladi
-  useEffect(() => {
-    setShowAllReviews(!!topReviewsData && topReviewsData.data.length >= 10);
-  }, [topReviewsData]);
-
   const t = useTranslations();
+
+  const newest = (recommendedData?.newest || []).slice(0, 8);
+  const mostSold = (recommendedData?.mostSold || []).slice(0, 8);
+  const styles: IStyle[] = stylesData?.data || [];
+  const reviews = topReviewsData?.data ?? [];
+
+  const ring = [
+    ...styles.map((style) => ({
+      id: `s${style.id}`,
+      image: style.image,
+      label: style.category?.name ?? '',
+      href: `/filters?category_id=${style.categoryId}`,
+    })),
+    ...BRAND_STYLES.map((s) => ({
+      id: s.title,
+      image: s.image,
+      label: s.title,
+      href: '/filters',
+    })),
+  ];
 
   return (
     <div className="wrap overflow-x-clip">
-      {/* ---------- Banner (3D shisha logo) ---------- */}
-      <section className="relative mt-4 md:mt-5 rounded-[28px] overflow-hidden border border-line grid lg:grid-cols-[1.1fr_1fr] min-h-[clamp(460px,64vh,680px)] bg-[radial-gradient(70%_70%_at_70%_30%,#6e4a2e,#24180f_60%,#120d09)]">
+      {/* ---------- Banner (rasm ustida — doim tungi ranglar) ---------- */}
+      <section
+        data-theme="dark"
+        className="relative mt-4 md:mt-5 rounded-[28px] overflow-hidden border border-line grid lg:grid-cols-[1.1fr_1fr] min-h-[clamp(460px,64vh,680px)] bg-[radial-gradient(70%_70%_at_70%_30%,#6e4a2e,#24180f_60%,#120d09)] text-ivory"
+      >
         <div className="relative z-10 order-2 lg:order-1 p-6 md:p-10 lg:p-14 flex flex-col justify-end gap-4 md:gap-5">
           <span className="lbl text-ivory/60">
             AKBW · {t('HomePage.newest')}
@@ -152,12 +157,18 @@ export default function Welcome() {
           <p className="text-ivory/60 max-w-[460px] md:text-base">
             {t('HomePage.hero_subtitle')}
           </p>
-          <div className="flex flex-wrap gap-2.5">
-            <Link href="/filters" className="pill pill-ivory">
-              {t('HomePage.explore_product')} <ArrowRight size={16} />
+          <div className="flex gap-2.5">
+            <Link
+              href="/filters"
+              className="pill pill-ivory max-md:!h-[46px] max-md:!px-5"
+            >
+              {t('HomePage.products_btn')} <ArrowRight size={16} />
             </Link>
-            <Link href="/new" className="pill pill-ghost">
-              {t('HomePage.newest')}
+            <Link
+              href="/new"
+              className="pill pill-ghost max-md:!h-[46px] max-md:!px-5"
+            >
+              {t('HomePage.newest_btn')}
             </Link>
           </div>
         </div>
@@ -174,200 +185,82 @@ export default function Welcome() {
         </div>
       </section>
 
-      {/* ---------- Kategoriyalar ---------- */}
-      {subCategories.length > 0 && (
-        <section className="pt-7">
-          <div className="flex md:grid md:grid-cols-6 gap-2.5 overflow-x-auto no-scrollbar -mr-4 pr-4 md:mr-0 md:pr-0">
-            {subCategories.map((c, i) => (
-              <Link
-                key={c.id}
-                href={`/filters?category=${c.id}`}
-                className="group relative shrink-0 w-[36%] md:w-auto aspect-[1/1.15] rounded-[18px] overflow-hidden bg-surface-2"
-              >
-                <Image
-                  src={TILE_IMAGES[i % TILE_IMAGES.length]}
-                  alt=""
-                  fill
-                  sizes="(max-width: 768px) 36vw, 16vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent from-50% to-night/75" />
-                <span className="absolute left-3 right-3 bottom-3 flex items-center justify-between lbl text-ivory">
-                  {c.name}
-                  <ArrowRight size={15} />
-                </span>
-              </Link>
-            ))}
-          </div>
+      {/* ---------- Fasllar — banner ostida bir qatorda ---------- */}
+      <section
+        data-theme="dark"
+        className="pt-3 md:pt-4 grid grid-cols-4 gap-2 md:gap-3.5"
+      >
+        {SEASONS.map((f) => (
+          <Link
+            key={f.key}
+            href="/filters"
+            style={{ backgroundImage: f.bg }}
+            className="relative aspect-[1/1.25] md:aspect-[16/10] rounded-[16px] md:rounded-[22px] overflow-hidden border border-line p-2.5 md:p-5 flex flex-col justify-between transition-transform hover:-translate-y-0.5"
+          >
+            <span className="text-ivory/80 text-lg md:text-3xl leading-none">
+              {f.icon}
+            </span>
+            <span className="flex flex-col gap-1">
+              <span className="lbl !text-[8.5px] md:!text-[11px] text-ivory/60">
+                {t('HomePage.season')}
+              </span>
+              <span className="serif text-[17px] md:text-[30px] leading-none text-ivory">
+                {t(`HomePage.season_${f.key}`)}
+              </span>
+            </span>
+          </Link>
+        ))}
+      </section>
+
+      {/* ---------- Yangi qo'shilganlar ---------- */}
+      <section className="pt-11 md:pt-24">
+        <SectionHead
+          eyebrow={t('HomePage.kicker_new')}
+          title={t('HomePage.newest')}
+          href="/new"
+          hrefLabel={t('HomePage.all_btn')}
+        />
+        <ProductRow items={newest} loading={isLoading} />
+      </section>
+
+      {/* ---------- Ko'p sotilganlar ---------- */}
+      {(isLoading || mostSold.length > 0) && (
+        <section className="pt-11 md:pt-24">
+          <SectionHead
+            eyebrow={t('HomePage.kicker_top')}
+            title={t('HomePage.top_sold')}
+            href="/best"
+            hrefLabel={t('HomePage.all_btn')}
+          />
+          <ProductRow items={mostSold} loading={isLoading} />
         </section>
       )}
 
-      {/* ---------- Yangi qo'shilganlar ---------- */}
-      <section className="pt-14 md:pt-24">
+      {/* ---------- Uslublar — 3D aylanma karusel ---------- */}
+      <section className="pt-12 md:pt-24">
         <SectionHead
-          eyebrow={t('NewArrivalsPage.latest_arrivals')}
-          title={t('HomePage.newest')}
-          href="/new"
-          hrefLabel={t('Navbar.see_all')}
+          eyebrow={t('HomePage.kicker_styles')}
+          title={t('HomePage.styles_title')}
         />
-        <ProductGrid items={displayNewest} loading={isLoading} />
-        {!isLoading && newest.length > 8 && (
-          <div className="flex justify-center mt-8">
-            <button
-              onClick={() => setShowAllNewest((v) => !v)}
-              className="pill pill-ghost"
-            >
-              {showAllNewest
-                ? t('HomePage.show_less')
-                : t('HomePage.show_more')}
-            </button>
-          </div>
-        )}
+        <RingCarousel items={ring} />
+        <p className="lbl text-ivory/40 text-center -mt-2">
+          {t('HomePage.ring_hint')}
+        </p>
       </section>
 
-      {/* ---------- AKBW Club banneri ---------- */}
-      <FadeUp>
-        <section className="mt-14 md:mt-24 grid md:grid-cols-2 rounded-[28px] overflow-hidden border border-line bg-surface">
-          <div className="p-6 md:p-12 lg:p-14 flex flex-col justify-center gap-4 order-2 md:order-1">
-            <span className="lbl text-ivory/50">AKBW Club</span>
-            <h2 className="serif text-[clamp(28px,3.2vw,44px)] leading-[1.05]">
-              {t('HomePage.akbw-title')}
-            </h2>
-            <p className="text-ivory/60">{t('HomePage.akbw-subtitle-1')}</p>
-            <div className="flex flex-wrap gap-2">
-              {[
-                ['5%', t('Bonus.welcome_bonus')],
-                ['10%', t('Bonus.referral_bonus')],
-                ['5%', t('Bonus.referrer_bonus')],
-              ].map(([v, l]) => (
-                <span
-                  key={l}
-                  className="inline-flex items-center gap-2 h-[34px] px-3 rounded-full border border-line-2 text-[13px]"
-                >
-                  <b className="text-ok font-semibold">{v}</b> {l}
-                </span>
-              ))}
-            </div>
-            <div>
-              {token ? (
-                <Profile>
-                  <button className="pill pill-ivory">
-                    {t('Bonus.title')}
-                  </button>
-                </Profile>
-              ) : (
-                <Register
-                  trigger={
-                    <button className="pill pill-ivory">
-                      {t('HomePage.login_register_btn')}
-                    </button>
-                  }
-                />
-              )}
-            </div>
-          </div>
-          <div className="relative min-h-[240px] md:min-h-[380px] order-1 md:order-2">
-            <Image
-              src="/assets/akbw-about.jpg"
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
-            />
-          </div>
-        </section>
-      </FadeUp>
-
-      {/* ---------- Eng ko'p sotilayotganlar ---------- */}
-      <section className="pt-14 md:pt-24">
-        <SectionHead
-          eyebrow={t('BestSellersPage.based_on_sales')}
-          title={t('HomePage.most-sold')}
-          href="/best"
-          hrefLabel={t('Navbar.see_all')}
-        />
-        <ProductGrid items={displayMostSold} loading={isLoading} />
-        {!isLoading && mostSold.length > 4 && (
-          <div className="flex justify-center mt-8">
-            <button
-              onClick={() => setShowAllMostSold((v) => !v)}
-              className="pill pill-ghost"
-            >
-              {showAllMostSold
-                ? t('HomePage.show_less')
-                : t('HomePage.show_more')}
-            </button>
-          </div>
-        )}
-      </section>
-
-      {/* ---------- Fasllar (admin paneldagi uslublar) ---------- */}
-      <section className="pt-14 md:pt-24">
-        <SectionHead
-          eyebrow={t('HomePage.styles')}
-          title={t('HomePage.seasons')}
-        />
-        {styles.length > 0 ? (
-          <>
-            <RingCarousel
-              items={styles.map((style: IStyle) => ({
-                id: style.id,
-                image: style.image,
-                label: style.category?.name ?? '',
-                href: `/filters?category_id=${style.categoryId}`,
-              }))}
-            />
-            <p className="lbl text-ivory/40 text-center -mt-2">
-              ← sudrang · bosib oching →
-            </p>
-          </>
-        ) : (
-          !isLoading && (
-            <p className="py-16 text-center text-ivory/40">
-              {t('HomePage.no_seasons')}
-            </p>
-          )
-        )}
-      </section>
-
-      {/* ---------- Sharhlar ---------- */}
-      {showAllReviews && (
-        <section className="pt-14 md:pt-24">
-          <div className="flex items-end justify-between gap-4 mb-6">
-            <FadeUp>
-              <span className="lbl text-ivory/50 block mb-2.5">
-                {t('HomePage.favorite_customers')}
-              </span>
-              <h2 className="serif text-[clamp(28px,3.2vw,44px)] leading-[1.05]">
-                {t('HomePage.happy_customers_title')}
-              </h2>
-            </FadeUp>
-            <div className="hidden md:flex gap-2">
-              {(['left', 'right'] as const).map((d) => (
-                <button
-                  key={d}
-                  onClick={() => handleScroll(d)}
-                  aria-label={d}
-                  className="size-11 rounded-full border border-line-2 grid place-items-center hover:bg-white/[0.06]"
-                >
-                  {d === 'left' ? (
-                    <ArrowLeft size={18} />
-                  ) : (
-                    <ArrowRight size={18} />
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div
-            ref={wrapperRef}
-            className="flex gap-3.5 overflow-x-auto no-scrollbar snap-x snap-mandatory"
-          >
-            {topReviewsData?.data?.map((review: any, index: number) => (
-              <div
-                ref={reviewRef}
-                key={index}
-                className="snap-start shrink-0 w-[86%] md:w-[calc((100%-28px)/3)] min-h-[220px] p-6 rounded-[18px] bg-surface border border-line flex flex-col justify-between gap-4"
+      {/* ---------- Mamnun mijozlar ---------- */}
+      {reviews.length > 0 && (
+        <section className="pt-11 md:pt-24">
+          <SectionHead
+            eyebrow={t('HomePage.reviews_kicker')}
+            title={t('HomePage.reviews_title')}
+          />
+          <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory -mx-4 px-4 md:mx-0 md:px-0">
+            {reviews.map((review: any, index: number) => (
+              <Link
+                key={review.id ?? index}
+                href={review.product_id ? `/product/${review.product_id}` : '/'}
+                className="snap-start shrink-0 w-[82%] md:w-[calc((100%-24px)/3)] min-h-[200px] p-6 rounded-[18px] bg-surface border border-line flex flex-col justify-between gap-4"
               >
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
@@ -382,26 +275,57 @@ export default function Welcome() {
                     />
                   ))}
                 </div>
-                <p className="serif text-[19px] leading-[1.35] line-clamp-4">
+                <p className="serif text-[19px] leading-[1.35] line-clamp-4 text-ivory">
                   “{review.comment}”
                 </p>
-                <div className="flex items-center gap-2.5 text-[13px] text-ivory/60">
-                  <span className="size-[34px] rounded-full bg-surface-3 grid place-items-center text-ivory">
-                    {(review.user?.name || 'A')[0]}
-                  </span>
+                <div className="flex items-center gap-2 text-[13px] text-ivory/60">
                   {review.user?.name || t('HomePage.anonymous_user')}
                   <BadgeCheck size={16} className="text-ok" />
                 </div>
-              </div>
+              </Link>
             ))}
-            {!topReviewsData?.data?.length && !isLoadingReviews && (
-              <p className="w-full py-10 text-center text-ivory/40">
-                {t('HomePage.not_enough_reviews')}
-              </p>
-            )}
           </div>
         </section>
       )}
+
+      {/* ---------- Biz haqimizda kartasi ---------- */}
+      <FadeUp>
+        <section className="mt-12 md:mt-24 grid md:grid-cols-2 rounded-[24px] overflow-hidden border border-line bg-surface">
+          <div className="relative h-[220px] md:h-auto md:min-h-[380px]">
+            <Image
+              src="/assets/welcome.jpg"
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="p-[22px] md:p-12 flex flex-col justify-center gap-3 md:gap-4">
+            <span className="lbl text-ivory/50">
+              {t('HomePage.brand_kicker')}
+            </span>
+            <h2 className="serif text-[26px] md:text-[clamp(28px,3vw,42px)] leading-[1.1] text-ivory">
+              Aburiix Kraft Brand Wear
+            </h2>
+            <p className="text-ivory/60 text-sm md:text-base leading-relaxed">
+              {t('HomePage.brand_text')}
+            </p>
+            <div className="flex flex-wrap gap-2.5 mt-1">
+              <button
+                onClick={() =>
+                  window.dispatchEvent(new CustomEvent('akbw:assistant'))
+                }
+                className="pill pill-ivory"
+              >
+                {t('HomePage.ai_btn')}
+              </button>
+              <Link href="/about" className="pill pill-ghost">
+                {t('HomePage.about_btn')}
+              </Link>
+            </div>
+          </div>
+        </section>
+      </FadeUp>
     </div>
   );
 }

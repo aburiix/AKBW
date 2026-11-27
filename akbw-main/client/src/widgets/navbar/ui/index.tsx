@@ -26,7 +26,7 @@ const Login = dynamic(() => import('@/widgets/login'), { ssr: false });
 const Register = dynamic(() => import('@/widgets/register'), { ssr: false });
 
 const LOCALES = [
-  { code: 'uz', label: "O'zbekcha" },
+  { code: 'uz', label: "Özbekça" },
   { code: 'ru', label: 'Русский' },
   { code: 'en', label: 'English' },
 ];
@@ -167,7 +167,7 @@ const Navbar = () => {
             onSubmit={handleSearch}
             className="hidden xl:flex items-center gap-2.5 h-11 px-4 rounded-full bg-surface border border-line flex-1 max-w-[420px] ml-auto text-ivory/60 focus-within:border-line-2"
           >
-            <button type="submit" aria-label="Qidirish">
+            <button type="submit" aria-label="Qidiriş">
               <Search size={18} />
             </button>
             <input
@@ -260,25 +260,22 @@ const Navbar = () => {
                     }
                   />
                 </div>
-                <div className="hidden md:block lg:hidden">
-                  <Profile>
-                    <button aria-label="Profil" className={iconBtn}>
-                      <User size={20} strokeWidth={1.5} />
-                    </button>
-                  </Profile>
-                </div>
+                <Link
+                  href="/profile"
+                  aria-label="Profil"
+                  className={cn(iconBtn, 'hidden md:grid lg:hidden')}
+                >
+                  <User size={20} strokeWidth={1.5} />
+                </Link>
               </>
             ) : (
-              <div className="hidden md:block ml-1.5">
-                <Profile>
-                  <button
-                    aria-label="Profil"
-                    className="size-10 rounded-full bg-ivory text-night grid place-items-center"
-                  >
-                    <User size={18} />
-                  </button>
-                </Profile>
-              </div>
+              <Link
+                href="/profile"
+                aria-label="Profil"
+                className="hidden md:grid ml-1.5 size-10 rounded-full bg-ivory text-night place-items-center"
+              >
+                <User size={18} />
+              </Link>
             )}
           </div>
         </div>
@@ -348,6 +345,10 @@ const Navbar = () => {
       </header>
 
       <MobileTabbar />
+      {/* Profil ichki oynalari (tahrirlash, chatlar, bildirishnomalar, sharhlar) — /profile sahifasi va futer ochadi */}
+      <Profile>
+        <button type="button" className="hidden" aria-hidden tabIndex={-1} />
+      </Profile>
     </>
   );
 };

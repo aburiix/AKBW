@@ -12,7 +12,7 @@ const formatPrice = async (amount: number | string, withLabel?: boolean) => {
   const label = withLabel
     ? locale === LanguageRoutes.RU
       ? ' сум'
-      : ' so‘m'
+      : ' söm'
     : '';
   const parts = String(amount).split('.');
   const dollars = parts[0];

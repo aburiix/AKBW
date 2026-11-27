@@ -11,7 +11,7 @@ import {
 import { cn } from '@/shared/lib/utils';
 import {
   AuthHeader,
-  AuthTerms,
+  AuthConsent,
   Field,
   OtpInput,
   ResendRow,
@@ -49,6 +49,7 @@ function Login({ trigger, className }: LoginProps) {
   const [timeLeft, setTimeLeft] = React.useState(60);
   const [phone, setPhone] = React.useState('+998');
   const [otp, setOtp] = React.useState('');
+  const [agree, setAgree] = React.useState(false);
 
   const { openModal, closeModal: _closeModal } =
     useCoordinatedModal('login-modal');
@@ -198,10 +199,23 @@ function Login({ trigger, className }: LoginProps) {
               </div>
             )}
 
+            <AuthConsent
+              checked={agree}
+              onChange={setAgree}
+              text={{
+                pre: t('consent_pre'),
+                terms: t('consent_terms'),
+                and: t('consent_and'),
+                privacy: t('consent_privacy'),
+                post: t('consent_post'),
+                required: t('consent_required'),
+              }}
+            />
+
             <Button
               type="submit"
               className="mt-2 w-full"
-              disabled={sendSmsMutation.isPending}
+              disabled={sendSmsMutation.isPending || !agree}
             >
               {sendSmsMutation.isPending ? t('sending') : t('send_code_btn')}
             </Button>
@@ -308,10 +322,7 @@ function Login({ trigger, className }: LoginProps) {
 
         <ModalDescription asChild>
           <div>
-            <AuthTerms
-              text={t('continue_terms_text')}
-              link={t('terms_link_text')}
-            />
+            <p className="sr-only">{t('continue_terms_text')}</p>
           </div>
         </ModalDescription>
       </ModalContent>

@@ -64,6 +64,13 @@ export default function RingCarousel({ items }: { items: RingItem[] }) {
           rot += vel;
         }
         ring.style.transform = `translateZ(-${radius}px) rotateX(-6deg) rotateY(${rot}deg)`;
+        // Oldidagi kartalar tiniq, orqaga o'tib ketganlari xira (ilovadagidek)
+        cards.forEach((el, i) => {
+          const a = ((i * step + rot) * Math.PI) / 180;
+          const front = Math.max(0, Math.cos(a));
+          el.style.opacity = String(0.28 + 0.72 * Math.min(1, front * 1.6));
+          el.style.filter = front > 0.05 ? '' : 'saturate(0.6)';
+        });
       }
       raf = requestAnimationFrame(tick);
     };

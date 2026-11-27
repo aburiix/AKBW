@@ -44,7 +44,7 @@ export default React.memo(function Product({ product }: ProductProps) {
     }
     toggleWishlist(product);
     if (!isFavorite) {
-      toast.success(`${product.name} sevimlilarga qo'shildi`);
+      toast.success(`${product.name} sevimlilarga qöşildi`);
     } else {
       toast.info(`${product.name} sevimlilardan olib tashlandi`);
     }
@@ -111,10 +111,10 @@ export default React.memo(function Product({ product }: ProductProps) {
               product.discount > 0 && 'text-sale',
             )}
           >
-            {product.price.toLocaleString()} so&apos;m
+            {product.price.toLocaleString()} söm
             {oldPrice > 0 && (
               <s className="block text-xs font-normal text-ivory/40">
-                {oldPrice.toLocaleString()} so&apos;m
+                {oldPrice.toLocaleString()} söm
               </s>
             )}
           </div>

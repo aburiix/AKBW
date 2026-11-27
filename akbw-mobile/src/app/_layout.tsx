@@ -72,6 +72,10 @@ export default function RootLayout() {
         <Stack.Screen name="profile-edit" options={{ title: t('PROFILNI TAHRIRLASH') }} />
         <Stack.Screen name="notifications" options={{ title: t('BILDIRISHNOMALAR') }} />
         <Stack.Screen name="contact" options={{ title: t("BOG'LANISH") }} />
+        <Stack.Screen name="my-reviews" options={{ title: t('MENING SHARHLARIM') }} />
+        <Stack.Screen name="about" options={{ title: t('BIZ HAQIMIZDA') }} />
+        <Stack.Screen name="legal" options={{ title: '' }} />
+        <Stack.Screen name="chat" options={{ title: '' }} />
         <Stack.Screen name="tryon-history" options={{ title: t("KIYIB KO'RISH TARIXI") }} />
       </Stack>
     </ThemeProvider>

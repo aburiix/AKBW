@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { useT } from '@/lib/i18n';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Button, Chip, Label, Screen, Wordmark } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
@@ -23,6 +23,8 @@ export default function Login() {
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState<'male' | 'female'>('male');
+  const [referral, setReferral] = useState('');
+  const [agree, setAgree] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [timer, setTimer] = useState(0);
@@ -81,7 +83,7 @@ export default function Login() {
 
   const register = () =>
     run(async () => {
-      const r = await api.register({ phone, name: name.trim(), lastName: lastName.trim(), gender, verifyToken });
+      const r = await api.register({ phone, name: name.trim(), lastName: lastName.trim(), gender, verifyToken, referralCode: referral.trim() || undefined });
       await finish(r.token, r.refreshToken);
     });
 
@@ -109,7 +111,9 @@ export default function Login() {
                 style={s.input}
                 {...inputProps}
               />
-              <Button title={t("Kod olish")} disabled={!isPhoneComplete(phone)} loading={busy} onPress={sendCode} />
+              <Consent value={agree} onChange={setAgree} />
+              <Button title={t("Kod olish")} disabled={!isPhoneComplete(phone) || !agree} loading={busy} onPress={sendCode} />
+              {!agree && <Text style={s.hint}>{t("Davom etish uchun shartlarga rozilik bering.")}</Text>}
             </>
           )}
 
@@ -151,6 +155,15 @@ export default function Login() {
                 textContentType="familyName"
                 {...inputProps}
               />
+              <TextInput
+                value={referral}
+                onChangeText={setReferral}
+                placeholder={t("Taklif kodi (ixtiyoriy)")}
+                autoCapitalize="none"
+                autoCorrect={false}
+                style={s.input}
+                {...inputProps}
+              />
               <View style={{ flexDirection: 'row', gap: 8, justifyContent: 'center' }}>
                 <Chip label={t("Erkak")} active={gender === 'male'} onPress={() => setGender('male')} />
                 <Chip label={t("Ayol")} active={gender === 'female'} onPress={() => setGender('female')} />
@@ -171,6 +184,36 @@ export default function Login() {
   );
 }
 
+/** Foydalanish shartlari va Maxfiylik siyosatiga rozilik (App Store / Google Play talabi, saytdagi bilan bir xil). */
+function Consent({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
+  const t = useT();
+  const c = useColors();
+  const s = useStyles(mk);
+  const open = (doc: 'terms' | 'privacy') => router.push({ pathname: '/legal', params: { doc } });
+  return (
+    <Pressable
+      onPress={() => onChange(!value)}
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked: value }}
+      style={s.consent}>
+      <View style={[s.box, value && { backgroundColor: c.ivory, borderColor: c.ivory }]}>
+        {value && <Text style={{ color: c.onIvory, fontSize: 13, fontWeight: '700' }}>✓</Text>}
+      </View>
+      <Text style={s.consentText}>
+        {t('Men AKBW')}{' '}
+        <Text style={s.consentLink} onPress={() => open('terms')}>
+          {t('Foydalanish shartlari')}
+        </Text>{' '}
+        {t('va')}{' '}
+        <Text style={s.consentLink} onPress={() => open('privacy')}>
+          {t('Maxfiylik siyosati')}
+        </Text>{' '}
+        {t('bilan tanishdim va roziman.')}
+      </Text>
+    </Pressable>
+  );
+}
+
 const mk = (c: Palette) =>
   StyleSheet.create({
     wrap: { padding: 24, paddingTop: 36, gap: 18, alignItems: 'stretch' },
@@ -188,4 +231,9 @@ const mk = (c: Palette) =>
     },
     link: { textAlign: 'center', color: c.mute, fontSize: 14, paddingVertical: 6 },
     error: { color: c.sale, textAlign: 'center', fontSize: 14 },
+    hint: { color: c.mute2, textAlign: 'center', fontSize: 12 },
+    consent: { flexDirection: 'row', gap: 12, alignItems: 'flex-start', paddingHorizontal: 4 },
+    box: { width: 22, height: 22, borderRadius: 7, borderWidth: 1.5, borderColor: c.line2, alignItems: 'center', justifyContent: 'center', marginTop: 1 },
+    consentText: { flex: 1, fontSize: 13, lineHeight: 19, color: c.mute },
+    consentLink: { color: c.text, textDecorationLine: 'underline' },
   });

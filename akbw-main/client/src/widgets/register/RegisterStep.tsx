@@ -6,6 +6,8 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 interface Props {
+  agree: boolean;
+  consent: React.ReactNode;
   name: string;
   lastName: string;
   gender: string;
@@ -31,6 +33,8 @@ export default function RegisterStep({
   setLastName,
   setGender,
   isLoading,
+  agree,
+  consent,
 }: Props) {
   const t = useTranslations('Register');
   return (
@@ -88,7 +92,12 @@ export default function RegisterStep({
         />
       </Field>
 
-      <Button type="submit" className="mt-2 w-full" disabled={isLoading}>
+      {consent}
+      <Button
+        type="submit"
+        className="mt-2 w-full"
+        disabled={isLoading || !agree}
+      >
         {isLoading ? t('sending') : t('send_code_btn')}
       </Button>
     </form>

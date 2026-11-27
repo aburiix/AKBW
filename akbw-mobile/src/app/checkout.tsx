@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { useT } from '@/lib/i18n';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PickerField } from '@/components/Picker';
 import { Button } from '@/components/ui';
@@ -30,9 +30,26 @@ export default function Checkout() {
   const [loading, setLoading] = useState<'regions' | 'cities' | 'branches' | 'price' | null>('regions');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [promo, setPromo] = useState('');
+  const [coupon, setCoupon] = useState<{ code: string; discount: number } | null>(null);
+  const [promoBusy, setPromoBusy] = useState(false);
+
+  const applyPromo = async () => {
+    setPromoBusy(true);
+    try {
+      const r = await api.applyCoupon(promo.trim());
+      setCoupon({ code: r.coupon.code ?? promo.trim(), discount: r.coupon.discount });
+    } catch {
+      Alert.alert(t("Promokod noto'g'ri"), t('Promokod topilmadi yoki muddati tugagan.'));
+    } finally {
+      setPromoBusy(false);
+    }
+  };
 
   const subtotal = items.reduce((sum, i) => sum + finalPrice(i.price, i.discount) * i.quantity, 0);
-  const total = subtotal + (delivery ?? 0);
+  const promoOff = coupon ? Math.round(subtotal * (coupon.discount / 100)) : 0;
+  // Server ham aynan shunday hisoblaydi: mahsulot chegirmasi, keyin promokod (yetkazib berish alohida)
+  const total = subtotal - promoOff + (delivery ?? 0);
 
   useEffect(() => {
     api
@@ -102,6 +119,7 @@ export default function Checkout() {
         items: items.map((i) => ({ productId: i.productId, sizeId: i.sizeId ?? null, colorId: i.colorId ?? null, quantity: i.quantity })),
         total_price: total,
         selectedBranch: branch,
+        coupon_code: coupon?.code,
       });
       clear();
       Alert.alert(
@@ -162,6 +180,30 @@ export default function Checkout() {
           </>
         )}
 
+        <Text style={[s.h, { marginTop: 12 }]}>{t('Promokod')}</Text>
+        {coupon ? (
+          <View style={s.promoRow}>
+            <Text style={{ flex: 1, color: c.ok, fontSize: 15 }}>✓ {coupon.code} — {t('{n}% chegirma qo‘llandi', { n: coupon.discount })}</Text>
+            <Text onPress={() => setCoupon(null)} style={{ color: c.mute, fontSize: 13, padding: 8 }}>
+              {t('Bekor')}
+            </Text>
+          </View>
+        ) : (
+          <View style={s.promoRow}>
+            <TextInput
+              value={promo}
+              onChangeText={setPromo}
+              placeholder={t('Promokodni kiriting')}
+              placeholderTextColor={c.mute2}
+              autoCapitalize="characters"
+              autoCorrect={false}
+              keyboardAppearance={c.scheme}
+              style={s.promoInput}
+            />
+            <Button title={t("Qo'llash")} size="sm" variant="ghost" loading={promoBusy} disabled={promo.trim().length < 2} onPress={applyPromo} />
+          </View>
+        )}
+
         <Text style={[s.h, { marginTop: 12 }]}>{t("Buyurtma")}</Text>
         <View style={s.card}>
           {items.map((i) => (
@@ -172,6 +214,12 @@ export default function Checkout() {
               <Text style={s.lineVal}>{formatPrice(finalPrice(i.price, i.discount) * i.quantity)}</Text>
             </View>
           ))}
+          {coupon && (
+            <View style={s.line}>
+              <Text style={[s.lineName, { color: c.ok }]}>{t('Promokod')} · {coupon.code} (−{coupon.discount}%)</Text>
+              <Text style={[s.lineVal, { color: c.ok }]}>−{formatPrice(promoOff)}</Text>
+            </View>
+          )}
           <View style={s.sep} />
           <View style={s.line}>
             <Text style={s.lineName}>{t("Yetkazib berish")}</Text>
@@ -207,5 +255,7 @@ const mk = (c: Palette) =>
   lineName: { flex: 1, fontSize: 14, color: c.text },
   lineVal: { fontSize: 15, color: c.text },
   sep: { height: StyleSheet.hairlineWidth, backgroundColor: c.line },
+  promoRow: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: c.s1, borderRadius: 999, borderWidth: 1, borderColor: c.line2, paddingLeft: 18, paddingRight: 4, minHeight: 52 },
+    promoInput: { flex: 1, fontSize: 15, color: c.text, height: 48 },
   bar: { paddingHorizontal: 16, paddingTop: 12, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: c.line, backgroundColor: c.bg },
 });

@@ -215,7 +215,7 @@ export default function Product({ id }: ProductProps) {
                   oldPrice ? 'text-sale' : 'text-ivory',
                 )}
               >
-                {product.price.toLocaleString()} so&apos;m
+                {product.price.toLocaleString()} söm
               </span>
               {oldPrice && (
                 <span className="text-ivory/35 line-through tabular-nums">
@@ -410,7 +410,7 @@ export default function Product({ id }: ProductProps) {
         <div className="glass !bg-surface-2/95 rounded-full flex items-center gap-3 pl-5 pr-1.5 py-1.5 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.8)]">
           <div className="flex flex-col min-w-0">
             <span className="text-[15px] text-ivory tabular-nums leading-tight">
-              {product.price.toLocaleString()} so&apos;m
+              {product.price.toLocaleString()} söm
             </span>
             <span className="text-[11px] text-ivory/45 truncate">
               {[sizeName, colorName, `${quantity} dona`]

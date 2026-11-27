@@ -1,5 +1,5 @@
 import { useAuth } from './auth';
-import { tr, useLang } from './i18n';
+import { toNewLatin, tr, useLang } from './i18n';
 import type {
   AssistantMe,
   AssistantUi,
@@ -8,8 +8,10 @@ import type {
   BtsPlace,
   Category,
   Order,
+  Chat,
   Product,
   ProductList,
+  Review,
   StyleItem,
   TryOnMe,
   User,
@@ -17,6 +19,9 @@ import type {
 
 export const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://api.akbw.uz/api';
 export const SITE_URL = 'https://akbw.uz';
+/** Server yuklangan fayl uchun http havola qaytarishi mumkin — iOS faqat https rasmni ko'rsatadi. */
+export const httpsUrl = (u?: string | null) => (u ? u.replace(/^http:\/\/api\.akbw\.uz/, 'https://api.akbw.uz') : undefined);
+
 export const BRAND = {
   phone: '+998905661107',
   phoneLabel: '+998 90 566 11 07',
@@ -98,7 +103,8 @@ export async function request<T>(path: string, opts: Options = {}): Promise<T> {
     const msg =
       (data && (data.message || data.error)) ||
       (res.status === 429 ? tr("Juda ko'p urinish. Birozdan keyin qayta urinib ko'ring.") : tr('Xatolik yuz berdi'));
-    throw new ApiError(res.status, String(msg), data);
+    // server xabarlari o'zbekcha (eski yozuvda) — o'zbek tilida yangi alifboga o'tkaziladi
+    throw new ApiError(res.status, useLang.getState().lang === 'uz' ? toNewLatin(String(msg)) : String(msg), data);
   }
   return data as T;
 }
@@ -123,11 +129,36 @@ export const api = {
     request<{ verifyToken: string }>('/sms/verify', { method: 'POST', body: { phone, code } }),
   login: (phone: string, verifyToken: string) =>
     request<{ token: string; refreshToken: string }>('/auth/login', { method: 'POST', body: { phone, verifyToken } }),
-  register: (body: { phone: string; name: string; lastName: string; gender: string; verifyToken: string }) =>
+  register: (body: { phone: string; name: string; lastName: string; gender: string; verifyToken: string; referralCode?: string }) =>
     request<{ token: string; refreshToken?: string }>('/auth/register', { method: 'POST', body }),
   me: () => request<{ data: User; ok: boolean }>('/user/me'),
-  updateMe: (body: { name?: string; lastName?: string; gender?: string }) =>
+  updateMe: (body: { name?: string; lastName?: string; gender?: string; profile_picture?: string }) =>
     request<{ data: User; ok: boolean }>('/user/me', { method: 'PUT', body }),
+  // sharhlar
+  reviews: (productId: number | string, page = 1) =>
+    request<{ data: Review[]; meta: { total: number; totalPages: number } }>(`/review/product/${productId}?page=${page}&limit=10`),
+  topReviews: () => request<{ data: Review[] }>('/review/top'),
+  addReview: (productId: number, rating: number, comment: string) =>
+    request<Review>('/review', { method: 'POST', body: { product_id: String(productId), rating, comment } }),
+  editReview: (id: number, productId: number, rating: number, comment: string) =>
+    request<Review>(`/review/${id}`, { method: 'PUT', body: { product_id: String(productId), rating, comment } }),
+  deleteReview: (id: number) => request<unknown>(`/review/${id}`, { method: 'DELETE' }),
+
+  // yordam chati va mahsulot so'rash
+  helpChat: () => request<Chat | null>('/chat/help-chat'),
+  createHelpChat: () => request<Chat>('/chat', { method: 'POST', body: { receiver_id: 'admin' } }),
+  sendHelp: (chat_id: number, message: string) => request<unknown>('/chat/help-chat-message', { method: 'POST', body: { chat_id, message } }),
+  askChat: () => request<Chat | null>('/chat/ask-for-product-chat'),
+  createAskChat: () => request<Chat>('/chat/ask-for-product-chat', { method: 'POST', body: { receiver_id: 'admin' } }),
+  sendAsk: (chat_id: number, message: string, photo?: string) =>
+    request<unknown>('/chat/ask-for-product-message', { method: 'POST', body: { chat_id, message, ...(photo ? { photo } : {}) } }),
+  uploadImage: async (uri: string) => {
+    const form = new FormData();
+    form.append('image', { uri, name: 'photo.jpg', type: 'image/jpeg' } as unknown as Blob);
+    return upload<{ url: string }>('/upload', form);
+  },
+  applyCoupon: (code: string) => request<{ success: boolean; coupon: { id: number; discount: number; code: string } }>('/coupon/apply', { method: 'POST', body: { code } }),
+
   deleteMe: () => request<{ ok: boolean }>('/user/me', { method: 'DELETE' }),
   notifications: () => request<{ data: { id: number; title: string; message: string; createdAt: string }[]; ok: boolean }>('/notification'),
   contact: (body: { name: string; phone: string; about: string }) => request<{ ok: boolean }>('/contact', { method: 'POST', body }),
@@ -147,6 +178,7 @@ export const api = {
     items: { productId: number; sizeId: number | null; colorId: number | null; quantity: number }[];
     total_price: number;
     selectedBranch: BtsBranch;
+    coupon_code?: string;
   }) => request<{ order: Order | Order[]; ok?: boolean }>('/order', { method: 'POST', body }),
   orders: () => request<{ data: Order[]; ok: boolean }>('/order'),
   payLink: (method: 'payme' | 'click' | 'paynet', orderId: number, amount: number) => {

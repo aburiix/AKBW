@@ -9,6 +9,7 @@ import {
   SlidersHorizontal,
 } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
+import { useRouter } from '@/shared/config/i18n/navigation';
 import { Input } from '@/shared/ui/input';
 import React, { useEffect, useMemo } from 'react';
 
@@ -61,6 +62,18 @@ export default function FilterPage() {
   const categoryParam =
     searchParams.get('category') || searchParams.get('category_id');
   const searchParam = searchParams.get('q');
+  const router = useRouter();
+  // Telefon: ilovadagidek sahifaning o'zida qidiruv (350 ms kutib URL'ga yoziladi)
+  const [q, setQ] = React.useState(searchParam ?? '');
+  useEffect(() => {
+    const id = setTimeout(() => {
+      const v = q.trim();
+      if (v === (searchParam ?? '')) return;
+      router.replace(v ? `/filters?q=${encodeURIComponent(v)}` : '/filters');
+    }, 350);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q]);
   const [isAll, setIsAll] = React.useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = React.useState<
     string | null | number
@@ -83,6 +96,7 @@ export default function FilterPage() {
   const [openPagination, _setOpenPagination] = React.useState<boolean>(false);
   const [selectedSizes, setSelectedSizes] = React.useState<number[]>([]);
 
+  const [filterOpen, setFilterOpen] = React.useState(false);
   const [sortBy, setSortBy] = React.useState<string>('createdAt');
   const [sortOrder, setSortOrder] = React.useState<'asc' | 'desc'>('desc');
 
@@ -182,8 +196,31 @@ export default function FilterPage() {
     );
 
   // Filtr paneli: kompyuterda yon panel, telefonda pastdan chiqadigan oyna
+  const sorts = [
+    ['createdAt', 'desc', t('sortNewest')],
+    ['price', 'asc', t('sortCheapest')],
+    ['price', 'desc', t('sortMostExpensive')],
+  ] as const;
   const panel = (
     <div className="flex flex-col">
+      <section className="lg:hidden pb-7">
+        <h3 className="lbl text-ivory/45 mb-4">{t('sort')}</h3>
+        <div className="flex flex-wrap gap-2">
+          {sorts.map(([by, order, label]) => (
+            <button
+              type="button"
+              key={label}
+              onClick={() => {
+                setSortBy(by);
+                setSortOrder(order);
+              }}
+              className={chip(sortBy === by && sortOrder === order)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </section>
       <section className="pb-7">
         <h3 className="lbl text-ivory/45 mb-4">{t('filters')}</h3>
         <div id="categories" className="space-y-1">
@@ -345,7 +382,41 @@ export default function FilterPage() {
   return (
     <div className="wrap min-h-screen pt-6 md:pt-10 pb-16">
       {/* Sarlavha */}
-      <div className="flex flex-col gap-3">
+      {/* Telefon: ilovadagi sarlavha + qidiruv */}
+      <div className="md:hidden flex flex-col gap-2 mb-4">
+        <span className="lbl text-ivory/45">
+          {t('kicker', {
+            n: productsData?.meta?.total ?? productsData?.data?.length ?? 0,
+          })}
+        </span>
+        <h1 className="serif text-[36px] leading-none text-ivory">
+          {searchParam ? title : t('catalog')}
+        </h1>
+      </div>
+      <div className="md:hidden flex gap-2">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          type="search"
+          enterKeyHint="search"
+          placeholder={t('searchPlaceholder')}
+          className="flex-1 min-w-0 h-12 rounded-full bg-surface border border-line-2 px-5 text-[15px] text-ivory placeholder:text-ivory/35 outline-none focus:border-ivory/40"
+        />
+        <button
+          type="button"
+          onClick={() => setFilterOpen(true)}
+          className={cn(
+            'h-12 px-[18px] rounded-full border lbl !text-[10.5px] whitespace-nowrap',
+            activeCount > 0
+              ? 'bg-ivory border-ivory text-night'
+              : 'border-line-2 text-ivory',
+          )}
+        >
+          {activeCount > 0 ? `${t('filter')} · ${activeCount}` : t('filter')}
+        </button>
+      </div>
+
+      <div className="hidden md:flex flex-col gap-3">
         <p className="lbl text-ivory/40">{t('breadcrumbs')}</p>
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <h1 className="serif text-[36px] md:text-[56px] leading-[1] text-ivory">
@@ -362,7 +433,7 @@ export default function FilterPage() {
 
       {/* Kategoriya chiplari */}
       {parents.length > 0 && !searchParam && (
-        <div className="mt-6 -mx-4 px-4 md:mx-0 md:px-0 flex gap-2 overflow-x-auto no-scrollbar">
+        <div className="mt-4 md:mt-6 -mx-4 px-4 md:mx-0 md:px-0 flex gap-2 overflow-x-auto no-scrollbar">
           <button
             type="button"
             className={chip(!selectedCategory)}
@@ -406,7 +477,7 @@ export default function FilterPage() {
         </div>
       )}
 
-      <div className="flex flex-col lg:flex-row items-start gap-8 xl:gap-12 mt-8">
+      <div className="flex flex-col lg:flex-row items-start gap-8 xl:gap-12 mt-4 md:mt-8">
         <aside
           id="sidebar"
           className="hidden lg:block w-[290px] shrink-0 sticky top-28 rounded-[26px] border border-line bg-surface p-6 max-h-[calc(100vh-140px)] overflow-y-auto no-scrollbar"
@@ -416,8 +487,8 @@ export default function FilterPage() {
 
         <main id="main-content" className="flex-1 w-full min-w-0">
           {/* Asboblar paneli: telefonda filtr tugmasi + saralash */}
-          <div className="sticky top-[64px] md:top-[76px] z-20 -mx-4 px-4 py-3 mb-6 md:static md:m-0 md:p-0 md:mb-8 bg-night/80 backdrop-blur-xl md:bg-transparent md:backdrop-blur-none flex items-center justify-between gap-3">
-            <Sheet>
+          <div className="hidden md:flex mb-8 items-center justify-between gap-3">
+            <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
               <SheetTrigger asChild>
                 <button
                   type="button"

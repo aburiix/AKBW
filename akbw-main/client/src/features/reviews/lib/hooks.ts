@@ -37,7 +37,7 @@ export const useCreateReview = () => {
       const errorMessage =
         error?.response?.data?.message ||
         error?.message ||
-        'Sharh yaratishda xatolik yuz berdi';
+        'Şarh yaratişda xatolik yuz berdi';
       toast.error(errorMessage);
     },
   });
@@ -60,7 +60,7 @@ export const useUpdateReview = (reviewId: number) => {
       const errorMessage =
         error?.response?.data?.message ||
         error?.message ||
-        'Sharh yangilashda xatolik yuz berdi';
+        'Şarh yangilaşda xatolik yuz berdi';
       toast.error(errorMessage);
     },
   });

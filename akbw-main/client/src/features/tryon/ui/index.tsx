@@ -687,7 +687,7 @@ export default function TryOn() {
                         {p.name}
                       </b>
                       <span className="text-ivory/40 text-[12.5px]">
-                        {p.price.toLocaleString()} so&apos;m
+                        {p.price.toLocaleString()} söm
                       </span>
                     </div>
                     {p.id === productId && (

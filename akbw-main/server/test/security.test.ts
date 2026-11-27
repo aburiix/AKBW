@@ -143,3 +143,17 @@ test("CIDR tekshiruvi", async () => {
   assert.equal(isIpInCidrs("91.196.76.53", L), false);
   assert.equal(isIpInCidrs("soxta", L), false);
 });
+
+// ── Buyurtma summasi: chegirma va promokod ────────────────────────
+test("computeOrderTotal: mahsulot chegirmasi va promokod", async () => {
+  const { computeOrderTotal } = await import("../src/utils/orderTotal.util.js");
+  const products = [
+    { id: 1, price: 249000, discount: 0 },
+    { id: 2, price: 100000, discount: 20 },
+  ];
+  assert.equal(computeOrderTotal([{ productId: 1, quantity: 2 }], products), 498000);
+  assert.equal(computeOrderTotal([{ productId: 2, quantity: 1 }], products), 80000, "20% chegirma");
+  assert.equal(computeOrderTotal([{ productId: 1, quantity: 1 }, { productId: 2, quantity: 1 }], products, 10), 296100, "10% promokod");
+  assert.equal(computeOrderTotal([{ productId: 99, quantity: 1 }], products), 0, "yo'q mahsulot");
+  assert.equal(computeOrderTotal([{ productId: 1, quantity: 1 }], products, 150), 0, "promokod 100% dan oshmaydi");
+});

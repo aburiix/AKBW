@@ -22,7 +22,7 @@ import {
 import { X } from 'lucide-react';
 import React from 'react';
 import * as z from 'zod';
-import { AuthHeader, AuthTerms } from '@/shared/ui/auth';
+import { AuthConsent, AuthHeader } from '@/shared/ui/auth';
 
 const registerSchema = z.object({
   name: z.string().min(2, 'name_invalid'),
@@ -50,6 +50,7 @@ function Register({ trigger }: RegisterProps) {
   const [phone, setPhone] = React.useState('+998');
   const [name, setName] = React.useState('');
   const [otp, setOtp] = React.useState('');
+  const [agree, setAgree] = React.useState(false);
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -204,6 +205,21 @@ function Register({ trigger }: RegisterProps) {
             handleRegister={handleSendVerification}
             handlePhoneChange={handlePhoneChange}
             isLoading={sendSmsMutation.isPending}
+            agree={agree}
+            consent={
+              <AuthConsent
+                checked={agree}
+                onChange={setAgree}
+                text={{
+                  pre: t('consent_pre'),
+                  terms: t('consent_terms'),
+                  and: t('consent_and'),
+                  privacy: t('consent_privacy'),
+                  post: t('consent_post'),
+                  required: t('consent_required'),
+                }}
+              />
+            }
           />
         );
 
@@ -266,10 +282,7 @@ function Register({ trigger }: RegisterProps) {
 
         <ModalDescription asChild>
           <div>
-            <AuthTerms
-              text={t('continue_terms_text')}
-              link={t('terms_link_text')}
-            />
+            <p className="sr-only">{t('continue_terms_text')}</p>
           </div>
         </ModalDescription>
       </ModalContent>

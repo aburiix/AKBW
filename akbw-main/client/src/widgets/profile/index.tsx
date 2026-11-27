@@ -40,6 +40,7 @@ import { useUserStore } from '@/shared/store/user.store';
 import { useUser, useUpdateUser } from '@/features/user/lib/hooks';
 import { useSupportChat, useProductInquiry } from './lib/hooks';
 import { toast } from '@/shared/ui/toast';
+import { userRequest } from '@/shared/config/api/user/user.request';
 import { uploadRequest } from '@/shared/config/api/upload/upload.request';
 import Login from '../login';
 import { AuthHeader } from '@/shared/ui/auth';
@@ -54,9 +55,11 @@ type SubSectionType = 'editProfile' | 'supportChat' | 'productInquiry' | null;
 
 interface ProfileProps {
   children?: React.ReactNode;
+  /** Sahifa rejimi (ilovadagidek alohida ekran): modal o'rniga shu bo'lim to'g'ridan-to'g'ri chiqadi */
+  page?: { tab: TabType; sub?: SubSectionType };
 }
 
-function Profile({ children }: ProfileProps) {
+function Profile({ children, page }: ProfileProps) {
   const { data: userData } = useUser();
   const updateUserMutation = useUpdateUser();
 
@@ -94,8 +97,18 @@ function Profile({ children }: ProfileProps) {
   const setProfileSubSection = useUIStore((s) => s.setProfileSubSection);
   const setProfileTab = useUIStore((s) => s.setProfileTab);
 
-  const activeTab = activeProfileTab as TabType;
-  const activeSubSection = activeProfileSubSection as SubSectionType;
+  React.useEffect(() => {
+    if (page)
+      useUIStore.setState({
+        activeProfileTab: page.tab,
+        activeProfileSubSection: page.sub ?? null,
+      });
+  }, [page?.tab, page?.sub]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const activeTab = (page ? page.tab : activeProfileTab) as TabType;
+  const activeSubSection = (
+    page ? (page.sub ?? null) : activeProfileSubSection
+  ) as SubSectionType;
 
   const token = useUserStore((s) => s.token);
   const setToken = useUserStore((s) => s.setToken);
@@ -156,7 +169,7 @@ function Profile({ children }: ProfileProps) {
         profile_picture: profileImage,
       });
       toast.success(t('messages.save_success'));
-      setProfileSubSection(null);
+      handleBackToMenu();
     } catch {
       toast.error(t('messages.save_error'));
     }
@@ -239,6 +252,10 @@ function Profile({ children }: ProfileProps) {
   };
 
   const handleBackToMenu = () => {
+    if (page) {
+      router.push('/profile');
+      return;
+    }
     setProfileSubSection(null);
   };
 
@@ -407,6 +424,51 @@ function Profile({ children }: ProfileProps) {
     onOpenChange(false);
   };
 
+  // Akkauntni o'chirish (ilovadagi bilan bir xil; Telegram Mini App'da ham ishlashi uchun confirm() emas, ichki tasdiq)
+  const [confirmDelete, setConfirmDelete] = React.useState(false);
+  const [deleting, setDeleting] = React.useState(false);
+  const handleDeleteAccount = async () => {
+    setDeleting(true);
+    try {
+      await userRequest.deleteMe();
+      toast.success(t('delete_account_done'));
+      setConfirmDelete(false);
+      setToken(null);
+      onOpenChange(false);
+    } catch {
+      toast.error(t('delete_account_error'));
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  if (page) {
+    if (!token)
+      return (
+        <div className="wrap max-w-[640px] min-h-[60vh] pt-10 flex flex-col items-center gap-4 text-center">
+          <p className="text-ivory/60">{t('guest_description')}</p>
+          <Link href="/profile" className="pill pill-ivory">
+            {t('login')}
+          </Link>
+        </div>
+      );
+    const showHeader = page.tab !== 'menu' || page.sub === 'editProfile';
+    return (
+      <div className="wrap max-w-[640px] pt-5 md:pt-10 pb-16 flex flex-col">
+        {page.tab !== 'menu' && (
+          <Link
+            href="/profile"
+            className="lbl text-ivory/50 mb-3 inline-flex items-center gap-1"
+          >
+            ‹ {t('tabs.menu')}
+          </Link>
+        )}
+        {showHeader && renderProfileHeader()}
+        <div className="mt-4">{renderTabContent()}</div>
+      </div>
+    );
+  }
+
   if (!token) {
     return (
       <Modal open={isProfileOpen} onOpenChange={onOpenChange}>
@@ -468,7 +530,7 @@ function Profile({ children }: ProfileProps) {
                   className="w-full h-12 appearance-none rounded-2xl border border-line-2 bg-ivory/[0.04] px-4 text-[14px] text-ivory outline-none cursor-pointer"
                   onChange={handleChangeLanguage}
                 >
-                  <option value="uz">O&apos;zbek 🇺🇿</option>
+                  <option value="uz">Özbek 🇺🇿</option>
                   <option value="ru">Русский 🇷🇺</option>
                   <option value="en">English 🇺🇸</option>
                 </select>
@@ -546,7 +608,7 @@ function Profile({ children }: ProfileProps) {
                 onChange={handleChangeLanguage}
                 className="md:hidden w-full mt-4 h-12 appearance-none rounded-2xl border border-line-2 bg-ivory/[0.04] px-4 text-[14px] text-ivory outline-none cursor-pointer"
               >
-                <option value="uz">O&apos;zbek 🇺🇿</option>
+                <option value="uz">Özbek 🇺🇿</option>
                 <option value="ru">Русский 🇷🇺</option>
                 <option value="en">English 🇺🇸</option>
               </select>
@@ -558,6 +620,42 @@ function Profile({ children }: ProfileProps) {
                 <LogOut size={16} />
                 {t('logout')}
               </Button>
+              {confirmDelete ? (
+                <div className="mt-3 rounded-2xl border border-sale/40 bg-sale/[0.06] p-4 flex flex-col gap-3">
+                  <p className="text-[15px] text-ivory">
+                    {t('delete_account_title')}
+                  </p>
+                  <p className="text-[12.5px] leading-relaxed text-ivory/60 normal-case tracking-normal">
+                    {t('delete_account_desc')}
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => setConfirmDelete(false)}
+                      disabled={deleting}
+                    >
+                      {t('delete_account_cancel')}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="flex-1 !border-sale !text-sale hover:!bg-sale/10"
+                      onClick={handleDeleteAccount}
+                      disabled={deleting}
+                    >
+                      {t('delete_account_confirm')}
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  onClick={() => setConfirmDelete(true)}
+                  variant="outline"
+                  className="w-full mt-3 !border-sale/25 !text-sale/80 hover:!bg-sale/10"
+                >
+                  {t('delete_account')}
+                </Button>
+              )}
             </>
           )}
         </div>

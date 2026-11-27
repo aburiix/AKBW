@@ -1,24 +1,14 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import {
-  Heart,
-  Home,
-  LayoutGrid,
-  ShoppingBag,
-  Sparkles,
-  User,
-} from 'lucide-react';
+import { Home, LayoutGrid, ShoppingBag, Sparkles, User } from 'lucide-react';
 import { Link, usePathname } from '@/shared/config/i18n/navigation';
 import { useCartStore } from '@/shared/store/cart.store';
 import { cn } from '@/shared/lib/utils';
 import { useTranslations } from 'next-intl';
 
-const Profile = dynamic(() => import('@/widgets/profile'), { ssr: false });
-
 const item =
-  'relative flex flex-col items-center gap-1 py-1.5 text-[8.5px] leading-none tracking-[0.06em] uppercase whitespace-nowrap font-[family-name:var(--font-futura)] transition-colors';
+  'relative h-[52px] rounded-[26px] flex flex-col items-center justify-center gap-[3px] text-[9px] leading-none tracking-[0.06em] uppercase whitespace-nowrap font-[family-name:var(--font-futura)] transition-colors';
 
 /** Telefon uchun pastki menyu (md dan kichik ekranlarda) */
 export default function MobileTabbar() {
@@ -101,10 +91,9 @@ export default function MobileTabbar() {
     return (
       <Link
         href={href}
-        className={cn(item, on ? 'text-ivory' : 'text-ivory/40')}
+        className={cn(item, on ? 'text-ivory bg-surface-2' : 'text-ivory/45')}
       >
-        {on && <span className="absolute -top-2 w-6 h-0.5 rounded bg-ivory" />}
-        <Icon size={21} strokeWidth={1.4} />
+        <Icon size={22} strokeWidth={1.5} />
         {label}
         {extra}
       </Link>
@@ -112,34 +101,32 @@ export default function MobileTabbar() {
   };
 
   return (
-    <nav className="tabbar md:hidden fixed z-[60] inset-x-0 bottom-0 grid grid-cols-6 px-1 pt-2 pb-[calc(8px+env(safe-area-inset-bottom))] bg-night/90 backdrop-blur-xl border-t border-line">
-      {tab('/', t('tab_home'), Home)}
-      {tab('/filters', t('tab_catalog'), LayoutGrid)}
-      {tab(
-        '/cart',
-        t('tab_cart'),
-        ShoppingBag,
-        mounted && cartCount > 0 ? (
-          <span className="absolute top-0 left-[55%] min-w-4 h-4 px-1 rounded-full bg-ivory text-night text-[9px] font-semibold leading-4 text-center tracking-normal">
-            {cartCount}
-          </span>
-        ) : null,
-      )}
-      <button
-        onClick={() => window.dispatchEvent(new CustomEvent('akbw:assistant'))}
-        className={cn(item, 'text-ivory/40 hover:text-ivory cursor-pointer')}
-        aria-label="AKBW AI"
-      >
-        <Sparkles size={21} strokeWidth={1.4} />
-        AI
-      </button>
-      {tab('/favorites', t('tab_fav'), Heart)}
-      <Profile>
-        <button className={cn(item, 'text-ivory/40 w-full')}>
-          <User size={21} strokeWidth={1.4} />
-          {t('tab_profile')}
+    <nav className="tabbar md:hidden fixed z-[60] inset-x-0 bottom-0 px-3.5 pb-[calc(10px+env(safe-area-inset-bottom))] pointer-events-none">
+      <div className="glass !bg-[var(--c-tabbar)] pointer-events-auto h-16 rounded-[32px] border border-line grid grid-cols-5 items-center px-1.5 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.45)]">
+        {tab('/', t('tab_home'), Home)}
+        {tab('/filters', t('tab_catalog'), LayoutGrid)}
+        <button
+          onClick={() =>
+            window.dispatchEvent(new CustomEvent('akbw:assistant'))
+          }
+          className={cn(item, 'text-ivory/45 hover:text-ivory cursor-pointer')}
+          aria-label="AKBW AI"
+        >
+          <Sparkles size={22} strokeWidth={1.5} />
+          AI
         </button>
-      </Profile>
+        {tab(
+          '/cart',
+          t('tab_cart'),
+          ShoppingBag,
+          mounted && cartCount > 0 ? (
+            <span className="absolute top-1 left-[56%] min-w-4 h-4 px-1 rounded-full bg-ivory text-night text-[9px] font-semibold leading-4 text-center tracking-normal">
+              {cartCount}
+            </span>
+          ) : null,
+        )}
+        {tab('/profile', t('tab_profile'), User)}
+      </div>
     </nav>
   );
 }

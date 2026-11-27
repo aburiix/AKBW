@@ -1,6 +1,15 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* Futura: faylda Ğ ğ Ş ş belgilari buzuq (nuqta chiziladi) — yangi alifbo harflari Inter/tizim shriftidan olinadi */
+@font-face {
+  font-family: 'AKBW Futura';
+  src: url('/fonts/futuralight.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0000-011D, U+0120-015D, U+0160-FFFF;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -38,25 +47,59 @@
   /* v5 qorong'i premium tema: "white" = to'q sirt, "black" = fil suyagi.
      Shu bilan butun saytdagi bg-white / text-black / gray-* klasslari avtomatik qorong'i uslubga o'tadi. */
   --color-akbw-sand: #a6a195;
-  --color-akbw-white: #161512;
-  --color-akbw-black: #efe8db;
-  --color-akbw-gray: #9a9488;
+  --color-akbw-white: var(--c-surface);
+  --color-akbw-black: var(--c-ivory);
+  --color-akbw-gray: var(--c-gray);
   --color-akbw-olive: #6b6e5f;
   --color-akbw-taupe: #8a847a;
-  --color-akbw-filter-bg: #1d1b18;
-  --color-akbw-filter-bg-muted: rgba(246, 240, 230, 0.05);
+  --color-akbw-filter-bg: var(--c-surface-2);
+  --color-akbw-filter-bg-muted: var(--c-muted-bg);
 
-  /* O'zgarmas ranglar (rasm ustidagi matn, qoplamalar uchun) */
-  --color-ivory: #efe8db;
-  --color-night: #0e0d0b;
-  --color-surface: #161512;
-  --color-surface-2: #1d1b18;
-  --color-surface-3: #26231f;
-  --color-line: rgba(246, 240, 230, 0.1);
-  --color-line-2: rgba(246, 240, 230, 0.2);
-  --color-sale: #e0896f;
-  --color-ok: #a9c49a;
-  --color-star: #e6c58a;
+  /* Tungi/kunduzgi rejimga qarab almashadi (ilova bilan bir xil palitra).
+     ivory = asosiy matn/aksent, night = sahifa foni. Rasm ustidagi bloklar data-theme="dark" bilan to'q qoladi. */
+  --color-ivory: var(--c-ivory);
+  --color-night: var(--c-night);
+  --color-surface: var(--c-surface);
+  --color-surface-2: var(--c-surface-2);
+  --color-surface-3: var(--c-surface-3);
+  --color-line: var(--c-line);
+  --color-line-2: var(--c-line-2);
+  --color-sale: var(--c-sale);
+  --color-ok: var(--c-ok);
+  --color-star: var(--c-star);
+
+  /* Tailwind standart palitrasi → brend (tungi/kunduzgi) */
+  --color-white: var(--n-white);
+  --color-black: var(--n-black);
+  --color-gray-50: var(--n-50);
+  --color-gray-100: var(--n-100);
+  --color-gray-200: var(--n-200);
+  --color-gray-300: var(--n-300);
+  --color-gray-400: var(--n-400);
+  --color-gray-500: var(--n-500);
+  --color-gray-600: var(--n-600);
+  --color-gray-700: var(--n-700);
+  --color-gray-800: var(--n-800);
+  --color-gray-900: var(--n-900);
+  --color-gray-950: var(--n-950);
+  --color-red-50: var(--st-red-50);
+  --color-red-100: var(--st-red-100);
+  --color-red-400: var(--c-sale);
+  --color-red-500: var(--c-sale);
+  --color-red-600: var(--c-sale);
+  --color-green-50: var(--st-green-50);
+  --color-green-100: var(--st-green-100);
+  --color-green-500: var(--c-ok);
+  --color-green-600: var(--c-ok);
+  --color-green-700: var(--c-ok);
+  --color-yellow-300: var(--c-star);
+  --color-yellow-400: var(--c-star);
+  --color-yellow-500: var(--c-star);
+  --color-blue-50: var(--st-blue-50);
+  --color-blue-500: var(--c-info);
+  --color-blue-600: var(--c-info);
+  --color-orange-500: var(--c-star);
+  --color-amber-500: var(--c-star);
 
   --animate-float: float 3s ease-in-out infinite;
 
@@ -73,52 +116,109 @@
   }
 }
 
-/* Tailwind standart palitrasini qorong'i temaga moslash (teskari yorqinlik) */
-@theme {
-  --color-white: #161512;
-  --color-black: #efe8db;
-  --color-gray-50: #191714;
-  --color-gray-100: #1f1d1a;
-  --color-gray-200: #2a2722;
-  --color-gray-300: #4a453d;
-  --color-gray-400: #7c766c;
-  --color-gray-500: #9a9488;
-  --color-gray-600: #b3ada1;
-  --color-gray-700: #cbc5b9;
-  --color-gray-800: #ddd8ce;
-  --color-gray-900: #ece7de;
-  --color-gray-950: #f6f1e8;
-  --color-red-50: #2a1814;
-  --color-red-100: #3a1f19;
-  --color-red-400: #e8a08b;
-  --color-red-500: #e0896f;
-  --color-red-600: #e07a62;
-  --color-green-50: #18211a;
-  --color-green-100: #1c2a1d;
-  --color-green-500: #a9c49a;
-  --color-green-600: #a9c49a;
-  --color-green-700: #bfd6b1;
-  --color-yellow-300: #8c7550;
-  --color-yellow-400: #e6c58a;
-  --color-yellow-500: #e6c58a;
-  --color-blue-50: #161c26;
-  --color-blue-500: #a9b8d6;
-  --color-blue-600: #a9b8d6;
-  --color-orange-500: #e0a46f;
-  --color-amber-500: #e6c58a;
+:root {
+  --radius: 8px;
+  --akbw-background: var(--c-surface-2);
+}
+
+/* ── Tungi (asosiy) ── ilovadagi DARK palitra */
+:root,
+[data-theme='dark'] {
+  --c-ivory: #efe8db;
+  --c-on-ivory: #13110f;
+  --c-night: #0e0d0b;
+  --c-surface: #161512;
+  --c-surface-2: #1d1b18;
+  --c-surface-3: #26231f;
+  --c-line: rgba(246, 240, 230, 0.1);
+  --c-line-2: rgba(246, 240, 230, 0.2);
+  --c-gray: #9a9488;
+  --c-muted-bg: rgba(246, 240, 230, 0.05);
+  --c-sale: #e0896f;
+  --c-ok: #a9c49a;
+  --c-star: #e6c58a;
+  --c-info: #a9b8d6;
+  --c-placeholder: rgba(246, 240, 230, 0.38);
+  --c-glow: radial-gradient(80% 50% at 50% -10%, rgba(138, 98, 67, 0.28), transparent 70%),
+    radial-gradient(60% 40% at 100% 100%, rgba(107, 110, 95, 0.14), transparent 70%);
+  --c-glass: linear-gradient(140deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+  --c-glass-line: rgba(246, 240, 230, 0.2);
+  --c-tabbar: rgba(24, 22, 19, 0.82);
+  --n-white: #161512;
+  --n-black: #efe8db;
+  --n-50: #191714;
+  --n-100: #1f1d1a;
+  --n-200: #2a2722;
+  --n-300: #4a453d;
+  --n-400: #7c766c;
+  --n-500: #9a9488;
+  --n-600: #b3ada1;
+  --n-700: #cbc5b9;
+  --n-800: #ddd8ce;
+  --n-900: #ece7de;
+  --n-950: #f6f1e8;
+  --st-red-50: #2a1814;
+  --st-red-100: #3a1f19;
+  --st-green-50: #18211a;
+  --st-green-100: #1c2a1d;
+  --st-blue-50: #161c26;
+  --background: var(--c-night);
+  --foreground: var(--c-ivory);
+  --border: var(--c-line);
+  --ring: rgba(239, 232, 219, 0.5);
+  --akbw-black: var(--c-ivory);
+  color-scheme: dark;
+}
+
+/* ── Kunduzgi ── ilovadagi LIGHT palitra (admin panel bilan bir xil) */
+[data-theme='light'] {
+  --c-ivory: #13110f;
+  --c-on-ivory: #f6f0e6;
+  --c-night: #f6f4f0;
+  --c-surface: #fbfaf7;
+  --c-surface-2: #f0ede7;
+  --c-surface-3: #e6e2da;
+  --c-line: rgba(19, 17, 15, 0.09);
+  --c-line-2: rgba(19, 17, 15, 0.18);
+  --c-gray: #6f6a61;
+  --c-muted-bg: rgba(19, 17, 15, 0.04);
+  --c-sale: #a94a33;
+  --c-ok: #4f7a3f;
+  --c-star: #8a6243;
+  --c-info: #3e6488;
+  --c-placeholder: rgba(19, 17, 15, 0.42);
+  --c-glow: radial-gradient(80% 50% at 50% -10%, rgba(138, 98, 67, 0.16), transparent 70%);
+  --c-glass: linear-gradient(140deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.6));
+  --c-glass-line: rgba(19, 17, 15, 0.12);
+  --c-tabbar: rgba(251, 250, 247, 0.86);
+  --n-white: #fbfaf7;
+  --n-black: #13110f;
+  --n-50: #f3f0ea;
+  --n-100: #e9e5dd;
+  --n-200: #dcd7cd;
+  --n-300: #bfb9ad;
+  --n-400: #857f75;
+  --n-500: #6f6a61;
+  --n-600: #5a554d;
+  --n-700: #45413b;
+  --n-800: #2c2925;
+  --n-900: #13110f;
+  --n-950: #0b0a09;
+  --st-red-50: #f7e6e1;
+  --st-red-100: #f0d3ca;
+  --st-green-50: #e7efe2;
+  --st-green-100: #d6e4cd;
+  --st-blue-50: #e3eaf2;
+  --background: var(--c-night);
+  --foreground: var(--c-ivory);
+  --border: var(--c-line);
+  --ring: rgba(19, 17, 15, 0.4);
+  --akbw-black: var(--c-ivory);
+  color-scheme: light;
 }
 
 :root {
-  --radius: 8px;
-
-  --background: #0e0d0b;
-  --foreground: #efe8db;
-  --border: rgba(246, 240, 230, 0.1);
-  --ring: rgba(239, 232, 219, 0.5);
-
-  --akbw-black: #efe8db;
-  --akbw-background: #1d1b18;
-
+  --font-futura: 'AKBW Futura', Inter, -apple-system, system-ui, sans-serif;
   --font-inter: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-montserrat: Montserrat, system-ui, -apple-system, sans-serif;
 }
@@ -130,14 +230,12 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background-image: radial-gradient(80% 50% at 50% -10%, rgba(138, 98, 67, 0.28), transparent 70%),
-      radial-gradient(60% 40% at 100% 100%, rgba(107, 110, 95, 0.14), transparent 70%);
+    background-image: var(--c-glow);
     background-attachment: fixed;
   }
 
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
   }
 
   /* Sarlavhalar — moda jurnali uslubi (Didot) */
@@ -150,16 +248,16 @@
     color: var(--foreground);
   }
   input::placeholder, textarea::placeholder {
-    color: rgba(246, 240, 230, 0.38);
+    color: var(--c-placeholder);
   }
   ::selection {
-    background: #efe8db;
-    color: #13110f;
+    background: var(--c-ivory);
+    color: var(--c-on-ivory);
   }
 
   /* Mobil pastki menyu uchun joy */
   @media (max-width: 767px) {
-    body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+    body { padding-bottom: calc(86px + env(safe-area-inset-bottom)); }
     /* iPhone Google ilovasi: menyu uning suzuvchi paneli ustiga (≈77pt) ko'tarilgan */
     html.ios-gsa body { padding-bottom: calc(72px + 77px); }
   }
@@ -185,14 +283,14 @@
     font-weight: 400;
   }
   .glass {
-    background: linear-gradient(140deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+    background: var(--c-glass);
     backdrop-filter: blur(24px) saturate(150%);
     -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid rgba(246, 240, 230, 0.2);
+    border: 1px solid var(--c-glass-line);
   }
   .surface {
-    background: #161512;
-    border: 1px solid rgba(246, 240, 230, 0.1);
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
   }
   .pill {
     display: inline-flex;
@@ -209,10 +307,10 @@
     white-space: nowrap;
     transition: background 0.2s, color 0.2s, transform 0.2s;
   }
-  .pill-ivory { background: #efe8db; color: #13110f; }
-  .pill-ivory:hover { background: #fff; }
-  .pill-ghost { border: 1px solid rgba(246, 240, 230, 0.2); color: #efe8db; }
-  .pill-ghost:hover { background: rgba(255, 255, 255, 0.06); }
+  .pill-ivory { background: var(--c-ivory); color: var(--c-on-ivory); }
+  .pill-ivory:hover { opacity: 0.88; }
+  .pill-ghost { border: 1px solid var(--c-line-2); color: var(--c-ivory); }
+  .pill-ghost:hover { background: var(--c-muted-bg); }
   .pill-sm { height: 40px; padding: 0 16px; }
   .marquee { animation: akbw-marquee 34s linear infinite; }
   @keyframes akbw-marquee { to { transform: translateX(-50%); } }

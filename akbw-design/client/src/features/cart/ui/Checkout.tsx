@@ -212,7 +212,7 @@ function Checkout({
                   </span>
                   <span className="text-[28px] md:text-[32px] text-ivory tabular-nums leading-none">
                     {Number(selectedOrder?.total_price).toLocaleString()}{' '}
-                    so&apos;m
+                    söm
                   </span>
                 </div>
                 <Button

@@ -198,6 +198,76 @@ export function AuthTerms({ text, link }: { text: string; link: string }) {
   );
 }
 
+/** Foydalanish shartlari va Maxfiylik siyosatiga rozilik belgisi (ilovadagi bilan bir xil) */
+export function AuthConsent({
+  checked,
+  onChange,
+  text,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  text: {
+    pre: string;
+    terms: string;
+    and: string;
+    privacy: string;
+    post: string;
+    required: string;
+  };
+}) {
+  const go = (path: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const locale = window.location.pathname.split('/')[1] || 'uz';
+    window.location.assign(`/${locale}${path}`);
+  };
+  const link = 'text-ivory underline underline-offset-2 cursor-pointer';
+  return (
+    <div className="flex flex-col gap-2">
+      <label className="flex items-start gap-3 cursor-pointer select-none px-1">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          className="peer sr-only"
+        />
+        <span
+          aria-hidden
+          className={`mt-px size-[22px] shrink-0 rounded-[7px] border-[1.5px] grid place-items-center text-[13px] font-bold transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-ivory/40 ${
+            checked ? 'bg-ivory border-ivory text-night' : 'border-line-2'
+          }`}
+        >
+          {checked ? '✓' : ''}
+        </span>
+        <span className="text-[13px] leading-[19px] text-ivory/60">
+          {text.pre}{' '}
+          <span
+            role="link"
+            tabIndex={0}
+            onClick={go('/terms')}
+            className={link}
+          >
+            {text.terms}
+          </span>{' '}
+          {text.and}{' '}
+          <span
+            role="link"
+            tabIndex={0}
+            onClick={go('/privacy')}
+            className={link}
+          >
+            {text.privacy}
+          </span>{' '}
+          {text.post}
+        </span>
+      </label>
+      {!checked && (
+        <p className="text-center text-[12px] text-ivory/40">{text.required}</p>
+      )}
+    </div>
+  );
+}
+
 /** Ikki variantli tanlagich (jins) */
 export function Segmented({
   value,

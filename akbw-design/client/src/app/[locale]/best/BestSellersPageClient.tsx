@@ -22,13 +22,13 @@ export default function BestSellersPageClient() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-2 h-8 bg-black rounded-full" />
             <h1 className="font-display text-3xl md:text-4xl font-bold text-black">
-              {t('title', { fallback: "Eng ko'p sotilayotganlar" })}
+              {t('title', { fallback: "Eng köp sotilayotganlar" })}
             </h1>
             <Trophy className="w-6 h-6 text-yellow-500" />
           </div>
           <p className="text-gray-600 text-lg max-w-2xl mb-8">
             {t('description', {
-              fallback: "Eng mashhur va ko'p sotilayotgan mahsulotlarimiz",
+              fallback: "Eng maşhur va köp sotilayotgan mahsulotlarimiz",
             })}
           </p>
           <div className="flex flex-wrap gap-4">
@@ -38,7 +38,7 @@ export default function BestSellersPageClient() {
               className="rounded-full bg-akbw-black/50 hover:bg-akbw-black text-white font-bold uppercase shadow-xl"
             >
               <Link href="/filters">
-                {t('view_all_products', { fallback: 'Barcha mahsulotlar' })}
+                {t('view_all_products', { fallback: 'Barça mahsulotlar' })}
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
@@ -89,12 +89,12 @@ export default function BestSellersPageClient() {
               </div>
               <h3 className="text-xl font-bold text-gray-700 mb-3">
                 {t('no_best_sellers', {
-                  fallback: "Hali eng ko'p sotilayotgan mahsulotlar yo'q",
+                  fallback: "Hali eng köp sotilayotgan mahsulotlar yöq",
                 })}
               </h3>
               <p className="text-gray-500 mb-8 max-w-md mx-auto">
                 {t('check_back_soon', {
-                  fallback: "Tez orada yangi mahsulotlar qo'shiladi",
+                  fallback: "Tez orada yangi mahsulotlar qöşiladi",
                 })}
               </p>
               <Button
@@ -104,7 +104,7 @@ export default function BestSellersPageClient() {
               >
                 <Link href="/filters">
                   {t('browse_all_products', {
-                    fallback: "Barcha mahsulotlarni ko'rish",
+                    fallback: "Barça mahsulotlarni köriş",
                   })}
                 </Link>
               </Button>

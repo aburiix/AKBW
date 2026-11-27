@@ -1,12 +1,12 @@
 import Constants from 'expo-constants';
 import { router, useFocusEffect } from 'expo-router';
-import * as WebBrowser from 'expo-web-browser';
 import { useCallback, useState } from 'react';
-import { Alert, Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { OptionSheet } from '@/components/OptionSheet';
 import { Button, Label, Screen, Wordmark } from '@/components/ui';
-import { api, BRAND, SITE_URL } from '@/lib/api';
+import { Image } from 'expo-image';
+import { api, BRAND, httpsUrl } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 import { cartCount, useCart } from '@/lib/cart';
 import { useFavorites } from '@/lib/favorites';
@@ -81,11 +81,19 @@ export default function Profile() {
     }, [token]),
   );
 
+  const invite = () =>
+    user?.referralCode &&
+    Share.share({
+      message: t("AKBW — zamonaviy kiyim do'koni. Ro'yxatdan o'tishda mening taklif kodimni kiriting: {code}\nhttps://akbw.uz", {
+        code: user.referralCode,
+      }),
+    });
+
   const toPay = orders?.filter((o) => o.state === 'PENDING').length ?? 0;
   const version = Constants.expoConfig?.version ?? '1.0.0';
   const langTitle = LANGS.find((l) => l.id === lang)?.title ?? '';
   const modeTitle = t(MODES.find((m) => m.id === mode)?.title ?? 'Avto');
-  const openLegal = (path: string) => WebBrowser.openBrowserAsync(`${SITE_URL}/${lang}${path}`);
+  const openLegal = (doc: 'terms' | 'privacy') => router.push({ pathname: '/legal', params: { doc } });
 
   const settings = (
     <Section title={t('Sozlamalar')}>
@@ -98,6 +106,7 @@ export default function Profile() {
   const help = (
     <Section title={t('Yordam')}>
       <Row icon="✦" title={t('AKBW AI yordamchi')} onPress={() => router.navigate('/ai')} />
+      {!!token && <Row icon="◍" title={t('Yordam chati')} onPress={() => router.push({ pathname: '/chat', params: { kind: 'help' } })} />}
       <Row icon="@" title={t("Biz bilan bog'lanish")} onPress={() => router.push('/contact')} />
       <Row icon="☏" title={t("Qo'ng'iroq qilish")} value={BRAND.phoneLabel} onPress={() => Linking.openURL(`tel:${BRAND.phone}`)} />
       <Row icon="➤" title="Telegram" value="@akbwuz" onPress={() => Linking.openURL(BRAND.telegram)} />
@@ -107,8 +116,9 @@ export default function Profile() {
 
   const legal = (
     <Section title={t("Ma'lumot")}>
-      <Row icon="§" title={t('Maxfiylik siyosati')} onPress={() => openLegal('/privacy')} />
-      <Row icon="§" title={t('Foydalanish shartlari')} onPress={() => openLegal('/terms')} last />
+      <Row icon="Ⓐ" title={t('Biz haqimizda')} onPress={() => router.push('/about')} />
+      <Row icon="§" title={t('Maxfiylik siyosati')} onPress={() => openLegal('privacy')} />
+      <Row icon="§" title={t('Foydalanish shartlari')} onPress={() => openLegal('terms')} last />
     </Section>
   );
 
@@ -167,9 +177,13 @@ export default function Profile() {
     <Screen>
       <ScrollView contentContainerStyle={{ paddingTop: insets.top + 12, paddingBottom: tabSpace + 24 }}>
         <View style={s.head}>
-          <View style={s.avatar}>
-            <Text style={s.avatarText}>{(user?.name?.[0] ?? 'A').toUpperCase()}</Text>
-          </View>
+          <Pressable onPress={() => router.push('/profile-edit')} style={s.avatar}>
+            {user?.profile_picture ? (
+              <Image source={httpsUrl(user.profile_picture)} style={StyleSheet.absoluteFill} contentFit="cover" transition={200} />
+            ) : (
+              <Text style={s.avatarText}>{(user?.name?.[0] ?? 'A').toUpperCase()}</Text>
+            )}
+          </Pressable>
           <View style={{ flex: 1, gap: 6 }}>
             <Text style={s.name} numberOfLines={2}>
               {fullName}
@@ -204,8 +218,23 @@ export default function Profile() {
         <Section title={t('Xaridlar')}>
           <Row icon="▤" title={t('Buyurtmalarim')} onPress={() => router.push('/orders')} badge={toPay || undefined} />
           <Row icon="♡" title={t('Sevimlilar')} onPress={() => router.push('/favorites')} />
-          <Row icon="◈" title={t("Kiyib ko'rish tarixi")} onPress={() => router.push('/tryon-history')} last />
+          <Row icon="◈" title={t("Kiyib ko'rish tarixi")} onPress={() => router.push('/tryon-history')} />
+          <Row icon="★" title={t('Mening sharhlarim')} onPress={() => router.push('/my-reviews')} />
+          <Row icon="⌕" title={t("Mahsulot so'rash")} onPress={() => router.push({ pathname: '/chat', params: { kind: 'ask' } })} last />
         </Section>
+
+        {!!user?.referralCode && (
+          <Pressable onPress={invite} style={({ pressed }) => [s.invite, { backgroundImage: c.heroBg }, pressed && { opacity: 0.85 }]}>
+            <View style={{ flex: 1, gap: 6 }}>
+              <Text style={[label(10), { color: 'rgba(239,232,219,0.6)' }]}>AKBW Club</Text>
+              <Text style={s.inviteTitle}>{t("Do'stlarni taklif qiling")}</Text>
+              <Text style={{ color: 'rgba(239,232,219,0.7)', fontSize: 13 }}>
+                {t('Taklif kodingiz')}: <Text style={{ color: '#EFE8DB', fontWeight: '600', fontSize: 11 }} selectable>{user.referralCode}</Text>
+              </Text>
+            </View>
+            <Text style={[label(10), { color: '#EFE8DB' }]}>{t('Ulashish')} ↗</Text>
+          </Pressable>
+        )}
 
         {settings}
         {help}
@@ -312,6 +341,7 @@ const mk = (c: Palette) =>
       justifyContent: 'center',
       borderWidth: 1,
       borderColor: c.line2,
+      overflow: 'hidden',
     },
     avatarText: { color: '#EFE8DB', fontSize: 26, fontFamily: F.serif },
     name: { fontFamily: F.serif, fontSize: 22, lineHeight: 26, color: c.text },
@@ -337,6 +367,8 @@ const mk = (c: Palette) =>
     rowText: { flex: 1, fontSize: 15, color: c.text },
     rowValue: { fontSize: 13, color: c.mute, maxWidth: 160 },
     badge: { minWidth: 20, height: 20, borderRadius: 10, paddingHorizontal: 6, backgroundColor: c.ivory, alignItems: 'center', justifyContent: 'center' },
+    invite: { flexDirection: 'row', alignItems: 'center', gap: 12, marginHorizontal: 16, marginTop: 26, padding: 20, borderRadius: 24, borderWidth: 1, borderColor: c.line, overflow: 'hidden' },
+    inviteTitle: { fontFamily: F.serif, fontSize: 22, color: '#EFE8DB' },
     dangerBtn: { height: 50, marginTop: 12, borderRadius: 999, borderWidth: 1, borderColor: c.sale, alignItems: 'center', justifyContent: 'center' },
     version: { textAlign: 'center', color: c.mute2, fontSize: 11, marginTop: 26, letterSpacing: 1 },
   });

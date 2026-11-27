@@ -9,6 +9,7 @@ export interface IUser {
   updatedAt: string;
   reviews?: any[];
   orders?: any[];
+  referralCode?: string;
 }
 
 export interface IUpdateUserRequest {

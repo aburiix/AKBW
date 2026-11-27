@@ -4,11 +4,13 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, FlatList, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ReviewsBlock, Stars } from '@/components/Reviews';
 import { Button, Center, Chip, Label, Screen } from '@/components/ui';
 import { api } from '@/lib/api';
 import { useCart } from '@/lib/cart';
 import { useFavorites } from '@/lib/favorites';
 import { finalPrice, formatPrice } from '@/lib/format';
+import { SITE_TEXT } from '@/lib/siteText';
 import { F, useColors, useStyles, type Palette } from '@/lib/theme';
 import type { Product } from '@/lib/types';
 
@@ -106,6 +108,12 @@ export default function ProductScreen() {
         <View style={{ padding: 16, paddingTop: 22, gap: 10 }}>
           {!!p.categories?.[0] && <Label>{`AKBW · ${p.categories[0].name}`}</Label>}
           <Text style={s.name}>{p.name}</Text>
+          {!!p.rating && (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <Stars value={p.rating} size={13} />
+              <Text style={{ color: c.mute, fontSize: 12 }}>{Number(p.rating).toFixed(1)}</Text>
+            </View>
+          )}
           <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
             <Text style={s.price}>{formatPrice(price)}</Text>
             {p.discount > 0 && <Text style={s.old}>{formatPrice(p.price)}</Text>}
@@ -157,12 +165,39 @@ export default function ProductScreen() {
             <Text style={s.desc}>{p.description}</Text>
           </View>
         )}
+        <Faq />
+        <ReviewsBlock productId={p.id} />
       </ScrollView>
 
       <View style={[s.bar, { paddingBottom: Math.max(insets.bottom, 12) }]}>
         <Button title={t("Savatga qo'shish")} onPress={onAdd} />
       </View>
     </Screen>
+  );
+}
+
+
+/** Saytdagi kabi "Savollar" bloki — bosilganda javob ochiladi. */
+function Faq() {
+  const t = useT();
+  const c = useColors();
+  const s = useStyles(mk);
+  const lang = useLang((st) => st.lang);
+  const FAQ = (SITE_TEXT[lang] ?? SITE_TEXT.uz).Faqs;
+  const [open, setOpen] = useState<number | null>(null);
+  return (
+    <View style={[s.block, { gap: 8 }]}>
+      <Label>{t('Savollar')}</Label>
+      {FAQ.map((f, i) => (
+        <Pressable key={i} onPress={() => setOpen(open === i ? null : i)} style={s.faq}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 12 }}>
+            <Text style={{ flex: 1, color: c.text, fontSize: 15 }}>{f.q}</Text>
+            <Text style={{ color: c.mute, fontSize: 18 }}>{open === i ? '−' : '+'}</Text>
+          </View>
+          {open === i && <Text style={{ color: c.mute, fontSize: 14, lineHeight: 21, marginTop: 8 }}>{f.a}</Text>}
+        </Pressable>
+      ))}
+    </View>
   );
 }
 
@@ -177,6 +212,7 @@ const mk = (c: Palette) =>
     old: { fontSize: 14, color: c.mute2, textDecorationLine: 'line-through' },
     block: { marginHorizontal: 16, marginTop: 20, gap: 12 },
     wrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+    faq: { backgroundColor: c.s1, borderRadius: 18, borderWidth: 1, borderColor: c.line, padding: 16 },
     descCard: { backgroundColor: c.s1, borderRadius: 20, borderWidth: 1, borderColor: c.line, padding: 18 },
     desc: { fontSize: 15, lineHeight: 23, color: c.mute },
     bar: {

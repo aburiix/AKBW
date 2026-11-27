@@ -33,6 +33,9 @@ export interface User {
   lastName: string;
   gender: string;
   profile_picture?: string | null;
+  referralCode?: string;
+  availableBonus?: number;
+  reviews?: { id: number; rating: number; comment: string; product_id: number; createdAt: string }[];
 }
 
 export interface BtsPlace {
@@ -134,4 +137,28 @@ export interface StyleItem {
   image: string;
   categoryId: number;
   category?: { id: number; name: string } | null;
+}
+
+export interface Review {
+  id: number;
+  rating: number;
+  comment: string;
+  product_id: number;
+  user?: { id: string; name: string; lastName: string; profile_picture?: string } | null;
+  createdAt: string;
+}
+
+export interface ChatMessage {
+  id: number;
+  chat_id: number;
+  sender_id: string | null;
+  message: string;
+  photo?: string;
+  createdAt: string;
+}
+
+export interface Chat {
+  id: number;
+  user_id: string;
+  messages: ChatMessage[];
 }

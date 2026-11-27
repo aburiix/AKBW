@@ -141,7 +141,12 @@ export default function Cart() {
   };
 
   const subtotal = useMemo(
-    () => cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    // Server bilan bir xil: mahsulot chegirmasi (discount %) har bir dona narxiga qo'llanadi
+    () =>
+      cartItems.reduce(
+        (acc, item) => acc + Math.round(item.price * (1 - (item.discount || 0) / 100)) * item.quantity,
+        0,
+      ),
     [cartItems],
   );
   const discount = useMemo(
@@ -369,7 +374,7 @@ export default function Cart() {
               <div className={cn('flex', 'justify-between', 'items-center')}>
                 <span className="lbl text-ivory/45 px-1">{t('subtotal')}</span>
                 <span className="text-[16px] text-ivory tabular-nums">
-                  {subtotal.toLocaleString()} so&apos;m
+                  {subtotal.toLocaleString()} söm
                 </span>
               </div>
               <div className={cn('flex', 'justify-between', 'items-center')}>
@@ -378,7 +383,7 @@ export default function Cart() {
                   {appliedDiscount > 0 ? `(-${appliedDiscount}%)` : ''}
                 </span>
                 <span className="text-[16px] text-sale tabular-nums">
-                  -{discount.toLocaleString()} so&apos;m
+                  -{discount.toLocaleString()} söm
                 </span>
               </div>
               <div className={cn('flex', 'justify-between', 'items-center')}>
@@ -386,14 +391,14 @@ export default function Cart() {
                   {t('delivery_fee')}
                 </span>
                 <span className="text-[16px] text-ivory tabular-nums">
-                  {deliveryFee.toLocaleString()} so&apos;m
+                  {deliveryFee.toLocaleString()} söm
                 </span>
               </div>
 
               <div className="flex justify-between items-end pt-4 border-t border-line">
                 <span className="lbl text-ivory/70">{t('total')}</span>
                 <span className="serif text-[34px] leading-none text-ivory tabular-nums">
-                  {total.toLocaleString()} so&apos;m
+                  {total.toLocaleString()} söm
                 </span>
               </div>
             </div>

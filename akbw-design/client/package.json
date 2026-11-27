@@ -83,5 +83,8 @@
       "prettier --write",
       "eslint src --fix"
     ]
+  },
+  "overrides": {
+    "sharp": "0.34.5"
   }
 }

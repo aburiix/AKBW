@@ -2,7 +2,7 @@ import { INavbarItem } from './model';
 
 const NavbarItems: INavbarItem[] = [
   {
-    label: "Do'kon",
+    label: "Dökon",
     href: '/store',
   },
   {

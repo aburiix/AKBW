@@ -30,7 +30,27 @@
     "no_seasons": "No seasons available yet",
     "happy_customers_title": "Our Grateful Customers",
     "not_enough_reviews": "Not enough reviews yet",
-    "anonymous_user": "Anonymous"
+    "anonymous_user": "Anonymous",
+    "products_btn": "Products",
+    "newest_btn": "New in",
+    "all_btn": "All",
+    "season": "Season",
+    "season_spring": "Spring",
+    "season_summer": "Summer",
+    "season_autumn": "Autumn",
+    "season_winter": "Winter",
+    "kicker_new": "AKBW · New",
+    "kicker_top": "AKBW · Top",
+    "top_sold": "Best sellers",
+    "kicker_styles": "AKBW · Collections",
+    "styles_title": "Styles",
+    "ring_hint": "← swipe · tap to open →",
+    "reviews_kicker": "Our favourite customers",
+    "reviews_title": "Happy customers",
+    "brand_kicker": "AKBW · Brand",
+    "brand_text": "Quality fabric, careful tailoring and a style that suits you. Find your size and try clothes on with AKBW AI.",
+    "ai_btn": "Chat with AKBW AI",
+    "about_btn": "About us"
   },
   "Footer": {
     "new_arrivals": "New Arrivals",
@@ -67,7 +87,13 @@
     "login_title": "Login",
     "verify_title": "Verification Code",
     "continue_terms_text": "By continuing, I",
-    "terms_link_text": "agree to the AKBW data processing policy!"
+    "terms_link_text": "agree to the AKBW data processing policy!",
+    "consent_pre": "I agree to the AKBW",
+    "consent_terms": "Terms of use",
+    "consent_and": "and",
+    "consent_privacy": "Privacy policy",
+    "consent_post": ".",
+    "consent_required": "Please accept the terms to continue."
   },
   "Register": {
     "name_invalid": "Name must be at least 2 letters long",
@@ -99,7 +125,13 @@
     "verify_btn": "Verify",
     "edit_info_btn": "Edit Information",
     "referral_bonus_applied": "Referral bonus applied",
-    "welcome_bonus_applied": "Welcome bonus applied"
+    "welcome_bonus_applied": "Welcome bonus applied",
+    "consent_pre": "I agree to the AKBW",
+    "consent_terms": "Terms of use",
+    "consent_and": "and",
+    "consent_privacy": "Privacy policy",
+    "consent_post": ".",
+    "consent_required": "Please accept the terms to continue."
   },
   "AboutPage": {
     "hero_subtitle": "Simple, High-Quality, Endless Design",
@@ -259,7 +291,13 @@
     "branch_selection_required": "Delivery branch selection is required",
     "rest_will_be_paid_at_delivery": "The delivery price will be paid upon delivery",
     "login_required": "Please login first",
-    "open_in_map": "Open in map"
+    "open_in_map": "Open in map",
+    "login_first": "Sign in to place an order",
+    "back_to_cart": "Cart",
+    "kicker": "AKBW · {n} items",
+    "checkout_title": "Checkout",
+    "cart_title": "Cart",
+    "my_orders": "My orders"
   },
   "FavoritesPage": {
     "title": "Favorites",
@@ -288,7 +326,11 @@
     "loadingProducts": "Loading products...",
     "noProducts": "No products found for the selected filters.",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "kicker": "AKBW · {n} products",
+    "catalog": "Catalog",
+    "searchPlaceholder": "Search clothes…",
+    "filter": "Filter"
   },
   "PrivacyPage": {
     "hero": {
@@ -427,7 +469,7 @@
       },
       {
         "q": "How to choose the correct size?",
-        "a": "Please refer to the size guide located below the size selection."
+        "a": "If you have a size question, ask AKBW AI with the “Ask about size” button."
       }
     ],
     "relatedProductsTitle": "You May Also Like!",
@@ -437,7 +479,8 @@
     "review_fields_required": "Please fill in all fields and select a rating",
     "review_success": "Review submitted successfully!",
     "review_deleted_success": "Review deleted successfully!",
-    "add_to_cart_success": "{name} added to cart"
+    "add_to_cart_success": "{name} added to cart",
+    "description": "Description"
   },
   "SearchPage": {
     "placeholder": "Search...",
@@ -627,7 +670,14 @@
       "name_min": "Name must be at least 2 characters long",
       "lastname_min": "Last name must be at least 2 characters long",
       "gender_min": "Gender must be at least 2 characters long"
-    }
+    },
+    "delete_account": "Delete account",
+    "delete_account_title": "Delete your account?",
+    "delete_account_desc": "Your name, phone number, AI chats and try-on photos will be permanently deleted. Order history is kept without personal data. This cannot be undone.",
+    "delete_account_confirm": "Yes, delete",
+    "delete_account_cancel": "Cancel",
+    "delete_account_done": "Account deleted",
+    "delete_account_error": "Could not delete the account, please try again"
   },
   "NewArrivalsPage": {
     "title": "New Arrivals",
@@ -677,7 +727,9 @@
     "pnf_text": "The product you are looking for does not exist or has been removed.",
     "try_on": "Try on with AI",
     "size_ai": "Find my size with AI",
-    "size_prompt": "Find my size for this item"
+    "size_prompt": "Find my size for this item",
+    "try_on_short": "Try on",
+    "size_ask": "Ask about size"
   },
   "TryOn": {
     "kicker": "AKBW · AI fitting room",
@@ -794,5 +846,54 @@
     "err_REFUSAL": "I can't answer that.",
     "fab": "AKBW AI",
     "drag_hint": "Drag to move"
+  },
+  "ProfilePage": {
+    "cabinet": "My account",
+    "guest_text": "Sign in to see your orders, saved details, try-on and AKBW AI.",
+    "login_register": "Sign in / Sign up",
+    "edit": "Edit",
+    "orders": "Orders",
+    "favorites": "Favourites",
+    "in_cart": "In cart",
+    "pay_wait": "Awaiting payment",
+    "pay_text": "{n} order(s) confirmed — please pay",
+    "purchases": "Purchases",
+    "my_orders": "My orders",
+    "tryon_history": "Try-on history",
+    "my_reviews": "My reviews",
+    "ask_product": "Request a product",
+    "invite_title": "Invite friends",
+    "invite_code": "Your invite code",
+    "share": "Share",
+    "copied": "Copied",
+    "invite_message": "AKBW — a modern clothing store. Enter my invite code when you sign up: {code}\nhttps://akbw.uz",
+    "settings": "Settings",
+    "language": "Language",
+    "appearance": "Appearance",
+    "notifications": "Notifications",
+    "help": "Help",
+    "ai": "AKBW AI assistant",
+    "help_chat": "Support chat",
+    "contact": "Contact us",
+    "call": "Call us",
+    "info": "Information",
+    "about": "About us",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use",
+    "logout": "Log out",
+    "logout_confirm": "Log out of your profile?",
+    "cancel": "Cancel",
+    "theme_system": "Auto",
+    "theme_dark": "Dark",
+    "theme_light": "Light",
+    "theme_hint": "\"Auto\" follows your device setting."
+  },
+  "TryOnHistory": {
+    "title": "Try-on history",
+    "login": "Sign in",
+    "empty": "No try-ons yet. Tap “Try on” on a product page.",
+    "to_catalog": "Go to catalog",
+    "delete": "Delete",
+    "delete_confirm": "Delete this photo?"
   }
 }

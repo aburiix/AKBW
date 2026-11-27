@@ -7,7 +7,7 @@ export const onError = (error: unknown, err_massage?: string) => {
   } else {
     toast.error(
       err_massage ||
-        "Nomalum xatolik yuz berdi! Iltimos keyinroq urunib ko'ring",
+        "Nomalum xatolik yuz berdi! Iltimos keyinroq urunib köring",
     );
   }
 };

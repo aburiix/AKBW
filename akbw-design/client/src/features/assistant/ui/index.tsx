@@ -460,7 +460,7 @@ export default function Assistant() {
                                   {p.name}
                                 </b>
                                 <span className="text-ivory/40">
-                                  {p.price.toLocaleString()} so&apos;m
+                                  {p.price.toLocaleString()} söm
                                 </span>
                               </div>
                             </Link>

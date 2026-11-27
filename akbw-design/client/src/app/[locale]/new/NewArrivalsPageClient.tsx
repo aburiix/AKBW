@@ -22,14 +22,14 @@ export default function NewArrivalsPageClient() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-2 h-8 bg-black rounded-full" />
             <h1 className="font-display text-3xl md:text-4xl font-bold text-black">
-              {t('title', { fallback: "Yangi Qo'shilganlar" })}
+              {t('title', { fallback: "Yangi Qöşilganlar" })}
             </h1>
             <Sparkles className="w-6 h-6 text-yellow-500 animate-pulse" />
           </div>
           <p className="text-gray-600 text-lg max-w-2xl mb-8">
             {t('description', {
               fallback:
-                "So'nggi 30 kun ichida qo'shilgan yangi mahsulotlarimiz",
+                "Sönggi 30 kun içida qöşilgan yangi mahsulotlarimiz",
             })}
           </p>
           <div className="flex flex-wrap gap-4">
@@ -39,7 +39,7 @@ export default function NewArrivalsPageClient() {
               className="rounded-full bg-akbw-black/50 hover:bg-akbw-black text-white font-bold uppercase shadow-xl"
             >
               <Link href="/filters">
-                {t('view_all_products', { fallback: 'Barcha mahsulotlar' })}
+                {t('view_all_products', { fallback: 'Barça mahsulotlar' })}
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
@@ -51,7 +51,7 @@ export default function NewArrivalsPageClient() {
             >
               <Link href="/best">
                 {t('view_best_sellers', {
-                  fallback: "Eng ko'p sotilayotganlar",
+                  fallback: "Eng köp sotilayotganlar",
                 })}
                 <Trophy className="ml-2 w-4 h-4" />
               </Link>
@@ -68,7 +68,7 @@ export default function NewArrivalsPageClient() {
               <div className="mb-8">
                 <div className="flex items-center justify-between">
                   <h2 className="font-display text-2xl font-bold text-black">
-                    {t('latest_arrivals', { fallback: "So'nggi yangiliklar" })}{' '}
+                    {t('latest_arrivals', { fallback: "Sönggi yangiliklar" })}{' '}
                     <span className="text-gray-400">
                       ({newArrivals.length})
                     </span>
@@ -92,12 +92,12 @@ export default function NewArrivalsPageClient() {
               </div>
               <h3 className="text-xl font-bold text-gray-700 mb-3">
                 {t('no_new_arrivals', {
-                  fallback: "Hali yangi mahsulotlar yo'q",
+                  fallback: "Hali yangi mahsulotlar yöq",
                 })}
               </h3>
               <p className="text-gray-500 mb-8 max-w-md mx-auto">
                 {t('check_back_soon', {
-                  fallback: "Tez orada yangi mahsulotlar qo'shiladi",
+                  fallback: "Tez orada yangi mahsulotlar qöşiladi",
                 })}
               </p>
               <Button
@@ -107,7 +107,7 @@ export default function NewArrivalsPageClient() {
               >
                 <Link href="/filters">
                   {t('browse_all_products', {
-                    fallback: "Barcha mahsulotlarni ko'rish",
+                    fallback: "Barça mahsulotlarni köriş",
                   })}
                 </Link>
               </Button>

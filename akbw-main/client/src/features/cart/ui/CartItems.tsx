@@ -70,7 +70,15 @@ export default function CartItems() {
 
               <div className="flex justify-between items-end gap-2 mt-3">
                 <span className="text-[16px] md:text-[20px] text-ivory tabular-nums whitespace-nowrap">
-                  {item.price.toLocaleString()} so&apos;m
+                  {Math.round(
+                    item.price * (1 - (item.discount || 0) / 100),
+                  ).toLocaleString()}{' '}
+                  söm
+                  {!!item.discount && (
+                    <span className="ml-2 text-[12px] text-ivory/40 line-through">
+                      {item.price.toLocaleString()}
+                    </span>
+                  )}
                 </span>
                 <div className="flex items-center h-10 rounded-full border border-line-2 px-1">
                   <button

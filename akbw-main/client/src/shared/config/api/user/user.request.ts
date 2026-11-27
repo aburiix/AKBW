@@ -8,6 +8,11 @@ export const userRequest = {
     );
     return response.data;
   },
+  /** Akkauntni o'chirish (DELETE /user/me) */
+  deleteMe: async () => {
+    const response = await httpClient.delete<{ ok: boolean }>('/user/me');
+    return response.data;
+  },
   updateProfile: async (data: IUpdateUserRequest) => {
     const response = await httpClient.put<{
       message: string;

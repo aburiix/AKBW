@@ -14,14 +14,38 @@
         "dark": "./assets/images/icon.png",
         "light": "./assets/images/icon-light.png",
         "tinted": "./assets/images/icon-light.png"
-      }
+      },
+      "associatedDomains": [
+        "applinks:akbw.uz",
+        "applinks:www.akbw.uz"
+      ]
     },
     "android": {
       "package": "uz.akbw.app",
       "adaptiveIcon": {
         "backgroundColor": "#0E0D0B",
         "foregroundImage": "./assets/images/icon-mark.png"
-      }
+      },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "akbw.uz"
+            },
+            {
+              "scheme": "https",
+              "host": "www.akbw.uz"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "web": {
       "output": "single",
@@ -47,8 +71,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Kiyib ko'rish uchun rasmingizni tanlashga ruxsat bering.",
-          "cameraPermission": "Kiyib ko'rish uchun suratga olishga ruxsat bering."
+          "photosPermission": "Kiyib körish va profil rasmi uçun rasmingizni tanlaşga ruxsat bering.",
+          "cameraPermission": "Kiyib körish va profil rasmi uçun suratga olişga ruxsat bering."
         }
       ],
       "expo-localization"

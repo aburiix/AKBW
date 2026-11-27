@@ -14,7 +14,7 @@ import Script from 'next/script';
 import TelegramProvider from '@/shared/config/telegram-provider';
 import Assistant from '@/features/assistant/ui';
 
-import { Kenao, Radiant, Didot, Granjon, Rosan, Futura } from '@/shared/fonts';
+import { Kenao, Radiant, Didot, Granjon, Rosan } from '@/shared/fonts';
 
 type Props = {
   children: ReactNode;
@@ -37,7 +37,7 @@ export default async function RootLayout({ children, params }: Props) {
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${Kenao.variable} ${Radiant.variable} ${Didot.variable} ${Granjon.variable} ${inter.variable} ${Rosan.variable} ${Futura.variable}`}
+      className={`${Kenao.variable} ${Radiant.variable} ${Didot.variable} ${Granjon.variable} ${inter.variable} ${Rosan.variable}`}
     >
       <body className="antialiased">
         {/* Telegram Mini App: bot ichida ochilganda ishlaydi, oddiy brauzerda jim turadi */}
@@ -46,9 +46,12 @@ export default async function RootLayout({ children, params }: Props) {
           strategy="beforeInteractive"
         />
         <NextIntlClientProvider locale={locale}>
+          {/* Tungi / Kunduzgi / Avto — ilova bilan bir xil (Profil → Ko'rinish) */}
           <ThemeProvider
-            attribute={'class'}
-            defaultTheme="light"
+            attribute="data-theme"
+            defaultTheme="system"
+            enableSystem
+            themes={['dark', 'light']}
             disableTransitionOnChange
           >
             <QueryProvider>

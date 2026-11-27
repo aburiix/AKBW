@@ -40,6 +40,7 @@ import { useUserStore } from '@/shared/store/user.store';
 import { useUser, useUpdateUser } from '@/features/user/lib/hooks';
 import { useSupportChat, useProductInquiry } from './lib/hooks';
 import { toast } from '@/shared/ui/toast';
+import { userRequest } from '@/shared/config/api/user/user.request';
 import { uploadRequest } from '@/shared/config/api/upload/upload.request';
 import Login from '../login';
 import { AuthHeader } from '@/shared/ui/auth';
@@ -407,6 +408,24 @@ function Profile({ children }: ProfileProps) {
     onOpenChange(false);
   };
 
+  // Akkauntni o'chirish (ilovadagi bilan bir xil; Telegram Mini App'da ham ishlashi uchun confirm() emas, ichki tasdiq)
+  const [confirmDelete, setConfirmDelete] = React.useState(false);
+  const [deleting, setDeleting] = React.useState(false);
+  const handleDeleteAccount = async () => {
+    setDeleting(true);
+    try {
+      await userRequest.deleteMe();
+      toast.success(t('delete_account_done'));
+      setConfirmDelete(false);
+      setToken(null);
+      onOpenChange(false);
+    } catch {
+      toast.error(t('delete_account_error'));
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   if (!token) {
     return (
       <Modal open={isProfileOpen} onOpenChange={onOpenChange}>
@@ -468,7 +487,7 @@ function Profile({ children }: ProfileProps) {
                   className="w-full h-12 appearance-none rounded-2xl border border-line-2 bg-ivory/[0.04] px-4 text-[14px] text-ivory outline-none cursor-pointer"
                   onChange={handleChangeLanguage}
                 >
-                  <option value="uz">O&apos;zbek 🇺🇿</option>
+                  <option value="uz">Özbek 🇺🇿</option>
                   <option value="ru">Русский 🇷🇺</option>
                   <option value="en">English 🇺🇸</option>
                 </select>
@@ -546,7 +565,7 @@ function Profile({ children }: ProfileProps) {
                 onChange={handleChangeLanguage}
                 className="md:hidden w-full mt-4 h-12 appearance-none rounded-2xl border border-line-2 bg-ivory/[0.04] px-4 text-[14px] text-ivory outline-none cursor-pointer"
               >
-                <option value="uz">O&apos;zbek 🇺🇿</option>
+                <option value="uz">Özbek 🇺🇿</option>
                 <option value="ru">Русский 🇷🇺</option>
                 <option value="en">English 🇺🇸</option>
               </select>
@@ -558,6 +577,33 @@ function Profile({ children }: ProfileProps) {
                 <LogOut size={16} />
                 {t('logout')}
               </Button>
+              {confirmDelete ? (
+                <div className="mt-3 rounded-2xl border border-sale/40 bg-sale/[0.06] p-4 flex flex-col gap-3">
+                  <p className="text-[15px] text-ivory">{t('delete_account_title')}</p>
+                  <p className="text-[12.5px] leading-relaxed text-ivory/60 normal-case tracking-normal">{t('delete_account_desc')}</p>
+                  <div className="flex gap-2">
+                    <Button variant="outline" className="flex-1" onClick={() => setConfirmDelete(false)} disabled={deleting}>
+                      {t('delete_account_cancel')}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="flex-1 !border-sale !text-sale hover:!bg-sale/10"
+                      onClick={handleDeleteAccount}
+                      disabled={deleting}
+                    >
+                      {t('delete_account_confirm')}
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  onClick={() => setConfirmDelete(true)}
+                  variant="outline"
+                  className="w-full mt-3 !border-sale/25 !text-sale/80 hover:!bg-sale/10"
+                >
+                  {t('delete_account')}
+                </Button>
+              )}
             </>
           )}
         </div>

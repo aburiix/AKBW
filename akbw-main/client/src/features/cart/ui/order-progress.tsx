@@ -51,14 +51,14 @@ const getStatusConfig = (status: string) => {
       };
     case 'IN_TRANSIT':
       return {
-        label: "Yo'lda",
+        label: 'Yölda',
         icon: Plane,
         color: 'text-purple-600',
         bgColor: 'bg-purple-100',
       };
     case 'ARRIVED_UZBEKISTAN':
       return {
-        label: "O'zbekistonga yetib keldi",
+        label: 'Özbekistonga yetib keldi',
         icon: MapPin,
         color: 'text-orange-600',
         bgColor: 'bg-orange-100',

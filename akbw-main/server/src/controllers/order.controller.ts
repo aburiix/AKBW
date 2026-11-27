@@ -3,6 +3,7 @@ import { FulfillmentType, OrderState, ShipmentState } from "../generated/prisma/
 import { type Request, type Response, type NextFunction } from "express";
 import type { GroupedItems, IOrderItem } from "../types/order.types.js";
 import axios, { isAxiosError } from "axios";
+import { computeOrderTotal } from "../utils/orderTotal.util.js";
 import { prisma } from "../db/client.js";
 
 async function notifyFactoryWorkers(shipmentId: number, factoryId: number | null) {
@@ -311,14 +312,17 @@ export const reviewOrder = async (
       });
     }
 
-    const couponId = coupon_id || null;
-    let finalCouponId = couponId;
-    if (!finalCouponId && coupon_code) {
-      const coupon = await prisma.coupons.findUnique({
-        where: { code: coupon_code },
-      });
-      if (coupon) finalCouponId = coupon.id;
-    };
+    // Promokod: id yoki kod bo'yicha topiladi; muddati o'tgan/yo'q bo'lsa — buyurtma rad etiladi
+    let coupon: { id: number; discount: number } | null = null;
+    if (coupon_id || coupon_code) {
+      const found = coupon_id
+        ? await prisma.coupons.findUnique({ where: { id: Number(coupon_id) } })
+        : await prisma.coupons.findUnique({ where: { code: String(coupon_code) } });
+      if (!found || found.expiry.getTime() < Date.now()) {
+        return res.status(400).json({ ok: false, message: "Promokod topilmadi yoki muddati tugagan" });
+      }
+      coupon = { id: found.id, discount: found.discount };
+    }
 
     const productIds = items.map((i: IOrderItem) => i.productId);
     const products = await prisma.products.findMany({
@@ -360,13 +364,8 @@ export const reviewOrder = async (
       });
     };
 
-    const total_price = items.reduce((acc: number, item: IOrderItem) => {
-      const product = products.find(p => p.id === item.productId);
-
-      if (!product) return acc;
-
-      return acc + product.price * item.quantity;
-    }, 0);
+    // Summa: mahsulot chegirmasi (discount %) va promokod hisobga olinadi — mijoz saytda/ilovada ko'rgan narx
+    const total_price = computeOrderTotal(items, products, coupon?.discount ?? 0);
 
     const address = await prisma.adresses.create({
       data: {
@@ -382,6 +381,7 @@ export const reviewOrder = async (
         user_id: user_id,
         total_price: total_price,
         addressId: address.id,
+        coupon_id: coupon?.id ?? null,
       },
     });
 

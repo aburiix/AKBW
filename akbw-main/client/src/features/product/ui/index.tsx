@@ -4,7 +4,16 @@ import { colorToCss } from '@/shared/lib/colorToCss';
 import { useProduct, useProducts } from '@/features/products/lib/hooks';
 import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { useCartStore } from '@/shared/store/cart.store';
-import { Star, Minus, Plus, Check, ShoppingBag, Sparkles } from 'lucide-react';
+import {
+  Star,
+  Minus,
+  Plus,
+  Check,
+  ShoppingBag,
+  Sparkles,
+  Heart,
+} from 'lucide-react';
+import { useWishlistStore } from '@/shared/store/wishlist.store';
 import { Link } from '@/shared/config/i18n/navigation';
 import ProductCard from '@/widgets/product';
 import { cn } from '@/shared/lib/utils';
@@ -28,6 +37,10 @@ export default function Product({ id }: ProductProps) {
   const { data: relatedProducts } = useProducts({ limit: 4 });
   const { data: product, isLoading, error } = useProduct(id);
   const addItem = useCartStore((s) => s.addItem);
+  const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
+  const liked = useWishlistStore((s) =>
+    s.items.some((i) => String(i.id) === String(id)),
+  );
 
   const t = useTranslations('ProductPage');
   const tUi = useTranslations('Ui');
@@ -116,9 +129,9 @@ export default function Product({ id }: ProductProps) {
 
   return (
     <div className="min-h-screen">
-      <div className="wrap pt-5 md:pt-8 pb-28 md:pb-10">
+      <div className="wrap pt-0 md:pt-8 pb-28 md:pb-10">
         {/* Yo'l */}
-        <nav className="flex items-center gap-2 lbl text-ivory/40 mb-6 md:mb-8 overflow-hidden">
+        <nav className="hidden md:flex items-center gap-2 lbl text-ivory/40 mb-8 overflow-hidden">
           <span className="shrink-0">{t('breadcrumbs.0')}</span>
           <span className="shrink-0">/</span>
           <span className="shrink-0">{t('breadcrumbs.1')}</span>
@@ -127,8 +140,61 @@ export default function Product({ id }: ProductProps) {
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-6 md:gap-10 xl:gap-16 items-start">
-          {/* Galereya */}
-          <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-4 lg:sticky lg:top-28">
+          {/* Telefon: ilovadagidek butun eniga suriladigan rasmlar + nuqtalar */}
+          <div className="md:hidden relative -mx-4">
+            <div
+              className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar"
+              onScroll={(e) => {
+                const el = e.currentTarget;
+                setActiveImage(Math.round(el.scrollLeft / el.clientWidth));
+              }}
+            >
+              {productImages.map((img, idx) => (
+                <div
+                  key={idx}
+                  className="relative shrink-0 w-full aspect-[3/4] snap-center bg-surface-2"
+                >
+                  <Image
+                    src={img}
+                    alt={product.name}
+                    fill
+                    sizes="100vw"
+                    priority={idx === 0}
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              aria-label={tUi('tab_fav')}
+              onClick={() => toggleWishlist(product)}
+              className="absolute top-3 right-4 size-10 rounded-full bg-black/35 backdrop-blur grid place-items-center"
+            >
+              <Heart
+                size={18}
+                className={liked ? 'text-sale fill-sale' : 'text-[#EFE8DB]'}
+              />
+            </button>
+            {productImages.length > 1 && (
+              <div className="absolute bottom-3.5 inset-x-0 flex justify-center gap-1.5">
+                {productImages.map((_, idx) => (
+                  <span
+                    key={idx}
+                    className={cn(
+                      'h-1.5 rounded-full transition-all',
+                      idx === activeImage
+                        ? 'w-[18px] bg-[#EFE8DB]'
+                        : 'w-1.5 bg-[#EFE8DB]/40',
+                    )}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Galereya (kompyuter) */}
+          <div className="hidden md:flex flex-row gap-4 lg:sticky lg:top-28">
             {productImages.length > 1 && (
               <div className="flex md:flex-col gap-2.5 overflow-x-auto md:overflow-y-auto no-scrollbar md:w-[84px] md:max-h-[640px] shrink-0">
                 {productImages.map((img, idx) => (
@@ -180,7 +246,10 @@ export default function Product({ id }: ProductProps) {
           {/* Ma'lumot */}
           <div className="flex flex-col">
             {categoryName && (
-              <span className="lbl text-ivory/45 mb-3">{categoryName}</span>
+              <span className="lbl text-ivory/45 mb-3">
+                <span className="md:hidden">AKBW · </span>
+                {categoryName}
+              </span>
             )}
             <h1 className="serif text-[34px] sm:text-[44px] xl:text-[54px] leading-[1.02] text-ivory">
               {product.name}
@@ -215,22 +284,27 @@ export default function Product({ id }: ProductProps) {
                   oldPrice ? 'text-sale' : 'text-ivory',
                 )}
               >
-                {product.price.toLocaleString()} so&apos;m
+                {product.price.toLocaleString()} söm
               </span>
               {oldPrice && (
                 <span className="text-ivory/35 line-through tabular-nums">
                   {oldPrice.toLocaleString()}
                 </span>
               )}
+              {product.discount > 0 && (
+                <span className="md:hidden text-sale text-[13px]">
+                  −{product.discount}%
+                </span>
+              )}
             </div>
 
             {product.description && (
-              <p className="mt-5 text-ivory/60 leading-relaxed text-[15px] max-w-xl">
+              <p className="hidden md:block mt-5 text-ivory/60 leading-relaxed text-[15px] max-w-xl">
                 {product.description}
               </p>
             )}
 
-            <div className="mt-8 rounded-[26px] border border-line bg-surface p-5 md:p-6 flex flex-col gap-7">
+            <div className="mt-7 md:mt-8 md:rounded-[26px] md:border md:border-line md:bg-surface md:p-6 flex flex-col gap-6 md:gap-7">
               {product.colors?.length > 0 && (
                 <div>
                   <div className="flex items-center justify-between mb-3.5">
@@ -300,17 +374,19 @@ export default function Product({ id }: ProductProps) {
                     type="button"
                     onClick={() =>
                       window.dispatchEvent(
-                        new CustomEvent('akbw:assistant', { detail: { prompt: tUi('size_prompt') } }),
+                        new CustomEvent('akbw:assistant', {
+                          detail: { prompt: tUi('size_prompt') },
+                        }),
                       )
                     }
-                    className="mt-3 inline-flex items-center gap-2 text-[13.5px] text-ivory border-b border-dashed border-line-2 pb-0.5 cursor-pointer hover:border-ivory/60"
+                    className="mt-3 hidden md:inline-flex items-center gap-2 text-[13.5px] text-ivory border-b border-dashed border-line-2 pb-0.5 cursor-pointer hover:border-ivory/60"
                   >
                     <Sparkles size={14} /> {tUi('size_ai')}
                   </button>
                 </div>
               )}
 
-              <div className="flex gap-3">
+              <div className="hidden md:flex gap-3">
                 <div className="flex items-center justify-between h-[52px] w-[132px] shrink-0 rounded-full border border-line-2 px-2">
                   <button
                     type="button"
@@ -345,17 +421,63 @@ export default function Product({ id }: ProductProps) {
               {/* AI kiyib ko'rish (faqat tizimga kirganlar uchun — sahifaning o'zida tekshiriladi) */}
               <Link
                 href={`/try-on?product=${product.id}`}
-                className="pill pill-ghost w-full !h-[52px] mt-3"
+                className="pill pill-ghost w-full !h-[52px] mt-3 hidden md:inline-flex"
               >
                 <Sparkles size={16} />
                 {tUi('try_on')}
               </Link>
+              <div className="md:hidden grid grid-cols-2 gap-2.5">
+                <Link
+                  href={`/try-on?product=${product.id}`}
+                  className="pill pill-ghost pill-sm !h-[46px] !px-3 !text-[10.5px]"
+                >
+                  {tUi('try_on_short')}
+                </Link>
+                <button
+                  type="button"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent('akbw:assistant', {
+                        detail: { prompt: tUi('size_prompt') },
+                      }),
+                    )
+                  }
+                  className="pill pill-ghost pill-sm !h-[46px] !px-3 !text-[10.5px]"
+                >
+                  {tUi('size_ask')}
+                </button>
+              </div>
+
+              {product.description && (
+                <div className="md:hidden rounded-[22px] border border-line bg-surface p-[18px] flex flex-col gap-2.5">
+                  <span className="lbl text-ivory/45">{t('description')}</span>
+                  <p className="text-ivory/70 leading-relaxed text-[15px]">
+                    {product.description}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Izohlar / savollar */}
-        <div className="mt-16 md:mt-24">
+        {/* Telefon: ilovadagidek savollar, keyin sharhlar (tabsiz) */}
+        <div className="md:hidden mt-8 flex flex-col gap-8">
+          <div className="flex flex-col gap-3">
+            <span className="lbl text-ivory/45">{t('tabs.faqs')}</span>
+            <Suspense fallback={null}>
+              <Faq activeTab="faqs" />
+            </Suspense>
+          </div>
+          <div className="flex flex-col gap-3">
+            <span className="lbl text-ivory/45">{t('tabs.reviews')}</span>
+            <Suspense fallback={null}>
+              <ReviewView activeTab="reviews" productId={id} />
+            </Suspense>
+          </div>
+        </div>
+
+        {/* Izohlar / savollar (kompyuter) */}
+        <div className="hidden md:block mt-24">
           <div className="inline-flex p-1 rounded-full border border-line-2 bg-ivory/[0.03]">
             {[
               { name: t('tabs.reviews'), id: 'reviews' },
@@ -378,7 +500,7 @@ export default function Product({ id }: ProductProps) {
           </div>
         </div>
 
-        <div className="mt-8 mb-16">
+        <div className="hidden md:block mt-8 mb-16">
           <Suspense fallback={<div className="text-ivory/40">…</div>}>
             <ReviewView activeTab={activeTab} productId={id} />
           </Suspense>
@@ -390,7 +512,7 @@ export default function Product({ id }: ProductProps) {
 
         {/* O'xshash mahsulotlar */}
         {relatedProducts?.data?.length ? (
-          <section className="mt-10 pt-12 md:pt-16 border-t border-line">
+          <section className="hidden md:block mt-10 pt-16 border-t border-line">
             <div className="flex items-end justify-between mb-6 md:mb-8">
               <h2 className="serif text-[30px] md:text-[44px] leading-none text-ivory">
                 {t('relatedProductsTitle')}
@@ -406,27 +528,14 @@ export default function Product({ id }: ProductProps) {
       </div>
 
       {/* Telefonda pastda doim ko'rinadigan "savatga" paneli */}
-      <div className="md:hidden fixed left-0 right-0 bottom-[calc(72px+env(safe-area-inset-bottom))] z-30 px-3 pb-2">
-        <div className="glass !bg-surface-2/95 rounded-full flex items-center gap-3 pl-5 pr-1.5 py-1.5 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.8)]">
-          <div className="flex flex-col min-w-0">
-            <span className="text-[15px] text-ivory tabular-nums leading-tight">
-              {product.price.toLocaleString()} so&apos;m
-            </span>
-            <span className="text-[11px] text-ivory/45 truncate">
-              {[sizeName, colorName, `${quantity} dona`]
-                .filter(Boolean)
-                .join(' · ')}
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={handleAddToCart}
-            className="pill pill-ivory pill-sm ml-auto !h-11 cursor-pointer active:scale-[0.98]"
-          >
-            <ShoppingBag size={15} />
-            {t('addToCart')}
-          </button>
-        </div>
+      <div className="md:hidden fixed left-0 right-0 bottom-[calc(80px+env(safe-area-inset-bottom))] z-30 px-3 pb-2">
+        <button
+          type="button"
+          onClick={handleAddToCart}
+          className="pill pill-ivory w-full cursor-pointer active:scale-[0.98] shadow-[0_20px_40px_-12px_rgba(0,0,0,0.6)]"
+        >
+          {t('addToCart')}
+        </button>
       </div>
     </div>
   );

@@ -25,7 +25,10 @@ export default function OrderView({
   return (
     <>
       {token && (
-        <div className="mt-16 md:mt-24 pt-12 border-t border-line">
+        <div
+          id="orders"
+          className="mt-16 md:mt-24 pt-12 border-t border-line scroll-mt-24"
+        >
           <h2 className="serif text-[34px] md:text-[48px] leading-none text-ivory mb-8">
             {t('active_orders')}
           </h2>

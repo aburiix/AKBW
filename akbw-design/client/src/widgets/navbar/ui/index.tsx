@@ -26,7 +26,7 @@ const Login = dynamic(() => import('@/widgets/login'), { ssr: false });
 const Register = dynamic(() => import('@/widgets/register'), { ssr: false });
 
 const LOCALES = [
-  { code: 'uz', label: "O'zbekcha" },
+  { code: 'uz', label: "Özbekça" },
   { code: 'ru', label: 'Русский' },
   { code: 'en', label: 'English' },
 ];
@@ -167,7 +167,7 @@ const Navbar = () => {
             onSubmit={handleSearch}
             className="hidden xl:flex items-center gap-2.5 h-11 px-4 rounded-full bg-surface border border-line flex-1 max-w-[420px] ml-auto text-ivory/60 focus-within:border-line-2"
           >
-            <button type="submit" aria-label="Qidirish">
+            <button type="submit" aria-label="Qidiriş">
               <Search size={18} />
             </button>
             <input

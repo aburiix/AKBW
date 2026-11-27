@@ -63,7 +63,7 @@ function OrderCard({
               </span>
             </p>
             <p className="serif text-[28px] leading-none text-ivory tabular-nums mt-2">
-              {order.total_price.toLocaleString()} so&apos;m
+              {order.total_price.toLocaleString()} söm
             </p>
             <p className="text-[12px] text-ivory/40 mt-1.5">
               {new Date(order.createdAt).toLocaleDateString()}
@@ -219,10 +219,10 @@ function OrderCard({
                 </div>
                 <div className={cn('text-right', 'shrink-0')}>
                   <p className="text-[14px] text-ivory tabular-nums">
-                    {(item.price * item.quantity).toLocaleString()} so&apos;m
+                    {(item.price * item.quantity).toLocaleString()} söm
                   </p>
                   <p className="text-[12px] text-ivory/40 mt-1.5">
-                    {item.price.toLocaleString()} so&apos;m × {item.quantity}
+                    {item.price.toLocaleString()} söm × {item.quantity}
                   </p>
                 </div>
               </div>

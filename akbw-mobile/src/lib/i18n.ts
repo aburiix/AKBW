@@ -12,7 +12,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 export type Lang = 'uz' | 'ru' | 'en';
 
 export const LANGS: { id: Lang; title: string }[] = [
-  { id: 'uz', title: "O'zbekcha" },
+  { id: 'uz', title: 'Özbekça' },
   { id: 'ru', title: 'Русский' },
   { id: 'en', title: 'English' },
 ];
@@ -319,6 +319,10 @@ const D: Dict = {
   "Ma'lumot": { ru: 'Информация', en: 'Information' },
   'Maxfiylik siyosati': { ru: 'Политика конфиденциальности', en: 'Privacy policy' },
   'Foydalanish shartlari': { ru: 'Условия использования', en: 'Terms of use' },
+  'Men AKBW': { ru: 'Я принимаю', en: 'I agree to the AKBW' },
+  'va': { ru: 'и', en: 'and' },
+  'bilan tanishdim va roziman.': { ru: 'AKBW.', en: '.' },
+  "Davom etish uchun shartlarga rozilik bering.": { ru: 'Чтобы продолжить, примите условия.', en: 'Please accept the terms to continue.' },
   Savatda: { ru: 'В корзине', en: 'In cart' },
   Tahrirlash: { ru: 'Изменить', en: 'Edit' },
   Buyurtmalar: { ru: 'Заказы', en: 'Orders' },
@@ -355,12 +359,148 @@ const D: Dict = {
     en: 'Your name, phone number, AI chats and try-on photos will be permanently deleted. Order history is kept without personal data. This cannot be undone.',
   },
   "Akkaunt o'chirildi": { ru: 'Аккаунт удалён', en: 'Account deleted' },
+  // sharhlar, chat, taklif, promokod, biz haqimizda
+  Sharhlar: { ru: 'Отзывы', en: 'Reviews' },
+  '{n} ta sharh': { ru: 'отзывов: {n}', en: '{n} reviews' },
+  'Sharh yozish': { ru: 'Написать отзыв', en: 'Write a review' },
+  'Sharhimni tahrirlash': { ru: 'Изменить мой отзыв', en: 'Edit my review' },
+  'Sharhni tahrirlash': { ru: 'Изменить отзыв', en: 'Edit review' },
+  "Sharhni o'chirasizmi?": { ru: 'Удалить отзыв?', en: 'Delete this review?' },
+  'Sharh yozish uchun profilingizga kiring.': { ru: 'Войдите, чтобы написать отзыв.', en: 'Sign in to write a review.' },
+  "Hali sharh yo'q. Birinchi bo'lib fikr qoldiring!": { ru: 'Отзывов пока нет. Будьте первым!', en: 'No reviews yet. Be the first!' },
+  'Mahsulot haqida fikringiz…': { ru: 'Ваше мнение о товаре…', en: 'Your thoughts on the product…' },
+  "Yana ko'rsatish": { ru: 'Показать ещё', en: 'Show more' },
+  Mijoz: { ru: 'Покупатель', en: 'Customer' },
+  'Mamnun mijozlar': { ru: 'Довольные клиенты', en: 'Happy customers' },
+  'Sevimli mijozlarimiz': { ru: 'Наши любимые клиенты', en: 'Our favorite customers' },
+  'Mening sharhlarim': { ru: 'Мои отзывы', en: 'My reviews' },
+  'MENING SHARHLARIM': { ru: 'МОИ ОТЗЫВЫ', en: 'MY REVIEWS' },
+  'Siz hali sharh yozmagansiz. Sotib olgan kiyimingiz sahifasida «Sharh yozish» tugmasini bosing.': {
+    ru: 'Вы ещё не писали отзывов. Нажмите «Написать отзыв» на странице купленной вещи.',
+    en: "You haven't written any reviews yet. Tap “Write a review” on a product you bought.",
+  },
+  Savollar: { ru: 'Вопросы', en: 'FAQ' },
+  'Yetkazib berish qancha vaqt oladi?': { ru: 'Сколько времени занимает доставка?', en: 'How long does delivery take?' },
+  "O'zbekistonda standart yetkazib berish 3-5 ish kuni, xalqaro yetkazib berish 7-14 kun davom etadi.": {
+    ru: 'Стандартная доставка по Узбекистану занимает 3-5 рабочих дней, международная доставка — 7-14 дней.',
+    en: 'Standard delivery in Uzbekistan takes 3-5 business days, international delivery takes 7-14 days.',
+  },
+  'Qaytarish siyosati qanday?': { ru: 'Какова политика возврата?', en: 'What is the return policy?' },
+  'Biz barcha ishlatilmagan va yuvilmagan buyumlar uchun 30 kunlik pulni qaytarish kafolati taqdim etamiz.': {
+    ru: 'Мы предоставляем 30-дневную гарантию возврата денег для всех неиспользованных и нестираных вещей.',
+    en: 'We offer a 30-day money-back guarantee for all unused and unwashed items.',
+  },
+  "Qanday qilib to'g'ri o'lchamni tanlash mumkin?": { ru: 'Как правильно выбрать размер?', en: 'How to choose the correct size?' },
+  "O'lcham bo'yicha savolingiz bo'lsa, «O'lchamni so'rash» tugmasi orqali AKBW AI'dan so'rang.": {
+    ru: 'Если есть вопрос о размере, спросите AKBW AI кнопкой «Спросить размер».',
+    en: 'If you have a size question, ask AKBW AI via “Ask about size”.',
+  },
+  'Yordam chati': { ru: 'Чат поддержки', en: 'Support chat' },
+  'YORDAM CHATI': { ru: 'ЧАТ ПОДДЕРЖКИ', en: 'SUPPORT CHAT' },
+  "Mahsulot so'rash": { ru: 'Запросить товар', en: 'Request a product' },
+  "MAHSULOT SO'RASH": { ru: 'ЗАПРОС ТОВАРА', en: 'PRODUCT REQUEST' },
+  "Kerakli kiyimni so'rang": { ru: 'Запросите нужную вещь', en: 'Ask for what you need' },
+  'Savolingiz bormi?': { ru: 'Есть вопрос?', en: 'Have a question?' },
+  'Katalogda topilmagan kiyimning rasmini yoki tavsifini yuboring — menejer topib, narxini aytadi.': {
+    ru: 'Отправьте фото или описание вещи, которой нет в каталоге, — менеджер найдёт её и сообщит цену.',
+    en: "Send a photo or description of an item that isn't in the catalog — a manager will find it and quote a price.",
+  },
+  'Menejerga yozing — buyurtma, yetkazib berish yoki to‘lov bo‘yicha yordam beramiz.': {
+    ru: 'Напишите менеджеру — поможем с заказом, доставкой или оплатой.',
+    en: 'Message a manager — we help with orders, delivery and payment.',
+  },
+  'Xabar yozing…': { ru: 'Напишите сообщение…', en: 'Write a message…' },
+  'Rasm biriktirildi': { ru: 'Фото прикреплено', en: 'Photo attached' },
+  Rasm: { ru: 'Фото', en: 'Photo' },
+  "Do'stlarni taklif qiling": { ru: 'Пригласите друзей', en: 'Invite friends' },
+  'Taklif kodingiz': { ru: 'Ваш код приглашения', en: 'Your invite code' },
+  Ulashish: { ru: 'Поделиться', en: 'Share' },
+  'Taklif kodi (ixtiyoriy)': { ru: 'Код приглашения (необязательно)', en: 'Invite code (optional)' },
+  "AKBW — zamonaviy kiyim do'koni. Ro'yxatdan o'tishda mening taklif kodimni kiriting: {code}\nhttps://akbw.uz": {
+    ru: 'AKBW — современный магазин одежды. При регистрации введите мой код приглашения: {code}\nhttps://akbw.uz',
+    en: 'AKBW — a modern clothing store. Enter my invite code when you sign up: {code}\nhttps://akbw.uz',
+  },
+  Promokod: { ru: 'Промокод', en: 'Promo code' },
+  'Promokodni kiriting': { ru: 'Введите промокод', en: 'Enter promo code' },
+  "Promokod noto'g'ri": { ru: 'Неверный промокод', en: 'Invalid promo code' },
+  'Promokod topilmadi yoki muddati tugagan.': { ru: 'Промокод не найден или истёк.', en: 'Promo code not found or expired.' },
+  '{n}% chegirma qo‘llandi': { ru: 'скидка {n}% применена', en: '{n}% discount applied' },
+  'Biz haqimizda': { ru: 'О нас', en: 'About us' },
+  'BIZ HAQIMIZDA': { ru: 'О НАС', en: 'ABOUT US' },
+  'Oddiy, Sifatli Cheksiz Dizayn': { ru: 'Простой, Качественный, Безграничный Дизайн', en: 'Simple, High-Quality, Endless Design' },
+  "O'zbekistonda tashkil topgan zamonaviy platforma": { ru: 'Современная платформа, созданная в Узбекистане', en: 'A modern platform founded in Uzbekistan' },
+  "AKBW — O'zbekistonda tashkil topgan zamonaviy kiyim platformasi bo'lib, soddalik, sifat va minimal dizayn g'oyalariga asoslangan.": {
+    ru: 'AKBW — современная платформа одежды, основанная в Узбекистане, базирующаяся на идеях простоты, качества и минималистичного дизайна.',
+    en: 'AKBW is a modern clothing platform founded in Uzbekistan, based on the ideas of simplicity, quality, and minimal design.',
+  },
+  "Platformaning asosiy maqsadi kundalik hayot uchun qulay, zamonaviy va estetik jihatdan toza kiyimlarni taklif qilish orqali o'ziga xos uslubni shakllantirishdir.": {
+    ru: 'Основная цель платформы — формирование уникального стиля путем предложения удобной, современной и эстетически чистой одежды для повседневной жизни.',
+    en: 'The main goal of the platform is to shape a unique style by offering comfortable, modern, and aesthetically clean clothes for daily life.',
+  },
+  Vizyon: { ru: 'Видение', en: 'Vision' },
+  "Vaqt sinovidan o'tadigan uslubni tanlash": { ru: 'Выбор стиля, неподвластного времени', en: 'Choosing a style that stands the test of time' },
+  "Platforma g'oyasi shovqinli trendlar va tez o'zgaruvchan modadan ko'ra, uzoq muddatli qiymatga ega bo'lgan dizayn, sokin ranglar va sifatli materiallarga tayanadi.": {
+    ru: 'Идея платформы опирается не на шумные тренды и быстроменяющуюся моду, а на дизайн, имеющий долгосрочную ценность, спокойные цвета и качественные материалы.',
+    en: "The platform's idea relies on long-term value design, calm colors, and quality materials rather than noisy trends and fast-changing fashion.",
+  },
+  Minimalizm: { ru: 'Минимализм', en: 'Minimalism' },
+  'Ortiqcha bezaklarsiz, tushunarli shakllar va sokin ranglar orqali xarakter ifodasi.': {
+    ru: 'Выражение характера через понятные формы и спокойные цвета без лишних украшений.',
+    en: 'Expressing character through clear shapes and calm colors, without excess decoration.',
+  },
+  Sifat: { ru: 'Качество', en: 'Quality' },
+  "Har bir mahsulot tanlashdan tortib mijozga yetib borguncha qat'iy nazorat.": {
+    ru: 'Строгий контроль каждого товара — от выбора до доставки клиенту.',
+    en: 'Strict control of every product, from selection to delivery.',
+  },
+  Kelajak: { ru: 'Будущее', en: 'Future' },
+  "O'zbekistonda boshlanib, xalqaro miqyosga intilayotgan barqaror rivojlanish.": {
+    ru: 'Устойчивое развитие: начав в Узбекистане, стремимся к международному уровню.',
+    en: 'Sustainable growth that started in Uzbekistan and aims for the international stage.',
+  },
+  'Rivojlanish va Maqsadlar': { ru: 'Развитие и Цели', en: 'Development and Goals' },
+  "Platforma Toshkent shahrida tashkil topgan bo'lib, faoliyati ABURIIX GROUP tarkibida olib boriladi. AKBW jamoasi dizayn, sifat nazorati va onlayn savdo jarayonlariga alohida e'tibor qaratadi.": {
+    ru: 'Платформа была основана в городе Ташкенте и ведет свою деятельность в составе ABURIIX GROUP. Команда AKBW уделяет особое внимание дизайну, контролю качества и процессам онлайн-продаж.',
+    en: 'The platform was founded in Tashkent and operates within ABURIIX GROUP. The AKBW team pays special attention to design, quality control, and online sales processes.',
+  },
+  "AKBW dastlab sifatli ishlab chiqaruvchilar bilan hamkorlik qilish orqali bozorda o'z o'rnini mustahkamlashni maqsad qilgan. Kelajakda esa platforma o'z dizayniga ega bo'lgan, AKBW falsafasini to'liq aks ettiruvchi mahsulotlarni yaratishni rejalashtiradi.": {
+    ru: 'AKBW изначально ставит целью укрепление своих позиций на рынке путем сотрудничества с качественными производителями. В будущем платформа планирует создавать продукцию с собственным дизайном, полностью отражающую философию AKBW.',
+    en: 'AKBW initially aims to strengthen its position in the market by cooperating with quality manufacturers. In the future, the platform plans to create products with its own design, fully reflecting the AKBW philosophy.',
+  },
+  'AKBW Asoschisi': { ru: 'Основатель AKBW', en: 'Founder of AKBW' },
+  'Profil rasmi': { ru: 'Фото профиля', en: 'Profile photo' },
+  "Rasmni o'chirish": { ru: 'Удалить фото', en: 'Remove photo' },
+  "Rasmni o'zgartirish": { ru: 'Изменить фото', en: 'Change photo' },
+  "Rasm qo'yish": { ru: 'Добавить фото', en: 'Add photo' },
   'Old money': { ru: 'Old money', en: 'Old money' },
   Oversize: { ru: 'Оверсайз', en: 'Oversize' },
   Minimalistik: { ru: 'Минимализм', en: 'Minimalist' },
   Sport: { ru: 'Спорт', en: 'Sport' },
   Glamour: { ru: 'Гламур', en: 'Glamour' },
 };
+
+/**
+ * O'zbek lotin yozuvining yangi shakli (foydalanuvchi talabi, 2026-11-27):
+ * Oʻ→Ö, Gʻ→Ğ, Sh→Ş, Ch→Ç (ng, x, q o'zgarmaydi). {o'rinlar}, havolalar va @nomlar tegilmaydi.
+ */
+export function toNewLatin(text: string): string {
+  return text
+    .split(/(\{[^}]*\}|https?:\/\/\S+|@[\w.]+)/)
+    .map((part, i) =>
+      i % 2
+        ? part
+        : part
+            .replace(/O['ʻ‘’`]/g, 'Ö')
+            .replace(/o['ʻ‘’`]/g, 'ö')
+            .replace(/G['ʻ‘’`]/g, 'Ğ')
+            .replace(/g['ʻ‘’`]/g, 'ğ')
+            .replace(/S[Hh]/g, 'Ş')
+            .replace(/sh/g, 'ş')
+            .replace(/C[Hh]/g, 'Ç')
+            .replace(/ch/g, 'ç'),
+    )
+    .join('');
+}
 
 function fill(s: string, vars?: Record<string, string | number>) {
   if (!vars) return s;
@@ -370,15 +510,14 @@ function fill(s: string, vars?: Record<string, string | number>) {
 /** Komponentdan tashqarida (api, format) — joriy tilni o'qiydi. */
 export function tr(uz: string, vars?: Record<string, string | number>): string {
   const lang = useLang.getState().lang;
-  const hit = lang === 'uz' ? undefined : D[uz]?.[lang];
-  return fill(hit ?? uz, vars);
+  return fill(lang === 'uz' ? toNewLatin(uz) : (D[uz]?.[lang] ?? uz), vars);
 }
 
 /** Komponent ichida: til almashganda qayta chiziladi. */
 export function useT() {
   const lang = useLang((s) => s.lang);
   return useCallback(
-    (uz: string, vars?: Record<string, string | number>) => fill((lang === 'uz' ? undefined : D[uz]?.[lang]) ?? uz, vars),
+    (uz: string, vars?: Record<string, string | number>) => fill(lang === 'uz' ? toNewLatin(uz) : (D[uz]?.[lang] ?? uz), vars),
     [lang],
   );
 }

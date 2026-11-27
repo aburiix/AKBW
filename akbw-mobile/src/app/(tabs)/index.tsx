@@ -6,10 +6,11 @@ import { FlatList, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductCard } from '@/components/ProductCard';
 import { RingCarousel, type RingItem } from '@/components/RingCarousel';
+import { Stars } from '@/components/Reviews';
 import { Button, Label, Screen, SectionTitle, Wordmark } from '@/components/ui';
 import { api } from '@/lib/api';
 import { F, label, useColors, useStyles, useTabBarSpace, type Palette } from '@/lib/theme';
-import type { Product, StyleItem } from '@/lib/types';
+import type { Product, Review, StyleItem } from '@/lib/types';
 
 const STYLES = [
   { title: 'Old money', img: require('../../../assets/img/oldmoney.jpg') },
@@ -37,6 +38,7 @@ export default function Home() {
   const [newest, setNewest] = useState<Product[]>([]);
   const [mostSold, setMostSold] = useState<Product[]>([]);
   const [styles, setStyles] = useState<StyleItem[]>([]);
+  const [top, setTop] = useState<Review[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,6 +51,10 @@ export default function Home() {
       api
         .styles()
         .then((x) => setStyles(x.data ?? []))
+        .catch(() => {});
+      api
+        .topReviews()
+        .then((x) => setTop(x.data ?? []))
         .catch(() => {});
     } catch (e: any) {
       setError(e.message);
@@ -167,6 +173,27 @@ export default function Home() {
           <Label style={{ textAlign: 'center', marginTop: -6 }}>{t("← suring · bosib oching →")}</Label>
         </View>
 
+        {/* Mamnun mijozlar — saytdagi sharhlar bo'limi */}
+        {top.length > 0 && (
+          <View style={{ marginTop: 44 }}>
+            <SectionTitle kicker={t('Sevimli mijozlarimiz')}>{t('Mamnun mijozlar')}</SectionTitle>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} snapToInterval={width * 0.82 + 12} decelerationRate="fast" contentContainerStyle={{ paddingHorizontal: 16, gap: 12 }}>
+              {top.map((r) => (
+                <Pressable
+                  key={r.id}
+                  onPress={() => router.push({ pathname: '/product/[id]', params: { id: String(r.product_id) } })}
+                  style={[s.review, { width: width * 0.82 }]}>
+                  <Stars value={r.rating} />
+                  <Text style={s.reviewText} numberOfLines={4}>
+                    “{r.comment}”
+                  </Text>
+                  <Text style={{ color: c.mute, fontSize: 13 }}>{r.user?.name ?? t('Mijoz')} ✓</Text>
+                </Pressable>
+              ))}
+            </ScrollView>
+          </View>
+        )}
+
         {/* Biz haqimizda kartasi */}
         <View style={s.about}>
           <Image source={require('../../../assets/img/welcome.jpg')} style={{ height: 220 }} contentFit="cover" />
@@ -176,7 +203,10 @@ export default function Home() {
             <Text style={{ color: c.mute, fontSize: 14, lineHeight: 21 }}>
               {t("Sifatli mato, puxta tikuv va o'zingizga mos uslub. AKBW AI yordamida o'lchamingizni toping va kiyimni kiyib ko'ring.")}
             </Text>
-            <Button title={t("AKBW AI bilan gaplashish")} onPress={() => router.navigate('/ai')} style={{ alignSelf: 'flex-start', marginTop: 4 }} />
+            <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap', marginTop: 4 }}>
+              <Button title={t("AKBW AI bilan gaplashish")} onPress={() => router.navigate('/ai')} />
+              <Button title={t('Biz haqimizda')} variant="ghost" onPress={() => router.push('/about')} />
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -207,5 +237,7 @@ const mk = (c: Palette) =>
     seasonIcon: { color: '#EFE8DB', fontSize: 18, opacity: 0.85 },
     seasonName: { fontFamily: F.serif, fontSize: 19, color: '#EFE8DB' },
     about: { marginTop: 48, marginHorizontal: 16, borderRadius: 28, overflow: 'hidden', borderWidth: 1, borderColor: c.line, backgroundColor: c.s1 },
+    review: { backgroundColor: c.s1, borderRadius: 18, borderWidth: 1, borderColor: c.line, padding: 20, gap: 14, minHeight: 190, justifyContent: 'space-between' },
+    reviewText: { fontFamily: F.serif, fontSize: 19, lineHeight: 26, color: c.text },
     aboutTitle: { fontFamily: F.serif, fontSize: 28, lineHeight: 30, color: c.text },
   });

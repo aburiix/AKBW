@@ -1,7 +1,14 @@
 'use client';
 
 import React, { useEffect, useMemo, useState, Suspense } from 'react';
-import { ArrowRight, Tag, MapPin, ChevronDown } from 'lucide-react';
+import {
+  ArrowRight,
+  Tag,
+  MapPin,
+  ChevronDown,
+  ChevronLeft,
+} from 'lucide-react';
+import { Link, useRouter } from '@/shared/config/i18n/navigation';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { cn } from '@/shared/lib/utils';
@@ -28,6 +35,19 @@ export default function Cart() {
   const cartItems = useCartStore((state) => state.items);
   const clearCart = useCartStore((state) => state.clearCart);
   const { token } = useUserStore();
+  const router = useRouter();
+  // Telefon: ilovadagidek 2 bosqich — savat ro'yxati, keyin buyurtma berish
+  const [step, setStep] = useState<'cart' | 'checkout'>('cart');
+  const itemCount = cartItems.reduce((n, i) => n + i.quantity, 0);
+  const goCheckout = () => {
+    if (!token) {
+      toast.error(t('login_first'));
+      router.push('/profile');
+      return;
+    }
+    setStep('checkout');
+    window.scrollTo({ top: 0 });
+  };
 
   const [paymentMethod, setPaymentMethod] = useState<
     'payme' | 'click' | 'paynet'
@@ -141,7 +161,15 @@ export default function Cart() {
   };
 
   const subtotal = useMemo(
-    () => cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    // Server bilan bir xil: mahsulot chegirmasi (discount %) har bir dona narxiga qo'llanadi
+    () =>
+      cartItems.reduce(
+        (acc, item) =>
+          acc +
+          Math.round(item.price * (1 - (item.discount || 0) / 100)) *
+            item.quantity,
+        0,
+      ),
     [cartItems],
   );
   const discount = useMemo(
@@ -209,13 +237,33 @@ export default function Cart() {
   return (
     <div className="min-h-screen">
       <div className="wrap pt-6 md:pt-10 pb-10">
-        <div className="flex gap-2 lbl text-ivory/40 mb-4">
+        {/* Telefon sarlavhasi (ilovadagidek) */}
+        <div className="md:hidden mb-5">
+          {step === 'checkout' ? (
+            <button
+              type="button"
+              onClick={() => setStep('cart')}
+              className="flex items-center gap-1 lbl text-ivory/50 mb-2"
+            >
+              <ChevronLeft size={15} /> {t('back_to_cart')}
+            </button>
+          ) : (
+            <span className="lbl text-ivory/45 block mb-2">
+              {t('kicker', { n: itemCount })}
+            </span>
+          )}
+          <h1 className="serif text-[36px] leading-none text-ivory">
+            {step === 'checkout' ? t('checkout_title') : t('cart_title')}
+          </h1>
+        </div>
+
+        <div className="hidden md:flex gap-2 lbl text-ivory/40 mb-4">
           <span>{t('breadcrumb_home')}</span>
           <span>/</span>
           <span className="text-ivory/75">{t('breadcrumb_cart')}</span>
         </div>
 
-        <h1 className="serif text-[40px] md:text-[60px] leading-none text-ivory mb-8 md:mb-12">
+        <h1 className="hidden md:block serif text-[60px] leading-none text-ivory mb-12">
           {t('title')}
         </h1>
 
@@ -229,10 +277,19 @@ export default function Cart() {
             'mb-20',
           )}
         >
-          <CartItems />
+          <div
+            className={cn(
+              'w-full lg:flex-1 min-w-0',
+              step === 'checkout' && 'max-md:hidden',
+            )}
+          >
+            <CartItems />
+          </div>
 
           <div
             className={cn(
+              step === 'cart' && 'max-md:hidden',
+              'max-md:!p-5',
               'w-full',
               'lg:w-[420px]',
               'shrink-0',
@@ -369,7 +426,7 @@ export default function Cart() {
               <div className={cn('flex', 'justify-between', 'items-center')}>
                 <span className="lbl text-ivory/45 px-1">{t('subtotal')}</span>
                 <span className="text-[16px] text-ivory tabular-nums">
-                  {subtotal.toLocaleString()} so&apos;m
+                  {subtotal.toLocaleString()} söm
                 </span>
               </div>
               <div className={cn('flex', 'justify-between', 'items-center')}>
@@ -378,7 +435,7 @@ export default function Cart() {
                   {appliedDiscount > 0 ? `(-${appliedDiscount}%)` : ''}
                 </span>
                 <span className="text-[16px] text-sale tabular-nums">
-                  -{discount.toLocaleString()} so&apos;m
+                  -{discount.toLocaleString()} söm
                 </span>
               </div>
               <div className={cn('flex', 'justify-between', 'items-center')}>
@@ -386,14 +443,14 @@ export default function Cart() {
                   {t('delivery_fee')}
                 </span>
                 <span className="text-[16px] text-ivory tabular-nums">
-                  {deliveryFee.toLocaleString()} so&apos;m
+                  {deliveryFee.toLocaleString()} söm
                 </span>
               </div>
 
               <div className="flex justify-between items-end pt-4 border-t border-line">
                 <span className="lbl text-ivory/70">{t('total')}</span>
                 <span className="serif text-[34px] leading-none text-ivory tabular-nums">
-                  {total.toLocaleString()} so&apos;m
+                  {total.toLocaleString()} söm
                 </span>
               </div>
             </div>
@@ -444,13 +501,51 @@ export default function Cart() {
           </div>
         </div>
 
+        {/* Telefon: pastdagi Jami + Buyurtma berish (ilovadagidek) */}
+        {step === 'cart' && cartItems.length > 0 && (
+          <div className="md:hidden fixed inset-x-0 bottom-[calc(80px+env(safe-area-inset-bottom))] z-30 px-3.5 pb-2">
+            <div className="glass !bg-[var(--c-tabbar)] rounded-[26px] border border-line p-3.5 flex flex-col gap-3 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.5)]">
+              <div className="flex items-center justify-between px-1.5">
+                <span className="lbl text-ivory/50">{t('total')}</span>
+                <span className="text-[20px] text-ivory tabular-nums">
+                  {total.toLocaleString()} söm
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={goCheckout}
+                className="pill pill-ivory w-full"
+              >
+                {t('checkout_title')}
+              </button>
+            </div>
+          </div>
+        )}
+        {step === 'cart' && cartItems.length > 0 && (
+          <div className="md:hidden h-32" aria-hidden />
+        )}
+
+        <div className="md:hidden">
+          {token && (
+            <Link
+              href="/orders"
+              className="flex items-center justify-between h-[58px] px-4 rounded-[20px] bg-surface border border-line text-[15px] text-ivory"
+            >
+              {t('my_orders')}{' '}
+              <ArrowRight size={17} className="text-ivory/50" />
+            </Link>
+          )}
+        </div>
+
         <Suspense fallback={<div>Loading...</div>}>
-          <OrderView
-            token={token || ''}
-            setSelectedOrder={setSelectedOrder}
-            setModalMode={setModalMode}
-            setIsCheckoutOpen={setIsCheckoutOpen}
-          />
+          <div className="hidden md:block">
+            <OrderView
+              token={token || ''}
+              setSelectedOrder={setSelectedOrder}
+              setModalMode={setModalMode}
+              setIsCheckoutOpen={setIsCheckoutOpen}
+            />
+          </div>
         </Suspense>
       </div>
 

@@ -30,7 +30,27 @@
     "no_seasons": "Сезоны пока отсутствуют",
     "happy_customers_title": "Наши благодарные клиенты",
     "not_enough_reviews": "Отзывов пока недостаточно",
-    "anonymous_user": "Аноним"
+    "anonymous_user": "Аноним",
+    "products_btn": "Товары",
+    "newest_btn": "Новинки",
+    "all_btn": "Все",
+    "season": "Сезон",
+    "season_spring": "Весна",
+    "season_summer": "Лето",
+    "season_autumn": "Осень",
+    "season_winter": "Зима",
+    "kicker_new": "AKBW · Новое",
+    "kicker_top": "AKBW · Топ",
+    "top_sold": "Хиты продаж",
+    "kicker_styles": "AKBW · Ассортимент",
+    "styles_title": "Стили",
+    "ring_hint": "← листайте · нажмите, чтобы открыть →",
+    "reviews_kicker": "Наши любимые клиенты",
+    "reviews_title": "Довольные клиенты",
+    "brand_kicker": "AKBW · Бренд",
+    "brand_text": "Качественная ткань, аккуратный пошив и стиль, который подходит именно вам. Подберите размер и примерьте одежду с помощью AKBW AI.",
+    "ai_btn": "Поговорить с AKBW AI",
+    "about_btn": "О нас"
   },
   "Footer": {
     "new_arrivals": "Новинки",
@@ -70,7 +90,13 @@
     "terms_link_text": "даю согласие на политику обработки данных AKBW!",
     "user_not_found": "Пользователь не найден",
     "please_register": "Пожалуйста, сначала зарегистрируйтесь",
-    "login_error": "Ошибка при входе"
+    "login_error": "Ошибка при входе",
+    "consent_pre": "Я принимаю",
+    "consent_terms": "Условия использования",
+    "consent_and": "и",
+    "consent_privacy": "Политику конфиденциальности",
+    "consent_post": "AKBW.",
+    "consent_required": "Чтобы продолжить, примите условия."
   },
   "Register": {
     "name_invalid": "Имя должно содержать минимум 2 буквы",
@@ -102,7 +128,13 @@
     "verify_btn": "Подтвердить",
     "edit_info_btn": "Редактировать данные",
     "referral_bonus_applied": "Реферальный бонус применен",
-    "welcome_bonus_applied": "Добро пожаловать!"
+    "welcome_bonus_applied": "Добро пожаловать!",
+    "consent_pre": "Я принимаю",
+    "consent_terms": "Условия использования",
+    "consent_and": "и",
+    "consent_privacy": "Политику конфиденциальности",
+    "consent_post": "AKBW.",
+    "consent_required": "Чтобы продолжить, примите условия."
   },
   "AboutPage": {
     "hero_subtitle": "Простой, Качественный, Безграничный Дизайн",
@@ -262,7 +294,13 @@
     "branch_selection_required": "Выбор филиала доставки обязателен",
     "rest_will_be_paid_at_delivery": "Оставшаяся сумма будет оплачена при доставке",
     "login_required": "Пожалуйста, сначала войдите в систему",
-    "open_in_map": "Открыть на карте"
+    "open_in_map": "Открыть на карте",
+    "login_first": "Войдите в профиль, чтобы оформить заказ",
+    "back_to_cart": "Корзина",
+    "kicker": "AKBW · товаров: {n}",
+    "checkout_title": "Оформление заказа",
+    "cart_title": "Корзина",
+    "my_orders": "Мои заказы"
   },
   "FavoritesPage": {
     "title": "Избранное",
@@ -291,7 +329,11 @@
     "loadingProducts": "Загрузка товаров...",
     "noProducts": "По выбранным фильтрам товаров не найдено.",
     "previous": "Предыдущий",
-    "next": "Следующий"
+    "next": "Следующий",
+    "kicker": "AKBW · товаров: {n}",
+    "catalog": "Каталог",
+    "searchPlaceholder": "Поиск одежды…",
+    "filter": "Фильтр"
   },
   "PrivacyPage": {
     "hero": {
@@ -430,7 +472,7 @@
       },
       {
         "q": "Как правильно выбрать размер?",
-        "a": "Пожалуйста, обратитесь к руководству по размерам под выбором размера."
+        "a": "Если есть вопрос по размеру, спросите AKBW AI кнопкой «Спросить размер»."
       }
     ],
     "relatedProductsTitle": "Вам может понравиться!",
@@ -440,7 +482,8 @@
     "review_fields_required": "Пожалуйста, заполните все поля и выберите оценку",
     "review_success": "Отзыв успешно добавлен!",
     "review_deleted_success": "Отзыв успешно удалён!",
-    "add_to_cart_success": "{name} добавлен в корзину"
+    "add_to_cart_success": "{name} добавлен в корзину",
+    "description": "Описание"
   },
   "SearchPage": {
     "placeholder": "Поиск...",
@@ -630,7 +673,14 @@
       "name_min": "Имя должно содержать минимум 2 буквы",
       "lastname_min": "Фамилия должна содержать минимум 2 буквы",
       "gender_min": "Пол должен содержать минимум 2 буквы"
-    }
+    },
+    "delete_account": "Удалить аккаунт",
+    "delete_account_title": "Удалить аккаунт?",
+    "delete_account_desc": "Ваше имя, номер телефона, диалоги с AI и фото примерок будут удалены навсегда. История заказов сохранится без персональных данных. Это действие нельзя отменить.",
+    "delete_account_confirm": "Да, удалить",
+    "delete_account_cancel": "Отмена",
+    "delete_account_done": "Аккаунт удалён",
+    "delete_account_error": "Не удалось удалить аккаунт, попробуйте ещё раз"
   },
   "NewArrivalsPage": {
     "title": "Новые поступления",
@@ -680,7 +730,9 @@
     "pnf_text": "Товар, который вы ищете, не существует или был удалён.",
     "try_on": "Примерить с AI",
     "size_ai": "Подобрать размер с AI",
-    "size_prompt": "Подбери мне размер для этой вещи"
+    "size_prompt": "Подбери мне размер для этой вещи",
+    "try_on_short": "Примерить",
+    "size_ask": "Спросить размер"
   },
   "TryOn": {
     "kicker": "AKBW · AI примерочная",
@@ -797,5 +849,54 @@
     "err_REFUSAL": "Не могу ответить на этот вопрос.",
     "fab": "AKBW AI",
     "drag_hint": "Перетащите, чтобы переместить"
+  },
+  "ProfilePage": {
+    "cabinet": "Личный кабинет",
+    "guest_text": "Войдите, чтобы видеть заказы, сохранённые данные, примерку и AKBW AI.",
+    "login_register": "Вход / Регистрация",
+    "edit": "Изменить",
+    "orders": "Заказы",
+    "favorites": "Избранное",
+    "in_cart": "В корзине",
+    "pay_wait": "Ожидает оплаты",
+    "pay_text": "Подтверждено заказов: {n} — оплатите",
+    "purchases": "Покупки",
+    "my_orders": "Мои заказы",
+    "tryon_history": "История примерок",
+    "my_reviews": "Мои отзывы",
+    "ask_product": "Запросить товар",
+    "invite_title": "Пригласите друзей",
+    "invite_code": "Ваш код приглашения",
+    "share": "Поделиться",
+    "copied": "Скопировано",
+    "invite_message": "AKBW — магазин современной одежды. При регистрации введите мой код приглашения: {code}\nhttps://akbw.uz",
+    "settings": "Настройки",
+    "language": "Язык",
+    "appearance": "Оформление",
+    "notifications": "Уведомления",
+    "help": "Помощь",
+    "ai": "Помощник AKBW AI",
+    "help_chat": "Чат поддержки",
+    "contact": "Связаться с нами",
+    "call": "Позвонить",
+    "info": "Информация",
+    "about": "О нас",
+    "privacy": "Политика конфиденциальности",
+    "terms": "Условия использования",
+    "logout": "Выйти",
+    "logout_confirm": "Выйти из профиля?",
+    "cancel": "Отмена",
+    "theme_system": "Авто",
+    "theme_dark": "Тёмная",
+    "theme_light": "Светлая",
+    "theme_hint": "«Авто» — меняется по настройкам устройства."
+  },
+  "TryOnHistory": {
+    "title": "История примерок",
+    "login": "Войти в профиль",
+    "empty": "Примерок пока нет. Нажмите «Примерить» на странице товара.",
+    "to_catalog": "В каталог",
+    "delete": "Удалить",
+    "delete_confirm": "Удалить фото?"
   }
 }
