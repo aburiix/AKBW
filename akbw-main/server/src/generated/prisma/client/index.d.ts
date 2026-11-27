@@ -320,7 +320,7 @@ export class PrismaClient<
    * Read more in our [docs](https://pris.ly/d/client).
    */
 
-  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
+  constructor(optionsArg ?: Prisma.PrismaClientConstructorArgs<ClientOptions>);
   $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
 
   /**
@@ -770,8 +770,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.8.0
-   * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
+   * Prisma Client JS version: 7.10.1
+   * Query Engine version: d1b3f377ca835d73fd50954a5e22128b9ebdd6b8
    */
   export type PrismaVersion = {
     client: string
@@ -906,6 +906,19 @@ export namespace Prisma {
   };
 
   /**
+   * Resolved type of the argument passed to the `PrismaClient` constructor.
+   *
+   * When called without a narrower options type (the common case), this resolves
+   * to `PrismaClientOptions` directly, which produces a clear TypeScript error
+   * message (`not assignable to parameter of type 'PrismaClientOptions'`) when
+   * the argument is missing or incomplete. When the user supplies a narrower
+   * options type (e.g. via a literal), it falls back to `Subset` to keep
+   * filtering out unknown properties.
+   */
+  export type PrismaClientConstructorArgs<Options extends PrismaClientOptions> =
+    [PrismaClientOptions] extends [Options] ? PrismaClientOptions : Subset<Options, PrismaClientOptions>;
+
+  /**
    * SelectSubset
    * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
    * Additionally, it validates, if both select and include are present. If the case, it errors.
@@ -937,7 +950,7 @@ export namespace Prisma {
   type XOR<T, U> =
     T extends object ?
     U extends object ?
-      (Without<T, U> & U) | (Without<U, T> & T)
+      ((Without<T, U> & U) | (Without<U, T> & T)) & object
     : U : T
 
 
@@ -3641,11 +3654,26 @@ export namespace Prisma {
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
     /**
-     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     * A driver adapter that PrismaClient uses to connect to your database, such as the ones provided by `@prisma/adapter-pg`, `@prisma/adapter-libsql`, `@prisma/adapter-planetscale`, etc.
+     * 
+     * A driver adapter is **required** unless you connect to your database through Prisma Accelerate (in which case use `accelerateUrl` instead).
+     * 
+     * Learn more: https://pris.ly/d/driver-adapters
+     * 
+     * @example
+     * ```ts
+     * import { PrismaPg } from '@prisma/adapter-pg'
+     * import { PrismaClient } from './generated/prisma/client'
+     * 
+     * const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+     * const prisma = new PrismaClient({ adapter })
+     * ```
      */
     adapter?: runtime.SqlDriverAdapterFactory
     /**
-     * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
+     * The Prisma Accelerate connection URL. Use this option to connect to your database through Prisma Accelerate instead of using a driver adapter to connect directly.
+     * 
+     * Learn more: https://pris.ly/d/accelerate
      */
     accelerateUrl?: string
     /**
@@ -4540,6 +4568,10 @@ export namespace Prisma {
     name: string | null
     lastName: string | null
     gender: string | null
+    birthDate: Date | null
+    region: string | null
+    district: string | null
+    email: string | null
     profile_picture: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4557,6 +4589,10 @@ export namespace Prisma {
     name: string | null
     lastName: string | null
     gender: string | null
+    birthDate: Date | null
+    region: string | null
+    district: string | null
+    email: string | null
     profile_picture: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4574,6 +4610,10 @@ export namespace Prisma {
     name: number
     lastName: number
     gender: number
+    birthDate: number
+    region: number
+    district: number
+    email: number
     profile_picture: number
     createdAt: number
     updatedAt: number
@@ -4605,6 +4645,10 @@ export namespace Prisma {
     name?: true
     lastName?: true
     gender?: true
+    birthDate?: true
+    region?: true
+    district?: true
+    email?: true
     profile_picture?: true
     createdAt?: true
     updatedAt?: true
@@ -4622,6 +4666,10 @@ export namespace Prisma {
     name?: true
     lastName?: true
     gender?: true
+    birthDate?: true
+    region?: true
+    district?: true
+    email?: true
     profile_picture?: true
     createdAt?: true
     updatedAt?: true
@@ -4639,6 +4687,10 @@ export namespace Prisma {
     name?: true
     lastName?: true
     gender?: true
+    birthDate?: true
+    region?: true
+    district?: true
+    email?: true
     profile_picture?: true
     createdAt?: true
     updatedAt?: true
@@ -4743,6 +4795,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate: Date | null
+    region: string | null
+    district: string | null
+    email: string | null
     profile_picture: string
     createdAt: Date
     updatedAt: Date
@@ -4779,6 +4835,10 @@ export namespace Prisma {
     name?: boolean
     lastName?: boolean
     gender?: boolean
+    birthDate?: boolean
+    region?: boolean
+    district?: boolean
+    email?: boolean
     profile_picture?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4810,6 +4870,10 @@ export namespace Prisma {
     name?: boolean
     lastName?: boolean
     gender?: boolean
+    birthDate?: boolean
+    region?: boolean
+    district?: boolean
+    email?: boolean
     profile_picture?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4828,6 +4892,10 @@ export namespace Prisma {
     name?: boolean
     lastName?: boolean
     gender?: boolean
+    birthDate?: boolean
+    region?: boolean
+    district?: boolean
+    email?: boolean
     profile_picture?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4846,6 +4914,10 @@ export namespace Prisma {
     name?: boolean
     lastName?: boolean
     gender?: boolean
+    birthDate?: boolean
+    region?: boolean
+    district?: boolean
+    email?: boolean
     profile_picture?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4856,7 +4928,7 @@ export namespace Prisma {
     totalUsedBonus?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone" | "refreshToken" | "name" | "lastName" | "gender" | "profile_picture" | "createdAt" | "updatedAt" | "referralCode" | "referredBy" | "availableBonus" | "totalEarnedBonus" | "totalUsedBonus", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone" | "refreshToken" | "name" | "lastName" | "gender" | "birthDate" | "region" | "district" | "email" | "profile_picture" | "createdAt" | "updatedAt" | "referralCode" | "referredBy" | "availableBonus" | "totalEarnedBonus" | "totalUsedBonus", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     helpChatMessages?: boolean | User$helpChatMessagesArgs<ExtArgs>
     askForChatMessages?: boolean | User$askForChatMessagesArgs<ExtArgs>
@@ -4904,6 +4976,10 @@ export namespace Prisma {
       name: string
       lastName: string
       gender: string
+      birthDate: Date | null
+      region: string | null
+      district: string | null
+      email: string | null
       profile_picture: string
       createdAt: Date
       updatedAt: Date
@@ -5354,6 +5430,10 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
     readonly gender: FieldRef<"User", 'String'>
+    readonly birthDate: FieldRef<"User", 'DateTime'>
+    readonly region: FieldRef<"User", 'String'>
+    readonly district: FieldRef<"User", 'String'>
+    readonly email: FieldRef<"User", 'String'>
     readonly profile_picture: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -42065,6 +42145,10 @@ export namespace Prisma {
     name: 'name',
     lastName: 'lastName',
     gender: 'gender',
+    birthDate: 'birthDate',
+    region: 'region',
+    district: 'district',
+    email: 'email',
     profile_picture: 'profile_picture',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -42708,6 +42792,10 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     gender?: StringFilter<"User"> | string
+    birthDate?: DateTimeNullableFilter<"User"> | Date | string | null
+    region?: StringNullableFilter<"User"> | string | null
+    district?: StringNullableFilter<"User"> | string | null
+    email?: StringNullableFilter<"User"> | string | null
     profile_picture?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -42738,6 +42826,10 @@ export namespace Prisma {
     name?: SortOrder
     lastName?: SortOrder
     gender?: SortOrder
+    birthDate?: SortOrderInput | SortOrder
+    region?: SortOrderInput | SortOrder
+    district?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
     profile_picture?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42772,6 +42864,10 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     gender?: StringFilter<"User"> | string
+    birthDate?: DateTimeNullableFilter<"User"> | Date | string | null
+    region?: StringNullableFilter<"User"> | string | null
+    district?: StringNullableFilter<"User"> | string | null
+    email?: StringNullableFilter<"User"> | string | null
     profile_picture?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -42801,6 +42897,10 @@ export namespace Prisma {
     name?: SortOrder
     lastName?: SortOrder
     gender?: SortOrder
+    birthDate?: SortOrderInput | SortOrder
+    region?: SortOrderInput | SortOrder
+    district?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
     profile_picture?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42826,6 +42926,10 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     lastName?: StringWithAggregatesFilter<"User"> | string
     gender?: StringWithAggregatesFilter<"User"> | string
+    birthDate?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    region?: StringNullableWithAggregatesFilter<"User"> | string | null
+    district?: StringNullableWithAggregatesFilter<"User"> | string | null
+    email?: StringNullableWithAggregatesFilter<"User"> | string | null
     profile_picture?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -45061,6 +45165,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45090,6 +45198,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45119,6 +45231,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45148,6 +45264,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45177,6 +45297,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -45194,6 +45318,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45210,6 +45338,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47475,6 +47607,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -47634,6 +47777,10 @@ export namespace Prisma {
     name?: SortOrder
     lastName?: SortOrder
     gender?: SortOrder
+    birthDate?: SortOrder
+    region?: SortOrder
+    district?: SortOrder
+    email?: SortOrder
     profile_picture?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47657,6 +47804,10 @@ export namespace Prisma {
     name?: SortOrder
     lastName?: SortOrder
     gender?: SortOrder
+    birthDate?: SortOrder
+    region?: SortOrder
+    district?: SortOrder
+    email?: SortOrder
     profile_picture?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47674,6 +47825,10 @@ export namespace Prisma {
     name?: SortOrder
     lastName?: SortOrder
     gender?: SortOrder
+    birthDate?: SortOrder
+    region?: SortOrder
+    district?: SortOrder
+    email?: SortOrder
     profile_picture?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47724,6 +47879,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -49742,6 +49911,10 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -52025,6 +52198,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -52090,6 +52274,20 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -52575,6 +52773,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52603,6 +52805,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52636,6 +52842,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52664,6 +52874,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53022,6 +53236,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53050,6 +53268,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53097,6 +53319,10 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     gender?: StringFilter<"User"> | string
+    birthDate?: DateTimeNullableFilter<"User"> | Date | string | null
+    region?: StringNullableFilter<"User"> | string | null
+    district?: StringNullableFilter<"User"> | string | null
+    email?: StringNullableFilter<"User"> | string | null
     profile_picture?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -54744,6 +54970,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54772,6 +55002,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54862,6 +55096,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54890,6 +55128,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55021,6 +55263,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55049,6 +55295,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55255,6 +55505,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55283,6 +55537,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55804,6 +56062,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55832,6 +56094,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55903,6 +56169,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55931,6 +56201,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55995,6 +56269,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56023,6 +56301,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56125,6 +56407,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56153,6 +56439,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56248,6 +56538,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56276,6 +56570,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56336,6 +56634,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56364,6 +56666,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56412,6 +56718,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56440,6 +56750,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56542,6 +56856,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56570,6 +56888,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56636,6 +56958,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56664,6 +56990,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56738,6 +57068,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56766,6 +57100,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57115,6 +57453,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57143,6 +57485,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57222,6 +57568,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57250,6 +57600,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57511,6 +57865,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57539,6 +57897,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57583,6 +57945,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57611,6 +57977,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57639,6 +58009,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57667,6 +58041,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57736,6 +58114,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57764,6 +58146,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57868,6 +58254,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57896,6 +58286,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57940,6 +58334,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57968,6 +58366,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58063,6 +58465,10 @@ export namespace Prisma {
     name: string
     lastName: string
     gender: string
+    birthDate?: Date | string | null
+    region?: string | null
+    district?: string | null
+    email?: string | null
     profile_picture?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58313,6 +58719,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58341,6 +58751,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58369,6 +58783,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     profile_picture?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

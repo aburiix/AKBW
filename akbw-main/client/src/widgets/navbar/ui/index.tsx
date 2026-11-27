@@ -131,10 +131,10 @@ const Navbar = () => {
         ref={headerRef}
         className="sticky top-0 z-50 bg-night/80 backdrop-blur-xl border-b border-line"
       >
-        <div className="wrap flex items-center gap-5 h-[60px] lg:h-[72px]">
+        <div className="wrap relative flex items-center gap-5 h-[60px] lg:h-[72px]">
           <Link
             href="/"
-            className="font-display !normal-case text-[26px] lg:text-[28px] tracking-[0.05em] text-ivory shrink-0 mr-auto lg:mr-0"
+            className="font-display !normal-case text-[26px] lg:text-[28px] tracking-[0.05em] text-ivory shrink-0 mr-auto lg:mr-0 max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2"
           >
             AKBW
           </Link>
@@ -179,7 +179,7 @@ const Navbar = () => {
             />
           </form>
 
-          <div className="flex items-center gap-0.5">
+          <div className="flex items-center gap-0.5 max-md:ml-auto">
             <button
               onClick={() =>
                 window.dispatchEvent(new CustomEvent('akbw:assistant'))

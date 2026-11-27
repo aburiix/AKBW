@@ -97,7 +97,11 @@ export default function Home() {
 
         {/* Banner — saytdagi bronza radial fon + kiyim rasmi */}
         <View style={[s.hero, { backgroundImage: c.heroBg }]}>
-          <Image source={require('../../../assets/img/welcome-right.png')} style={s.heroImg} contentFit="contain" contentPosition="bottom" />
+          {/* Juftlik ortida saytdagi 3D shisha AKBW logosi (saytdagi Three.js sahnasidan olingan tasvir) */}
+          <View style={s.heroMedia}>
+            <Image source={require('../../../assets/img/hero-glass-logo.jpg')} style={StyleSheet.absoluteFill} contentFit="cover" contentPosition="top" />
+            <Image source={require('../../../assets/img/welcome-right.png')} style={s.heroImg} contentFit="contain" contentPosition="bottom" />
+          </View>
           <View style={s.heroText}>
             <Label color="rgba(239,232,219,0.6)">{t("AKBW · Yangi qo'shilganlar")}</Label>
             <Text style={s.heroTitle}>{t("Bizning Brendimiz — Uslub va Ishonch")}</Text>
@@ -218,6 +222,7 @@ const mk = (c: Palette) =>
   StyleSheet.create({
     header: { alignItems: 'center', paddingVertical: 12 },
     hero: { marginHorizontal: 16, borderRadius: 28, overflow: 'hidden', borderWidth: 1, borderColor: c.line, minHeight: 560 },
+    heroMedia: { height: 348, overflow: 'hidden' },
     heroImg: { height: 330, marginTop: 18 },
     heroText: { padding: 22, paddingTop: 6, gap: 14 },
     heroTitle: { fontFamily: F.serif, fontSize: 34, lineHeight: 36, color: '#EFE8DB' },

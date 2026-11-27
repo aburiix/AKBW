@@ -65,15 +65,3 @@ export const Rosan = localFont({
   variable: '--font-rosan',
   display: 'swap',
 });
-
-export const Futura = localFont({
-  src: [
-    {
-      path: '../../../public/fonts/futuralight.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-futura',
-  display: 'swap',
-});

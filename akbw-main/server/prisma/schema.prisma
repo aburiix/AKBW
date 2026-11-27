@@ -14,6 +14,10 @@ model User {
   name               String
   lastName           String
   gender             String
+  birthDate          DateTime?
+  region             String?
+  district           String?
+  email              String?
   helpChatMessages   HelpChatMessages[]
   askForChatMessages AskForChatMessages[]
   reviews            Reviews[]

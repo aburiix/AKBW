@@ -8,7 +8,7 @@ import { cn } from '@/shared/lib/utils';
 import { useTranslations } from 'next-intl';
 
 const item =
-  'relative h-[52px] rounded-[26px] flex flex-col items-center justify-center gap-[3px] text-[9px] leading-none tracking-[0.06em] uppercase whitespace-nowrap font-[family-name:var(--font-futura)] transition-colors';
+  'relative h-[52px] rounded-[26px] flex flex-col items-center justify-center gap-[3px] text-[10px] leading-none font-medium tracking-[0.02em] uppercase whitespace-nowrap font-[family-name:var(--font-inter)] transition-colors';
 
 /** Telefon uchun pastki menyu (md dan kichik ekranlarda) */
 export default function MobileTabbar() {
@@ -63,7 +63,7 @@ export default function MobileTabbar() {
     return (
       <Link
         href={href}
-        className={cn(item, on ? 'text-ivory bg-surface-2' : 'text-ivory/45')}
+        className={cn(item, on ? 'text-ivory bg-surface-2' : 'text-ivory/85')}
       >
         <Icon size={22} strokeWidth={1.5} />
         {label}
@@ -81,7 +81,7 @@ export default function MobileTabbar() {
           onClick={() =>
             window.dispatchEvent(new CustomEvent('akbw:assistant'))
           }
-          className={cn(item, 'text-ivory/45 hover:text-ivory cursor-pointer')}
+          className={cn(item, 'text-ivory/85 hover:text-ivory cursor-pointer')}
           aria-label="AKBW AI"
         >
           <Sparkles size={22} strokeWidth={1.5} />

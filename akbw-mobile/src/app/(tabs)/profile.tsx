@@ -152,7 +152,12 @@ export default function Profile() {
             <Text style={s.heroTitle}>{t('Shaxsiy kabinet')}</Text>
             <Text style={s.heroText}>{t("Buyurtmalar, saqlangan ma'lumotlar, kiyib ko'rish va AKBW AI uchun profilingizga kiring.")}</Text>
             <Pressable onPress={() => router.push('/login')} style={({ pressed }) => [s.heroBtn, pressed && { opacity: 0.8 }]}>
-              <Text style={[label(11), { color: '#13110F' }]}>{t("Kirish / Ro'yxatdan o'tish")}</Text>
+              <Text style={[label(11), { color: '#13110F' }]}>{t('Kirish')}</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => router.push({ pathname: '/login', params: { mode: 'register' } })}
+              style={({ pressed }) => [s.heroBtnGhost, pressed && { opacity: 0.7 }]}>
+              <Text style={[label(11), { color: '#EFE8DB' }]}>{t("Ro'yxatdan o'tish")}</Text>
             </Pressable>
           </View>
 
@@ -331,6 +336,7 @@ const mk = (c: Palette) =>
     heroTitle: { fontFamily: F.serif, fontSize: 30, color: '#EFE8DB', marginTop: 6 },
     heroText: { textAlign: 'center', color: 'rgba(239,232,219,0.65)', fontSize: 14, lineHeight: 21 },
     heroBtn: { alignSelf: 'stretch', height: 50, borderRadius: 999, backgroundColor: '#EFE8DB', alignItems: 'center', justifyContent: 'center', marginTop: 6 },
+    heroBtnGhost: { alignSelf: 'stretch', height: 50, borderRadius: 999, borderWidth: 1, borderColor: 'rgba(239,232,219,0.35)', alignItems: 'center', justifyContent: 'center' },
     head: { flexDirection: 'row', alignItems: 'center', gap: 14, paddingHorizontal: 16, paddingVertical: 12 },
     avatar: {
       width: 64,

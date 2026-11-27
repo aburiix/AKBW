@@ -124,12 +124,23 @@ export const api = {
   colors: () => request<{ id: number; name: string }[]>('/product/colors'),
   styles: () => request<{ ok: boolean; data: StyleItem[] }>('/style'),
 
-  sendSms: (phone: string, type?: 'login') => request<{ ok: boolean }>('/sms/send', { method: 'POST', body: { phone, type } }),
+  sendSms: (phone: string, type?: 'login') => request<{ ok: boolean; isRegistered?: boolean }>('/sms/send', { method: 'POST', body: { phone, type } }),
   verifySms: (phone: string, code: string) =>
     request<{ verifyToken: string }>('/sms/verify', { method: 'POST', body: { phone, code } }),
   login: (phone: string, verifyToken: string) =>
     request<{ token: string; refreshToken: string }>('/auth/login', { method: 'POST', body: { phone, verifyToken } }),
-  register: (body: { phone: string; name: string; lastName: string; gender: string; verifyToken: string; referralCode?: string }) =>
+  register: (body: {
+    phone: string;
+    name: string;
+    lastName: string;
+    gender: string;
+    birthDate: string;
+    region: string;
+    district: string;
+    email?: string;
+    verifyToken: string;
+    referralCode?: string;
+  }) =>
     request<{ token: string; refreshToken?: string }>('/auth/register', { method: 'POST', body }),
   me: () => request<{ data: User; ok: boolean }>('/user/me'),
   updateMe: (body: { name?: string; lastName?: string; gender?: string; profile_picture?: string }) =>

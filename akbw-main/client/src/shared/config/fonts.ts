@@ -4,7 +4,7 @@ const inter = {
   className: 'font-inter',
   style: {
     fontFamily:
-      'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      '-apple-system, BlinkMacSystemFont, system-ui, Inter, "Segoe UI", Roboto, sans-serif',
   },
 };
 

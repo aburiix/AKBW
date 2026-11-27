@@ -204,7 +204,7 @@ export default function Welcome() {
               <span className="lbl !text-[8.5px] md:!text-[11px] text-ivory/60">
                 {t('HomePage.season')}
               </span>
-              <span className="serif text-[17px] md:text-[30px] leading-none text-ivory">
+              <span className="serif text-[19px] md:text-[30px] leading-none text-ivory">
                 {t(`HomePage.season_${f.key}`)}
               </span>
             </span>
