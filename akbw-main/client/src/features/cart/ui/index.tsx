@@ -503,7 +503,7 @@ export default function Cart() {
 
         {/* Telefon: pastdagi Jami + Buyurtma berish (ilovadagidek) */}
         {step === 'cart' && cartItems.length > 0 && (
-          <div className="md:hidden fixed inset-x-0 bottom-[calc(80px+env(safe-area-inset-bottom))] z-30 px-3.5 pb-2">
+          <div className="md:hidden fixed inset-x-0 above-tabbar bottom-[calc(80px+env(safe-area-inset-bottom))] z-30 px-3.5 pb-2">
             <div className="glass !bg-[var(--c-tabbar)] rounded-[26px] border border-line p-3.5 flex flex-col gap-3 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.5)]">
               <div className="flex items-center justify-between px-1.5">
                 <span className="lbl text-ivory/50">{t('total')}</span>

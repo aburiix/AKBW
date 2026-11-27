@@ -528,7 +528,7 @@ export default function Product({ id }: ProductProps) {
       </div>
 
       {/* Telefonda pastda doim ko'rinadigan "savatga" paneli */}
-      <div className="md:hidden fixed left-0 right-0 bottom-[calc(80px+env(safe-area-inset-bottom))] z-30 px-3 pb-2">
+      <div className="md:hidden fixed left-0 right-0 above-tabbar bottom-[calc(80px+env(safe-area-inset-bottom))] z-30 px-3 pb-2">
         <button
           type="button"
           onClick={handleAddToCart}

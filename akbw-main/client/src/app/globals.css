@@ -259,7 +259,7 @@
   @media (max-width: 767px) {
     body { padding-bottom: calc(86px + env(safe-area-inset-bottom)); }
     /* iPhone Google ilovasi: menyu uning suzuvchi paneli ustiga (≈77pt) ko'tarilgan */
-    html.ios-gsa body { padding-bottom: calc(72px + 77px); }
+    html.ios-gsa body { padding-bottom: calc(86px + 77px); }
   }
 }
 
@@ -397,15 +397,12 @@ html.tg-app .tabbar {
   -webkit-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
-/* iPhone ichki brauzerlari (Google ilovasi, Instagram, Chrome…): panelni visualViewport
-   pastiga mahkamlash — qiymatni MobileTabbar JS orqali yangilab turadi */
+/* iPhone Google ilovasi: menyu va uning ustidagi panellar Google'ning suzuvchi paneli ustiga
+   doimiy ko'tariladi (JS bilan kuzatilmaydi — sahifa aylantirilganda menyu qo'zg'almaydi) */
 :root { --sab: env(safe-area-inset-bottom); }
-html.ios-webview .tabbar {
-  bottom: auto;
-  top: var(--vv-bottom, 100dvh);
-  -webkit-transform: translate3d(0, -100%, 0);
-  transform: translate3d(0, -100%, 0);
-}
+html.ios-gsa .tabbar { bottom: 77px; }
+html.ios-gsa .above-tabbar { bottom: calc(80px + 77px); }
+
 
 /* Kiyib ko'rish: AI ishlayotganda skaner chizig'i */
 .tryon-scan { animation: tryon-scan 2.2s cubic-bezier(.45,0,.55,1) infinite; }
