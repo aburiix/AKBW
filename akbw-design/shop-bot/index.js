@@ -20,7 +20,7 @@ const lang = (ctx) => {
 const url = (ctx, path = "") => `${BASE}/${lang(ctx)}${path}`;
 
 const T = {
-  uz: { hi: (n) => `Assalomu alaykum, ${n}! 👋\n\n<b>AKBW</b> — Aburiix Kraft Brand Wear.\nKiyimlarni shu yerning o'zida, Telegram ichida tanlang va buyurtma bering.\n\n🚚 BTS orqali butun O'zbekiston bo'ylab yetkazamiz.`, shop: "🛍 Do'konni ochish", cat: "👕 Katalog", cart: "🧺 Savat", help: "Do'konni ochish uchun pastdagi tugmani bosing 👇" },
+  uz: { hi: (n) => `Assalomu alaykum, ${n}! 👋\n\n<b>AKBW</b> — Aburiix Kraft Brand Wear.\nKiyimlarni şu yerning özida, Telegram içida tanlang va buyurtma bering.\n\n🚚 BTS orqali butun Özbekiston böylab yetkazamiz.`, shop: "🛍 Dökonni oçiş", cat: "👕 Katalog", cart: "🧺 Savat", help: "Dökonni oçiş uçun pastdagi tugmani bosing 👇" },
   ru: { hi: (n) => `Здравствуйте, ${n}! 👋\n\n<b>AKBW</b> — Aburiix Kraft Brand Wear.\nВыбирайте и заказывайте одежду прямо в Telegram.\n\n🚚 Доставка по всему Узбекистану через BTS.`, shop: "🛍 Открыть магазин", cat: "👕 Каталог", cart: "🧺 Корзина", help: "Нажмите кнопку ниже, чтобы открыть магазин 👇" },
   en: { hi: (n) => `Hello, ${n}! 👋\n\n<b>AKBW</b> — Aburiix Kraft Brand Wear.\nBrowse and order clothes right inside Telegram.\n\n🚚 Delivery across Uzbekistan via BTS.`, shop: "🛍 Open the shop", cat: "👕 Catalog", cart: "🧺 Cart", help: "Tap the button below to open the shop 👇" },
 };
@@ -50,11 +50,11 @@ bot.on("message", (ctx) => ctx.reply(T[lang(ctx)].help, shopKeyboard(ctx)));
 
 // Chat pastidagi doimiy "Do'kon" menyu tugmasi (hamma uchun)
 await bot.telegram.setChatMenuButton({
-  menuButton: { type: "web_app", text: "Do'kon", web_app: { url: `${BASE}/uz` } },
+  menuButton: { type: "web_app", text: "Dökon", web_app: { url: `${BASE}/uz` } },
 });
 await bot.telegram.setMyCommands([
-  { command: "start", description: "Boshlash" },
-  { command: "shop", description: "Do'konni ochish" },
+  { command: "start", description: "Boşlaş" },
+  { command: "shop", description: "Dökonni oçiş" },
 ]);
 
 bot.launch();

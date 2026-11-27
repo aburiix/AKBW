@@ -305,7 +305,8 @@
     "kicker": "AKBW · {n} ta mahsulot",
     "checkout_title": "Buyurtma beriş",
     "cart_title": "Savat",
-    "my_orders": "Buyurtmalarim"
+    "my_orders": "Buyurtmalarim",
+    "cancel_item": "Bekor qiliş"
   },
   "FavoritesPage": {
     "title": "Sevimlilar",

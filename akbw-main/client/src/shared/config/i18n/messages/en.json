@@ -297,7 +297,8 @@
     "kicker": "AKBW · {n} items",
     "checkout_title": "Checkout",
     "cart_title": "Cart",
-    "my_orders": "My orders"
+    "my_orders": "My orders",
+    "cancel_item": "Cancel"
   },
   "FavoritesPage": {
     "title": "Favorites",

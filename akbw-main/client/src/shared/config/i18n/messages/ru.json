@@ -300,7 +300,8 @@
     "kicker": "AKBW · товаров: {n}",
     "checkout_title": "Оформление заказа",
     "cart_title": "Корзина",
-    "my_orders": "Мои заказы"
+    "my_orders": "Мои заказы",
+    "cancel_item": "Отменить"
   },
   "FavoritesPage": {
     "title": "Избранное",

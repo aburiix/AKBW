@@ -7,7 +7,7 @@ import { Button, Center, Label, PageTitle, Screen } from '@/components/ui';
 import { useAuth } from '@/lib/auth';
 import { cartCount, useCart, type CartItem } from '@/lib/cart';
 import { finalPrice, formatPrice } from '@/lib/format';
-import { useColors, useStyles, useTabBarSpace, type Palette } from '@/lib/theme';
+import { label, useColors, useStyles, useTabBarSpace, type Palette } from '@/lib/theme';
 
 export default function Cart() {
   const t = useT();
@@ -63,6 +63,7 @@ export default function Cart() {
 
 function Row({ item, onQty, onRemove }: { item: CartItem; onQty: (q: number) => void; onRemove: () => void }) {
   const t = useT();
+  const c = useColors();
   const s = useStyles(mk);
   return (
     <View style={s.row}>
@@ -85,8 +86,8 @@ function Row({ item, onQty, onRemove }: { item: CartItem; onQty: (q: number) => 
               <Text style={s.qtyTxt}>+</Text>
             </Pressable>
           </View>
-          <Pressable hitSlop={8} onPress={onRemove}>
-            <Label size={9.5}>{t("O'chirish")}</Label>
+          <Pressable onPress={onRemove} style={({ pressed }) => [s.cancel, pressed && { opacity: 0.6 }]}>
+            <Text style={[label(8.5), { color: c.sale, letterSpacing: 1.2 }]}>{t('Bekor qilish')}</Text>
           </Pressable>
         </View>
       </View>
@@ -100,8 +101,9 @@ const mk = (c: Palette) =>
     img: { width: 92, height: 122, borderRadius: 14, backgroundColor: c.s2 },
     name: { fontSize: 14, color: c.text },
     price: { fontSize: 15, color: c.text },
-    qtyRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 },
-    qty: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: c.line2, borderRadius: 999, height: 34 },
+    qtyRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 4 },
+    cancel: { height: 34, width: 108, borderRadius: 999, borderWidth: 1, borderColor: c.sale, alignItems: 'center', justifyContent: 'center' },
+    qty: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: 108, borderWidth: 1, borderColor: c.line2, borderRadius: 999, height: 34 },
     qtyBtn: { width: 34, alignItems: 'center' },
     qtyTxt: { fontSize: 18, color: c.text },
     qtyNum: { minWidth: 22, textAlign: 'center', color: c.text },

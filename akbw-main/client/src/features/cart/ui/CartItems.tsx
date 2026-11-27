@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useCartStore } from '@/shared/store/cart.store';
-import { Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
+import { Minus, Plus, ShoppingBag } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from '@/shared/ui/toast';
 import React from 'react';
@@ -58,17 +58,9 @@ export default function CartItems() {
                     )}
                   </div>
                 </div>
-                <button
-                  type="button"
-                  aria-label="delete"
-                  onClick={() => handleRemoveItem(item.id, item.name)}
-                  className="grid place-items-center size-9 shrink-0 rounded-full text-ivory/40 hover:text-sale hover:bg-sale/10 transition-colors cursor-pointer"
-                >
-                  <Trash2 size={17} />
-                </button>
               </div>
 
-              <div className="flex justify-between items-end gap-2 mt-3">
+              <div className="flex flex-col gap-2.5 mt-3">
                 <span className="text-[16px] md:text-[20px] text-ivory tabular-nums whitespace-nowrap">
                   {Math.round(
                     item.price * (1 - (item.discount || 0) / 100),
@@ -80,23 +72,33 @@ export default function CartItems() {
                     </span>
                   )}
                 </span>
-                <div className="flex items-center h-10 rounded-full border border-line-2 px-1">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between w-[112px] h-10 rounded-full border border-line-2 px-1">
+                    <button
+                      type="button"
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      className="grid place-items-center size-8 rounded-full text-ivory/60 hover:text-ivory hover:bg-ivory/[0.06] cursor-pointer"
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span className="w-7 text-center text-ivory tabular-nums">
+                      {item.quantity}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      className="grid place-items-center size-8 rounded-full text-ivory/60 hover:text-ivory hover:bg-ivory/[0.06] cursor-pointer"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                  {/* Profildagi "Akkauntni o'chirish" kabi qizil chiziqli tugma */}
                   <button
                     type="button"
-                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    className="grid place-items-center size-8 rounded-full text-ivory/60 hover:text-ivory hover:bg-ivory/[0.06] cursor-pointer"
+                    onClick={() => handleRemoveItem(item.id, item.name)}
+                    className="h-10 w-[112px] shrink-0 px-0 rounded-full border border-sale text-sale lbl !text-[9.5px] !tracking-[0.1em] whitespace-nowrap hover:bg-sale/10 transition-colors cursor-pointer"
                   >
-                    <Minus size={14} />
-                  </button>
-                  <span className="w-7 text-center text-ivory tabular-nums">
-                    {item.quantity}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    className="grid place-items-center size-8 rounded-full text-ivory/60 hover:text-ivory hover:bg-ivory/[0.06] cursor-pointer"
-                  >
-                    <Plus size={14} />
+                    {t('cancel_item')}
                   </button>
                 </div>
               </div>

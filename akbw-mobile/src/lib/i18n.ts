@@ -131,6 +131,7 @@ const D: Dict = {
     en: 'Sign in to your profile to place an order.',
   },
   Bekor: { ru: 'Отмена', en: 'Cancel' },
+  'Bekor qilish': { ru: 'Отменить', en: 'Cancel' },
   Kirish: { ru: 'Войти', en: 'Sign in' },
   Jami: { ru: 'Итого', en: 'Total' },
   'Buyurtma berish': { ru: 'Оформить заказ', en: 'Place order' },
