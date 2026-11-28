@@ -8,6 +8,8 @@ import {
   updateProductSchema,
 } from "../validators/product.validator.js";
 import {
+  postProductToChannel,
+  channelStatus,
   getProducts,
   getProductById,
   createProduct,
@@ -62,6 +64,9 @@ router.delete("/colors/:id", checkAdmins, deleteColor);
 router.get("/", getProducts);
 router.get("/recommended/all", recommendedAll);
 router.post("/", checkAdmins, validate(createProductSchema), createProduct);
+// Telegram kanal
+router.get("/channel/status", checkAdmins, channelStatus);
+router.post("/:id/channel", checkAdmins, postProductToChannel);
 router.put("/:id", checkAdmins, validate(updateProductSchema), updateProduct);
 router.get("/:id", getProductById);
 router.delete("/:id", checkAdmins, deleteProduct);

@@ -180,6 +180,8 @@ exports.Prisma.ProductsScalarFieldEnum = {
   volume_y: 'volume_y',
   volume_z: 'volume_z',
   discount: 'discount',
+  channel_message_id: 'channel_message_id',
+  channel_posted_at: 'channel_posted_at',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

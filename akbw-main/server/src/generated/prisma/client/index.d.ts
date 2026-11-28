@@ -9536,6 +9536,7 @@ export namespace Prisma {
     volume_y: number | null
     volume_z: number | null
     discount: number | null
+    channel_message_id: number | null
   }
 
   export type ProductsSumAggregateOutputType = {
@@ -9547,6 +9548,7 @@ export namespace Prisma {
     volume_y: number | null
     volume_z: number | null
     discount: number | null
+    channel_message_id: number | null
   }
 
   export type ProductsMinAggregateOutputType = {
@@ -9560,6 +9562,8 @@ export namespace Prisma {
     volume_y: number | null
     volume_z: number | null
     discount: number | null
+    channel_message_id: number | null
+    channel_posted_at: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9575,6 +9579,8 @@ export namespace Prisma {
     volume_y: number | null
     volume_z: number | null
     discount: number | null
+    channel_message_id: number | null
+    channel_posted_at: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9591,6 +9597,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount: number
+    channel_message_id: number
+    channel_posted_at: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -9606,6 +9614,7 @@ export namespace Prisma {
     volume_y?: true
     volume_z?: true
     discount?: true
+    channel_message_id?: true
   }
 
   export type ProductsSumAggregateInputType = {
@@ -9617,6 +9626,7 @@ export namespace Prisma {
     volume_y?: true
     volume_z?: true
     discount?: true
+    channel_message_id?: true
   }
 
   export type ProductsMinAggregateInputType = {
@@ -9630,6 +9640,8 @@ export namespace Prisma {
     volume_y?: true
     volume_z?: true
     discount?: true
+    channel_message_id?: true
+    channel_posted_at?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9645,6 +9657,8 @@ export namespace Prisma {
     volume_y?: true
     volume_z?: true
     discount?: true
+    channel_message_id?: true
+    channel_posted_at?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9661,6 +9675,8 @@ export namespace Prisma {
     volume_y?: true
     volume_z?: true
     discount?: true
+    channel_message_id?: true
+    channel_posted_at?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -9764,6 +9780,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount: number
+    channel_message_id: number | null
+    channel_posted_at: Date | null
     createdAt: Date
     updatedAt: Date
     _count: ProductsCountAggregateOutputType | null
@@ -9799,6 +9817,8 @@ export namespace Prisma {
     volume_y?: boolean
     volume_z?: boolean
     discount?: boolean
+    channel_message_id?: boolean
+    channel_posted_at?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     categories?: boolean | Products$categoriesArgs<ExtArgs>
@@ -9823,6 +9843,8 @@ export namespace Prisma {
     volume_y?: boolean
     volume_z?: boolean
     discount?: boolean
+    channel_message_id?: boolean
+    channel_posted_at?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     factory?: boolean | Products$factoryArgs<ExtArgs>
@@ -9840,6 +9862,8 @@ export namespace Prisma {
     volume_y?: boolean
     volume_z?: boolean
     discount?: boolean
+    channel_message_id?: boolean
+    channel_posted_at?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     factory?: boolean | Products$factoryArgs<ExtArgs>
@@ -9857,11 +9881,13 @@ export namespace Prisma {
     volume_y?: boolean
     volume_z?: boolean
     discount?: boolean
+    channel_message_id?: boolean
+    channel_posted_at?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProductsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "price" | "product_images" | "type" | "actual_product_link" | "factory_id" | "weight" | "volume_x" | "volume_y" | "volume_z" | "discount" | "createdAt" | "updatedAt", ExtArgs["result"]["products"]>
+  export type ProductsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "price" | "product_images" | "type" | "actual_product_link" | "factory_id" | "weight" | "volume_x" | "volume_y" | "volume_z" | "discount" | "channel_message_id" | "channel_posted_at" | "createdAt" | "updatedAt", ExtArgs["result"]["products"]>
   export type ProductsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     categories?: boolean | Products$categoriesArgs<ExtArgs>
     sizes?: boolean | Products$sizesArgs<ExtArgs>
@@ -9902,6 +9928,11 @@ export namespace Prisma {
       volume_y: number
       volume_z: number
       discount: number
+      /**
+       * Telegram kanaldagi post (mahsulot kanalga yuborilgan bo'lsa)
+       */
+      channel_message_id: number | null
+      channel_posted_at: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["products"]>
@@ -10345,6 +10376,8 @@ export namespace Prisma {
     readonly volume_y: FieldRef<"Products", 'Float'>
     readonly volume_z: FieldRef<"Products", 'Float'>
     readonly discount: FieldRef<"Products", 'Int'>
+    readonly channel_message_id: FieldRef<"Products", 'Int'>
+    readonly channel_posted_at: FieldRef<"Products", 'DateTime'>
     readonly createdAt: FieldRef<"Products", 'DateTime'>
     readonly updatedAt: FieldRef<"Products", 'DateTime'>
   }
@@ -42210,6 +42243,8 @@ export namespace Prisma {
     volume_y: 'volume_y',
     volume_z: 'volume_z',
     discount: 'discount',
+    channel_message_id: 'channel_message_id',
+    channel_posted_at: 'channel_posted_at',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -43144,6 +43179,8 @@ export namespace Prisma {
     volume_y?: FloatFilter<"Products"> | number
     volume_z?: FloatFilter<"Products"> | number
     discount?: IntFilter<"Products"> | number
+    channel_message_id?: IntNullableFilter<"Products"> | number | null
+    channel_posted_at?: DateTimeNullableFilter<"Products"> | Date | string | null
     createdAt?: DateTimeFilter<"Products"> | Date | string
     updatedAt?: DateTimeFilter<"Products"> | Date | string
     categories?: CategoriesListRelationFilter
@@ -43167,6 +43204,8 @@ export namespace Prisma {
     volume_y?: SortOrder
     volume_z?: SortOrder
     discount?: SortOrder
+    channel_message_id?: SortOrderInput | SortOrder
+    channel_posted_at?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     categories?: CategoriesOrderByRelationAggregateInput
@@ -43193,6 +43232,8 @@ export namespace Prisma {
     volume_y?: FloatFilter<"Products"> | number
     volume_z?: FloatFilter<"Products"> | number
     discount?: IntFilter<"Products"> | number
+    channel_message_id?: IntNullableFilter<"Products"> | number | null
+    channel_posted_at?: DateTimeNullableFilter<"Products"> | Date | string | null
     createdAt?: DateTimeFilter<"Products"> | Date | string
     updatedAt?: DateTimeFilter<"Products"> | Date | string
     categories?: CategoriesListRelationFilter
@@ -43216,6 +43257,8 @@ export namespace Prisma {
     volume_y?: SortOrder
     volume_z?: SortOrder
     discount?: SortOrder
+    channel_message_id?: SortOrderInput | SortOrder
+    channel_posted_at?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProductsCountOrderByAggregateInput
@@ -43240,6 +43283,8 @@ export namespace Prisma {
     volume_y?: FloatWithAggregatesFilter<"Products"> | number
     volume_z?: FloatWithAggregatesFilter<"Products"> | number
     discount?: IntWithAggregatesFilter<"Products"> | number
+    channel_message_id?: IntNullableWithAggregatesFilter<"Products"> | number | null
+    channel_posted_at?: DateTimeNullableWithAggregatesFilter<"Products"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Products"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Products"> | Date | string
   }
@@ -45558,6 +45603,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesCreateNestedManyWithoutProductsInput
@@ -45581,6 +45628,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesUncheckedCreateNestedManyWithoutProductsInput
@@ -45601,6 +45650,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUpdateManyWithoutProductsNestedInput
@@ -45624,6 +45675,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUncheckedUpdateManyWithoutProductsNestedInput
@@ -45646,6 +45699,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -45660,6 +45715,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -45676,6 +45733,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -48154,6 +48213,8 @@ export namespace Prisma {
     volume_y?: SortOrder
     volume_z?: SortOrder
     discount?: SortOrder
+    channel_message_id?: SortOrder
+    channel_posted_at?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -48167,6 +48228,7 @@ export namespace Prisma {
     volume_y?: SortOrder
     volume_z?: SortOrder
     discount?: SortOrder
+    channel_message_id?: SortOrder
   }
 
   export type ProductsMaxOrderByAggregateInput = {
@@ -48180,6 +48242,8 @@ export namespace Prisma {
     volume_y?: SortOrder
     volume_z?: SortOrder
     discount?: SortOrder
+    channel_message_id?: SortOrder
+    channel_posted_at?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -48195,6 +48259,8 @@ export namespace Prisma {
     volume_y?: SortOrder
     volume_z?: SortOrder
     discount?: SortOrder
+    channel_message_id?: SortOrder
+    channel_posted_at?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -48208,6 +48274,7 @@ export namespace Prisma {
     volume_y?: SortOrder
     volume_z?: SortOrder
     discount?: SortOrder
+    channel_message_id?: SortOrder
   }
 
   export type EnumFulfillmentTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -50540,6 +50607,14 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type CategoriesUpdateManyWithoutProductsNestedInput = {
     create?: XOR<CategoriesCreateWithoutProductsInput, CategoriesUncheckedCreateWithoutProductsInput> | CategoriesCreateWithoutProductsInput[] | CategoriesUncheckedCreateWithoutProductsInput[]
     connectOrCreate?: CategoriesCreateOrConnectWithoutProductsInput | CategoriesCreateOrConnectWithoutProductsInput[]
@@ -50629,14 +50704,6 @@ export namespace Prisma {
     update?: OrderItemUpdateWithWhereUniqueWithoutProductInput | OrderItemUpdateWithWhereUniqueWithoutProductInput[]
     updateMany?: OrderItemUpdateManyWithWhereWithoutProductInput | OrderItemUpdateManyWithWhereWithoutProductInput[]
     deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type CategoriesUncheckedUpdateManyWithoutProductsNestedInput = {
@@ -54056,6 +54123,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesCreateNestedManyWithoutProductsInput
@@ -54078,6 +54147,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesUncheckedCreateNestedManyWithoutProductsInput
@@ -54113,6 +54184,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUpdateManyWithoutProductsNestedInput
@@ -54135,6 +54208,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUncheckedUpdateManyWithoutProductsNestedInput
@@ -54154,6 +54229,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sizes?: SizesCreateNestedManyWithoutProductsInput
@@ -54176,6 +54253,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sizes?: SizesUncheckedCreateNestedManyWithoutProductsInput
@@ -54322,6 +54401,8 @@ export namespace Prisma {
     volume_y?: FloatFilter<"Products"> | number
     volume_z?: FloatFilter<"Products"> | number
     discount?: IntFilter<"Products"> | number
+    channel_message_id?: IntNullableFilter<"Products"> | number | null
+    channel_posted_at?: DateTimeNullableFilter<"Products"> | Date | string | null
     createdAt?: DateTimeFilter<"Products"> | Date | string
     updatedAt?: DateTimeFilter<"Products"> | Date | string
   }
@@ -54545,6 +54626,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesCreateNestedManyWithoutProductsInput
@@ -54567,6 +54650,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesUncheckedCreateNestedManyWithoutProductsInput
@@ -54759,6 +54844,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesCreateNestedManyWithoutProductsInput
@@ -54781,6 +54868,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesUncheckedCreateNestedManyWithoutProductsInput
@@ -55042,6 +55131,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesCreateNestedManyWithoutProductsInput
@@ -55064,6 +55155,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesUncheckedCreateNestedManyWithoutProductsInput
@@ -55174,6 +55267,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUpdateManyWithoutProductsNestedInput
@@ -55196,6 +55291,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUncheckedUpdateManyWithoutProductsNestedInput
@@ -55753,6 +55850,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesCreateNestedManyWithoutProductsInput
@@ -55775,6 +55874,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesUncheckedCreateNestedManyWithoutProductsInput
@@ -55926,6 +56027,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUpdateManyWithoutProductsNestedInput
@@ -55948,6 +56051,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUncheckedUpdateManyWithoutProductsNestedInput
@@ -57171,6 +57276,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesCreateNestedManyWithoutProductsInput
@@ -57192,6 +57299,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categories?: CategoriesUncheckedCreateNestedManyWithoutProductsInput
@@ -59245,6 +59354,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sizes?: SizesUpdateManyWithoutProductsNestedInput
@@ -59267,6 +59378,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sizes?: SizesUncheckedUpdateManyWithoutProductsNestedInput
@@ -59288,6 +59401,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -59392,6 +59507,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUpdateManyWithoutProductsNestedInput
@@ -59414,6 +59531,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUncheckedUpdateManyWithoutProductsNestedInput
@@ -59435,6 +59554,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -59535,6 +59656,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUpdateManyWithoutProductsNestedInput
@@ -59557,6 +59680,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUncheckedUpdateManyWithoutProductsNestedInput
@@ -59578,6 +59703,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -59900,6 +60027,8 @@ export namespace Prisma {
     volume_y: number
     volume_z: number
     discount?: number
+    channel_message_id?: number | null
+    channel_posted_at?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -59941,6 +60070,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUpdateManyWithoutProductsNestedInput
@@ -59962,6 +60093,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoriesUncheckedUpdateManyWithoutProductsNestedInput
@@ -59983,6 +60116,8 @@ export namespace Prisma {
     volume_y?: FloatFieldUpdateOperationsInput | number
     volume_z?: FloatFieldUpdateOperationsInput | number
     discount?: IntFieldUpdateOperationsInput | number
+    channel_message_id?: NullableIntFieldUpdateOperationsInput | number | null
+    channel_posted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

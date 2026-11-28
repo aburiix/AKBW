@@ -89,6 +89,9 @@ model Products {
   volume_z       Float
   factory        Factories?            @relation(fields: [factory_id], references: [id])
   discount       Int                   @default(0)
+  /// Telegram kanaldagi post (mahsulot kanalga yuborilgan bo'lsa)
+  channel_message_id Int?
+  channel_posted_at  DateTime?
   reviews        Reviews[]
   createdAt      DateTime              @default(now())
   updatedAt      DateTime              @default(now()) @updatedAt

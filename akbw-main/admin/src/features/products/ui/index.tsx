@@ -12,6 +12,7 @@ import {
   Trash2,
   Eye,
   ArrowUpDown,
+  Send,
 } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
@@ -29,7 +30,7 @@ import { cn } from '@/shared/lib/utils';
 import { useLocale } from 'next-intl';
 import { useDebounce } from '@/shared/lib/hooks';
 
-import { useProducts, useDeleteProduct } from '../lib/hooks';
+import { useProducts, useDeleteProduct, useChannelStatus, usePostToChannel } from '../lib/hooks';
 import { useCategories } from '../../categories/lib/hooks';
 import type { IProduct } from '@/shared/config/api/product/product.model';
 import Loading from '@/widgets/loading/ui';
@@ -64,6 +65,8 @@ export default function Products() {
 
   const { data: categories = [] } = useCategories();
   const deleteMutation = useDeleteProduct();
+  const { data: channelStatus } = useChannelStatus();
+  const postToChannel = usePostToChannel();
 
   const [open, setOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<IProduct | null>(null);
@@ -368,6 +371,18 @@ export default function Products() {
                             Tahrirlash
                           </span>
                         </DropdownMenuItem>
+                        {channelStatus?.enabled && (
+                          <DropdownMenuItem
+                            onClick={() => postToChannel.mutate(product.id)}
+                            disabled={postToChannel.isPending}
+                            className="rounded-xl gap-3 px-3 py-2 cursor-pointer"
+                          >
+                            <Send size={16} className="text-gray-400" />
+                            <span className="text-xs font-bold uppercase tracking-wider">
+                              {product.channel_message_id ? 'Kanalda yangilash' : 'Kanalga yuborish'}
+                            </span>
+                          </DropdownMenuItem>
+                        )}
                         <DropdownMenuSeparator className="bg-gray-50" />
                         <DropdownMenuItem
                           onClick={() => handleDelete(product)}

@@ -19,7 +19,7 @@ import type {
 } from '@/shared/config/api/product/product.model';
 
 import { useCategories } from '../../categories/lib/hooks';
-import { useCreateProduct, useUpdateProduct } from '../lib/hooks';
+import { useChannelStatus, useCreateProduct, useUpdateProduct } from '../lib/hooks';
 import {
   getSizesRequest,
   getColorsRequest,
@@ -74,6 +74,10 @@ export default function AddProductModal({
   const [selectedSizes, setSelectedSizes] = useState<number[]>([]);
   const [selectedColors, setSelectedColors] = useState<number[]>([]);
   const [productType, setProductType] = useState<'SELF' | 'FACTORY'>('SELF');
+  // Telegram kanalga yuborish (faqat yangi mahsulot yaratishda, ixtiyoriy)
+  const [postToChannel, setPostToChannel] = useState(false);
+  const { data: channelStatus } = useChannelStatus();
+  const channelReady = !!channelStatus?.enabled;
   const [selectedFactoryId, setSelectedFactoryId] = useState<number | null>(
     null,
   );
@@ -370,6 +374,7 @@ export default function AddProductModal({
         })),
       type: productType,
       factory_id: productType === 'FACTORY' ? selectedFactoryId : null,
+      ...(!product && postToChannel && channelReady && images.length > 0 ? { post_to_channel: true } : {}),
     };
 
     if (payload.translations.length === 0) {
@@ -901,6 +906,38 @@ export default function AddProductModal({
                     ))}
                   </div>
                 </div>
+
+                {/* Telegram kanal — yangi mahsulot uchun */}
+                {!product && !viewOnly && (
+                  <label
+                    className={cn(
+                      'flex items-start gap-4 p-5 rounded-2xl border transition-colors',
+                      channelReady && images.length > 0
+                        ? 'border-gray-100 bg-gray-50/60 cursor-pointer hover:border-gray-200'
+                        : 'border-gray-100 bg-gray-50/30 opacity-60 cursor-not-allowed',
+                    )}
+                  >
+                    <input
+                      type="checkbox"
+                      className="mt-1 h-5 w-5 accent-black cursor-pointer disabled:cursor-not-allowed"
+                      checked={postToChannel && channelReady && images.length > 0}
+                      disabled={!channelReady || images.length === 0}
+                      onChange={(e) => setPostToChannel(e.target.checked)}
+                    />
+                    <span className="space-y-1">
+                      <span className="block text-xs font-black uppercase tracking-widest">
+                        Telegram kanalga yuborish
+                      </span>
+                      <span className="block text-xs text-gray-500">
+                        {!channelReady
+                          ? 'Kanal hali sozlanmagan (deploy/set-channel.sh).'
+                          : images.length === 0
+                            ? 'Avval mahsulot rasmini yuklang.'
+                            : 'Saqlangach rasm, narx, o‘lcham va ranglar bilan kanalga post chiqadi.'}
+                      </span>
+                    </span>
+                  </label>
+                )}
               </div>
             )}
           </div>

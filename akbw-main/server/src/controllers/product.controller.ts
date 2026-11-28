@@ -8,6 +8,7 @@ import {
 } from "../db/client.js";
 import BaseError from "../errors/base.errors.js";
 import type { Prisma } from "../generated/prisma/client/index.js";
+import { ChannelError, isChannelEnabled, publishProduct, removeProductPost, updateProductPost } from "../services/channel.service.js";
 
 const localizeCategory = (c: any, lang: string) => ({
     ...c,
@@ -273,10 +274,22 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
             });
         });
 
+        // "Telegram kanalga yuborish" belgilangan bo'lsa — post. Xato bo'lsa ham mahsulot saqlanadi, sabab qaytariladi.
+        let channel: { ok: boolean; error?: string } | undefined;
+        if (req.body.post_to_channel) {
+            try {
+                await publishProduct(product.id);
+                channel = { ok: true };
+            } catch (e) {
+                channel = { ok: false, error: e instanceof ChannelError ? e.message : "Kanalga yuborib bo'lmadi" };
+            }
+        }
+
         return res.status(201).json({
             ok: true,
             message: "Product created successfully",
             product: localizeProduct(product, languageCode),
+            channel,
         });
     } catch (error: any) {
         next(error);
@@ -357,10 +370,21 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
             }
         });
 
+        // Kanalda posti bor mahsulot tahrirlansa — post ham yangilanadi (narx, rasm, matn)
+        let channel: { ok: boolean; error?: string } | undefined;
+        if (product.channel_message_id) {
+            try {
+                channel = { ok: await updateProductPost(product.id) };
+            } catch (e) {
+                channel = { ok: false, error: e instanceof ChannelError ? e.message : "Kanal postini yangilab bo'lmadi" };
+            }
+        }
+
         return res.status(200).json({
             ok: true,
             message: "Product updated successfully",
             product: localizeProduct(product, languageCode),
+            channel,
         });
     } catch (error) {
         next(error);
@@ -371,6 +395,9 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
     try {
         const { id } = req.params;
         const productId = Number(id);
+
+        // kanaldagi postni olib tashlash (bo'lmasa "Sotuvda yo'q") — xato mahsulot o'chirishni to'xtatmaydi
+        await removeProductPost(productId).catch((e) => console.error("Kanal postini o'chirib bo'lmadi:", e?.message));
 
         await prisma.$transaction([
             prisma.orderItem.deleteMany({ where: { productId } }),
@@ -680,4 +707,23 @@ export const recommendedAll = async (req: Request, res: Response, next: NextFunc
     } catch (error) {
         next(error);
     };
+};
+/** Admin: mahsulotni Telegram kanalga yuborish (bor bo'lsa — postni yangilash) */
+export const postProductToChannel = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const r = await publishProduct(Number(req.params.id));
+        return res.status(200).json({
+            ok: true,
+            ...r,
+            message: r.updated ? "Kanaldagi post yangilandi" : "Mahsulot kanalga yuborildi",
+        });
+    } catch (e) {
+        if (e instanceof ChannelError) return res.status(e.code >= 400 && e.code < 600 ? e.code : 400).json({ ok: false, message: e.message });
+        next(e);
+    }
+};
+
+/** Admin: kanal sozlanganmi */
+export const channelStatus = async (_req: Request, res: Response) => {
+    return res.status(200).json({ ok: true, enabled: isChannelEnabled() });
 };

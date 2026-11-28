@@ -19,6 +19,8 @@ const createProductSchema = Joi.object({
     volume_x: Joi.number().required(),
     volume_y: Joi.number().required(),
     volume_z: Joi.number().required(),
+    // admin panel: "Telegram kanalga yuborish" belgisi
+    post_to_channel: Joi.boolean().optional(),
 });
 
 const updateProductSchema = Joi.object({

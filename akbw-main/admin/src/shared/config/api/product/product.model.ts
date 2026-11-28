@@ -18,6 +18,8 @@ export interface ICreateProduct {
   volume_x: number;
   volume_y: number;
   volume_z: number;
+  /** yaratishda: Telegram kanalga ham yuborilsinmi */
+  post_to_channel?: boolean;
 }
 
 export interface ICreateCategoryTranslation {
@@ -57,6 +59,9 @@ export interface IProduct {
   volume_z: number;
   createdAt: string;
   updatedAt: string;
+  /** Telegram kanaldagi post (yuborilgan bo'lsa) */
+  channel_message_id?: number | null;
+  channel_posted_at?: string | null;
 }
 
 export interface IProductListResponse {

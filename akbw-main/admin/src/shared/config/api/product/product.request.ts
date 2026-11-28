@@ -31,6 +31,17 @@ export const deleteProductRequest = async (id: number) => {
   return await httpClient.delete(`${ENDP_PRODUCT}/${id}`);
 };
 
+/** Mahsulotni Telegram kanalga yuborish (posti bor bo'lsa — yangilash) */
+export const postProductToChannelRequest = async (
+  id: number,
+): Promise<{ ok: boolean; message: string; updated: boolean }> => {
+  return (await httpClient.post(`${ENDP_PRODUCT}/${id}/channel`)).data;
+};
+
+export const getChannelStatusRequest = async (): Promise<{ enabled: boolean }> => {
+  return (await httpClient.get(`${ENDP_PRODUCT}/channel/status`)).data;
+};
+
 export const updateProductRequest = async (product: IUpdateProduct) => {
   const { id, ...data } = product;
   return (await httpClient.put(`${ENDP_PRODUCT_CREATE}/${id}`, data)).data;
