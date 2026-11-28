@@ -6,11 +6,15 @@ import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Appearance } from 'react-native';
+import { Appearance, Platform } from 'react-native';
 import { useAuth } from '@/lib/auth';
 import { F, useColors, useThemeMode } from '@/lib/theme';
+import { installGlobalErrorHandlers } from '@/lib/notify';
+import { Toasts } from '@/components/Toasts';
 
 SplashScreen.preventAutoHideAsync();
+// Har qanday kutilmagan xato foydalanuvchiga xabar bilan ko'rsatiladi
+installGlobalErrorHandlers();
 
 export default function RootLayout() {
   const t = useT();
@@ -25,7 +29,7 @@ export default function RootLayout() {
 
   // Tanlangan rejimni tizim komponentlariga ham beramiz (pastki menyu, klaviatura, alertlar).
   useEffect(() => {
-    Appearance.setColorScheme(mode === 'system' ? 'unspecified' : mode);
+    if (Platform.OS !== 'web') Appearance.setColorScheme(mode === 'system' ? 'unspecified' : mode);
   }, [mode]);
 
   useEffect(() => {
@@ -78,6 +82,7 @@ export default function RootLayout() {
         <Stack.Screen name="chat" options={{ title: '' }} />
         <Stack.Screen name="tryon-history" options={{ title: t("KIYIB KO'RISH TARIXI") }} />
       </Stack>
+      <Toasts />
     </ThemeProvider>
     </GestureHandlerRootView>
   );

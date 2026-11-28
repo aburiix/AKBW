@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert, KeyboardAvoidingView, Linking, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -26,7 +27,7 @@ export default function Contact() {
         setName(`${r.data.name ?? ''} ${r.data.lastName ?? ''}`.trim());
         setPhone(r.data.phone ?? '+998 ');
       })
-      .catch(() => {});
+      .catch(notifyError);
   }, [token]);
 
   const send = async () => {

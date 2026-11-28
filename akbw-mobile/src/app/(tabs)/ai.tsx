@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { Image } from 'expo-image';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -79,7 +80,7 @@ export default function Assistant() {
 
   const loadMe = useCallback(() => {
     if (!token) return;
-    api.assistantMe().then(setMe).catch(() => {});
+    api.assistantMe().then(setMe).catch(notifyError);
   }, [token]);
 
   useFocusEffect(loadMe);
@@ -136,8 +137,8 @@ export default function Assistant() {
       const r = await api.assistantThread(id);
       setThreadId(id);
       setMsgs(r.messages.map((m) => ({ key: String(m.id), role: m.role, text: m.ui.text, cards: m.ui.cards, size: m.ui.size })));
-    } catch {
-      // e'tiborsiz
+    } catch (e) {
+      notifyError(e);
     }
   };
 

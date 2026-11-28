@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { useLocalSearchParams } from 'expo-router';
 import { useLang, useT } from '@/lib/i18n';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -42,7 +43,7 @@ export default function Catalog() {
   }, [params.category]);
 
   useEffect(() => {
-    api.categories().then(setCats).catch(() => {});
+    api.categories().then(setCats).catch(notifyError);
   }, [lang]);
 
   // qidiruv — yozib bo'lgach 350 ms kutadi

@@ -1,3 +1,4 @@
+import { describeError, notifyError } from '@/lib/notify';
 import { router } from 'expo-router';
 import { useT } from '@/lib/i18n';
 import { useEffect, useState } from 'react';
@@ -39,8 +40,9 @@ export default function Checkout() {
     try {
       const r = await api.applyCoupon(promo.trim());
       setCoupon({ code: r.coupon.code ?? promo.trim(), discount: r.coupon.discount });
-    } catch {
-      Alert.alert(t("Promokod noto'g'ri"), t('Promokod topilmadi yoki muddati tugagan.'));
+    } catch (e) {
+      // haqiqiy sabab (server xabari yoki internet) ko'rsatiladi
+      Alert.alert(t("Promokod noto'g'ri"), describeError(e, t('Promokod topilmadi yoki muddati tugagan.')));
     } finally {
       setPromoBusy(false);
     }
@@ -104,8 +106,9 @@ export default function Checkout() {
         items.map((i) => ({ productId: String(i.productId), quantity: String(i.quantity) })),
       );
       setDelivery(r.total_price ?? 0);
-    } catch {
+    } catch (e) {
       setDelivery(0);
+      notifyError(e, t("Yetkazish narxini hisoblab bo'lmadi."));
     } finally {
       setLoading(null);
     }

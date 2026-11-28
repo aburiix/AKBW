@@ -82,7 +82,13 @@ export async function request<T>(path: string, opts: Options = {}): Promise<T> {
       signal: controller.signal,
     });
   } catch {
-    throw new ApiError(0, tr("Internet bilan aloqa yo'q. Qayta urinib ko'ring."));
+    // 15 s ichida javob kelmadi — server sekin; aks holda internet yo'q
+    throw new ApiError(
+      0,
+      controller.signal.aborted
+        ? tr("Server javob bermayapti (vaqt tugadi). Qayta urinib ko'ring.")
+        : tr("Internet bilan aloqa yo'q. Qayta urinib ko'ring."),
+    );
   } finally {
     clearTimeout(timer);
   }

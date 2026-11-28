@@ -1,5 +1,6 @@
 'use client';
 
+import { notifyError } from '@/shared/lib/notify-error';
 import {
   useCreateReview,
   useProductReviews,
@@ -50,8 +51,8 @@ export default function ReviewView({ activeTab, productId }: ReviewViewProps) {
         queryKey: ['reviews'],
       });
       setOpenDeleteReview(false);
-    } catch (_e) {
-      toast.error(t('error_deleting_review'));
+    } catch (e) {
+      notifyError(e, t('error_deleting_review'));
     }
   };
 
@@ -79,8 +80,8 @@ export default function ReviewView({ activeTab, productId }: ReviewViewProps) {
       setUserRating(0);
       setReviewText('');
       toast.success(t('review_success'));
-    } catch (_e) {
-      toast.error(t('error_submitting_review'));
+    } catch (e) {
+      notifyError(e, t('error_submitting_review'));
     }
   };
 

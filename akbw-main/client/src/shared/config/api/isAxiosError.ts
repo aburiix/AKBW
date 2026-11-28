@@ -1,13 +1,6 @@
-import { isAxiosError } from 'axios';
-import { toast } from '@/shared/ui/toast';
+import { notifyError } from '@/shared/lib/notify-error';
 
+/** Eski chaqiruvlar uchun: xatoni umumiy ushlagich orqali ko'rsatadi (server sababi bilan) */
 export const onError = (error: unknown, err_massage?: string) => {
-  if (isAxiosError(error)) {
-    toast.error(error.response?.data.message);
-  } else {
-    toast.error(
-      err_massage ||
-        "Nomalum xatolik yuz berdi! Iltimos keyinroq urunib köring",
-    );
-  }
+  notifyError(error, err_massage);
 };

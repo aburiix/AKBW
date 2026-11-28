@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -19,7 +20,10 @@ export default function TryOnHistory() {
     api
       .tryOnMe()
       .then((r) => setItems(r.items ?? []))
-      .catch(() => setItems([]));
+      .catch((e) => {
+        setItems([]);
+        notifyError(e);
+      });
   }, []);
 
   const remove = (id: string) =>
@@ -29,8 +33,12 @@ export default function TryOnHistory() {
         text: t("O'chirish"),
         style: 'destructive',
         onPress: async () => {
-          await api.deleteTryOn(id).catch(() => {});
-          setItems((l) => l?.filter((x) => x.id !== id) ?? null);
+          try {
+            await api.deleteTryOn(id);
+            setItems((l) => l?.filter((x) => x.id !== id) ?? null);
+          } catch (e) {
+            notifyError(e, t("O'chirib bo'lmadi."));
+          }
         },
       },
     ]);

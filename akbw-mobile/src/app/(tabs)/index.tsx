@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { Image } from 'expo-image';
 import { useLang, useT } from '@/lib/i18n';
 import { router } from 'expo-router';
@@ -51,11 +52,11 @@ export default function Home() {
       api
         .styles()
         .then((x) => setStyles(x.data ?? []))
-        .catch(() => {});
+        .catch(notifyError);
       api
         .topReviews()
         .then((x) => setTop(x.data ?? []))
-        .catch(() => {});
+        .catch(notifyError);
     } catch (e: any) {
       setError(e.message);
     }

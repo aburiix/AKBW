@@ -19,6 +19,8 @@ export const useProduct = (id: string | number) => {
     queryKey: ['product', id],
     queryFn: () => getProductByIdRequest(id),
     enabled: !!id,
+    // mahsulot topilmasa sahifaning o'zi "Mahsulot topilmadi" deb ko'rsatadi
+    meta: { ignore404: true },
   });
 };
 

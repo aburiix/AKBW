@@ -5,7 +5,6 @@ import {
   getBranchesRequest,
 } from '@/shared/config/api/bts/bts.requests';
 import { applyCouponRequest } from '@/shared/config/api/coupon/coupon.request';
-import { toast } from '@/shared/ui/toast';
 import { useTranslations } from 'next-intl';
 import { IGetBranchesRequest } from '@/shared/config/api/bts/bts.model';
 import { calculateDelivery } from '@/shared/config/api/delivery/delivery.requests';
@@ -33,15 +32,10 @@ export const useBtsCities = (regionCode: string) => {
 };
 
 export const useApplyCoupon = () => {
-  const t = useTranslations('Cart');
   return useMutation({
     mutationKey: ['apply-coupon'],
     mutationFn: applyCouponRequest,
-    onError: (_err) => {
-      toast.error(t('promo_code_invalid'), {
-        description: t('promo_code_not_found_or_expired'),
-      });
-    },
+    // xato xabari savat sahifasida (sabab bilan) ko'rsatiladi
   });
 };
 

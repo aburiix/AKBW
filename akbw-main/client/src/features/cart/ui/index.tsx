@@ -1,5 +1,6 @@
 'use client';
 
+import { markNotified, notifyError } from '@/shared/lib/notify-error';
 import React, { useEffect, useMemo, useState, Suspense } from 'react';
 import {
   ArrowRight,
@@ -84,15 +85,7 @@ export default function Cart() {
   const createOrderMutation = useCreateOrder();
   const applyCouponMutation = useApplyCoupon();
 
-  useEffect(() => {
-    if (btsGettingError) {
-      toast.error(t('bts_getting_error'));
-    } else if (btsCitiesGettingError) {
-      toast.error(t('bts_cities_getting_error'));
-    } else if (btsBranchesGettingError) {
-      toast.error(t('bts_branches_getting_error'));
-    }
-  }, [btsGettingError, btsCitiesGettingError, btsBranchesGettingError]);
+  // BTS xatolari umumiy ushlagichda (QueryProvider) haqiqiy sabab bilan ko'rsatiladi
 
   useEffect(() => {
     if (selectedBranch === null) {
@@ -153,6 +146,7 @@ export default function Cart() {
         });
       }
     } catch (error: any) {
+      markNotified(error);
       toast.error(t('promo_code_invalid'), {
         description:
           error?.response?.data?.error || t('promo_code_not_found_or_expired'),
@@ -222,8 +216,8 @@ export default function Cart() {
 
       clearCart();
       toast.success(t('order_submitted'));
-    } catch {
-      toast.error(t('order_submit_error'));
+    } catch (e) {
+      notifyError(e, t('order_submit_error'));
     }
   };
 

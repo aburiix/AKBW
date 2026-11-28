@@ -1,5 +1,6 @@
 'use client';
 
+import { notifyError } from '@/shared/lib/notify-error';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useEffect, useState, type ReactNode } from 'react';
@@ -77,8 +78,8 @@ export default function ProfilePage() {
       toast.success(tp('delete_account_done'));
       setSheet(null);
       setToken(null);
-    } catch {
-      toast.error(tp('delete_account_error'));
+    } catch (e) {
+      notifyError(e, tp('delete_account_error'));
     } finally {
       setDeleting(false);
     }

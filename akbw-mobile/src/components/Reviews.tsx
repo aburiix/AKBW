@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Modal, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -49,8 +50,9 @@ export function ReviewsBlock({ productId }: { productId: number }) {
         setTotal(r.meta?.total ?? r.data.length);
         setPages(r.meta?.totalPages ?? 1);
         setPage(p);
-      } catch {
+      } catch (e) {
         setItems((prev) => prev ?? []);
+        notifyError(e);
       }
     },
     [productId],
@@ -65,7 +67,7 @@ export function ReviewsBlock({ productId }: { productId: number }) {
     api
       .me()
       .then((r) => setMe(r.data.id))
-      .catch(() => {});
+      .catch(notifyError);
   }, [token]);
 
   const avg = items?.length ? items.reduce((a, r) => a + r.rating, 0) / items.length : 0;
@@ -89,7 +91,11 @@ export function ReviewsBlock({ productId }: { productId: number }) {
         text: t("O'chirish"),
         style: 'destructive',
         onPress: async () => {
-          await api.deleteReview(r.id).catch(() => {});
+          try {
+            await api.deleteReview(r.id);
+          } catch (e) {
+            notifyError(e, t("O'chirib bo'lmadi."));
+          }
           load(1);
         },
       },

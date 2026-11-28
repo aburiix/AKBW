@@ -1,5 +1,6 @@
 'use client';
 
+import { notifyError } from '@/shared/lib/notify-error';
 import React from 'react';
 import {
   Modal,
@@ -58,8 +59,8 @@ function Checkout({
 
     try {
       await processLink();
-    } catch {
-      toast.error(t('payment_error'));
+    } catch (e) {
+      notifyError(e, t('payment_error'));
       return;
     }
 

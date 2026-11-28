@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import { Center, Label, Screen } from '@/components/ui';
@@ -17,7 +18,10 @@ export default function Notifications() {
     api
       .notifications()
       .then((r) => setItems(r.data ?? []))
-      .catch(() => setItems([]));
+      .catch((e) => {
+        setItems([]);
+        notifyError(e);
+      });
   }, []);
 
   if (!items)

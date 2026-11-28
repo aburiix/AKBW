@@ -39,7 +39,6 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 import { useTranslations } from 'next-intl';
-import { toast } from '@/shared/ui/toast';
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = React.useState<T>(value);
@@ -138,17 +137,9 @@ export default function FilterPage() {
     ],
   );
 
-  useEffect(() => {
-    if (categoriesError) {
-      toast.error(t('categories_error'));
-    }
-  }, [categoriesError, t]);
-
-  useEffect(() => {
-    if (productsError) {
-      toast.error(t('products_error'));
-    }
-  }, [productsError, t]);
+  // Kategoriya / mahsulot yuklanmasa — xabar umumiy ushlagichda (QueryProvider), haqiqiy sabab bilan
+  void categoriesError;
+  void productsError;
 
   useEffect(() => {
     setCurrentPage(1);

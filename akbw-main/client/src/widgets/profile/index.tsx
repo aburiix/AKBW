@@ -1,5 +1,6 @@
 'use client';
 
+import { notifyError } from '@/shared/lib/notify-error';
 import { Button } from '@/shared/ui/button';
 import {
   Modal,
@@ -161,8 +162,8 @@ function Profile({ children, page }: ProfileProps) {
         setSelectedImage(null);
       }
       setChatMessage('');
-    } catch {
-      toast.error(t('messages.send_error'));
+    } catch (e) {
+      notifyError(e, t('messages.send_error'));
     }
   };
 
@@ -176,8 +177,8 @@ function Profile({ children, page }: ProfileProps) {
         const response = await uploadRequest.uploadImage(file);
         setProfileImage(response.url);
         toast.success(t('messages.image_upload_success'));
-      } catch {
-        toast.error(t('messages.image_upload_error'));
+      } catch (e) {
+        notifyError(e, t('messages.image_upload_error'));
       } finally {
         setIsUploading(false);
       }
@@ -359,8 +360,8 @@ function Profile({ children, page }: ProfileProps) {
       setConfirmDelete(false);
       setToken(null);
       onOpenChange(false);
-    } catch {
-      toast.error(t('delete_account_error'));
+    } catch (e) {
+      notifyError(e, t('delete_account_error'));
     } finally {
       setDeleting(false);
     }

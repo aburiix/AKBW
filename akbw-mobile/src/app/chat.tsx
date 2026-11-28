@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { Image } from 'expo-image';
 import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
@@ -33,12 +34,17 @@ export default function ChatScreen() {
   const [busy, setBusy] = useState(false);
   const listRef = useRef<FlatList<ChatMessage>>(null);
 
+  // har 6 s yangilanadi — xato bo'lsa bir marta xabar beriladi (yana ishlaguncha takrorlanmaydi)
+  const failed = useRef(false);
   const load = useCallback(async () => {
     try {
       const r = ask ? await api.askChat() : await api.helpChat();
       setChat(r && (r as Chat).id ? (r as Chat) : null);
-    } catch {
+      failed.current = false;
+    } catch (e) {
       setChat((x) => (x === undefined ? null : x));
+      if (!failed.current) notifyError(e);
+      failed.current = true;
     }
   }, [ask]);
 
@@ -47,7 +53,7 @@ export default function ChatScreen() {
       api
         .me()
         .then((r) => setMe(r.data.id))
-        .catch(() => {});
+        .catch(notifyError);
       load();
       const timer = setInterval(load, 6000);
       return () => clearInterval(timer);

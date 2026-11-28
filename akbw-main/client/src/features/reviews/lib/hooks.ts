@@ -1,3 +1,4 @@
+import { notifyError } from '@/shared/lib/notify-error';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   createReviewRequest,
@@ -6,7 +7,6 @@ import {
   getTopReviewsRequest,
 } from '@/shared/config/api/review/review.request';
 import { ICreateReviewRequest } from '@/shared/config/api/review/review.model';
-import { toast } from '@/shared/ui/toast';
 
 export const useProductReviews = (
   productId: number,
@@ -33,13 +33,7 @@ export const useCreateReview = () => {
         queryKey: ['product', variables.product_id],
       });
     },
-    onError: (error: any) => {
-      const errorMessage =
-        error?.response?.data?.message ||
-        error?.message ||
-        'Şarh yaratişda xatolik yuz berdi';
-      toast.error(errorMessage);
-    },
+    onError: (error: any) => notifyError(error, 'Şarh yaratişda xatolik yuz berdi'),
   });
 };
 export const useUpdateReview = (reviewId: number) => {
@@ -56,13 +50,7 @@ export const useUpdateReview = (reviewId: number) => {
         queryKey: ['product', variables.product_id],
       });
     },
-    onError: (error: any) => {
-      const errorMessage =
-        error?.response?.data?.message ||
-        error?.message ||
-        'Şarh yangilaşda xatolik yuz berdi';
-      toast.error(errorMessage);
-    },
+    onError: (error: any) => notifyError(error, 'Şarh yangilaşda xatolik yuz berdi'),
   });
 };
 export const useTopReviews = () => {

@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { Image } from 'expo-image';
 import { useT } from '@/lib/i18n';
 import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
@@ -34,8 +35,8 @@ export default function TryOn() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    api.product(productId).then(setProduct).catch(() => {});
-    if (token) api.tryOnMe().then(setMe).catch(() => {});
+    api.product(productId).then(setProduct).catch(notifyError);
+    if (token) api.tryOnMe().then(setMe).catch(notifyError);
   }, [productId, token]);
 
   const pick = async (camera: boolean) => {

@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { Image } from 'expo-image';
 import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
@@ -77,7 +78,7 @@ export default function ProfileEdit() {
         setDistrict(r.data.district ?? '');
         setEmail(r.data.email ?? '');
       })
-      .catch(() => {})
+      .catch(notifyError)
       .finally(() => setLoaded(true));
   }, []);
 

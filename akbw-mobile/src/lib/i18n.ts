@@ -498,6 +498,17 @@ const D: Dict = {
   Minimalistik: { ru: 'Минимализм', en: 'Minimalist' },
   Sport: { ru: 'Спорт', en: 'Sport' },
   Glamour: { ru: 'Гламур', en: 'Glamour' },
+  // xatolik xabarlari (har bir xato foydalanuvchiga ko'rsatiladi)
+  "Server javob bermayapti (vaqt tugadi). Qayta urinib ko'ring.": { ru: 'Сервер не отвечает (время ожидания истекло). Попробуйте снова.', en: 'The server is not responding (timed out). Please try again.' },
+  "Serverda xatolik yuz berdi. Birozdan keyin qayta urinib ko'ring.": { ru: 'Ошибка на сервере. Попробуйте чуть позже.', en: 'Server error. Please try again shortly.' },
+  "Xizmat vaqtincha ishlamayapti. Keyinroq urinib ko'ring.": { ru: 'Сервис временно недоступен. Попробуйте позже.', en: 'The service is temporarily unavailable. Please try later.' },
+  "Sessiya tugadi. Iltimos, qayta kiring.": { ru: 'Сессия истекла. Пожалуйста, войдите снова.', en: 'Your session has expired. Please sign in again.' },
+  "Bu amal uchun ruxsat yo'q.": { ru: 'Нет доступа для этого действия.', en: "You don't have permission to do this." },
+  "So'ralgan ma'lumot topilmadi.": { ru: 'Запрошенные данные не найдены.', en: 'The requested data was not found.' },
+  "Ma'lumotlar noto'g'ri kiritildi. Tekshirib, qayta urinib ko'ring.": { ru: 'Данные введены неверно. Проверьте и попробуйте снова.', en: 'Some data is invalid. Check it and try again.' },
+  "Kutilmagan xatolik yuz berdi. Iltimos, qayta urinib ko'ring.": { ru: 'Произошла непредвиденная ошибка. Попробуйте снова.', en: 'An unexpected error occurred. Please try again.' },
+  "Yetkazish narxini hisoblab bo'lmadi.": { ru: 'Не удалось рассчитать стоимость доставки.', en: 'Could not calculate the delivery price.' },
+  "O'chirib bo'lmadi.": { ru: 'Не удалось удалить.', en: 'Could not delete.' },
 };
 
 /**

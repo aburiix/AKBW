@@ -1,8 +1,8 @@
+import { notifyError } from '@/shared/lib/notify-error';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { orderRequest } from '@/shared/config/api/order/order.request';
 import { ICreateOrderRequest } from '@/shared/config/api/order/order.model';
 import { useTranslations } from 'next-intl';
-import { toast } from '@/shared/ui/toast';
 import { onError } from '@/shared/config/api/isAxiosError';
 import { openExternal } from '@/shared/lib/telegram';
 
@@ -21,9 +21,7 @@ export const useCreateOrder = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
     },
-    onError: (_err) => {
-      toast.error(t('order_submit_error'));
-    },
+    onError: (err) => notifyError(err, t('order_submit_error')),
   });
 };
 

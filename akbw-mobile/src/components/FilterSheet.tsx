@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { useEffect, useState } from 'react';
 import { useT } from '@/lib/i18n';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -67,8 +68,8 @@ export function FilterSheet({
   const [colors, setColors] = useState<Named[]>([]);
 
   useEffect(() => {
-    api.sizes().then(setSizes).catch(() => {});
-    api.colors().then(setColors).catch(() => {});
+    api.sizes().then(setSizes).catch(notifyError);
+    api.colors().then(setColors).catch(notifyError);
   }, []);
 
   const toggle = (key: 'sizes' | 'colors', id: number) =>

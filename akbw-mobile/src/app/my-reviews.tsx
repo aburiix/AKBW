@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text } from 'react-native';
@@ -19,7 +20,10 @@ export default function MyReviews() {
     api
       .me()
       .then((r) => setItems(r.data.reviews ?? []))
-      .catch(() => setItems([]));
+      .catch((e) => {
+        setItems([]);
+        notifyError(e);
+      });
   }, []);
 
   if (!items)

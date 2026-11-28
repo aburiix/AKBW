@@ -1,3 +1,4 @@
+import { notifyError } from '@/lib/notify';
 import Constants from 'expo-constants';
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
@@ -73,11 +74,11 @@ export default function Profile() {
       api
         .me()
         .then((r) => setUser(r.data))
-        .catch(() => {});
+        .catch(notifyError);
       api
         .orders()
         .then((r) => setOrders(r.data ?? []))
-        .catch(() => {});
+        .catch(notifyError);
     }, [token]),
   );
 
