@@ -56,13 +56,17 @@ export default function Orders() {
     try {
       const r = await api.payLink(method, paying.id, paying.total_price);
       if (!r.link) throw new Error(t("To'lov havolasi olinmadi"));
+      setBusy(null);
       setPaying(null);
-      await WebBrowser.openBrowserAsync(r.link);
+      // iOS: oyna (Modal) to'liq yopilmasdan brauzer ochilsa, ekran qotib qoladi — yopilish animatsiyasini kutamiz
+      await new Promise((res) => setTimeout(res, 450));
+      await WebBrowser.openBrowserAsync(r.link, { dismissButtonStyle: 'close' });
       load();
     } catch (e: any) {
-      Alert.alert(t("To'lov ochilmadi"), e.message);
-    } finally {
       setBusy(null);
+      setPaying(null);
+      // Xato oynasi ham Modal yopilgach chiqsin, aks holda u ko'rinmay qolib, ekran bosilmaydi
+      setTimeout(() => Alert.alert(t("To'lov ochilmadi"), e.message), 450);
     }
   };
 
