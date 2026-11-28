@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express";
 import deliveryService from "../services/delivery.service.js";
 import { prisma } from "../db/client.js";
 import { isAxiosError } from "axios";
+import { safeErr } from "../utils/safeErr.util.js";
 
 export const getRegions = async (req: Request, res: Response) => {
     try {
@@ -231,7 +232,7 @@ export const getDeliveryFromToLinks = async(req: Request, res:Response, next:Nex
                 });
                 fromBranchData = fromBranches?.data?.items?.find((branch: any) => branch.code == shipment?.sender_branch_code) || null;
             } catch (error) {
-                console.error("Failed to fetch sender branch info for shipment", id, error);
+                console.error("Failed to fetch sender branch info for shipment", id, safeErr(error));
             }
 
             try {
@@ -241,7 +242,7 @@ export const getDeliveryFromToLinks = async(req: Request, res:Response, next:Nex
                 });
                 toBranchData = toBranches?.data?.items?.find((branch: any) => branch.code == shipment?.receiver_branch_code) || null;
             } catch (error) {
-                console.error("Failed to fetch receiver branch info for shipment", id, error);
+                console.error("Failed to fetch receiver branch info for shipment", id, safeErr(error));
             }
 
             const fromLatLong = fromBranchData?.lat_long || senderConfig?.lat_long || "";

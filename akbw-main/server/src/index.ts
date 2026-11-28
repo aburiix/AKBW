@@ -41,6 +41,7 @@ import botRoutes from "./routers/bot.routes.js";
 import tryonRoutes from "./routers/tryon.routes.js";
 import assistantRoutes from "./routers/assistant.routes.js";
 import path from "path";
+import { safeErr } from "./utils/safeErr.util.js";
 
 // configure dotenv
 dotenv.config();
@@ -146,7 +147,7 @@ app.use((req: Request, res: Response) => {
 
 // error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error("Global Error Handler:", err);
+  console.error("Global Error Handler:", safeErr(err));
 
   if (err.isTransactionError) {
     console.log("error this is transaction error: ", err.isTransactionError);

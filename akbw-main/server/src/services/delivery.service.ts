@@ -13,9 +13,12 @@ import dotenv from "dotenv";
 import axios, {
     isAxiosError
 } from "axios";
+import { safeErr } from "../utils/safeErr.util.js";
 
 
 dotenv.config();
+
+
 
 class DeliveryService {
     private baseUrl: string = String(process.env.BTS_BASE_URL || "https://apitest.bts.uz:28345");
@@ -37,8 +40,7 @@ class DeliveryService {
             }
             return response.data;
         } catch (error) {
-            console.error("BTS login failed:", error);
-            console.log("BTS login error response data: ", isAxiosError(error) ? error.response?.data : null);
+            console.error("BTS login failed:", safeErr(error));
             throw error;
         }
     }
@@ -63,7 +65,7 @@ class DeliveryService {
             }
             return response.data;
         } catch (error) {
-            console.error("BTS token refresh failed:", error);
+            console.error("BTS token refresh failed:", safeErr(error));
             return await this.login();
         }
     }
@@ -139,12 +141,11 @@ class DeliveryService {
                 await this.refreshToken();
                 return await this.createOrder(payload);
             };
-            console.log("createOrder-error: ", err);
+            console.log("createOrder-error: ", safeErr(err));
             if (isAxiosError(err)) {
                 console.log("Axios Create order response data: ", err.response?.data?.errors);
                 console.log("Axios Create order response data raw: ", err.response?.data?.errors?.raw);
                 console.log("Axios Create order response data fields: ", err.response?.data?.errors?.fields);
-                console.log("Axios Create order request data: ", err.config?.data);
             };
             throw err;
         }
@@ -170,7 +171,7 @@ class DeliveryService {
                 return await this.getState({ order_id: order_id });
             };
 
-            console.error("getState-error: ", error);
+            console.error("getState-error: ", safeErr(error));
 
             throw error;
         };
@@ -219,10 +220,9 @@ class DeliveryService {
                 return 0;
             }
         } catch (error) {
-            console.log("calculateDeliveryCost-error: ", error);
+            console.log("calculateDeliveryCost-error: ", safeErr(error));
             if (isAxiosError(error)) {
                 console.log("Axios Calculate order delivery price response data: ", error.response?.data);
-                console.log("Axios Calculate order delivery price request data: ", error.request?.data);
             };
             if (isAxiosError(error) && error?.response?.status === 401) {
                 await this.refreshToken();
@@ -286,7 +286,7 @@ class DeliveryService {
             console.log("OSRM route not available, falling back to haversine:", response.data?.code);
             return fallback();
         } catch (error) {
-            console.log("OSRM distance failed, falling back to haversine:", error);
+            console.log("OSRM distance failed, falling back to haversine:", safeErr(error));
             return fallback();
         }
     }
